@@ -1,9 +1,9 @@
 import moment from "moment/moment";
 import { useState } from "react";
 import { Calendar } from "react-calendar";
-import "./style.css";
+import "../todoList/style/style.css";
 
-const TodoListCalender = () => {
+const TodoListCalendar = () => {
 	const [value, onChange] = useState(new Date());
 	const [dot, setDot] = useState(["2022-11-09", "2022-11-10"]);
 	const [tri, setTri] = useState(["2022-11-09", "2022-11-04"]);
@@ -47,4 +47,4 @@ const TodoListCalender = () => {
 	);
 };
 
-export default TodoListCalender;
+export default TodoListCalendar;
