@@ -22,7 +22,7 @@ const CalendarPage = () => {
 				className="mx-auto w-full text-sm border-b"
 				tileContent={({ date, view }) => {
 					// 날짜 타일에 컨텐츠 추가하기 (html 태그)
-					// 추가할 html 태그를 변수 초기화
+					// 추가할 html, triangle 태그를 변수 초기화
 					let html = [];
 					let triangle = [];
 					// 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
