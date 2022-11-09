@@ -1,5 +1,4 @@
-import React from "react";
-import CalendarPage from "./CalendarPage";
+import CalendarPage from "../../components/todoList/todoListCalender";
 
 const TodoListPage = () => {
 	return <CalendarPage />;
