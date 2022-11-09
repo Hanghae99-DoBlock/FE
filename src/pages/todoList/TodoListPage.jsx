@@ -1,5 +1,8 @@
-const TodoLisPage = () => {
-	return <div>TodoLisPage</div>;
+import React from "react";
+import CalendarPage from "./CalendarPage";
+
+const TodoListPage = () => {
+	return <CalendarPage />;
 };
 
-export default TodoLisPage;
+export default TodoListPage;
