@@ -1,7 +1,7 @@
-import CalendarPage from "../../components/todoList/todoListCalender";
+import { TodoListCalendar } from "../../components";
 
 const TodoListPage = () => {
-	return <CalendarPage />;
+	return <TodoListCalendar />;
 };
 
 export default TodoListPage;
