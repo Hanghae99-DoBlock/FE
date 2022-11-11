@@ -20,7 +20,7 @@ const GlobalStyles = createGlobalStyle`
   font-weight: normal;
   /* font-family: */
   }
-  
+
   a {
     color: inherit;
     text-decoration: none;
@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
 
   button,svg {
     cursor: pointer;
+    background-color: transparent;
     letter-spacing: 0.1em;
   }
 

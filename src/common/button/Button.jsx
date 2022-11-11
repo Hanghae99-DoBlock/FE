@@ -19,10 +19,21 @@ const StBtn = styled.button`
 					font-size : 16px;
 					font-weight: 600;
 					line-height : 19px;
-				
+					`;
+			// 투두 추가 버튼
+			case "addTodo":
+				return css`
+					width: 100%;
+					height: 49px;
+					background: #7474ff;
+					border-radius: 10px;
+					font-weight: 600;
+					font-size: 14px;
+					color: #ffffff;
 				`;
 			default:
 				break;
 		}
-	}};
+	}
+}
 `;
