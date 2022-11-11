@@ -5,7 +5,7 @@ import { TodoItem } from "../../components";
 import { __getTodoList } from "../../redux/modules/todoList/todoSlice";
 
 const ListingTodos = () => {
-	const todoList = useSelector(state => state.todoSlice.todoList);
+	// const todoList = useSelector(state => state.todoSlice.todoList);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -14,9 +14,9 @@ const ListingTodos = () => {
 
 	return (
 		<Flex gap="10px" fd="column" pad="0 16px 26px">
-			{todoList.map(todoItem => (
+			{/* {todoList.map(todoItem => (
 				<TodoItem key={todoItem.id} todoItem={todoItem.todo}></TodoItem>
-			))}
+			))} */}
 		</Flex>
 	);
 };
