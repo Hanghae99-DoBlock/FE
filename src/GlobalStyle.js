@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
 	border: 0;
   /* font-family: */
   }
-  
+
   a {
     color: inherit;
     text-decoration: none;
@@ -26,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
 
   button {
     cursor: pointer;
+    background-color: transparent;
     letter-spacing: 0.1em;
   }
 

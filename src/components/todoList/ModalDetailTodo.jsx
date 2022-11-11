@@ -1,0 +1,68 @@
+import { useSelector } from "react-redux";
+import { Box, Button, Flex, Form, Label, Svg, Text } from "../../common";
+
+const ModalDetailTodo = () => {
+	const isDetailTodoModalOpen = useSelector(
+		state => state.modalSlice.isDetailTodoModalOpen,
+	);
+
+	const todoItem = useSelector(state => state.modalSlice.todoItem);
+
+	if (!isDetailTodoModalOpen) return null;
+
+	return (
+		// 오버레이
+		<Flex
+			bgColor="rgba(0, 0, 0, 0.6)"
+			position="fixed"
+			maxWidth="320px"
+			minWidth="430px"
+			height="100%"
+			zIndex="1"
+		>
+			{/* 모달 */}
+			<Box variant="modalBox">
+				{/* 닫기 버튼 */}
+				<Flex jc="flex-end">
+					<Svg variant="close"></Svg>
+				</Flex>
+				{/* 폼 */}
+				<Form variant="todoForm">
+					{/* 할 일 +  옵션 인풋들 */}
+					<div>
+						{/* 할 일 라벨 + 인풋 */}
+						<Flex fd="column" ai="flex-start">
+							<Label variant="grey">할 일</Label>
+							<Box variant="todoContent">
+								<Text variant="medium">{todoItem.todoContent}</Text>
+							</Box>
+						</Flex>
+
+						{/* 옵션 인풋들 */}
+						<Flex gap="17px" fd="column" ai="flex-start" margin="12px 0 0 0">
+							{/* 메모 인풋 */}
+							<Flex gap="18.5px">
+								<Svg variant="memo" />
+
+								{/* 메모 인풋은 하드코딩만 해두었습니다 */}
+								<p
+									style={{
+										fontWeight: "500",
+										fontSize: "13px",
+										color: "#979797",
+									}}
+								>
+									메모
+								</p>
+							</Flex>
+						</Flex>
+					</div>
+					{/* 추가 버튼 */}
+					<Button variant="addTodo">수정하기</Button>
+				</Form>
+			</Box>
+		</Flex>
+	);
+};
+
+export default ModalDetailTodo;
