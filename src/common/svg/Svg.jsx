@@ -72,13 +72,6 @@ const Svg = ({ variant, onClick }) => {
 					viewBox="0 0 70 70"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
-					style={{
-						position: "fixed",
-						// position: "relative",
-						bottom: "6px",
-						//right: "-350px",
-						right: "23px",
-					}}
 				>
 					<g filter="url(#filter0_d_297_832)">
 						<circle cx="33" cy="33" r="25" fill="#7474FF" />
