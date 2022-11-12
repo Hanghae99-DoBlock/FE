@@ -12,6 +12,7 @@ const StInput = styled.input`
 			case "todoInput":
 				return css`
 					height: 48px;
+					width: 100%;
 					padding: 12px 0;
 					caret-color: #7474ff;
 					font-weight: 600;
