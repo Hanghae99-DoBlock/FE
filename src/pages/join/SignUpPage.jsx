@@ -198,7 +198,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>
 									닉네임은 2-6자, 영어 대소문자 또는 숫자 또는 한글로
 									구성됩니다.
@@ -214,7 +216,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>이미 사용중인 닉네임입니다.</StInfo>
 							</Flex>
 						) : (
@@ -227,7 +231,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>사용가능한 닉네임입니다.</StInfo>
 							</Flex>
 						)}
@@ -290,7 +296,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>올바른 이메일 형식을 입력해주세요.</StInfo>
 							</Flex>
 						) : checkEmail !== 200 ? (
@@ -303,7 +311,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>이미 사용중인 이메일입니다</StInfo>
 							</Flex>
 						) : (
@@ -316,7 +326,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>사용가능한 이메일입니다.</StInfo>
 							</Flex>
 						)}
@@ -391,7 +403,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>
 									비밀번호는 8-20자, 영문 대소문자,숫자,특수문자!@#$%^&*를
 									적어도 하나이상 포함해야합니다
@@ -407,7 +421,9 @@ const SignUpPage = () => {
 								ai="center"
 								jc="flex-start"
 							>
-								<Svg variant="alert" />
+								<StSvg>
+									<Svg variant="alert" />
+								</StSvg>
 								<StInfo>사용가능한 비밀번호 입니다</StInfo>
 							</Flex>
 						)}
@@ -470,7 +486,9 @@ const SignUpPage = () => {
 							ai="center"
 							jc="flex-start"
 						>
-							<Svg variant="alert" />
+							<StSvg>
+								<Svg variant="alert" />
+							</StSvg>
 							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
 						</Flex>
 					) : (
@@ -503,6 +521,14 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
+
+const StSvg = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+`;
 
 const StEmail = styled.div`
 	display: flex;
@@ -603,6 +629,6 @@ const StRePasswordBlue = styled.div`
 	justify-content: space-between;
 `;
 
-const StInfo = styled.span`
+const StInfo = styled.div`
 	color: #7474ff;
 `;
