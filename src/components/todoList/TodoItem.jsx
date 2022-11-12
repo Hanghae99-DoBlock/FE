@@ -29,6 +29,7 @@ const TodoItem = ({ todoItem }) => {
 				</Flex>
 
 				{/* 투두 컨텐트 */}
+
 				<Flex jc="flex-start" wd="100%" mg="0 0 0 16px">
 					<Text variant="normal">{todoItem}</Text>
 				</Flex>

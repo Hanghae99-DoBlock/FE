@@ -537,6 +537,7 @@ const StEmail = styled.div`
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
 	:focus-within {
 		outline: 1px solid #7474ff;
@@ -551,6 +552,7 @@ const StEmailBlue = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StPassword = styled.div`
@@ -560,7 +562,7 @@ const StPassword = styled.div`
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-
+	justify-content: space-between;
 	:focus-within {
 		outline: 1px solid #7474ff;
 	}
@@ -574,6 +576,7 @@ const StPasswordBlue = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const Stnickname = styled.div`
@@ -583,6 +586,7 @@ const Stnickname = styled.div`
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
 	:focus-within {
 		outline: 1px solid #7474ff;
@@ -597,6 +601,7 @@ const StnicknameBlue = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StRePassword = styled.div`
@@ -606,6 +611,7 @@ const StRePassword = styled.div`
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
 	:focus-within {
 		outline: 1px solid #7474ff;
@@ -620,6 +626,7 @@ const StRePasswordBlue = styled.div`
 	align-items: center;
 	border-radius: 10px;
 	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StInfo = styled.div`

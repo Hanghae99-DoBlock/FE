@@ -4,6 +4,7 @@ import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 // import { __addTodo } from "../../redux/modules/todoList/todoSlice";
 
+
 const ModalAddTodo = () => {
 	const [todo, setTodo] = useState({});
 	const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const ModalAddTodo = () => {
 	const uploadHandler = e => {
 		e.preventDefault();
 		// dispatch(__addTodo(todo));
+
 		setTodo("");
 		dispatch(updateIsAddTodoModalOpen());
 	};
@@ -57,6 +59,7 @@ const ModalAddTodo = () => {
 
 						{/* 옵션 인풋들 */}
 						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
+
 							{/* 메모 인풋 */}
 							<Flex gap="18.5px">
 								<Svg variant="memo" />
