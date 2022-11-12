@@ -291,7 +291,7 @@ const SignUpPage = () => {
 								jc="flex-start"
 							>
 								<Svg variant="alert" />
-								<StInfo>올바른 이메일 형식을 입력해주세요</StInfo>
+								<StInfo>올바른 이메일 형식을 입력해주세요.</StInfo>
 							</Flex>
 						) : checkEmail !== 200 ? (
 							<Flex
