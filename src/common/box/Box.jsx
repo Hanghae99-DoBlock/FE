@@ -16,6 +16,7 @@ const StBox = styled.div`
 			case "todoListArea":
 				return css`
 					background: #f9f9f9;
+					height: 100%;
 					width: 100%;
 				`;
 

@@ -15,7 +15,7 @@ const TodoListPage = () => {
 	};
 
 	return (
-		<Flex fd="column">
+		<Flex fd="column" height="100%">
 			<TodoListCalendar />
 			<Box variant="todoListArea">
 				{/* 투두 리스트 헤더 */}
