@@ -2,404 +2,607 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import chevron from "../../images/chevron.left.svg"
-import useMediaQuery from 'react-responsive'
-import {BrowserView,MobileView,isBrowser,isMobile} from "react-device-detect"
+import chevron from "../../images/chevron.left.svg";
+import useMediaQuery from "react-responsive";
+import {
+	BrowserView,
+	MobileView,
+	isBrowser,
+	isMobile,
+} from "react-device-detect";
 import { useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
-import { __checkEmail, __checkNick, __signUp } from "../../redux/modules/joinSlice";
+import {
+	__checkEmail,
+	__checkNick,
+	__signUp,
+} from "../../redux/modules/joinSlice";
 import { useNavigate } from "react-router-dom";
-
-
-
+import Svg from "../../common/svg/Svg";
 
 const SignUpPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
+	const [passwordType, setPasswordType] = useState({
+		type: "password",
+		visible: false,
+	});
+	const [checkPasswordType, setCheckPasswordType] = useState({
+		type: "password",
+		visible: false,
+	});
+	const email = useInput("");
+	const password = useInput("");
+	const nickname = useInput("");
+	const checkPass = useInput("");
 
-	const [passwordType,setPasswordType] = useState({
-		type : "password",
-		visible : false
-	})
-	const [checkPasswordType,setCheckPasswordType] = useState({
-		type : "password",
-		visible : false
-	})
-	const email = useInput('')
-	const password = useInput('')
-	const nickname = useInput('')
-	const checkPass = useInput('')
+	const [isBlue, setIsBlue] = useState(false);
+	const [isMailDuple, setIsMailDuple] = useState(false);
 
-	const [isBlue,setIsBlue] = useState(false)
-	const [isMailDuple,setIsMailDuple] = useState(false)
-
-	const checkNickname = useSelector(state=>state?.join?.checkNickResult.status)
-	const checkEmail= useSelector(state=>state?.join?.checkMailResult.status)
-	console.log(checkEmail)
+	const checkNickname = useSelector(
+		state => state?.join?.checkNickResult.status,
+	);
+	const checkEmail = useSelector(state => state?.join?.checkMailResult.status);
+	console.log(checkEmail);
 	//이메일 정규식
-	const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	const regEmail =
+		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	//닉네임 정규식
 	// 1. 2-6자, 영어 대소문자 또는 숫자 또는 한글로 구성
 	// 2. 특이사항 : 한글 초성 및 모음은 허가하지 않는다.
-	const regNick = /^(?=.*[a-z0-9A-Z가-힣])[a-z0-9A-Z가-힣]{2,6}$/
+	const regNick = /^(?=.*[a-z0-9A-Z가-힣])[a-z0-9A-Z가-힣]{2,6}$/;
 	//비밀번호 정규식
 	// 1. 영문 대소문자, 숫자, 특수문자 !@#$%^&* 를 적어도 하나씩 포함해야됨
 	// 2. 8-20자
-	const regPass = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]{8,20}$/
+	const regPass =
+		/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]{8,20}$/;
 
 	//password type 변경하는 함수
 	const passwordTypeHandler = e => {
 		setPasswordType(() => {
 			if (!passwordType.visible) {
-				return { type: 'text', visible: true };
+				return { type: "text", visible: true };
 			}
-			return { type: 'password', visible: false };
-		})
-	}
+			return { type: "password", visible: false };
+		});
+	};
 
 	const checkPasswordTypeHandler = e => {
 		setCheckPasswordType(() => {
 			if (!checkPasswordType.visible) {
-				return { type: 'text', visible: true };
+				return { type: "text", visible: true };
 			}
-			return { type: 'password', visible: false };
-		})
-	}
+			return { type: "password", visible: false };
+		});
+	};
 
-	const changePlaceholder = () =>{
-		if(email.value.trim() === '' && password.value.trim() === '' && nickname.value.trim() === '' && checkPass.value.trim() === ''){
-			 setIsBlue(true)
-		}else if(email.value.trim() !== '' || password.value.trim() !== '' || nickname.value.trim() !== ''|| checkPass.value.trim() !== ''){
-			setIsBlue(false)
+	const changePlaceholder = () => {
+		if (
+			email.value.trim() === "" &&
+			password.value.trim() === "" &&
+			nickname.value.trim() === "" &&
+			checkPass.value.trim() === ""
+		) {
+			setIsBlue(true);
+		} else if (
+			email.value.trim() !== "" ||
+			password.value.trim() !== "" ||
+			nickname.value.trim() !== "" ||
+			checkPass.value.trim() !== ""
+		) {
+			setIsBlue(false);
 		}
-			
-	}
-	const joinHandler = () =>{
-		if(regEmail.test(email.value) && regNick.test(nickname.value) && regPass.test(password.value) && password.value === checkPass.value){
-			dispatch(__signUp({email : email.value, nickname : nickname.value, password : password.value}))
-			navigate("/signin")
+	};
+	const joinHandler = () => {
+		if (
+			regEmail.test(email.value) &&
+			regNick.test(nickname.value) &&
+			regPass.test(password.value) &&
+			password.value === checkPass.value
+		) {
+			dispatch(
+				__signUp({
+					email: email.value,
+					nickname: nickname.value,
+					password: password.value,
+				}),
+			);
+			navigate("/signin");
 		}
-	}
+	};
 
-	const checkNicknameHandler = ()=>{
-		if(regNick.test(nickname.value)){
-			dispatch(__checkNick({nickname : nickname.value}))
+	const checkNicknameHandler = () => {
+		if (regNick.test(nickname.value)) {
+			dispatch(__checkNick({ nickname: nickname.value }));
 		}
-	}
+	};
 
-	const checkEmailHandler = () =>{
-		if(regEmail.test(email.value)){
-			dispatch(__checkEmail({email : email.value}))
+	const checkEmailHandler = () => {
+		if (regEmail.test(email.value)) {
+			dispatch(__checkEmail({ email: email.value }));
 		}
-	}
+	};
 
 	const checkPasswordHandler = () => {
-		if(regPass.test(password.value)){
-
+		if (regPass.test(password.value)) {
 		}
-	}
-
+	};
 
 	return (
-		
 		<>
-		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
-			<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
+			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+				<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
 					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
-						<svg onClick={()=>navigate("/signin")} width="24" height="24" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M0.771484 7.93945C0.771484 8.23242 0.898438 8.51562 1.12305 8.73047L7.55859 15.166C7.79297 15.3906 8.05664 15.498 8.32031 15.498C8.93555 15.498 9.375 15.0586 9.375 14.4727C9.375 14.1699 9.25781 13.9062 9.0625 13.7207L6.875 11.5039L3.98438 8.86719L6.26953 9.00391H18.1445C18.7793 9.00391 19.2285 8.56445 19.2285 7.93945C19.2285 7.30469 18.7793 6.875 18.1445 6.875H6.26953L3.99414 7.01172L6.875 4.375L9.0625 2.1582C9.25781 1.96289 9.375 1.69922 9.375 1.39648C9.375 0.810547 8.93555 0.380859 8.32031 0.380859C8.05664 0.380859 7.79297 0.478516 7.53906 0.722656L1.12305 7.14844C0.898438 7.35352 0.771484 7.64648 0.771484 7.93945Z" fill="black"/>
-						</svg>
+						<Svg variant="chevron" onClick={() => navigate("/signin")} />
 					</Flex>
-					<Flex fs="18">
-						회원가입
-					</Flex>
-					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0">
-					</Flex>
-			</Flex>
-			<Flex ht="124px" dir="column" pd="0 20px 20px" gap="6px">
-				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-					닉네임
+					<Flex fs="18">회원가입</Flex>
+					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
+				<Flex ht="124px" dir="column" pd="0 20px 20px" gap="6px">
+					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+						닉네임
+					</Flex>
 
-				{isBlue === false ?
-				<Stnickname>
-					<StInput onBlur={checkNicknameHandler} value={nickname.value} onChange={nickname.onChange} type="text" variant="join" placeholder="닉네임을 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0"> 
-					{nickname.value.trim() === ''? null :<svg onClick={nickname.onReset} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.023 3 3 7.023 3 12C3 16.977 7.023 21 12 21C16.977 21 21 16.977 21 12C21 7.023 16.977 3 12 3ZM12 19.2C8.031 19.2 4.8 15.969 4.8 12C4.8 8.031 8.031 4.8 12 4.8C15.969 4.8 19.2 8.031 19.2 12C19.2 15.969 15.969 19.2 12 19.2ZM12 10.731L15.231 7.5L16.5 8.769L13.269 12L16.5 15.231L15.231 16.5L12 13.269L8.769 16.5L7.5 15.231L10.731 12L7.5 8.769L8.769 7.5L12 10.731Z" fill="#7474FF"/>
-					</svg>}
+					{isBlue === false ? (
+						<Stnickname>
+							<StInput
+								onBlur={checkNicknameHandler}
+								value={nickname.value}
+								onChange={nickname.onChange}
+								type="text"
+								variant="join"
+								placeholder="닉네임을 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{nickname.value.trim() === "" ? null : (
+									<Svg onClick={nickname.onReset} variant="InputReset" />
+								)}
+							</Flex>
+						</Stnickname>
+					) : (
+						<StnicknameBlue>
+							<StInput
+								onBlur={checkNicknameHandler}
+								value={nickname.value}
+								onChange={nickname.onChange}
+								type="text"
+								variant="changeBlue"
+								placeholder="닉네임을 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{nickname.value.trim() === "" ? null : (
+									<Svg variant="InputReset" onClick={nickname.onReset} />
+								)}
+							</Flex>
+						</StnicknameBlue>
+					)}
+					<Flex dir="row" wd="335px" ht="26px">
+						{nickname.value.trim() === "" ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+							></Flex>
+						) : !regNick.test(nickname.value) ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>
+									닉네임은 2-6자, 영어 대소문자 또는 숫자 또는 한글로
+									구성됩니다.
+								</StInfo>
+							</Flex>
+						) : checkNickname !== 200 ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>이미 사용중인 닉네임입니다.</StInfo>
+							</Flex>
+						) : (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>사용가능한 닉네임입니다.</StInfo>
+							</Flex>
+						)}
 					</Flex>
-				</Stnickname>:
-				<StnicknameBlue>
-					<StInput onBlur={checkNicknameHandler} value={nickname.value} onChange={nickname.onChange} type="text" variant="changeBlue" placeholder="닉네임을 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0"> 
-					{nickname.value.trim() === ''? null :<svg onClick={nickname.onReset} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.023 3 3 7.023 3 12C3 16.977 7.023 21 12 21C16.977 21 21 16.977 21 12C21 7.023 16.977 3 12 3ZM12 19.2C8.031 19.2 4.8 15.969 4.8 12C4.8 8.031 8.031 4.8 12 4.8C15.969 4.8 19.2 8.031 19.2 12C19.2 15.969 15.969 19.2 12 19.2ZM12 10.731L15.231 7.5L16.5 8.769L13.269 12L16.5 15.231L15.231 16.5L12 13.269L8.769 16.5L7.5 15.231L10.731 12L7.5 8.769L8.769 7.5L12 10.731Z" fill="#7474FF"/>
-					</svg>}
-					</Flex>
-				</StnicknameBlue>}
-				<Flex dir="row" wd="335px" ht="26px">
-					{nickname.value.trim() === '' ?
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					</Flex> :
-					!regNick.test(nickname.value) ? <Flex dir="row" wd="335px" ht="26px" fs="12" gap="8" ai="center">
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-					<StInfo>닉네임은 2-6자, 영어 대소문자 또는 숫자 또는 한글로 구성됩니다.</StInfo>
-					</Flex> : 
-					checkNickname !==200 ?
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-						<StInfo>이미 사용중인 닉네임입니다.</StInfo>
-					</Flex> : 
-					 <Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-						<StInfo>사용가능한 닉네임입니다.</StInfo>
-					 </Flex>}
 				</Flex>
-			</Flex>
-			<Flex ht="124px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
-				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-					이메일
+				<Flex ht="124px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
+					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+						이메일
+					</Flex>
+					{isBlue === false ? (
+						<StEmail>
+							<StInput
+								onBlur={checkEmailHandler}
+								value={email.value}
+								onChange={email.onChange}
+								type="text"
+								variant="join"
+								placeholder="이메일을 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{email.value.trim() === "" ? null : (
+									<Svg variant="InputReset" onClick={email.onReset} />
+								)}
+							</Flex>
+						</StEmail>
+					) : (
+						<StEmailBlue>
+							<StInput
+								onBlur={checkEmailHandler}
+								value={email.value}
+								onChange={email.onChange}
+								type="text"
+								variant="changeBlue"
+								placeholder="이메일을 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{email.value.trim() === "" ? null : (
+									<Svg onClick={email.onReset} variant="InputReset" />
+								)}
+							</Flex>
+						</StEmailBlue>
+					)}
+					<Flex dir="row" wd="335px" ht="26px">
+						{email.value.trim() === "" ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+							></Flex>
+						) : !regEmail.test(email.value) ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>올바른 이메일 형식을 입력해주세요.</StInfo>
+							</Flex>
+						) : checkEmail !== 200 ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>이미 사용중인 이메일입니다</StInfo>
+							</Flex>
+						) : (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>사용가능한 이메일입니다.</StInfo>
+							</Flex>
+						)}
+					</Flex>
 				</Flex>
-				{isBlue === false ?
-				<StEmail>
-					<StInput onBlur={checkEmailHandler} value={email.value} onChange={email.onChange} type="text" variant="join" placeholder="이메일을 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-					{email.value.trim() === ''? null :<svg onClick={email.onReset} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.023 3 3 7.023 3 12C3 16.977 7.023 21 12 21C16.977 21 21 16.977 21 12C21 7.023 16.977 3 12 3ZM12 19.2C8.031 19.2 4.8 15.969 4.8 12C4.8 8.031 8.031 4.8 12 4.8C15.969 4.8 19.2 8.031 19.2 12C19.2 15.969 15.969 19.2 12 19.2ZM12 10.731L15.231 7.5L16.5 8.769L13.269 12L16.5 15.231L15.231 16.5L12 13.269L8.769 16.5L7.5 15.231L10.731 12L7.5 8.769L8.769 7.5L12 10.731Z" fill="#7474FF"/>
-					</svg>}
+				<Flex
+					wd="100%"
+					ht="124px"
+					dir="column"
+					ai="center"
+					pd="0 20px 20px"
+					gap="6px"
+					position="relative"
+				>
+					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+						비밀번호
 					</Flex>
-				</StEmail>:
-				<StEmailBlue>
-					<StInput onBlur={checkEmailHandler} value={email.value} onChange={email.onChange} type="text" variant="changeBlue" placeholder="이메일을 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-					{email.value.trim() === ''? null :<svg onClick={email.onReset} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.023 3 3 7.023 3 12C3 16.977 7.023 21 12 21C16.977 21 21 16.977 21 12C21 7.023 16.977 3 12 3ZM12 19.2C8.031 19.2 4.8 15.969 4.8 12C4.8 8.031 8.031 4.8 12 4.8C15.969 4.8 19.2 8.031 19.2 12C19.2 15.969 15.969 19.2 12 19.2ZM12 10.731L15.231 7.5L16.5 8.769L13.269 12L16.5 15.231L15.231 16.5L12 13.269L8.769 16.5L7.5 15.231L10.731 12L7.5 8.769L8.769 7.5L12 10.731Z" fill="#7474FF"/>
-					</svg>}
+					{isBlue === false ? (
+						<StPassword>
+							<StInput
+								onBlur={checkPasswordHandler}
+								type={passwordType.type}
+								value={password.value}
+								onChange={password.onChange}
+								variant="join"
+								placeholder="비밀번호를 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{passwordType.visible === false ? (
+									<Svg variant="noShow" onClick={passwordTypeHandler} />
+								) : (
+									<Svg variant="show" onClick={passwordTypeHandler} />
+								)}
+							</Flex>
+						</StPassword>
+					) : (
+						<StPasswordBlue>
+							<StInput
+								onBlur={checkPasswordHandler}
+								type={passwordType.type}
+								value={password.value}
+								onChange={password.onChange}
+								variant="changeBlue"
+								placeholder="비밀번호를 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{passwordType.visible === false ? (
+									<Svg variant="noShow" onClick={passwordTypeHandler} />
+								) : (
+									<Svg variant="show" onClick={passwordTypeHandler} />
+								)}
+							</Flex>
+						</StPasswordBlue>
+					)}
+					<Flex dir="row" wd="335px" ht="26px">
+						{password.value.trim() === "" ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+							></Flex>
+						) : !regPass.test(password.value) ? (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>
+									비밀번호는 8-20자, 영문 대소문자,숫자,특수문자!@#$%^&*를
+									적어도 하나이상 포함해야합니다
+								</StInfo>
+							</Flex>
+						) : (
+							<Flex
+								dir="row"
+								wd="335px"
+								ht="26px"
+								fs="12"
+								gap="8px"
+								ai="center"
+								jc="flex-start"
+							>
+								<Svg variant="alert" />
+								<StInfo>사용가능한 비밀번호 입니다</StInfo>
+							</Flex>
+						)}
 					</Flex>
-				</StEmailBlue>}
-				<Flex dir="row" wd="335px" ht="26px">
-					{email.value.trim() === '' ?
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					</Flex> :
-					!regEmail.test(email.value) ? <Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-					<StInfo>올바른 이메일 형식을 입력해주세요</StInfo>
-					</Flex> : 
-					checkEmail !==200 ?
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-						<StInfo>이미 사용중인 이메일입니다</StInfo>
-					</Flex> : 
-					 <Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-						<StInfo>사용가능한 이메일입니다.</StInfo>
-					 </Flex>}
 				</Flex>
-			</Flex>
-			<Flex wd="100%" ht="124px" dir="column" ai="center" pd="0 20px 20px" gap="6px" position="relative">
-				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-					비밀번호
+				<Flex
+					wd="100%"
+					ht="124px"
+					dir="column"
+					ai="center"
+					pd="0 20px 20px"
+					gap="6px"
+					position="relative"
+				>
+					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+						비밀번호 확인
+					</Flex>
+					{isBlue === false ? (
+						<StRePassword>
+							<StInput
+								type={checkPasswordType.type}
+								value={checkPass.value}
+								onChange={checkPass.onChange}
+								variant="join"
+								placeholder="비밀번호를 한번 더 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{checkPasswordType.visible === false ? (
+									<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
+								) : (
+									<Svg variant="show" onClick={checkPasswordTypeHandler} />
+								)}
+							</Flex>
+						</StRePassword>
+					) : (
+						<StRePasswordBlue>
+							<StInput
+								type={checkPasswordType.type}
+								value={checkPass.value}
+								onChange={checkPass.onChange}
+								variant="changeBlue"
+								placeholder="비밀번호를 한번 더 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{checkPasswordType.visible === false ? (
+									<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
+								) : (
+									<Svg variant="show" onClick={checkPasswordTypeHandler} />
+								)}
+							</Flex>
+						</StRePasswordBlue>
+					)}
+					{password.value !== checkPass.value ? (
+						<Flex
+							dir="row"
+							wd="335px"
+							ht="26px"
+							fs="12"
+							gap="8px"
+							ai="center"
+							jc="flex-start"
+						>
+							<Svg variant="alert" />
+							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
+						</Flex>
+					) : (
+						<Flex
+							dir="row"
+							wd="335px"
+							ht="26px"
+							fs="12"
+							gap="8px"
+							ai="center"
+						></Flex>
+					)}
 				</Flex>
-				{isBlue === false ?
-				<StPassword>
-					<StInput onBlur={checkPasswordHandler} type={passwordType.type} value={password.value} onChange={password.onChange} variant="join" placeholder="비밀번호를 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-						{passwordType.visible === false ? <svg onClick={passwordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.0469 19.1328 13.737 19.0729 14.3984 18.9531C15.0599 18.8385 15.6901 18.6797 16.2891 18.4766L15.0469 17.2266C14.6198 17.3464 14.1797 17.4427 13.7266 17.5156C13.2786 17.5885 12.8125 17.625 12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.237 3.44792 12.0443 3.60938 11.7891C3.77083 11.5286 4.0026 11.2318 4.30469 10.8984C4.60677 10.5651 4.96875 10.2214 5.39062 9.86719C5.81771 9.50781 6.29948 9.16406 6.83594 8.83594L5.65625 7.65625C5.02083 8.0625 4.45052 8.49219 3.94531 8.94531C3.4401 9.39323 3.01302 9.83594 2.66406 10.2734C2.3151 10.7057 2.04948 11.1068 1.86719 11.4766C1.6849 11.8411 1.59375 12.138 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 5.60938C11.6458 5.60938 10.9948 5.66406 10.375 5.77344C9.75521 5.88281 9.15885 6.03125 8.58594 6.21875L9.83594 7.46875C10.2318 7.35938 10.6354 7.27344 11.0469 7.21094C11.4583 7.14323 11.8854 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4844 7.64323 16.2005 7.92448 16.8672 8.27344C17.5339 8.61719 18.1354 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5234 21.2109 12.7318 21.0547 12.9922C20.9036 13.2526 20.6849 13.5443 20.3984 13.8672C20.112 14.1849 19.7682 14.513 19.3672 14.8516C18.9661 15.1901 18.5156 15.5182 18.0156 15.8359L19.1797 17C19.7891 16.599 20.3333 16.1771 20.8125 15.7344C21.2969 15.2865 21.7057 14.8516 22.0391 14.4297C22.3724 14.0026 22.625 13.6094 22.7969 13.25C22.974 12.8906 23.0625 12.5964 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7578 7.42448 17.9609 7.00781C17.1641 6.58594 16.2917 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938ZM12.3281 16.5781C12.6302 16.5781 12.9219 16.5443 13.2031 16.4766C13.4896 16.4036 13.7604 16.3099 14.0156 16.1953L8.49219 10.6641C8.36719 10.9245 8.27083 11.1979 8.20312 11.4844C8.14062 11.7708 8.10938 12.0651 8.10938 12.3672C8.10938 12.9401 8.21615 13.4818 8.42969 13.9922C8.64844 14.4974 8.95052 14.9453 9.33594 15.3359C9.72135 15.7214 10.1693 16.026 10.6797 16.25C11.1901 16.4688 11.7396 16.5781 12.3281 16.5781ZM16.2266 13.875C16.3307 13.6458 16.4089 13.4036 16.4609 13.1484C16.5182 12.8932 16.5469 12.6328 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C12.0651 8.16406 11.8021 8.1901 11.5469 8.24219C11.2917 8.29427 11.0495 8.36979 10.8203 8.46875L16.2266 13.875ZM18.4922 19.2656C18.612 19.3906 18.7578 19.4531 18.9297 19.4531C19.1016 19.4583 19.2474 19.3958 19.3672 19.2656C19.4974 19.1354 19.5599 18.987 19.5547 18.8203C19.5547 18.6536 19.4922 18.5078 19.3672 18.3828L6.13281 5.15625C6.01823 5.03646 5.8724 4.97656 5.69531 4.97656C5.51823 4.97656 5.36979 5.03646 5.25 5.15625C5.13021 5.27604 5.07031 5.42448 5.07031 5.60156C5.07031 5.77344 5.13021 5.91927 5.25 6.03906L18.4922 19.2656Z" fill="#C8C8C8"/>
-						</svg> : <svg  onClick={passwordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.3958 19.1328 14.401 19.0052 15.3438 18.75C16.2917 18.4948 17.1641 18.1589 17.9609 17.7422C18.7578 17.3203 19.4688 16.8568 20.0938 16.3516C20.724 15.8464 21.2604 15.3411 21.7031 14.8359C22.1458 14.3255 22.4818 13.8542 22.7109 13.4219C22.9453 12.9844 23.0625 12.6328 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7552 7.42448 17.9531 7.00781C17.1562 6.58594 16.2865 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938C11.2812 5.60938 10.2865 5.73698 9.34375 5.99219C8.40625 6.2474 7.53906 6.58594 6.74219 7.00781C5.94531 7.42448 5.22917 7.88542 4.59375 8.39062C3.95833 8.89583 3.41667 9.40365 2.96875 9.91406C2.52604 10.4193 2.1849 10.888 1.94531 11.3203C1.71094 11.7526 1.59375 12.1016 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.2161 3.47135 11.9844 3.67969 11.6719C3.89323 11.3594 4.19531 11.0052 4.58594 10.6094C4.97656 10.2083 5.4401 9.80469 5.97656 9.39844C6.51823 8.99219 7.1224 8.61719 7.78906 8.27344C8.45573 7.92448 9.16927 7.64323 9.92969 7.42969C10.6953 7.21615 11.4948 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4792 7.64323 16.1927 7.92448 16.8594 8.27344C17.526 8.61719 18.1302 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5495 21.1823 12.8047 20.9688 13.1328C20.7604 13.4609 20.4609 13.8229 20.0703 14.2188C19.6797 14.6094 19.2135 15.0052 18.6719 15.4062C18.1302 15.8021 17.526 16.1693 16.8594 16.5078C16.1927 16.8464 15.4792 17.1172 14.7188 17.3203C13.9583 17.5234 13.1615 17.625 12.3281 17.625ZM12.3359 16.5781C12.9141 16.5781 13.4583 16.4688 13.9688 16.25C14.4792 16.026 14.9271 15.7214 15.3125 15.3359C15.6979 14.9453 16 14.4974 16.2188 13.9922C16.4375 13.4818 16.5469 12.9401 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C11.7422 8.16406 11.1901 8.27344 10.6797 8.49219C10.1693 8.70573 9.72135 9.00521 9.33594 9.39062C8.95052 9.77083 8.64844 10.2161 8.42969 10.7266C8.21615 11.237 8.10938 11.7839 8.10938 12.3672C8.10938 12.9401 8.21875 13.4818 8.4375 13.9922C8.65625 14.4974 8.95833 14.9453 9.34375 15.3359C9.72917 15.7214 10.1745 16.026 10.6797 16.25C11.1901 16.4688 11.7422 16.5781 12.3359 16.5781ZM12.3281 13.7344C11.9479 13.7344 11.625 13.599 11.3594 13.3281C11.0938 13.0573 10.9609 12.737 10.9609 12.3672C10.9609 11.9922 11.0938 11.6719 11.3594 11.4062C11.625 11.1406 11.9479 11.0078 12.3281 11.0078C12.7031 11.0078 13.0234 11.1406 13.2891 11.4062C13.5599 11.6719 13.6953 11.9922 13.6953 12.3672C13.6953 12.737 13.5599 13.0573 13.2891 13.3281C13.0234 13.599 12.7031 13.7344 12.3281 13.7344Z" fill="#7474FF"/>
-						</svg>}
-					</Flex>
-				</StPassword>:
-				<StPasswordBlue>
-					<StInput onBlur={checkPasswordHandler} type={passwordType.type} value={password.value} onChange={password.onChange} variant="changeBlue" placeholder="비밀번호를 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-						{passwordType.visible === false ? <svg onClick={passwordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.0469 19.1328 13.737 19.0729 14.3984 18.9531C15.0599 18.8385 15.6901 18.6797 16.2891 18.4766L15.0469 17.2266C14.6198 17.3464 14.1797 17.4427 13.7266 17.5156C13.2786 17.5885 12.8125 17.625 12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.237 3.44792 12.0443 3.60938 11.7891C3.77083 11.5286 4.0026 11.2318 4.30469 10.8984C4.60677 10.5651 4.96875 10.2214 5.39062 9.86719C5.81771 9.50781 6.29948 9.16406 6.83594 8.83594L5.65625 7.65625C5.02083 8.0625 4.45052 8.49219 3.94531 8.94531C3.4401 9.39323 3.01302 9.83594 2.66406 10.2734C2.3151 10.7057 2.04948 11.1068 1.86719 11.4766C1.6849 11.8411 1.59375 12.138 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 5.60938C11.6458 5.60938 10.9948 5.66406 10.375 5.77344C9.75521 5.88281 9.15885 6.03125 8.58594 6.21875L9.83594 7.46875C10.2318 7.35938 10.6354 7.27344 11.0469 7.21094C11.4583 7.14323 11.8854 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4844 7.64323 16.2005 7.92448 16.8672 8.27344C17.5339 8.61719 18.1354 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5234 21.2109 12.7318 21.0547 12.9922C20.9036 13.2526 20.6849 13.5443 20.3984 13.8672C20.112 14.1849 19.7682 14.513 19.3672 14.8516C18.9661 15.1901 18.5156 15.5182 18.0156 15.8359L19.1797 17C19.7891 16.599 20.3333 16.1771 20.8125 15.7344C21.2969 15.2865 21.7057 14.8516 22.0391 14.4297C22.3724 14.0026 22.625 13.6094 22.7969 13.25C22.974 12.8906 23.0625 12.5964 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7578 7.42448 17.9609 7.00781C17.1641 6.58594 16.2917 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938ZM12.3281 16.5781C12.6302 16.5781 12.9219 16.5443 13.2031 16.4766C13.4896 16.4036 13.7604 16.3099 14.0156 16.1953L8.49219 10.6641C8.36719 10.9245 8.27083 11.1979 8.20312 11.4844C8.14062 11.7708 8.10938 12.0651 8.10938 12.3672C8.10938 12.9401 8.21615 13.4818 8.42969 13.9922C8.64844 14.4974 8.95052 14.9453 9.33594 15.3359C9.72135 15.7214 10.1693 16.026 10.6797 16.25C11.1901 16.4688 11.7396 16.5781 12.3281 16.5781ZM16.2266 13.875C16.3307 13.6458 16.4089 13.4036 16.4609 13.1484C16.5182 12.8932 16.5469 12.6328 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C12.0651 8.16406 11.8021 8.1901 11.5469 8.24219C11.2917 8.29427 11.0495 8.36979 10.8203 8.46875L16.2266 13.875ZM18.4922 19.2656C18.612 19.3906 18.7578 19.4531 18.9297 19.4531C19.1016 19.4583 19.2474 19.3958 19.3672 19.2656C19.4974 19.1354 19.5599 18.987 19.5547 18.8203C19.5547 18.6536 19.4922 18.5078 19.3672 18.3828L6.13281 5.15625C6.01823 5.03646 5.8724 4.97656 5.69531 4.97656C5.51823 4.97656 5.36979 5.03646 5.25 5.15625C5.13021 5.27604 5.07031 5.42448 5.07031 5.60156C5.07031 5.77344 5.13021 5.91927 5.25 6.03906L18.4922 19.2656Z" fill="#C8C8C8"/>
-						</svg> : <svg  onClick={passwordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.3958 19.1328 14.401 19.0052 15.3438 18.75C16.2917 18.4948 17.1641 18.1589 17.9609 17.7422C18.7578 17.3203 19.4688 16.8568 20.0938 16.3516C20.724 15.8464 21.2604 15.3411 21.7031 14.8359C22.1458 14.3255 22.4818 13.8542 22.7109 13.4219C22.9453 12.9844 23.0625 12.6328 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7552 7.42448 17.9531 7.00781C17.1562 6.58594 16.2865 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938C11.2812 5.60938 10.2865 5.73698 9.34375 5.99219C8.40625 6.2474 7.53906 6.58594 6.74219 7.00781C5.94531 7.42448 5.22917 7.88542 4.59375 8.39062C3.95833 8.89583 3.41667 9.40365 2.96875 9.91406C2.52604 10.4193 2.1849 10.888 1.94531 11.3203C1.71094 11.7526 1.59375 12.1016 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.2161 3.47135 11.9844 3.67969 11.6719C3.89323 11.3594 4.19531 11.0052 4.58594 10.6094C4.97656 10.2083 5.4401 9.80469 5.97656 9.39844C6.51823 8.99219 7.1224 8.61719 7.78906 8.27344C8.45573 7.92448 9.16927 7.64323 9.92969 7.42969C10.6953 7.21615 11.4948 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4792 7.64323 16.1927 7.92448 16.8594 8.27344C17.526 8.61719 18.1302 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5495 21.1823 12.8047 20.9688 13.1328C20.7604 13.4609 20.4609 13.8229 20.0703 14.2188C19.6797 14.6094 19.2135 15.0052 18.6719 15.4062C18.1302 15.8021 17.526 16.1693 16.8594 16.5078C16.1927 16.8464 15.4792 17.1172 14.7188 17.3203C13.9583 17.5234 13.1615 17.625 12.3281 17.625ZM12.3359 16.5781C12.9141 16.5781 13.4583 16.4688 13.9688 16.25C14.4792 16.026 14.9271 15.7214 15.3125 15.3359C15.6979 14.9453 16 14.4974 16.2188 13.9922C16.4375 13.4818 16.5469 12.9401 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C11.7422 8.16406 11.1901 8.27344 10.6797 8.49219C10.1693 8.70573 9.72135 9.00521 9.33594 9.39062C8.95052 9.77083 8.64844 10.2161 8.42969 10.7266C8.21615 11.237 8.10938 11.7839 8.10938 12.3672C8.10938 12.9401 8.21875 13.4818 8.4375 13.9922C8.65625 14.4974 8.95833 14.9453 9.34375 15.3359C9.72917 15.7214 10.1745 16.026 10.6797 16.25C11.1901 16.4688 11.7422 16.5781 12.3359 16.5781ZM12.3281 13.7344C11.9479 13.7344 11.625 13.599 11.3594 13.3281C11.0938 13.0573 10.9609 12.737 10.9609 12.3672C10.9609 11.9922 11.0938 11.6719 11.3594 11.4062C11.625 11.1406 11.9479 11.0078 12.3281 11.0078C12.7031 11.0078 13.0234 11.1406 13.2891 11.4062C13.5599 11.6719 13.6953 11.9922 13.6953 12.3672C13.6953 12.737 13.5599 13.0573 13.2891 13.3281C13.0234 13.599 12.7031 13.7344 12.3281 13.7344Z" fill="#7474FF"/>
-						</svg>}
-					</Flex>
-				</StPasswordBlue>}
-				<Flex dir="row" wd="335px" ht="26px">
-					{password.value.trim() === '' ?
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					</Flex> :
-					!regPass.test(password.value) ? <Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-					<StInfo>비밀번호는 8-20자, 영문 대소문자,숫자,특수문자!@#$%^&*를 적어도 하나이상 포함해야합니다</StInfo>
-					</Flex> : 
-					<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-						</svg>
-						<StInfo>사용가능한 비밀번호 입니다</StInfo>
-					</Flex>
-					}
-				</Flex>
-				
-			</Flex>
-			<Flex wd="100%" ht="124px" dir="column" ai="center" pd="0 20px 20px" gap="6px" position="relative">
-				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-					비밀번호 확인
-				</Flex>
-				{isBlue === false ?
-				<StRePassword>
-					<StInput type={checkPasswordType.type} value={checkPass.value} onChange={checkPass.onChange} variant="join" placeholder="비밀번호를 한번 더 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-						{checkPasswordType.visible === false ? <svg onClick={checkPasswordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.0469 19.1328 13.737 19.0729 14.3984 18.9531C15.0599 18.8385 15.6901 18.6797 16.2891 18.4766L15.0469 17.2266C14.6198 17.3464 14.1797 17.4427 13.7266 17.5156C13.2786 17.5885 12.8125 17.625 12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.237 3.44792 12.0443 3.60938 11.7891C3.77083 11.5286 4.0026 11.2318 4.30469 10.8984C4.60677 10.5651 4.96875 10.2214 5.39062 9.86719C5.81771 9.50781 6.29948 9.16406 6.83594 8.83594L5.65625 7.65625C5.02083 8.0625 4.45052 8.49219 3.94531 8.94531C3.4401 9.39323 3.01302 9.83594 2.66406 10.2734C2.3151 10.7057 2.04948 11.1068 1.86719 11.4766C1.6849 11.8411 1.59375 12.138 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 5.60938C11.6458 5.60938 10.9948 5.66406 10.375 5.77344C9.75521 5.88281 9.15885 6.03125 8.58594 6.21875L9.83594 7.46875C10.2318 7.35938 10.6354 7.27344 11.0469 7.21094C11.4583 7.14323 11.8854 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4844 7.64323 16.2005 7.92448 16.8672 8.27344C17.5339 8.61719 18.1354 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5234 21.2109 12.7318 21.0547 12.9922C20.9036 13.2526 20.6849 13.5443 20.3984 13.8672C20.112 14.1849 19.7682 14.513 19.3672 14.8516C18.9661 15.1901 18.5156 15.5182 18.0156 15.8359L19.1797 17C19.7891 16.599 20.3333 16.1771 20.8125 15.7344C21.2969 15.2865 21.7057 14.8516 22.0391 14.4297C22.3724 14.0026 22.625 13.6094 22.7969 13.25C22.974 12.8906 23.0625 12.5964 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7578 7.42448 17.9609 7.00781C17.1641 6.58594 16.2917 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938ZM12.3281 16.5781C12.6302 16.5781 12.9219 16.5443 13.2031 16.4766C13.4896 16.4036 13.7604 16.3099 14.0156 16.1953L8.49219 10.6641C8.36719 10.9245 8.27083 11.1979 8.20312 11.4844C8.14062 11.7708 8.10938 12.0651 8.10938 12.3672C8.10938 12.9401 8.21615 13.4818 8.42969 13.9922C8.64844 14.4974 8.95052 14.9453 9.33594 15.3359C9.72135 15.7214 10.1693 16.026 10.6797 16.25C11.1901 16.4688 11.7396 16.5781 12.3281 16.5781ZM16.2266 13.875C16.3307 13.6458 16.4089 13.4036 16.4609 13.1484C16.5182 12.8932 16.5469 12.6328 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C12.0651 8.16406 11.8021 8.1901 11.5469 8.24219C11.2917 8.29427 11.0495 8.36979 10.8203 8.46875L16.2266 13.875ZM18.4922 19.2656C18.612 19.3906 18.7578 19.4531 18.9297 19.4531C19.1016 19.4583 19.2474 19.3958 19.3672 19.2656C19.4974 19.1354 19.5599 18.987 19.5547 18.8203C19.5547 18.6536 19.4922 18.5078 19.3672 18.3828L6.13281 5.15625C6.01823 5.03646 5.8724 4.97656 5.69531 4.97656C5.51823 4.97656 5.36979 5.03646 5.25 5.15625C5.13021 5.27604 5.07031 5.42448 5.07031 5.60156C5.07031 5.77344 5.13021 5.91927 5.25 6.03906L18.4922 19.2656Z" fill="#C8C8C8"/>
-						</svg> : <svg  onClick={checkPasswordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.3958 19.1328 14.401 19.0052 15.3438 18.75C16.2917 18.4948 17.1641 18.1589 17.9609 17.7422C18.7578 17.3203 19.4688 16.8568 20.0938 16.3516C20.724 15.8464 21.2604 15.3411 21.7031 14.8359C22.1458 14.3255 22.4818 13.8542 22.7109 13.4219C22.9453 12.9844 23.0625 12.6328 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7552 7.42448 17.9531 7.00781C17.1562 6.58594 16.2865 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938C11.2812 5.60938 10.2865 5.73698 9.34375 5.99219C8.40625 6.2474 7.53906 6.58594 6.74219 7.00781C5.94531 7.42448 5.22917 7.88542 4.59375 8.39062C3.95833 8.89583 3.41667 9.40365 2.96875 9.91406C2.52604 10.4193 2.1849 10.888 1.94531 11.3203C1.71094 11.7526 1.59375 12.1016 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.2161 3.47135 11.9844 3.67969 11.6719C3.89323 11.3594 4.19531 11.0052 4.58594 10.6094C4.97656 10.2083 5.4401 9.80469 5.97656 9.39844C6.51823 8.99219 7.1224 8.61719 7.78906 8.27344C8.45573 7.92448 9.16927 7.64323 9.92969 7.42969C10.6953 7.21615 11.4948 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4792 7.64323 16.1927 7.92448 16.8594 8.27344C17.526 8.61719 18.1302 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5495 21.1823 12.8047 20.9688 13.1328C20.7604 13.4609 20.4609 13.8229 20.0703 14.2188C19.6797 14.6094 19.2135 15.0052 18.6719 15.4062C18.1302 15.8021 17.526 16.1693 16.8594 16.5078C16.1927 16.8464 15.4792 17.1172 14.7188 17.3203C13.9583 17.5234 13.1615 17.625 12.3281 17.625ZM12.3359 16.5781C12.9141 16.5781 13.4583 16.4688 13.9688 16.25C14.4792 16.026 14.9271 15.7214 15.3125 15.3359C15.6979 14.9453 16 14.4974 16.2188 13.9922C16.4375 13.4818 16.5469 12.9401 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C11.7422 8.16406 11.1901 8.27344 10.6797 8.49219C10.1693 8.70573 9.72135 9.00521 9.33594 9.39062C8.95052 9.77083 8.64844 10.2161 8.42969 10.7266C8.21615 11.237 8.10938 11.7839 8.10938 12.3672C8.10938 12.9401 8.21875 13.4818 8.4375 13.9922C8.65625 14.4974 8.95833 14.9453 9.34375 15.3359C9.72917 15.7214 10.1745 16.026 10.6797 16.25C11.1901 16.4688 11.7422 16.5781 12.3359 16.5781ZM12.3281 13.7344C11.9479 13.7344 11.625 13.599 11.3594 13.3281C11.0938 13.0573 10.9609 12.737 10.9609 12.3672C10.9609 11.9922 11.0938 11.6719 11.3594 11.4062C11.625 11.1406 11.9479 11.0078 12.3281 11.0078C12.7031 11.0078 13.0234 11.1406 13.2891 11.4062C13.5599 11.6719 13.6953 11.9922 13.6953 12.3672C13.6953 12.737 13.5599 13.0573 13.2891 13.3281C13.0234 13.599 12.7031 13.7344 12.3281 13.7344Z" fill="#7474FF"/>
-						</svg>}
-
-					</Flex>
-				</StRePassword>:
-				<StRePasswordBlue>
-					<StInput type={checkPasswordType.type} value={checkPass.value} onChange={checkPass.onChange} variant="changeBlue" placeholder="비밀번호를 한번 더 입력하세요"/>
-					<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-						{checkPasswordType.visible === false ? <svg onClick={checkPasswordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.0469 19.1328 13.737 19.0729 14.3984 18.9531C15.0599 18.8385 15.6901 18.6797 16.2891 18.4766L15.0469 17.2266C14.6198 17.3464 14.1797 17.4427 13.7266 17.5156C13.2786 17.5885 12.8125 17.625 12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.237 3.44792 12.0443 3.60938 11.7891C3.77083 11.5286 4.0026 11.2318 4.30469 10.8984C4.60677 10.5651 4.96875 10.2214 5.39062 9.86719C5.81771 9.50781 6.29948 9.16406 6.83594 8.83594L5.65625 7.65625C5.02083 8.0625 4.45052 8.49219 3.94531 8.94531C3.4401 9.39323 3.01302 9.83594 2.66406 10.2734C2.3151 10.7057 2.04948 11.1068 1.86719 11.4766C1.6849 11.8411 1.59375 12.138 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 5.60938C11.6458 5.60938 10.9948 5.66406 10.375 5.77344C9.75521 5.88281 9.15885 6.03125 8.58594 6.21875L9.83594 7.46875C10.2318 7.35938 10.6354 7.27344 11.0469 7.21094C11.4583 7.14323 11.8854 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4844 7.64323 16.2005 7.92448 16.8672 8.27344C17.5339 8.61719 18.1354 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5234 21.2109 12.7318 21.0547 12.9922C20.9036 13.2526 20.6849 13.5443 20.3984 13.8672C20.112 14.1849 19.7682 14.513 19.3672 14.8516C18.9661 15.1901 18.5156 15.5182 18.0156 15.8359L19.1797 17C19.7891 16.599 20.3333 16.1771 20.8125 15.7344C21.2969 15.2865 21.7057 14.8516 22.0391 14.4297C22.3724 14.0026 22.625 13.6094 22.7969 13.25C22.974 12.8906 23.0625 12.5964 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7578 7.42448 17.9609 7.00781C17.1641 6.58594 16.2917 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938ZM12.3281 16.5781C12.6302 16.5781 12.9219 16.5443 13.2031 16.4766C13.4896 16.4036 13.7604 16.3099 14.0156 16.1953L8.49219 10.6641C8.36719 10.9245 8.27083 11.1979 8.20312 11.4844C8.14062 11.7708 8.10938 12.0651 8.10938 12.3672C8.10938 12.9401 8.21615 13.4818 8.42969 13.9922C8.64844 14.4974 8.95052 14.9453 9.33594 15.3359C9.72135 15.7214 10.1693 16.026 10.6797 16.25C11.1901 16.4688 11.7396 16.5781 12.3281 16.5781ZM16.2266 13.875C16.3307 13.6458 16.4089 13.4036 16.4609 13.1484C16.5182 12.8932 16.5469 12.6328 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C12.0651 8.16406 11.8021 8.1901 11.5469 8.24219C11.2917 8.29427 11.0495 8.36979 10.8203 8.46875L16.2266 13.875ZM18.4922 19.2656C18.612 19.3906 18.7578 19.4531 18.9297 19.4531C19.1016 19.4583 19.2474 19.3958 19.3672 19.2656C19.4974 19.1354 19.5599 18.987 19.5547 18.8203C19.5547 18.6536 19.4922 18.5078 19.3672 18.3828L6.13281 5.15625C6.01823 5.03646 5.8724 4.97656 5.69531 4.97656C5.51823 4.97656 5.36979 5.03646 5.25 5.15625C5.13021 5.27604 5.07031 5.42448 5.07031 5.60156C5.07031 5.77344 5.13021 5.91927 5.25 6.03906L18.4922 19.2656Z" fill="#C8C8C8"/>
-						</svg> : <svg  onClick={checkPasswordTypeHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12.3281 19.1328C13.3958 19.1328 14.401 19.0052 15.3438 18.75C16.2917 18.4948 17.1641 18.1589 17.9609 17.7422C18.7578 17.3203 19.4688 16.8568 20.0938 16.3516C20.724 15.8464 21.2604 15.3411 21.7031 14.8359C22.1458 14.3255 22.4818 13.8542 22.7109 13.4219C22.9453 12.9844 23.0625 12.6328 23.0625 12.3672C23.0625 12.1016 22.9453 11.7526 22.7109 11.3203C22.4818 10.888 22.1458 10.4193 21.7031 9.91406C21.2604 9.40365 20.724 8.89583 20.0938 8.39062C19.4688 7.88542 18.7552 7.42448 17.9531 7.00781C17.1562 6.58594 16.2865 6.2474 15.3438 5.99219C14.401 5.73698 13.3958 5.60938 12.3281 5.60938C11.2812 5.60938 10.2865 5.73698 9.34375 5.99219C8.40625 6.2474 7.53906 6.58594 6.74219 7.00781C5.94531 7.42448 5.22917 7.88542 4.59375 8.39062C3.95833 8.89583 3.41667 9.40365 2.96875 9.91406C2.52604 10.4193 2.1849 10.888 1.94531 11.3203C1.71094 11.7526 1.59375 12.1016 1.59375 12.3672C1.59375 12.6328 1.71094 12.9844 1.94531 13.4219C2.1849 13.8542 2.52604 14.3255 2.96875 14.8359C3.41667 15.3411 3.95573 15.8464 4.58594 16.3516C5.22135 16.8568 5.9375 17.3203 6.73438 17.7422C7.53125 18.1589 8.39844 18.4948 9.33594 18.75C10.2786 19.0052 11.276 19.1328 12.3281 19.1328ZM12.3281 17.625C11.4948 17.625 10.6953 17.5234 9.92969 17.3203C9.16927 17.1172 8.45573 16.8464 7.78906 16.5078C7.1224 16.1693 6.51823 15.8021 5.97656 15.4062C5.4401 15.0052 4.97656 14.6094 4.58594 14.2188C4.19531 13.8229 3.89323 13.4609 3.67969 13.1328C3.47135 12.8047 3.36719 12.5495 3.36719 12.3672C3.36719 12.2161 3.47135 11.9844 3.67969 11.6719C3.89323 11.3594 4.19531 11.0052 4.58594 10.6094C4.97656 10.2083 5.4401 9.80469 5.97656 9.39844C6.51823 8.99219 7.1224 8.61719 7.78906 8.27344C8.45573 7.92448 9.16927 7.64323 9.92969 7.42969C10.6953 7.21615 11.4948 7.10938 12.3281 7.10938C13.1615 7.10938 13.9583 7.21615 14.7188 7.42969C15.4792 7.64323 16.1927 7.92448 16.8594 8.27344C17.526 8.61719 18.1302 8.99219 18.6719 9.39844C19.2135 9.80469 19.6797 10.2083 20.0703 10.6094C20.4609 11.0052 20.7604 11.3594 20.9688 11.6719C21.1823 11.9844 21.2891 12.2161 21.2891 12.3672C21.2891 12.5495 21.1823 12.8047 20.9688 13.1328C20.7604 13.4609 20.4609 13.8229 20.0703 14.2188C19.6797 14.6094 19.2135 15.0052 18.6719 15.4062C18.1302 15.8021 17.526 16.1693 16.8594 16.5078C16.1927 16.8464 15.4792 17.1172 14.7188 17.3203C13.9583 17.5234 13.1615 17.625 12.3281 17.625ZM12.3359 16.5781C12.9141 16.5781 13.4583 16.4688 13.9688 16.25C14.4792 16.026 14.9271 15.7214 15.3125 15.3359C15.6979 14.9453 16 14.4974 16.2188 13.9922C16.4375 13.4818 16.5469 12.9401 16.5469 12.3672C16.5469 11.7839 16.4375 11.237 16.2188 10.7266C16 10.2161 15.6979 9.77083 15.3125 9.39062C14.9271 9.00521 14.4792 8.70573 13.9688 8.49219C13.4583 8.27344 12.9141 8.16406 12.3359 8.16406C11.7422 8.16406 11.1901 8.27344 10.6797 8.49219C10.1693 8.70573 9.72135 9.00521 9.33594 9.39062C8.95052 9.77083 8.64844 10.2161 8.42969 10.7266C8.21615 11.237 8.10938 11.7839 8.10938 12.3672C8.10938 12.9401 8.21875 13.4818 8.4375 13.9922C8.65625 14.4974 8.95833 14.9453 9.34375 15.3359C9.72917 15.7214 10.1745 16.026 10.6797 16.25C11.1901 16.4688 11.7422 16.5781 12.3359 16.5781ZM12.3281 13.7344C11.9479 13.7344 11.625 13.599 11.3594 13.3281C11.0938 13.0573 10.9609 12.737 10.9609 12.3672C10.9609 11.9922 11.0938 11.6719 11.3594 11.4062C11.625 11.1406 11.9479 11.0078 12.3281 11.0078C12.7031 11.0078 13.0234 11.1406 13.2891 11.4062C13.5599 11.6719 13.6953 11.9922 13.6953 12.3672C13.6953 12.737 13.5599 13.0573 13.2891 13.3281C13.0234 13.599 12.7031 13.7344 12.3281 13.7344Z" fill="#7474FF"/>
-						</svg>}
-					</Flex>
-				</StRePasswordBlue>}
-				{password.value !== checkPass.value ?
-				<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z" fill="#7474FF"/>
-					</svg>
-					<StInfo>비밀번호를 다시 확인해주세요</StInfo>
-				</Flex> : 
-				<Flex dir="row" wd="335px" ht="26px" fs="12" gap="8px" ai="center">
-				</Flex>}
-				
-			</Flex>
 				<Flex gap="16px" jc="center" ai="center">
-				<Flex jc="center" ai="center">
-					<Button variant="join" onClick={()=>{changePlaceholder();joinHandler();}}>
-						가입하기
-					</Button>
+					<Flex jc="center" ai="center">
+						<Button
+							variant="join"
+							onClick={() => {
+								changePlaceholder();
+								joinHandler();
+							}}
+						>
+							가입하기
+						</Button>
+					</Flex>
 				</Flex>
 			</Flex>
-		</Flex>
 		</>
 	);
-}
+};
 
 export default SignUpPage;
 
 const StEmail = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
-	:focus-within{
-		outline : 1px solid #7474FF
+	:focus-within {
+		outline: 1px solid #7474ff;
 	}
 `;
 
 const StEmailBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-	outline : 1px solid #7474FF;
+	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StPassword = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-
-	:focus-within{
-		outline : 1px solid #7474FF
+	justify-content: space-between;
+	:focus-within {
+		outline: 1px solid #7474ff;
 	}
 `;
 
 const StPasswordBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-	outline : 1px solid #7474FF;
+	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const Stnickname = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
-	:focus-within{
-		outline : 1px solid #7474FF
+	:focus-within {
+		outline: 1px solid #7474ff;
 	}
-
 `;
 
 const StnicknameBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-	outline: 1px solid #7474FF;
+	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StRePassword = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
+	justify-content: space-between;
 
-	:focus-within{
-		outline : 1px solid #7474FF
+	:focus-within {
+		outline: 1px solid #7474ff;
 	}
 `;
 
 const StRePasswordBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width:335px;
-	background-color: #F4F4F4;
+	width: 335px;
+	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
-	outline: 1px solid #7474FF;
+	outline: 1px solid #7474ff;
+	justify-content: space-between;
 `;
 
 const StInfo = styled.span`
-	color : #7474FF
+	color: #7474ff;
 `;
