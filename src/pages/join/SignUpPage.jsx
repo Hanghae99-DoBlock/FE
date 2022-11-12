@@ -180,21 +180,13 @@ const SignUpPage = () => {
 					)}
 					<Flex dir="row" wd="335px" ht="26px">
 						{nickname.value.trim() === "" ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								gap="8px"
-								ai="center"
-							></Flex>
+							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 						) : !regNick.test(nickname.value) ? (
 							<Flex
 								dir="row"
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8"
 								ai="center"
 								jc="flex-start"
 							>
@@ -202,8 +194,7 @@ const SignUpPage = () => {
 									<Svg variant="alert" />
 								</StSvg>
 								<StInfo>
-									닉네임은 2-6자, 영어 대소문자 또는 숫자 또는 한글로
-									구성됩니다.
+									닉네임은 2-6자, 영어 대소문자,숫자 또는 한글로 구성됩니다.
 								</StInfo>
 							</Flex>
 						) : checkNickname !== 200 ? (
@@ -212,7 +203,6 @@ const SignUpPage = () => {
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -227,7 +217,6 @@ const SignUpPage = () => {
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -278,21 +267,13 @@ const SignUpPage = () => {
 					)}
 					<Flex dir="row" wd="335px" ht="26px">
 						{email.value.trim() === "" ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								gap="8px"
-								ai="center"
-							></Flex>
+							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 						) : !regEmail.test(email.value) ? (
 							<Flex
 								dir="row"
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -307,7 +288,6 @@ const SignUpPage = () => {
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -322,7 +302,6 @@ const SignUpPage = () => {
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -385,21 +364,13 @@ const SignUpPage = () => {
 					)}
 					<Flex dir="row" wd="335px" ht="26px">
 						{password.value.trim() === "" ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								gap="8px"
-								ai="center"
-							></Flex>
+							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 						) : !regPass.test(password.value) ? (
 							<Flex
 								dir="row"
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -407,7 +378,7 @@ const SignUpPage = () => {
 									<Svg variant="alert" />
 								</StSvg>
 								<StInfo>
-									비밀번호는 8-20자, 영문 대소문자,숫자,특수문자!@#$%^&*를
+									비밀번호는 8-20자, 영문 대소문자,숫자,특수문자 !@#$%^&*를
 									적어도 하나이상 포함해야합니다
 								</StInfo>
 							</Flex>
@@ -417,7 +388,6 @@ const SignUpPage = () => {
 								wd="335px"
 								ht="26px"
 								fs="12"
-								gap="8px"
 								ai="center"
 								jc="flex-start"
 							>
@@ -482,7 +452,6 @@ const SignUpPage = () => {
 							wd="335px"
 							ht="26px"
 							fs="12"
-							gap="8px"
 							ai="center"
 							jc="flex-start"
 						>
@@ -492,14 +461,7 @@ const SignUpPage = () => {
 							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
 						</Flex>
 					) : (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							gap="8px"
-							ai="center"
-						></Flex>
+						<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 					)}
 				</Flex>
 				<Flex gap="16px" jc="center" ai="center">
@@ -524,10 +486,9 @@ export default SignUpPage;
 
 const StSvg = styled.div`
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	width: 24px;
-	height: 24px;
+	width: 22px;
+	height: 22px;
 `;
 
 const StEmail = styled.div`
@@ -631,4 +592,7 @@ const StRePasswordBlue = styled.div`
 
 const StInfo = styled.div`
 	color: #7474ff;
+	display: flex;
+	justify-content: flex-start;
+	width: 300px;
 `;
