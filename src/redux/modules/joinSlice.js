@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../api";
 
-console.log(serverUrl);
-
 export const __signUp = createAsyncThunk(
 	"SIGN_UP",
 	async (payload, thunkAPI) => {
@@ -24,7 +22,6 @@ export const __signIn = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const data = await axios.post(`${serverUrl}/api/members/login`, payload);
-			console.log(data);
 			const accessToken = data.headers.authorization;
 			const refreshToken = data.headers.refreshtoken;
 

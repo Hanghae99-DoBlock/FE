@@ -45,7 +45,6 @@ const SignUpPage = () => {
 		state => state?.join?.checkNickResult.status,
 	);
 	const checkEmail = useSelector(state => state?.join?.checkMailResult.status);
-	console.log(checkEmail);
 	//이메일 정규식
 	const regEmail =
 		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -446,7 +445,8 @@ const SignUpPage = () => {
 							</Flex>
 						</StRePasswordBlue>
 					)}
-					{password.value !== checkPass.value ? (
+					{checkPass.value.trim() !== "" &&
+					password.value !== checkPass.value ? (
 						<Flex
 							dir="row"
 							wd="335px"
