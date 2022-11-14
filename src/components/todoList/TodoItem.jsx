@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
 import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
-const TodoItem = ({ todoItem }) => {
+const TodoItem = ({ todoContent }) => {
 	const dispatch = useDispatch();
 
 	const onClickTodoItemHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen(todoItem));
+		dispatch(updateIsDetailTodoModalOpen(todoContent));
 	};
 
 	return (
@@ -29,9 +29,8 @@ const TodoItem = ({ todoItem }) => {
 				</Flex>
 
 				{/* 투두 컨텐트 */}
-
 				<Flex jc="flex-start" wd="100%" mg="0 0 0 16px">
-					<Text variant="normal">{todoItem}</Text>
+					<Text variant="normal">{todoContent}</Text>
 				</Flex>
 			</Flex>
 		</>
