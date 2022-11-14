@@ -7,7 +7,7 @@ import {
 
 const TodoListPage = () => {
 	return (
-		<Flex fd="column" height="100%">
+		<Flex dir="column" ht="100%">
 			<TodoListCalendar />
 			<Box variant="todoListArea">
 				{/* 투두 리스트 헤더 */}
