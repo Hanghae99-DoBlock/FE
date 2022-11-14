@@ -1,25 +1,25 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import styled from "styled-components";
-import ProfileImage from "../../images/profile.jpeg";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../profile/style/slide.css";
 import { Pagination } from "swiper";
-import Flex from "../../common/flex/Flex";
 import {
+	Flex,
+	Svg,
 	FirstHeading,
 	SecondHeading,
 	ThirdHeading,
-} from "../../common/heading/Heading.styles";
-import Svg from "../../common/svg/Svg";
+	Image,
+	Hr,
+} from "../../common";
 const Profile = () => {
 	return (
 		<Flex wd="100%" dir="column">
 			<Flex wd="335px" mg="auto">
 				<Flex wd="100%" jc="space-between">
 					<Flex jc="space-around">
-						<Image />
+						<Image variant="image" />
 						<FirstHeading fw="600" fs="18px" color="#131313" mg="30px 0 0 0">
 							어쩌구
 							<SecondHeading fw="400" fs="12px" color="#979797" mg="10px 0 0 0">
@@ -53,7 +53,7 @@ const Profile = () => {
 						3
 					</ThirdHeading>
 				</SecondHeading>
-				<Hr />
+				<Hr variant="hr" />
 				<SecondHeading fw="300" fs="12px" color="#979797">
 					팔로잉
 					<ThirdHeading
@@ -66,7 +66,7 @@ const Profile = () => {
 						220
 					</ThirdHeading>
 				</SecondHeading>
-				<Hr />
+				<Hr variant="hr" />
 				<SecondHeading fw="300" fs="12px" color="#979797">
 					팔로워
 					<ThirdHeading
@@ -88,7 +88,7 @@ const Profile = () => {
 							내가 작성한 피드 게시글
 						</SecondHeading>
 					</Flex>
-					<Svg variant="RightArrow" />
+					<Svg variant="rightArrow" />
 				</Flex>
 			</Flex>
 			<Swiper
@@ -153,23 +153,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-const Image = styled.div`
-	background-image: url(${ProfileImage});
-	background-repeat: no-repeat;
-	background-size: cover;
-	border: 1px solid #ccc;
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	margin-top: 27px;
-	margin-right: 10px;
-`;
-
-const Hr = styled.hr`
-	height: 65px;
-	width: 2px;
-	border-width: 0;
-	color: #f4f4f4;
-	background-color: #f4f4f4;
-`;

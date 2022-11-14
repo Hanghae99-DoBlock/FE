@@ -281,7 +281,7 @@ const Svg = ({ variant, onClick }) => {
 					/>
 				</svg>
 			);
-		case "RightArrow":
+		case "rightArrow":
 			return (
 				<svg
 					width="5"
