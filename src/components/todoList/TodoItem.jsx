@@ -14,11 +14,11 @@ const TodoItem = ({ todoItem }) => {
 			{/* 투두 박스 */}
 			<Flex
 				onClick={onClickTodoItemHandler}
-				width="100%"
-				height="51px"
+				wd="100%"
+				ht="51px"
 				radius="10px"
-				bgColor="#FFFFFF"
-				pad="12px 10px"
+				bg="#FFFFFF"
+				pd="12px 10px"
 			>
 				{/* icons: 햄버거, 체크박스 */}
 				<Flex gap="7px">
@@ -29,7 +29,8 @@ const TodoItem = ({ todoItem }) => {
 				</Flex>
 
 				{/* 투두 컨텐트 */}
-				<Flex jc="flex-start" width="100%" margin="0 0 0 16px">
+
+				<Flex jc="flex-start" wd="100%" mg="0 0 0 16px">
 					<Text variant="normal">{todoItem}</Text>
 				</Flex>
 			</Flex>

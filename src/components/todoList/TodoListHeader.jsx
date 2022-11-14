@@ -2,7 +2,7 @@ import { Flex, Svg, Text } from "../../common";
 
 const TodoListHeader = () => {
 	return (
-		<Flex height="70px" jc="space-between" pad="23px 20px">
+		<Flex height="70px" jc="space-between" pd="23px 20px">
 			<Flex gap="15px">
 				{/* 날짜 */}
 				<Text variant="big">8.화</Text>

@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
+
   }
 
   body, div, span, h1, h2, h3, h4, h5, h6,
@@ -16,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 	margin: 0;
 	padding: 0;
 	border: 0;
+  font-weight: normal;
   /* font-family: */
   }
 
@@ -24,7 +26,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  button {
+  button,svg {
     cursor: pointer;
     background-color: transparent;
     letter-spacing: 0.1em;
