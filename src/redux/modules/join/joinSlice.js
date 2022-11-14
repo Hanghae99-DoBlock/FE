@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
 import axios from "axios";
-import { serverUrl } from "../api";
+import { serverUrl } from "../../api";
 
 export const __signUp = createAsyncThunk(
 	"SIGN_UP",

@@ -17,7 +17,7 @@ import {
 	__checkEmail,
 	__checkNick,
 	__signUp,
-} from "../../redux/modules/joinSlice";
+} from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
 
