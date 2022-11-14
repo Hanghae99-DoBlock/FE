@@ -31,6 +31,7 @@
 	margin-bottom: 1em;
 }
 .react-calendar__month-view__weekdays {
+	color: #929292;
 	text-align: center;
 	text-transform: uppercase;
 	font-weight: bold;
@@ -51,7 +52,8 @@
 }
 
 .react-calendar__month-view__days__day--weekend {
-	color: #d10000;
+	/* color: #d10000; */
+	color: #131313;
 }
 .react-calendar__month-view__days__day--neighboringMonth {
 	color: #757575;
@@ -80,11 +82,12 @@
 	line-height: 1.125em;
 }
 .react-calendar__navigation button {
-	color: #f87171;
+	color: #131313;
 	min-width: 44px;
 	background: none;
-	font-size: 16px;
+	font-size: 20px;
 	margin-top: 8px;
+	font-weight: 600;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
@@ -98,19 +101,19 @@ abbr[title] {
 }
 
 .react-calendar__tile--now abbr {
-	background: #f8717133;
+	background: #7474ff33;
 	padding: 5px 4px;
-	border-radius: 100%;
+	border-radius: 10px;
 	font-weight: bold;
-	color: #f87171;
+	color: #7474ff;
 	margin: auto !important;
 }
 .react-calendar__tile--now abbr:enabled:hover,
 .react-calendar__tile--now abbr:enabled:focus {
-	background: #f8717133;
-	border-radius: 100%;
+	background: #7474ff33;
+	border-radius: 10px;
 	font-weight: bold;
-	color: #f87171;
+	color: #7474ff;
 }
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
@@ -121,9 +124,9 @@ abbr[title] {
 	background-color: #f8f8fa;
 }
 .react-calendar__tile--range abbr {
-	color: #f87171;
+	color: #7474ff;
 	padding: 5px 4px;
-	border-radius: 100%;
+	border-radius: 10px;
 	border-radius: 0;
 }
 .react-calendar__tile--rangeStart {
@@ -131,19 +134,19 @@ abbr[title] {
 	color: white;
 }
 .react-calendar__tile--rangeEnd abbr {
-	background-color: #f87171;
+	background-color: #7474ff;
 	padding: 5px 4px;
-	border-radius: 100%;
+	border-radius: 10px;
 	color: white;
 }
 .react-calendar__tile abbr:enabled:hover,
 .react-calendar__tile abbr:enabled:focus {
-	background-color: #f87171;
+	background-color: #7474ff;
 	padding: 5px 4px;
-	border-radius: 100%;
+	border-radius: 10px;
 	color: white;
 }
-.flex {
+/* .flex {
 	display: flex;
 	justify-content: center;
 	margin: 5px auto 0;
@@ -160,4 +163,4 @@ abbr[title] {
 	border-left: 4px solid transparent;
 	border-right: 4px solid transparent;
 	margin-right: 1px;
-}
+} */
