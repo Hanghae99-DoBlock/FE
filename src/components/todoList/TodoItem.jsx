@@ -1,12 +1,18 @@
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
 import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
+import { __checkTodo } from "../../redux/modules/todoList/todoListSlice";
 
-const TodoItem = ({ todoContent }) => {
+const TodoItem = props => {
+	const { todoContent, todoId, completed, todoMemo } = props;
 	const dispatch = useDispatch();
 
 	const onClickTodoItemHandler = () => {
 		dispatch(updateIsDetailTodoModalOpen(todoContent));
+	};
+
+	const checkTodoHandler = () => {
+		dispatch(__checkTodo(props));
 	};
 
 	return (
@@ -25,7 +31,11 @@ const TodoItem = ({ todoContent }) => {
 					{/* 햄버거 */}
 					<Svg variant="hamburger" />
 					{/* 체크박스 */}
-					<Svg variant="checkBox" />
+					{completed ? (
+						<Svg variant="todoCompleted" />
+					) : (
+						<Svg onClick={checkTodoHandler} variant="checkBox" />
+					)}
 				</Flex>
 
 				{/* 투두 컨텐트 */}
