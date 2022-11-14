@@ -2,16 +2,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
-// import { __getTodoList } from "../../redux/modules/todoList/todoSlice";
+import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
 const ListingTodos = () => {
-	const todoList = false;
-	// const todoList = useSelector(state => state.todoSlice.todoList);
+	const todoList = useSelector(state => state.todoListSlice.todoList);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		// dispatch(__getTodoList());
+		dispatch(__getTodoList());
 	}, []);
 
 	const openAddTodoModalHandler = () => {
@@ -19,11 +18,14 @@ const ListingTodos = () => {
 	};
 
 	return (
-		<Flex dir="column" gap="10px" pd="0 16px 26px" ht="100%" bg="#F9F9F9">
+		<Flex dir="column" gap="10px" pd="0 16px 26px" bg="#F9F9F9">
 			{todoList ? (
 				// 투두가 있을 때
 				todoList.map(todoItem => (
-					<TodoItem key={todoItem.id} todoItem={todoItem.todo}></TodoItem>
+					<TodoItem
+						key={todoItem.todoId}
+						todoContent={todoItem.todoContent}
+					></TodoItem>
 				))
 			) : (
 				// 투두가 없을 때
