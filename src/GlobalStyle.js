@@ -16,16 +16,18 @@ const GlobalStyles = createGlobalStyle`
 	margin: 0;
 	padding: 0;
 	border: 0;
+  font-weight: normal;
   /* font-family: */
   }
-  
+
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  button {
+  button,svg {
     cursor: pointer;
+    background-color: transparent;
     letter-spacing: 0.1em;
   }
 
