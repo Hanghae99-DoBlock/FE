@@ -1,30 +1,48 @@
 import styled from "styled-components";
 
-export const Flex = styled.div`
+const Flex = ({ children, ...props }) => {
+	return <StFlex {...props}>{children}</StFlex>;
+};
+
+export default Flex;
+
+export const StFlex = styled.div`
 	/* 공통 */
 	display: flex;
 
 	/* flex 속성 */
-	flex-direction: ${({ fd }) => (fd ? fd : "row")};
+	flex-direction: ${({ dir }) => (dir ? dir : "row")};
 	justify-content: ${({ jc }) => (jc ? jc : "center")};
 	align-items: ${({ ai }) => (ai ? ai : "center")};
 
-	/* 위치 */
-	z-index: ${({ zIndex }) => (zIndex ? zIndex : "")};
-	position: ${({ position }) => (position ? position : "")};
-
 	/* 사이즈 */
-	height: ${({ height }) => (height ? height : "")};
-	width: ${({ width }) => (width ? width : "")};
-	max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "")};
-	min-width: ${({ minWidth }) => (minWidth ? minWidth : "")};
+	width: ${({ wd }) => wd};
+	height: ${({ ht }) => ht};
+	min-height: ${({ mh }) => mh};
+	max-height: ${({ mxh }) => mxh};
+	min-width: ${({ mw }) => mw};
+	max-width: ${({ mxw }) => mxw};
 
 	/* 스타일 */
-	background-color: ${({ bgColor }) => (bgColor ? bgColor : "")};
-	border-radius: ${({ radius }) => (radius ? radius : "")};
+	background-color: ${({ bg }) => bg};
+	border-right: ${({ br }) => br};
+	border-radius: ${({ radius }) => radius};
 
 	/* 여백 */
-	gap: ${({ gap }) => (gap ? gap : "")};
-	padding: ${({ pad }) => (pad ? pad : "")};
-	margin: ${({ margin }) => (margin ? margin : "")};
+	margin: ${({ mg }) => mg};
+	gap: ${({ gap }) => gap};
+	padding: ${({ pd }) => pd};
+
+	/* 위치 */
+	top: ${({ top }) => top};
+	left: ${({ left }) => left};
+	right: ${({ right }) => right};
+	position: ${({ position }) => position};
+	z-index: ${({ zIndex }) => zIndex};
+
+	/* 폰트 */
+	color: ${({ color }) => color};
+	font-size: ${({ fs }) => `${fs}px`};
+	font-weight: ${({ fw }) => fw};
+	line-height: ${({ lh }) => `${lh}px`};
 `;

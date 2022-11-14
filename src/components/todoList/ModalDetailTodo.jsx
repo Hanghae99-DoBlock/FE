@@ -13,10 +13,10 @@ const ModalDetailTodo = () => {
 	return (
 		// 오버레이
 		<Flex
-			bgColor="rgba(0, 0, 0, 0.6)"
+			bg="rgba(0, 0, 0, 0.6)"
 			position="fixed"
-			maxWidth="320px"
-			minWidth="430px"
+			mxw="320px"
+			mw="430px"
 			height="100%"
 			zIndex="1"
 		>
@@ -31,7 +31,8 @@ const ModalDetailTodo = () => {
 					{/* 할 일 +  옵션 인풋들 */}
 					<div>
 						{/* 할 일 라벨 + 인풋 */}
-						<Flex fd="column" ai="flex-start">
+						<Flex dir="column" ai="flex-start">
+
 							<Label variant="grey">할 일</Label>
 							<Box variant="todoContent">
 								<Text variant="medium">{todoItem.todoContent}</Text>
@@ -39,7 +40,8 @@ const ModalDetailTodo = () => {
 						</Flex>
 
 						{/* 옵션 인풋들 */}
-						<Flex gap="17px" fd="column" ai="flex-start" margin="12px 0 0 0">
+						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
+
 							{/* 메모 인풋 */}
 							<Flex gap="18.5px">
 								<Svg variant="memo" />
