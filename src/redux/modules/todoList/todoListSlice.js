@@ -3,6 +3,7 @@ import { serverUrl } from "../../api";
 import axios from "axios";
 
 const accessToken = localStorage.getItem("accessToken");
+axios.defaults.withCredentials = true;
 
 const initialState = {
 	todoList: [],
@@ -41,6 +42,28 @@ export const __getTodoList = createAsyncThunk(
 	},
 );
 
+// 투두 체크 Thunk
+export const __checkTodo = createAsyncThunk(
+	"todo/checkTodo",
+	async (todoItem, thunkAPI) => {
+		try {
+			const response = await axios.patch(
+				`${serverUrl}/api/todolist/${todoItem.todoId}/completed`,
+				// 401 에러 해결
+				{
+					withCredentials: true,
+				},
+				{
+					headers: { Authorization: accessToken },
+				},
+			);
+			return thunkAPI.fulfillWithValue(todoItem);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
 // 투두리스트 슬라이스
 export const todoListSlice = createSlice({
 	name: "todoList",
@@ -55,8 +78,16 @@ export const todoListSlice = createSlice({
 
 			// 투두리스트 조회 성공
 			.addCase(__getTodoList.fulfilled, (state, action) => {
-				console.log("action.payload", action.payload);
 				state.todoList = action.payload;
+			})
+
+			// 투두 체크 성공
+			.addCase(__checkTodo.fulfilled, (state, action) => {
+				state.todoList = state.todoList.map(todoItem => {
+					return todoItem.todoId === action.payload.todoId
+						? { ...todoItem, completed: !todoItem.completed }
+						: todoItem;
+				});
 			});
 	},
 });
