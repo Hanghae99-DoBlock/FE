@@ -16,14 +16,13 @@ const StBox = styled.div`
 			case "todoListArea":
 				return css`
 					background: #f9f9f9;
+					height: 100%;
 					width: 100%;
 				`;
 
 			// 모달창
 			case "modalBox":
 				return css`
-					position: fixed;
-					margin: 0 auto;
 					background-color: white;
 					width: 279px;
 					height: 356px;

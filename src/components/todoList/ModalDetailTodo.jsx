@@ -17,7 +17,7 @@ const ModalDetailTodo = () => {
 			position="fixed"
 			mxw="320px"
 			mw="430px"
-			height="100%"
+			ht="100%"
 			zIndex="1"
 		>
 			{/* 모달 */}
@@ -32,7 +32,6 @@ const ModalDetailTodo = () => {
 					<div>
 						{/* 할 일 라벨 + 인풋 */}
 						<Flex dir="column" ai="flex-start">
-
 							<Label variant="grey">할 일</Label>
 							<Box variant="todoContent">
 								<Text variant="medium">{todoItem.todoContent}</Text>
@@ -41,7 +40,6 @@ const ModalDetailTodo = () => {
 
 						{/* 옵션 인풋들 */}
 						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
-
 							{/* 메모 인풋 */}
 							<Flex gap="18.5px">
 								<Svg variant="memo" />
