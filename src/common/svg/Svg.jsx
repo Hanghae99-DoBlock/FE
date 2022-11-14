@@ -72,13 +72,6 @@ const Svg = ({ variant, onClick }) => {
 					viewBox="0 0 70 70"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
-					style={{
-						position: "fixed",
-						// position: "relative",
-						bottom: "6px",
-						//right: "-350px",
-						right: "23px",
-					}}
 				>
 					<g filter="url(#filter0_d_297_832)">
 						<circle cx="33" cy="33" r="25" fill="#7474FF" />
@@ -163,6 +156,31 @@ const Svg = ({ variant, onClick }) => {
 				</svg>
 			);
 
+		// 투두 없음 아이콘
+		case "todoEmpty":
+			return (
+				<svg
+					width="35"
+					height="36"
+					viewBox="0 0 35 36"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						fillRule="evenodd"
+						clipRule="evenodd"
+						d="M2.5 23V28C2.5 30.7614 4.73858 33 7.5 33H12.5V35.5H7.5C3.35787 35.5 0 32.1421 0 28V23H2.5ZM22.5 33V35.5H27.5C31.6421 35.5 35 32.1421 35 28V23H32.5V28C32.5 30.7614 30.2614 33 27.5 33H22.5ZM32.5 13H35V8C35 3.85786 31.6421 0.5 27.5 0.5H22.5V3H27.5C30.2614 3 32.5 5.23858 32.5 8V13ZM12.5 3H7.5C4.73858 3 2.5 5.23858 2.5 8V13H0V8C0 3.85787 3.35786 0.5 7.5 0.5H12.5V3Z"
+						fill="#979797"
+					/>
+					<path
+						fillRule="evenodd"
+						clipRule="evenodd"
+						d="M25.5546 10.9776C26.1155 11.38 26.244 12.161 25.8416 12.7219L15.9792 26.4689C15.7563 26.7797 15.4032 26.9713 15.0211 26.9889C14.639 27.0066 14.2699 26.8483 14.0193 26.5593L7.85288 19.4496C7.40055 18.9281 7.45664 18.1386 7.97817 17.6863C8.49969 17.234 9.28916 17.2901 9.74149 17.8116L14.8707 23.7254L23.8102 11.2646C24.2127 10.7037 24.9936 10.5752 25.5546 10.9776Z"
+						fill="#979797"
+					/>
+				</svg>
+			);
+
 		case "chevron":
 			return (
 				<svg
@@ -190,8 +208,8 @@ const Svg = ({ variant, onClick }) => {
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
-						fill-rule="evenodd"
-						clip-rule="evenodd"
+						fillRule="evenodd"
+						clipRule="evenodd"
 						d="M12 3C7.023 3 3 7.023 3 12C3 16.977 7.023 21 12 21C16.977 21 21 16.977 21 12C21 7.023 16.977 3 12 3ZM12 19.2C8.031 19.2 4.8 15.969 4.8 12C4.8 8.031 8.031 4.8 12 4.8C15.969 4.8 19.2 8.031 19.2 12C19.2 15.969 15.969 19.2 12 19.2ZM12 10.731L15.231 7.5L16.5 8.769L13.269 12L16.5 15.231L15.231 16.5L12 13.269L8.769 16.5L7.5 15.231L10.731 12L7.5 8.769L8.769 7.5L12 10.731Z"
 						fill="#7474FF"
 					/>
@@ -239,8 +257,8 @@ const Svg = ({ variant, onClick }) => {
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
-						fill-rule="evenodd"
-						clip-rule="evenodd"
+						fillRule="evenodd"
+						clipRule="evenodd"
 						d="M7 0C3.136 0 0 3.136 0 7C0 10.864 3.136 14 7 14C10.864 14 14 10.864 14 7C14 3.136 10.864 0 7 0ZM6.3 10.5V9.1H7.7V10.5H6.3ZM6.3 3.5V7.7H7.7V3.5H6.3Z"
 						fill="#7474FF"
 					/>

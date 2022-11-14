@@ -50,6 +50,7 @@ const ModalAddTodo = () => {
 						<Flex dir="column" ai="flex-start">
 							<Label variant="grey">할 일</Label>
 							<Input
+								autoFocus
 								type="text"
 								onChange={onChangeHandler}
 								value={todo.todo || ""}
