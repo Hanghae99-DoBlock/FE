@@ -25,6 +25,9 @@ const ListingTodos = () => {
 					<TodoItem
 						key={todoItem.todoId}
 						todoContent={todoItem.todoContent}
+						todoId={todoItem.todoId}
+						completed={todoItem.completed}
+						todoMemo={todoItem.todoMemo}
 					></TodoItem>
 				))
 			) : (
