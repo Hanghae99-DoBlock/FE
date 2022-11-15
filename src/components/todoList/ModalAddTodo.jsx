@@ -22,19 +22,15 @@ const ModalAddTodo = () => {
 
 	const onChangeHandler = e => {
 		// 날짜는 하드코딩만 해두었습니다
-		setTodo({
-			year: 2022,
-			month: 11,
-			day: 14,
-			todoContent: e.target.value,
-		});
+		const { name, value } = e.target;
+		setTodo({ ...todo, year: 2022, month: 11, day: 14, [name]: value });
 	};
 
 	const uploadHandler = e => {
 		e.preventDefault();
 		dispatch(__addTodo(todo));
 
-		setTodo("");
+		setTodo({});
 		dispatch(updateIsAddTodoModalOpen());
 	};
 
@@ -68,6 +64,7 @@ const ModalAddTodo = () => {
 								onChange={onChangeHandler}
 								value={todo.todoContent || ""}
 								variant="todoInput"
+								name="todoContent"
 							/>
 						</Flex>
 
@@ -79,6 +76,9 @@ const ModalAddTodo = () => {
 
 							{/* 메모 인풋 */}
 							<TextArea
+								onChange={onChangeHandler}
+								value={todo.todoMemo || ""}
+								name="todoMemo"
 								variant="memo"
 								placeholder="메모"
 								maxLength="100"
