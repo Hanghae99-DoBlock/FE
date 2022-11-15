@@ -1,12 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Form, Label, Svg, Text } from "../../common";
+import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
 const ModalDetailTodo = () => {
+	const dispatch = useDispatch();
+
 	const isDetailTodoModalOpen = useSelector(
 		state => state.modalSlice.isDetailTodoModalOpen,
 	);
 
 	const todoItem = useSelector(state => state.modalSlice.todoItem);
+
+	const closeDetailModalHandler = () => {
+		dispatch(updateIsDetailTodoModalOpen());
+	};
 
 	if (!isDetailTodoModalOpen) return null;
 

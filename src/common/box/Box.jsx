@@ -38,6 +38,14 @@ const StBox = styled.div`
 					height: 48px;
 					padding: 12px 0;
 				`;
+
+			// 메모 아이콘 박스
+			case "memoIconBox":
+				return css`
+					width: 20px;
+					height: 20px;
+					padding: 5px 0 0 2px;
+				`;
 			default:
 				break;
 		}
