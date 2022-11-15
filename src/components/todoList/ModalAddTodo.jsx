@@ -34,6 +34,10 @@ const ModalAddTodo = () => {
 		dispatch(updateIsAddTodoModalOpen());
 	};
 
+	const closeAddTodoModalHandler = () => {
+		dispatch(updateIsAddTodoModalOpen());
+	};
+
 	if (!isAddTodoModalOpen) return null;
 
 	return (
@@ -50,7 +54,7 @@ const ModalAddTodo = () => {
 			<Box variant="modalBox">
 				{/* 닫기 버튼 */}
 				<Flex jc="flex-end">
-					<Svg variant="close"></Svg>
+					<Svg onClick={closeAddTodoModalHandler} variant="close"></Svg>
 				</Flex>
 				{/* 폼 */}
 				<Form variant="todoForm" onSubmit={uploadHandler}>
