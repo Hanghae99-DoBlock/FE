@@ -25,7 +25,7 @@ const TodoItem = props => {
 					<Svg variant="hamburger" />
 					{/* 체크박스 */}
 					{completed ? (
-						<Svg variant="todoCompleted" />
+						<Svg onClick={checkTodoHandler} variant="todoCompleted" />
 					) : (
 						<Svg onClick={checkTodoHandler} variant="checkBox" />
 					)}
