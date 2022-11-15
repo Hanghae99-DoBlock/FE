@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
+import {
+	Box,
+	Button,
+	Flex,
+	Form,
+	Input,
+	Label,
+	Svg,
+	TextArea,
+} from "../../common";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 import { __addTodo } from "../../redux/modules/todoList/todoListSlice";
 
@@ -49,7 +58,6 @@ const ModalAddTodo = () => {
 				</Flex>
 				{/* 폼 */}
 				<Form variant="todoForm" onSubmit={uploadHandler}>
-					{/* 할 일 +  옵션 인풋들 */}
 					<div>
 						{/* 할 일 라벨 + 인풋 */}
 						<Flex dir="column" ai="flex-start">
@@ -69,16 +77,14 @@ const ModalAddTodo = () => {
 							<Flex gap="18.5px">
 								<Svg variant="memo" />
 
-								{/* 메모 인풋은 하드코딩만 해두었습니다 */}
-								<p
-									style={{
-										fontWeight: "500",
-										fontSize: "13px",
-										color: "#979797",
-									}}
-								>
-									메모
-								</p>
+								{/* 메모 인풋 */}
+								<TextArea
+									variant="memo"
+									placeholder="메모"
+									maxLength="100"
+									rows="5"
+									cols="29"
+								/>
 							</Flex>
 						</Flex>
 					</div>
