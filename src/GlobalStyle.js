@@ -5,6 +5,11 @@ const GlobalStyles = createGlobalStyle`
 
     ${reset}
 
+
+  html{
+    overflow : auto;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -21,8 +26,10 @@ const GlobalStyles = createGlobalStyle`
   font-weight: normal;
   letter-spacing: -1px;
   word-spacing: -3px;
+  
   /* font-family: */
   }
+
 
   a {
     color: inherit;

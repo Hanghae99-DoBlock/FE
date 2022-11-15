@@ -37,8 +37,10 @@ export const StFlex = styled.div`
 	top: ${({ top }) => top};
 	left: ${({ left }) => left};
 	right: ${({ right }) => right};
+	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
+	overflow: ${({ overflow }) => overflow};
 
 	/* 폰트 */
 	color: ${({ color }) => color};

@@ -1,4 +1,4 @@
-import { Box, Flex } from "../../common";
+import { Box, Button, Flex } from "../../common";
 import { StInput } from "../../common/input/Input";
 import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
@@ -29,6 +29,7 @@ const AddFeedPage = () => {
 			mg="0 auto"
 			jc="flex-start"
 			gap="20px"
+			ai="flex-start"
 		>
 			<Flex
 				dir="row"
@@ -207,6 +208,7 @@ const AddFeedPage = () => {
 				jc="flex-start"
 				pd="0 20px"
 				ai="normal"
+				gap="20px"
 			>
 				<Flex jc="flex-start" gap="6px" ai="baseline">
 					<Flex
@@ -236,8 +238,21 @@ const AddFeedPage = () => {
 						최대 100자 입력 가능합니다
 					</Flex>
 				</Flex>
-				<Flex wd="335px" ht="40px" ai="flex-start" gap="13px">
+				<Flex wd="335px" ht="160px" ai="flex-start" gap="13px">
 					<StDetailContent maxLength={100} />
+				</Flex>
+				<Flex
+					wd="100vw"
+					ht="94px"
+					pd="17px 20px"
+					position="fixed"
+					left="-8px"
+					bottom="0"
+					bg="white"
+					jc="center"
+					ai="center"
+				>
+					<Button variant="join">업로드 하기</Button>
 				</Flex>
 			</Flex>
 		</Flex>
