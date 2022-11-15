@@ -37,6 +37,18 @@ const StBox = styled.div`
 					height: 48px;
 					padding: 12px 0;
 				`;
+
+			case "feedTodo":
+				return css`
+					display: flex;
+					width: 335px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 16px 12px 16px;
+					outline-color: #7474ff;
+					align-items: center;
+				`;
 			default:
 				break;
 		}

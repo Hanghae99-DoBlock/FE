@@ -45,4 +45,5 @@ export const StFlex = styled.div`
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
+	opacity: ${({ oc }) => oc};
 `;

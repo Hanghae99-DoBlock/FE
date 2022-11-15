@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
+ 
 
   }
 
@@ -18,6 +19,8 @@ const GlobalStyles = createGlobalStyle`
 	padding: 0;
 	border: 0;
   font-weight: normal;
+  letter-spacing: -1px;
+  word-spacing: -3px;
   /* font-family: */
   }
 
