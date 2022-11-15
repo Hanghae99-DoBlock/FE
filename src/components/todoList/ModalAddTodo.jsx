@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
+import {
+	Box,
+	Button,
+	Flex,
+	Form,
+	Input,
+	Label,
+	Svg,
+	TextArea,
+} from "../../common";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 import { __addTodo } from "../../redux/modules/todoList/todoListSlice";
 
@@ -13,12 +22,8 @@ const ModalAddTodo = () => {
 
 	const onChangeHandler = e => {
 		// 날짜는 하드코딩만 해두었습니다
-		setTodo({
-			year: 2022,
-			month: 11,
-			day: 14,
-			todoContent: e.target.value,
-		});
+		const { name, value } = e.target;
+		setTodo({ ...todo, year: 2022, month: 11, day: 14, [name]: value });
 	};
 
 	const uploadHandler = e => {
@@ -26,6 +31,11 @@ const ModalAddTodo = () => {
 		dispatch(__addTodo(todo));
 
 		setTodo("");
+		dispatch(updateIsAddTodoModalOpen());
+		setTodo({});
+	};
+
+	const closeAddTodoModalHandler = () => {
 		dispatch(updateIsAddTodoModalOpen());
 		setTodo({});
 	};
