@@ -1,3 +1,3 @@
-import Profile from "./Profile";
+import { Profile, ProfileEdit } from "./Profile";
 
-export { Profile };
+export { Profile, ProfileEdit };
