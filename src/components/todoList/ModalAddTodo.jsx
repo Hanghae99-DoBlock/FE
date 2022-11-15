@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
-// import { __addTodo } from "../../redux/modules/todoList/todoSlice";
-
+import { __addTodo } from "../../redux/modules/todoList/todoListSlice";
 
 const ModalAddTodo = () => {
 	const [todo, setTodo] = useState({});
@@ -13,12 +12,18 @@ const ModalAddTodo = () => {
 	);
 
 	const onChangeHandler = e => {
-		setTodo({ todo: e.target.value });
+		// 날짜는 하드코딩만 해두었습니다
+		setTodo({
+			year: 2022,
+			month: 11,
+			day: 14,
+			todoContent: e.target.value,
+		});
 	};
 
 	const uploadHandler = e => {
 		e.preventDefault();
-		// dispatch(__addTodo(todo));
+		dispatch(__addTodo(todo));
 
 		setTodo("");
 		dispatch(updateIsAddTodoModalOpen());
@@ -53,14 +58,13 @@ const ModalAddTodo = () => {
 								autoFocus
 								type="text"
 								onChange={onChangeHandler}
-								value={todo.todo || ""}
+								value={todo.todoContent || ""}
 								variant="todoInput"
 							/>
 						</Flex>
 
 						{/* 옵션 인풋들 */}
 						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
-
 							{/* 메모 인풋 */}
 							<Flex gap="18.5px">
 								<Svg variant="memo" />
