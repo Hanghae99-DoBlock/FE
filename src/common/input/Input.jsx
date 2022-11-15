@@ -54,6 +54,16 @@ export const StInput = styled.input`
 					font-size: 19px;
 					color: #131313;
 				`;
+			case "imageInput":
+				return css`
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: 2;
+				`;
 			default:
 				break;
 		}
