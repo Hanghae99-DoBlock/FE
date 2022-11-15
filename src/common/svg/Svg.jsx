@@ -125,7 +125,6 @@ const Svg = ({ variant, onClick }) => {
 		case "close":
 			return (
 				<svg
-					onClick={onClick}
 					width="16"
 					height="16"
 					viewBox="0 0 16 16"

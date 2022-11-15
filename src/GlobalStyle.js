@@ -20,11 +20,6 @@ const GlobalStyles = createGlobalStyle`
   /* font-family: */
   }
 
-textarea {
-  resize: none;
-  overflow: hidden;
-  }
-
   a {
     color: inherit;
     text-decoration: none;

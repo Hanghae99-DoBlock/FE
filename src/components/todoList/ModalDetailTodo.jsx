@@ -1,19 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Box, Button, Flex, Form, Label, Svg, Text } from "../../common";
-import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
 const ModalDetailTodo = () => {
-	const dispatch = useDispatch();
-
 	const isDetailTodoModalOpen = useSelector(
 		state => state.modalSlice.isDetailTodoModalOpen,
 	);
 
 	const todoItem = useSelector(state => state.modalSlice.todoItem);
-
-	const closeDetailModalHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen());
-	};
 
 	if (!isDetailTodoModalOpen) return null;
 
@@ -44,13 +37,11 @@ const ModalDetailTodo = () => {
 									<Text variant="medium">{todoItem.todoContent}</Text>
 								</Box>
 							</Flex>
-
 							{/* 옵션 인풋들 */}
 							<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
 								{/* 메모 인풋 */}
 								<Flex gap="18.5px">
 									<Svg variant="memo" />
-
 									{/* 메모 인풋은 하드코딩만 해두었습니다 */}
 									<p
 										style={{

@@ -67,24 +67,7 @@ export const __checkNick = createAsyncThunk(
 	},
 );
 
-//유저 조회하기
-export const __getUsers = createAsyncThunk(
-	"user/getUser",
-	async (payload, thunkAPI) => {
-		console.log(payload);
-		try {
-			const users = await axios.get(
-				`http://localhost:3000/profile/${payload.id}`,
-			);
-			return thunkAPI.fulfillWithValue(users.data);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-
 const initialState = {
-	users: [],
 	isLoading: false,
 	isError: false,
 	checkMailResult: "",
