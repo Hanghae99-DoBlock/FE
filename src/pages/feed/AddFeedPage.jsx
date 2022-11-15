@@ -153,7 +153,12 @@ const AddFeedPage = () => {
 					<StButton>선택버튼</StButton>
 				</Flex>
 				<Flex wd="335px" ht="40px" ai="flex-start" gap="13px">
-					<Box variant="feedTodo">6시에 기상하기!</Box>
+					<Box variant="feedTodo">
+						<Flex jc="space-between" wd="335px">
+							<Flex>6시에 기상하기!</Flex>
+							<Svg variant="BoastTodoDelete" />
+						</Flex>
+					</Box>
 				</Flex>
 			</Flex>
 			<Flex
