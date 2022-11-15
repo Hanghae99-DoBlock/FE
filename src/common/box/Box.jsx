@@ -27,9 +27,7 @@ const StBox = styled.div`
 					width: 279px;
 					height: 356px;
 					border-radius: 10px;
-					padding: 21px 26px 14px 26px;
-					position: fixed;
-					top: 20vh;
+					padding: 21px 20px 14px 20px;
 				`;
 
 			// 투두 박스
