@@ -13,16 +13,6 @@ const StLabel = styled.label`
 					font-weight: 400;
 					font-size: 13px;
 				`;
-			case "imageLabel":
-				return css`
-					position: absolute;
-					left: 0;
-					top: 0;
-					height: 100%;
-					width: 100%;
-					z-index: 1;
-					background-color: transparent;
-				`;
 			default:
 				break;
 		}
