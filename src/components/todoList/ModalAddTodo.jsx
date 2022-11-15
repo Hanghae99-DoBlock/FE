@@ -71,21 +71,20 @@ const ModalAddTodo = () => {
 							/>
 						</Flex>
 
-						{/* 옵션 인풋들 */}
-						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
-							{/* 메모 인풋 */}
-							<Flex gap="18.5px">
+						<Flex gap="18.5px" ai="flex-start" mg="14px 0 0 0">
+							{/* 메모 아이콘 */}
+							<Box variant="memoIconBox">
 								<Svg variant="memo" />
+							</Box>
 
-								{/* 메모 인풋 */}
-								<TextArea
-									variant="memo"
-									placeholder="메모"
-									maxLength="100"
-									rows="5"
-									cols="29"
-								/>
-							</Flex>
+							{/* 메모 인풋 */}
+							<TextArea
+								variant="memo"
+								placeholder="메모"
+								maxLength="100"
+								rows="5"
+								cols="29"
+							/>
 						</Flex>
 					</div>
 					{/* 추가 버튼 */}
