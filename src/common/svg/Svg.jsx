@@ -303,6 +303,7 @@ const Svg = ({ variant, onClick }) => {
 		case "todoCompleted":
 			return (
 				<svg
+					onClick={onClick}
 					width="24"
 					height="25"
 					viewBox="0 0 24 25"
@@ -322,14 +323,14 @@ const Svg = ({ variant, onClick }) => {
 						height="20"
 						rx="4"
 						stroke="#7474FF"
-						stroke-width="2"
+						strokeWidth="2"
 					/>
 					<path
 						d="M6.23472 13.4624L10.7567 18.6762L17.9891 8.59502"
 						stroke="#7474FF"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
 					/>
 				</svg>
 			);
