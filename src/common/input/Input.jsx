@@ -68,17 +68,6 @@ export const StInput = styled.input`
 						padding: 12px 0 16px;
 					}
 				`;
-			case "detailFeed":
-				return css`
-					display: flex;
-					width: 335px;
-					height: 180px;
-					background-color: #f4f4f4;
-					border-radius: 10px;
-					padding: 12px 16px 12px 16px;
-					outline-color: #7474ff;
-					align-items: flex-start;
-				`;
 		}
 	}}
 `;

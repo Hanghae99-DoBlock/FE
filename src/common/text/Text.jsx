@@ -19,6 +19,12 @@ const StText = styled.span`
 					font-size: 19px;
 					color: #131313;
 				`;
+			case "greyBig":
+				return css`
+					font-weight: 600;
+					font-size: 16px;
+					color: #979797;
+				`;
 			case "grey":
 				return css`
 					font-weight: 500;

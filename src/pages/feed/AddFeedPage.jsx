@@ -4,7 +4,7 @@ import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
 import { useState } from "react";
 import useInput from "../../common/hooks/useInput";
-import AddFeedModal from "./AddFeedModal";
+import AddFeedModal from "./ChoiceTodoModal";
 
 const AddFeedPage = () => {
 	const hashtag = useInput("");

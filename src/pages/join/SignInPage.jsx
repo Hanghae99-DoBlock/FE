@@ -2,14 +2,6 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import chevron from "../../images/chevron.left.svg";
-import useMediaQuery from "react-responsive";
-import {
-	BrowserView,
-	MobileView,
-	isBrowser,
-	isMobile,
-} from "react-device-detect";
 import { useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +13,6 @@ import Svg from "../../common/svg/Svg";
 const SignInPage = () => {
 	const token = localStorage.getItem("accessToken");
 	const decodeToken = jwtDecode(token);
-	console.log(decodeToken);
-
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 

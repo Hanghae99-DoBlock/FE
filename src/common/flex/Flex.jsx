@@ -24,10 +24,12 @@ export const StFlex = styled.div`
 	max-width: ${({ mxw }) => mxw};
 
 	/* 스타일 */
+	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
 	border-right: ${({ br }) => br};
 	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
+	box-shadow: ${({ bs }) => bs};
 
 	/* 여백 */
 	margin: ${({ mg }) => mg};

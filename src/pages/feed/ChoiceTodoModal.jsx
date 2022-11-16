@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
+import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
+import FeedPage from "./ChoiceTodo";
 import "./style/AddFeedStyle.css";
 
-const AddFeedModal = ({ setOpenModal }) => {
-	const [isChecked, setIsChecked] = useState(false);
+const ChoiceTodoModal = ({ setOpenModal }) => {
+	const dispatch = useDispatch();
+
+	const todolist = useSelector(state => state?.todoListSlice?.todoList);
+
+	const [checkTodo, setCheckTodo] = useState([]);
+
+	useEffect(() => {
+		dispatch(__getTodoList());
+	}, []);
 
 	const closeModalHandler = () => {
 		setOpenModal(false);
-	};
-
-	const changeCheckedHandler = e => {
-		setIsChecked(!isChecked);
-		console.log(e.target.checked);
 	};
 
 	return (
@@ -43,49 +48,16 @@ const AddFeedModal = ({ setOpenModal }) => {
 					<Flex jc="flex-start" fs="13" color="#979797" mg="0 0 24px 0">
 						최대 3개 선택 가능합니다
 					</Flex>
-					<Flex
-						wd="248px"
-						ht="157px"
-						jc="flex-start"
-						ai="flex-start"
-						dir="column"
-						overflow="auto"
-						gap="15px"
-					>
-						<Flex
-							wd="231px"
-							ht="29px"
-							jc="flex-start"
-							ai="flex-start"
-							gap="8px"
-							fs="14"
-							bb="1px solid #F2F2F5"
-						>
-							<label className="checkbox-wrap">
-								{!isChecked ? (
-									<Svg variant="nonCheck" />
-								) : (
-									<Svg variant="check" />
-								)}
-
-								<StCheckBox
-									onClick={changeCheckedHandler}
-									type="checkbox"
-									name="todo"
-								/>
-							</label>
-							<Flex jc="flex-start" ai="flex-start" fs="14" lh="22">
-								나르을 위해서
-							</Flex>
-						</Flex>
-					</Flex>
+					{todolist?.map(todo => {
+						return <FeedPage todo={todo} />;
+					})}
 				</Flex>
 			</Box>
 		</Flex>
 	);
 };
 
-export default AddFeedModal;
+export default ChoiceTodoModal;
 
 export const StCheckBox = styled.input`
 	border: 1px solid red;

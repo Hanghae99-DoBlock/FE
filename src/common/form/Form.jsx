@@ -11,7 +11,7 @@ const StForm = styled.form`
 			// 투두 작성 폼
 			case "todoForm":
 				return css`
-					height: 307px;
+					height: 300px;
 					display: flex;
 					flex-direction: column;
 					color: #979797;
