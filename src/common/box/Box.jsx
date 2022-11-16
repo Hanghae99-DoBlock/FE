@@ -49,6 +49,16 @@ const StBox = styled.div`
 					outline-color: #7474ff;
 					align-items: center;
 				`;
+			case "feedModal":
+				return css`
+					position: fixed;
+					margin: 0 auto;
+					background-color: white;
+					width: 279px;
+					height: 402px;
+					border-radius: 10px;
+					padding: 21px 20px 14px 20px;
+				`;
 			default:
 				break;
 		}

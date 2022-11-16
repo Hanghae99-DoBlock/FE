@@ -1,0 +1,18 @@
+.checkbox-wrap input[type="checkbox"] {
+	display: none;
+}
+
+.checkbox-wrap input[type="checkbox"]:checked + .check-icon {
+	background: url("../../../images/Radio2.png");
+}
+
+.checkbox-wrap .check-icon {
+	background: url("../../../images/Radio.png") center no-repeat;
+	transition-duration: 0.3s;
+}
+
+.check-icon {
+	width: 24px;
+	height: 24px;
+	border: none;
+}
