@@ -50,15 +50,7 @@ const ModalDetailTodo = () => {
 								<Flex gap="18.5px">
 									<Svg variant="memo" />
 									{/* 메모 인풋은 하드코딩만 해두었습니다 */}
-									<p
-										style={{
-											fontWeight: "500",
-											fontSize: "13px",
-											color: "#979797",
-										}}
-									>
-										메모
-									</p>
+									<Text variant="small">{todoItem.todoMemo}</Text>
 								</Flex>
 							</Flex>
 						</div>
