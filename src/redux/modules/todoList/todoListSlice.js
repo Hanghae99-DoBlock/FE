@@ -29,8 +29,12 @@ export const __getTodoList = createAsyncThunk(
 	"todo/getTodoList",
 	async (payload, thunkAPI) => {
 		try {
+			const { year, month, date } = payload;
+			console.log(year, month, date);
 			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=2022&month=11&day=14`,
+				`${serverUrl}/api/todolist?year=${parseInt(year)}&month=${parseInt(
+					month,
+				)}&day=${date}`,
 				{
 					headers: { Authorization: accessToken },
 				},
