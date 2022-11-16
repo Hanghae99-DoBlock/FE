@@ -49,7 +49,6 @@ const ModalDetailTodo = () => {
 								{/* 메모 인풋 */}
 								<Flex gap="18.5px">
 									<Svg variant="memo" />
-									{/* 메모 인풋은 하드코딩만 해두었습니다 */}
 									<Text variant="small">{todoItem.todoMemo}</Text>
 								</Flex>
 							</Flex>
