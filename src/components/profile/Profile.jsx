@@ -104,6 +104,7 @@ const Profile = () => {
 							</SecondHeading>
 						</Flex>
 					</Flex>
+					<Svg variant="Setting" />
 				</Flex>
 				<Flex
 					wd="333px"
