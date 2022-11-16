@@ -5,13 +5,8 @@ import { TodoItem } from "../../components";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
-const ListingTodos = () => {
-	const todoList = useSelector(state => state.todoListSlice.todoList);
+const ListingTodos = ({ todoList }) => {
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(__getTodoList());
-	}, []);
 
 	const openAddTodoModalHandler = () => {
 		dispatch(updateIsAddTodoModalOpen());
