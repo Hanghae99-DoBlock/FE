@@ -13,7 +13,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	const todolist = useSelector(state => state?.todoListSlice?.todoList);
 
 	const [checkTodo, setCheckTodo] = useState([]);
-
+	/*목록 가져오기*/
 	useEffect(() => {
 		dispatch(__getTodoList());
 	}, []);
