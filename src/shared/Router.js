@@ -1,7 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PasswordChange from "../components/profile/PasswordChange";
-import ProfileEdit from "../components/profile/ProfileEdit";
-import { ProfilePage, SignInPage, SignUpPage, TodoListPage } from "../pages";
+import {
+	ProfilePage,
+	SignInPage,
+	SignUpPage,
+	TodoListPage,
+	ProfileEditPage,
+	PasswordChangePage,
+} from "../pages";
 
 const Router = () => {
 	return (
@@ -11,8 +16,11 @@ const Router = () => {
 					<Route path="/signin" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/profile/:id" element={<ProfilePage />} />
-					<Route path="/profile/edit" element={<ProfileEdit />} />
-					<Route path="/profile/edit/password" element={<PasswordChange />} />
+					<Route path="/profile/edit/:id" element={<ProfileEditPage />} />
+					<Route
+						path="/profile/edit/password"
+						element={<PasswordChangePage />}
+					/>
 					<Route path="/" element={<TodoListPage />} />
 				</Routes>
 			</BrowserRouter>
