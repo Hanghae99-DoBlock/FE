@@ -8,7 +8,7 @@ const TodoItem = props => {
 	const dispatch = useDispatch();
 
 	const onClickTodoItemHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen(todoContent));
+		dispatch(updateIsDetailTodoModalOpen(props));
 	};
 
 	const checkTodoHandler = () => {
