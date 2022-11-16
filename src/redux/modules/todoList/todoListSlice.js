@@ -14,10 +14,10 @@ export const __addTodo = createAsyncThunk(
 	"todo/addTodo",
 	async (payload, thunkAPI) => {
 		try {
-			await axios.post(`${serverUrl}/api/todolist`, payload, {
+			const response = await axios.post(`${serverUrl}/api/todolist`, payload, {
 				headers: { Authorization: accessToken },
 			});
-			return thunkAPI.fulfillWithValue(payload);
+			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}

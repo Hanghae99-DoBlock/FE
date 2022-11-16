@@ -17,7 +17,7 @@ export const modalSlice = createSlice({
 		},
 		updateIsDetailTodoModalOpen: (state, action) => {
 			state.isDetailTodoModalOpen = !state.isDetailTodoModalOpen;
-			state.todoItem.todoContent = action.payload;
+			state.todoItem = action.payload;
 		},
 	},
 	extraReducers: {},

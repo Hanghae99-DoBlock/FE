@@ -35,34 +35,23 @@ const ModalDetailTodo = () => {
 					</Flex>
 					{/* 폼 */}
 					<Form variant="todoForm">
-						{/* 할 일 +  옵션 인풋들 */}
 						<div>
-							{/* 할 일 라벨 + 인풋 */}
+							{/* 할 일 */}
 							<Flex dir="column" ai="flex-start">
 								<Label variant="grey">할 일</Label>
 								<Box variant="todoContent">
 									<Text variant="medium">{todoItem.todoContent}</Text>
 								</Box>
 							</Flex>
-							{/* 옵션 인풋들 */}
 							<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
-								{/* 메모 인풋 */}
+								{/* 메모 */}
 								<Flex gap="18.5px">
 									<Svg variant="memo" />
-									{/* 메모 인풋은 하드코딩만 해두었습니다 */}
-									<p
-										style={{
-											fontWeight: "500",
-											fontSize: "13px",
-											color: "#979797",
-										}}
-									>
-										메모
-									</p>
+									<Text variant="small">{todoItem.todoMemo}</Text>
 								</Flex>
 							</Flex>
 						</div>
-						{/* 추가 버튼 */}
+						{/* 버튼 */}
 						<Button variant="addTodo">수정하기</Button>
 					</Form>
 				</Box>
