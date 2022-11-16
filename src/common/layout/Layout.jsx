@@ -17,6 +17,8 @@ const StLayout = styled.div`
 					min-width: 320px;
 					max-width: 430px;
 					margin: 0 auto;
+					height: 100%;
+					position: relative;
 				`;
 			default:
 				break;
