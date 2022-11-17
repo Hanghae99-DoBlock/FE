@@ -42,6 +42,39 @@ const StText = styled.span`
 					font-weight: 500;
 					font-size: 15px;
 				`;
+
+			// 피드
+			case "whiteMicro":
+				return css`
+					color: #ffffff;
+					font-weight: 600;
+					font-size: 10px;
+				`;
+			case "whiteTiny":
+				return css`
+					color: #ffffff;
+					font-weight: 500;
+					font-size: 12px;
+				`;
+			case "whiteSmall":
+				return css`
+					color: #ffffff;
+					font-weight: 510;
+					font-size: 13px;
+					margin: 0 0 2px 0;
+				`;
+			case "whiteMedium":
+				return css`
+					color: #ffffff;
+					font-weight: 500;
+					font-size: 14px;
+				`;
+			case "whiteBig":
+				return css`
+					color: #ffffff;
+					font-weight: 800;
+					font-size: 24px;
+				`;
 			default:
 				break;
 		}

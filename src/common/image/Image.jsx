@@ -32,6 +32,16 @@ const StImage = styled.img`
 					height: 100%;
 					object-fit: cover;
 				`;
+			case "profilePicSmall":
+				return css`
+					background-image: url(${ProfileImage});
+					background-repeat: no-repeat;
+					background-size: cover;
+					width: 24px;
+					height: 24px;
+					border-radius: 50%;
+					outline-offset: -1px;
+				`;
 			default:
 				break;
 		}

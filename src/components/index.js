@@ -1,5 +1,5 @@
 import {
-  TodoListCalendar,
+	TodoListCalendar,
 	ListingTodos,
 	TodoListHeader,
 	ModalAddTodo,
@@ -7,11 +7,14 @@ import {
 	ModalDetailTodo,
 } from "./todoList";
 
+import { FeedItem } from "./feed";
+
 export {
-  TodoListCalendar,
+	TodoListCalendar,
 	ListingTodos,
 	TodoListHeader,
 	ModalAddTodo,
 	TodoItem,
 	ModalDetailTodo,
+	FeedItem,
 };

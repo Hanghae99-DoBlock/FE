@@ -6,6 +6,7 @@ import {
 	TodoListPage,
 	ProfileEditPage,
 	PasswordChangePage,
+	FeedPage,
 } from "../pages";
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
 						element={<PasswordChangePage />}
 					/>
 					<Route path="/" element={<TodoListPage />} />
+					<Route path="/feed" element={<FeedPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>
