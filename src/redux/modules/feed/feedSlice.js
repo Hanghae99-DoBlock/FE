@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { FeedPage } from "../../../pages";
 
 const initialState = {
-	isChecked: false,
 	checkedList: [],
 };
 
@@ -12,16 +11,20 @@ export const feedSlice = createSlice({
 	initialState,
 	reducers: {
 		choiceTodo: (state, action) => {
-			state.isChecked = !state.isChecked;
-			if (action.payload.isChecked) {
-				state?.checkedList.push(action.payload.value);
+			if (action.payload.isChecked && state.checkedList.length < 3) {
+				state.checkedList.push(action.payload.value);
 			} else {
-				state.checkedList = state?.checkedList.filter(list => {
+				state.checkedList = state.checkedList.filter(list => {
 					return action.payload.value !== list;
 				});
 			}
 		},
+		deleteTodo: (state, action) => {
+			state.checkedList = state.checkedList.filter(list => {
+				return action.payload !== list;
+			});
+		},
 	},
 });
-export const { choiceTodo } = feedSlice.actions;
+export const { choiceTodo, deleteTodo } = feedSlice.actions;
 export default feedSlice.reducer;

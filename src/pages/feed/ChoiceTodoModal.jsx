@@ -6,6 +6,7 @@ import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import FeedPage from "./ChoiceTodo";
 import "./style/AddFeedStyle.css";
+import React from "react";
 
 const ChoiceTodoModal = ({ setOpenModal }) => {
 	const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	);
 };
 
-export default ChoiceTodoModal;
+export default React.memo(ChoiceTodoModal);
 
 export const StCheckBox = styled.input`
 	border: 1px solid red;

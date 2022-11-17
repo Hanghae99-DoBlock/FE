@@ -2,15 +2,39 @@ import { Box, Button, Flex } from "../../common";
 import { StInput } from "../../common/input/Input";
 import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import AddFeedModal from "./ChoiceTodoModal";
+import { useSelector } from "react-redux";
+import BoastFeed from "./BoastFeed";
 
 const AddFeedPage = () => {
 	const hashtag = useInput("");
 	const [hashtagArr, setHashtagArr] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
+	const boastFeed = useSelector(state => state.feed.checkedList);
+	const boastFeedNonDuple = boastFeed?.filter((val, i) => {
+		return boastFeed.indexOf(val) === i;
+	});
+	const [color, setColor] = useState("");
 
+	const yeollowHandler = () => {
+		setColor("#FFAC33");
+	};
+
+	const orangeHandler = () => {
+		setColor("#FE8358");
+	};
+
+	const blueHandler = () => {
+		setColor("#49AFFA");
+	};
+
+	const greenHandler = () => {
+		setColor("#4CCCB5");
+	};
+
+	useEffect(() => {}, [boastFeedNonDuple]);
 	const openModalHandler = () => {
 		setOpenModal(true);
 	};
@@ -19,6 +43,7 @@ const AddFeedPage = () => {
 		setOpenModal(false);
 	};
 
+	console.log(color);
 	const addHashtag = e => {
 		if (e?.keyCode === 32 && hashtagArr.length < 3) {
 			setHashtagArr([...hashtagArr, hashtag.value]);
@@ -79,10 +104,10 @@ const AddFeedPage = () => {
 						피드 컬러
 					</Flex>
 					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
-						<Flex wd="40px" ht="40px" bg="#FFAC33" radius="10px"></Flex>
-						<Flex wd="40px" ht="40px" bg="#FE8358" radius="10px"></Flex>
-						<Flex wd="40px" ht="40px" bg="#49AFFA" radius="10px"></Flex>
-						<Flex wd="40px" ht="40px" bg="#4CCCB5" radius="10px"></Flex>
+						<StYellowBox onClick={yeollowHandler}></StYellowBox>
+						<StOrangeBox onClick={orangeHandler}></StOrangeBox>
+						<StBlueBox onClick={blueHandler}></StBlueBox>
+						<StGreenBox onClick={greenHandler}></StGreenBox>
 					</Flex>
 				</Flex>
 				<Flex
@@ -162,13 +187,10 @@ const AddFeedPage = () => {
 						</Flex>
 						<StButton onClick={openModalHandler}>선택버튼</StButton>
 					</Flex>
-					<Flex wd="335px" ht="40px" ai="flex-start" gap="13px">
-						<Box variant="feedTodo">
-							<Flex jc="space-between" wd="335px">
-								<Flex>6시에 기상하기!</Flex>
-								<Svg variant="BoastTodoDelete" />
-							</Flex>
-						</Box>
+					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
+						{boastFeedNonDuple?.map(todo => {
+							return <BoastFeed todo={todo} />;
+						})}
 					</Flex>
 				</Flex>
 				<Flex
@@ -236,7 +258,7 @@ const AddFeedPage = () => {
 							fw="600"
 							jc="flex-start"
 						>
-							태그 추가
+							상세 내용
 						</Flex>
 						<Flex
 							dir="row"
@@ -276,6 +298,60 @@ const AddFeedPage = () => {
 };
 
 export default AddFeedPage;
+
+export const StYellowBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #ffac33;
+	border-radius: 10px;
+	:hover {
+		cursor: pointer;
+	}
+
+	:focus {
+		outline: 2px solid #7474ff;
+	}
+`;
+
+export const StOrangeBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #fe8358;
+	border-radius: 10px;
+	:hover {
+		cursor: pointer;
+	}
+	:focus {
+		outline: 2px solid #7474ff;
+	}
+`;
+
+export const StBlueBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #49affa;
+	border-radius: 10px;
+
+	:hover {
+		cursor: pointer;
+	}
+	:focus {
+		outline: 2px solid #7474ff;
+	}
+`;
+
+export const StGreenBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #4cccb5;
+	border-radius: 10px;
+	:hover {
+		cursor: pointer;
+	}
+	:focus {
+		outline: 2px solid #7474ff;
+	}
+`;
 
 export const StDetailContent = styled.textarea`
 	min-width: 335px;

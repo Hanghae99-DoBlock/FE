@@ -10,11 +10,7 @@ import { StCheckBox } from "./ChoiceTodoModal";
 const ChoiceTodo = ({ todo }) => {
 	const dispatch = useDispatch();
 	const [checked, setChecked] = useState(false);
-	const [checkedList, setCheckedList] = useState([]);
-
-	const isChecked = useSelector(state => state.feed.isChecked);
 	const boastTodo = useSelector(state => state.feed.checkedList);
-	console.log(boastTodo);
 
 	const changeCheckedHandler = e => {
 		setChecked(!checked);
