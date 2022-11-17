@@ -75,6 +75,16 @@ const StText = styled.span`
 					font-weight: 800;
 					font-size: 24px;
 				`;
+			case "tabMenu":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+				`;
+			case "selectedTabMenu":
+				return css`
+					font-weight: 700;
+					font-size: 14px;
+				`;
 			default:
 				break;
 		}

@@ -127,6 +127,38 @@ const StBox = styled.div`
 						outline: 1px solid #7474ff;
 					}
 				`;
+			// 기본 탭 메뉴
+			case "tabMenu":
+				return css`
+					display: flex;
+					width: 100%;
+					height: 100%;
+					justify-content: center;
+					align-items: center;
+					background: white;
+					border-bottom: 1px solid #e0e0e0;
+				`;
+
+			// 선택된 탭 메뉴
+			case "selectedTabMenu":
+				return css`
+					display: flex;
+					width: 100%;
+					height: 100%;
+					justify-content: center;
+					align-items: center;
+					background: white;
+					border-bottom: 2px solid #333333;
+				`;
+
+			// 피드 아이템 블루
+			case "blueFeedItem":
+				return css`
+					background-image: url(/images/feed/blueFeedItem.svg);
+					background-size: contain;
+					background-repeat: no-repeat;
+					padding: 35px;
+				`;
 			default:
 				break;
 		}

@@ -1,18 +1,10 @@
-import { Flex, Image, Svg, Text } from "../../common";
+import { Box, Flex, Image, Svg, Text } from "../../common";
 
 const FeedItem = () => {
 	return (
-		<Flex
-			bg="#575757"
-			wd="100%"
-			ht="196px"
-			pd="35px"
-			dir="column"
-			jc="space-between"
-			radius="15px"
-		>
+		<Box variant="blueFeedItem">
 			{/* 상단 */}
-			<Flex dir="column" ai="center" gap="15px" mg="0 0 30px 0">
+			<Flex dir="column" ai="center" gap="15px" mg="0 0 10px 0">
 				<Text variant="whiteTiny">6시 기상하기</Text>
 				<Text variant="whiteBig">미라클 모닝 성공</Text>
 				<Text variant="whiteMedium"># 미라클모닝 # 내가해냄 # 6시기상</Text>
@@ -40,7 +32,7 @@ const FeedItem = () => {
 					<Text variant="whiteMicro">어쩌구</Text>
 				</Flex>
 			</Flex>
-		</Flex>
+		</Box>
 	);
 };
 
