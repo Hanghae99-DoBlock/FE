@@ -71,8 +71,6 @@ const ProfileEdit = () => {
 
 	const user = useSelector(state => state.profileSlice.profile);
 
-	console.log(user);
-
 	return (
 		<Flex
 			dir="column"
