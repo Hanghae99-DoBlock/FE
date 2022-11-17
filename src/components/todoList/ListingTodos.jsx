@@ -15,7 +15,7 @@ const ListingTodos = props => {
 
 	return (
 		<Flex dir="column" gap="10px" pd="0 16px 26px" bg="#F9F9F9">
-			{todoList ? (
+			{todoList[0] ? (
 				// 투두가 있을 때
 				todoList.map(todoItem => (
 					<TodoItem
