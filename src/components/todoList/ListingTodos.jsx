@@ -5,11 +5,12 @@ import { TodoItem } from "../../components";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
-const ListingTodos = ({ todoList }) => {
+const ListingTodos = props => {
+	const { year, month, date, todoList } = props;
 	const dispatch = useDispatch();
 
 	const openAddTodoModalHandler = () => {
-		dispatch(updateIsAddTodoModalOpen());
+		dispatch(updateIsAddTodoModalOpen(props));
 	};
 
 	return (
