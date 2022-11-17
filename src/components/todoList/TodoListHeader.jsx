@@ -13,7 +13,7 @@ const TodoListHeader = props => {
 
 	useEffect(() => {
 		dispatch(__getTodoList(props));
-	}, []);
+	}, [props]);
 
 	return (
 		<>
