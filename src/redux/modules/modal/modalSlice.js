@@ -16,9 +16,9 @@ export const modalSlice = createSlice({
 		updateIsAddTodoModalOpen: (state, action) => {
 			state.isAddTodoModalOpen = !state.isAddTodoModalOpen;
 			state.selectedDate = {
-				year: action.payload.year,
-				month: action.payload.month,
-				date: action.payload.date,
+				year: action.payload?.year,
+				month: action.payload?.month,
+				date: action.payload?.date,
 			};
 		},
 		updateIsDetailTodoModalOpen: (state, action) => {
