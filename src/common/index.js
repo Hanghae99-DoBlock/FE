@@ -10,6 +10,7 @@ import Flex from "./flex/Flex";
 import Image from "./image/Image";
 import Hr from "./hr/Hr";
 import TextArea from "./textArea/TextArea";
+import Nav from "./nav/Nav";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
 
 export {
@@ -28,4 +29,5 @@ export {
 	Image,
 	Hr,
 	TextArea,
+	Nav,
 };

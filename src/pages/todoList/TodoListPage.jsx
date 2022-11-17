@@ -3,13 +3,17 @@ import {
 	TodoListCalendar,
 	ListingTodos,
 	TodoListHeader,
+	NavBelow,
 } from "../../components";
 
 const TodoListPage = () => {
 	return (
-		<Flex dir="column" ht="100%">
-			<TodoListCalendar />
-		</Flex>
+		<>
+			<Flex dir="column" ht="100%">
+				<TodoListCalendar />
+			</Flex>
+			<NavBelow />
+		</>
 	);
 };
 
