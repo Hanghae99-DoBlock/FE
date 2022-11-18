@@ -29,6 +29,7 @@ export const StFlex = styled.div`
 	border-right: ${({ br }) => br};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
+	cursor: ${({ cursor }) => cursor};
 
 	/* 여백 */
 	margin: ${({ mg }) => mg};
