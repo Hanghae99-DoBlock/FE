@@ -75,6 +75,13 @@ const StBox = styled.div`
 					justify-content: flex-start;
 					width: 300px;
 				`;
+			case "stPasswordChange":
+				return css`
+					color: #7474ff;
+					display: flex;
+					justify-content: flex-start;
+					width: 300px;
+				`;
 			case "stnicknameBlue":
 				return css`
 					display: flex;
@@ -119,6 +126,19 @@ const StBox = styled.div`
 					display: flex;
 					flex-direction: row;
 					width: 335px;
+					background-color: #f4f4f4;
+					align-items: center;
+					border-radius: 10px;
+					justify-content: space-between;
+					:focus-within {
+						outline: 1px solid #7474ff;
+					}
+				`;
+			case "passworadChange":
+				return css`
+					display: flex;
+					flex-direction: row;
+					width: 257px;
 					background-color: #f4f4f4;
 					align-items: center;
 					border-radius: 10px;
