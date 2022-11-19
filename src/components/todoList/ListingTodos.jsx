@@ -5,16 +5,17 @@ import { TodoItem } from "../../components";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
-const ListingTodos = ({ todoList }) => {
+const ListingTodos = props => {
+	const { year, month, date, todoList } = props;
 	const dispatch = useDispatch();
 
 	const openAddTodoModalHandler = () => {
-		dispatch(updateIsAddTodoModalOpen());
+		dispatch(updateIsAddTodoModalOpen(props));
 	};
 
 	return (
 		<Flex dir="column" gap="10px" pd="0 16px 26px" bg="#F9F9F9">
-			{todoList ? (
+			{todoList[0] ? (
 				// 투두가 있을 때
 				todoList.map(todoItem => (
 					<TodoItem

@@ -5,6 +5,7 @@ const initialState = {
 	isAddTodoModalOpen: false,
 	isDetailTodoModalOpen: false,
 	todoItem: { todoContent: "" },
+	selectedDate: {},
 };
 
 // 슬라이스
@@ -14,6 +15,11 @@ export const modalSlice = createSlice({
 	reducers: {
 		updateIsAddTodoModalOpen: (state, action) => {
 			state.isAddTodoModalOpen = !state.isAddTodoModalOpen;
+			state.selectedDate = {
+				year: parseInt(action.payload?.year),
+				month: parseInt(action.payload?.month),
+				day: parseInt(action.payload?.date),
+			};
 		},
 		updateIsDetailTodoModalOpen: (state, action) => {
 			state.isDetailTodoModalOpen = !state.isDetailTodoModalOpen;

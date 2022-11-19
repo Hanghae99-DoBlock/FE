@@ -30,11 +30,11 @@ export const __getTodoList = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const { year, month, date } = payload;
-			console.log(year, month, date);
+			const intYear = parseInt(year);
+			const intMonth = parseInt(month);
+			const intDay = parseInt(date);
 			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=${parseInt(year)}&month=${parseInt(
-					month,
-				)}&day=${date}`,
+				`${serverUrl}/api/todolist?year=${intYear}&month=${intMonth}&day=${intDay}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -83,6 +83,10 @@ export const todoListSlice = createSlice({
 			// 투두리스트 조회 성공
 			.addCase(__getTodoList.fulfilled, (state, action) => {
 				state.todoList = action.payload;
+			})
+			// 투두리스트 조회 실패
+			.addCase(__getTodoList.rejected, (state, action) => {
+				state.todoList = [];
 			})
 
 			// 투두 체크 성공

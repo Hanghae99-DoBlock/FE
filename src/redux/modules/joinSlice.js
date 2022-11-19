@@ -43,7 +43,6 @@ export const __checkEmail = createAsyncThunk(
 				`${serverUrl}/api/members/checkmail`,
 				payload,
 			);
-			console.log(data);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
@@ -59,7 +58,6 @@ export const __checkNick = createAsyncThunk(
 				`${serverUrl}/api/members/checkname`,
 				payload,
 			);
-			console.log(data);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
