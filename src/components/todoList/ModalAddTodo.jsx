@@ -19,7 +19,7 @@ const ModalAddTodo = () => {
 	const isAddTodoModalOpen = useSelector(
 		state => state.modalSlice.isAddTodoModalOpen,
 	);
-	const selectedDate = useSelector(state => state.modalSlice.selectedDate);
+	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
