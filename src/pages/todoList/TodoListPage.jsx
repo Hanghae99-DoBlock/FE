@@ -4,6 +4,7 @@ import {
 	TodoListCalendar,
 	ListingTodos,
 	TodoListHeader,
+	NavBelow,
 } from "../../components";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
@@ -16,13 +17,10 @@ const TodoListPage = () => {
 
 	return (
 		<>
-			<Flex dir="column" ht="100vh" bg="#F9F9F9">
+			<Flex dir="column" ht="100%">
 				<TodoListCalendar />
-				{/* 투두 추가 모달 오픈 버튼 */}
-				<Flex wd="100%" position="sticky" bottom="70px" jc="flex-end" pd="10px">
-					<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
-				</Flex>
 			</Flex>
+			<NavBelow />
 		</>
 	);
 };
