@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Flex, Svg, Input, Box } from "../../common";
 import useInput from "../../common/hooks/useInput";
+import { __editPassword } from "../../redux/modules/profileSlice";
 
 const PasswordChange = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { id } = useParams();
 
 	const [passwordType, setPasswordType] = useState({
 		type: "password",
@@ -38,11 +40,15 @@ const PasswordChange = () => {
 		}
 	};
 
+	const passwordChangeHandler = () => {
+		dispatch(__editPassword());
+	};
+
 	return (
 		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
 			<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
 				<Flex wd="113px" ht="42px" jc="flex-start" mg="0 0 0 17px">
-					<Svg variant="chevron" onClick={() => navigate("/signin")} />
+					<Svg variant="chevron" onClick={() => navigate(-1)} />
 				</Flex>
 				<Flex fs="18" fw="600">
 					비밀번호 변경
@@ -82,15 +88,7 @@ const PasswordChange = () => {
 						fs="12"
 						ai="center"
 						jc="flex-start"
-					>
-						<Box variant="stSvg">
-							<Svg variant="alert" />
-						</Box>
-						<Box variant="stInfo">
-							비밀번호는 8-20자, 영문 대소문자,숫자,특수문자 !@#$%^&*를 적어도
-							하나이상 포함해야합니다
-						</Box>
-					</Flex>
+					></Flex>
 				) : (
 					<Flex
 						dir="row"
@@ -99,12 +97,7 @@ const PasswordChange = () => {
 						fs="12"
 						ai="center"
 						jc="flex-start"
-					>
-						<Box variant="stSvg">
-							<Svg variant="alert" />
-						</Box>
-						<Box variant="stInfo">사용가능한 비밀번호 입니다</Box>
-					</Flex>
+					></Flex>
 				)}
 			</Flex>
 			<Flex
@@ -202,7 +195,7 @@ const PasswordChange = () => {
 				<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 			)}
 			<Flex
-				style={{ marginTop: "10px" }}
+				style={{ marginTop: "10px", cursor: "pointer" }}
 				fw="600"
 				fs="16px"
 				pd="
@@ -211,6 +204,7 @@ const PasswordChange = () => {
 				ht="60px"
 				bc="#C8C8C8"
 				radius="10px"
+				onClick={passwordChangeHandler}
 			>
 				변경 완료
 			</Flex>

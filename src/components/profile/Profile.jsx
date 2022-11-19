@@ -9,8 +9,8 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { __getUsers } from "../../redux/modules/profileSlice";
+import { useEffect, useState } from "react";
+import { __followThunk, __getUser } from "../../redux/modules/profileSlice";
 const Profile = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -23,12 +23,13 @@ const Profile = () => {
 	console.log(profile);
 
 	useEffect(() => {
-		dispatch(__getUsers(id));
+		dispatch(__getUser(id));
 	}, []);
 
 	const profileEditHandler = () => {
-		navigate(`/profile/edit/${id}`);
+		navigate(`/profile/edit`);
 	};
+
 	return (
 		<>
 			<Flex
@@ -47,7 +48,7 @@ const Profile = () => {
 							<Image
 								variant="image"
 								src={
-									profile.profileImage === ""
+									decodeToken.profileImage === ""
 										? decodeToken.profileImage
 										: profile.profileImage
 								}
@@ -59,9 +60,23 @@ const Profile = () => {
 								</Flex>
 							</FirstHeading>
 						</Flex>
-						<div onClick={profileEditHandler}>
-							<Svg variant="Setting" />
-						</div>
+						{decodeToken.memberId === profile.memberId ? (
+							<Svg variant="Setting" onClick={profileEditHandler} />
+						) : profile.followOrNot === false ? (
+							<Svg
+								variant="profileFollow"
+								onClick={() => {
+									dispatch(__followThunk(id));
+								}}
+							></Svg>
+						) : (
+							<Svg
+								variant="profileFollowCancel"
+								onClick={() => {
+									dispatch(__followThunk(id));
+								}}
+							></Svg>
+						)}
 					</Flex>
 				</Flex>
 				<Flex
@@ -78,33 +93,53 @@ const Profile = () => {
 					<SecondHeading fw="300" fs="12px" color="#979797">
 						게시글
 						<Flex fw="600" fs="19" color="#7474ff" ta="center" mg="10px 0 0 0">
-							3
+							{profile.countFeed}
 						</Flex>
 					</SecondHeading>
 					<Hr variant="hr" />
 					<SecondHeading fw="300" fs="12px" color="#979797">
 						팔로잉
-						<Flex fw="600" fs="19" color="#7474ff" ta="center" mg="10px 0 0 0">
-							220
+						<Flex
+							fw="600"
+							fs="19"
+							color="#7474ff"
+							ta="center"
+							mg="10px 0 0 0"
+							onClick={() => {
+								navigate(`/profile/${id}/following`);
+							}}
+							style={{ cursor: "pointer" }}
+						>
+							{profile.countFollowing}
 						</Flex>
 					</SecondHeading>
 					<Hr variant="hr" />
 					<SecondHeading fw="300" fs="12px" color="#979797">
 						팔로워
-						<Flex fw="600" fs="19" color="#7474ff" ta="center" mg="10px 0 0 0">
-							39
+						<Flex
+							fw="600"
+							fs="19"
+							color="#7474ff"
+							ta="center"
+							mg="10px 0 0 0"
+							onClick={() => {
+								navigate(`/profile/${id}/follower`);
+							}}
+							style={{ cursor: "pointer" }}
+						>
+							{profile.countFollower}
 						</Flex>
 					</SecondHeading>
 				</Flex>
 				<Flex wd="331px" mg="20px auto">
 					<Flex wd="100%" jc="space-between">
 						<Flex jc="space-between">
-							<SecondHeading fw="600" fs="15px" mg="0 0 0 10px">
+							<SecondHeading fw="600" fs="15px">
 								내가 작성한 피드 게시글
 							</SecondHeading>
 						</Flex>
+						<Svg variant="rightArrow"></Svg>
 					</Flex>
-					<Svg variant="Setting" />
 				</Flex>
 				<Flex
 					wd="333px"
@@ -152,6 +187,18 @@ const Profile = () => {
 							#미라클모닝 #뿌듯 #오늘도성공
 						</Flex>
 					</FirstHeading>
+				</Flex>
+				<Flex wd="331px" mg="20px auto">
+					<Flex wd="100%" jc="space-between">
+						<Flex jc="space-between">
+							<SecondHeading fw="600" fs="15px">
+								{decodeToken.memberId === profile.memberId
+									? "내 뱃지 12개"
+									: "획득한 뱃지 12개"}
+							</SecondHeading>
+						</Flex>
+						<Svg variant="rightArrow"></Svg>
+					</Flex>
 				</Flex>
 			</Flex>
 		</>
