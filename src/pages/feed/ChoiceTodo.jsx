@@ -17,12 +17,15 @@ const ChoiceTodo = ({ todo }) => {
 		dispatch(
 			choiceTodo({ value: e.target.value, isChecked: e.target.checked }),
 		);
+		if (boastTodo.length >= 3) {
+			setChecked(false);
+		}
 	};
 
 	return (
 		<Flex
 			wd="231px"
-			ht="29px"
+			mht="29px"
 			jc="flex-start"
 			ai="flex-start"
 			gap="8px"

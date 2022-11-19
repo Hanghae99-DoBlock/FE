@@ -15,9 +15,6 @@ const BoastFeed = ({ todo }) => {
 		<Box variant="feedTodo">
 			<Flex jc="space-between" wd="335px">
 				<Flex>{todo}</Flex>
-				<Flex wd="14px" ht="14px" onClick={deleteTodoHandler}>
-					<Svg variant="BoastTodoDelete" />
-				</Flex>
 			</Flex>
 		</Box>
 	);

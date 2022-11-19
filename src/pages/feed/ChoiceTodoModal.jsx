@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
-import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import FeedPage from "./ChoiceTodo";
 import "./style/AddFeedStyle.css";
 import React from "react";
+import ChoiceTodo from "./ChoiceTodo";
 
 const ChoiceTodoModal = ({ setOpenModal }) => {
 	const dispatch = useDispatch();
 
-	const todolist = useSelector(state => state?.todoListSlice?.todoList);
+	const todolist = useSelector(state => state.todoListSlice.todoList);
 
-	const [checkTodo, setCheckTodo] = useState([]);
 	/*목록 가져오기*/
 	useEffect(() => {
 		dispatch(__getTodoList());
@@ -35,7 +34,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 		>
 			{/* 모달 */}
 			<Box variant="feedModal">
-				<Flex dir="column" ai="none" jc="none" gap="7px">
+				<Flex dir="column" ai="none" jc="none" gap="7px" overflowX="hidden">
 					<Flex jc="flex-end">
 						{/* 닫기 버튼 */}
 						<Svg variant="close" onClick={closeModalHandler}></Svg>
@@ -49,9 +48,25 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 					<Flex jc="flex-start" fs="13" color="#979797" mg="0 0 24px 0">
 						최대 3개 선택 가능합니다
 					</Flex>
-					{todolist?.map(todo => {
-						return <FeedPage todo={todo} />;
-					})}
+					<Flex
+						dir="column"
+						overflowY="auto"
+						overflowX="hidden"
+						gap="15px"
+						wd="248px"
+						ht="157px"
+						jc="flex-start"
+					>
+						{/*등록된 투두리스트 목록을 체크박스에서 체크할 수 있게 불러옴*/}
+						{todolist?.map(todo => {
+							return <ChoiceTodo todo={todo} />;
+						})}
+					</Flex>
+					<Flex>
+						<Button onClick={closeModalHandler} variant="addBoastTodo">
+							선택 완료
+						</Button>
+					</Flex>
 				</Flex>
 			</Box>
 		</Flex>

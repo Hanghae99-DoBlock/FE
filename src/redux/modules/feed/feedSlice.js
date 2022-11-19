@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-import { FeedPage } from "../../../pages";
 
 const initialState = {
 	checkedList: [],
+	tagList: [],
 };
 
 export const feedSlice = createSlice({
@@ -24,7 +23,25 @@ export const feedSlice = createSlice({
 				return action.payload !== list;
 			});
 		},
+		resetTodo: (state, action) => {
+			state.checkedList = [];
+		},
+		addTag: (state, action) => {
+			if (state.tagList.length < 3) {
+				state.tagList.push(action.payload.value);
+			} else {
+				state.tagList = state.tagList.filter(tag => {
+					return action.payload.value !== tag;
+				});
+			}
+		},
+		deleteTag: (state, action) => {
+			state.tagList = state.tagList.filter((tag, index) => {
+				return action.payload.value !== tag;
+			});
+		},
 	},
 });
-export const { choiceTodo, deleteTodo } = feedSlice.actions;
+export const { choiceTodo, deleteTodo, resetTodo, addTag, deleteTag } =
+	feedSlice.actions;
 export default feedSlice.reducer;

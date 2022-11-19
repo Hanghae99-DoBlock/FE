@@ -5,19 +5,35 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import AddFeedModal from "./ChoiceTodoModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BoastFeed from "./BoastFeed";
+import {
+	addTag,
+	deleteTag,
+	resetTodo,
+} from "../../redux/modules/feed/feedSlice";
+import TagList, { StTagInput } from "./TagList";
 
 const AddFeedPage = () => {
-	const hashtag = useInput("");
-	const [hashtagArr, setHashtagArr] = useState([]);
+	const dispatch = useDispatch();
 	const [openModal, setOpenModal] = useState(false);
+	const [tagInput, setTagInput] = useState([]);
+	const [tagValue, setTagValue] = useState("");
+	const [isReadOnly, setIsReadOnly] = useState(false);
 	const boastFeed = useSelector(state => state.feed.checkedList);
+	const tagList = useSelector(state => state.feed.tagList);
+
+	{
+		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
+	}
 	const boastFeedNonDuple = boastFeed?.filter((val, i) => {
 		return boastFeed.indexOf(val) === i;
 	});
 	const [color, setColor] = useState("");
 
+	{
+		/*전달할 색상 값 변경 */
+	}
 	const yeollowHandler = () => {
 		setColor("#FFAC33");
 	};
@@ -33,25 +49,54 @@ const AddFeedPage = () => {
 	const greenHandler = () => {
 		setColor("#4CCCB5");
 	};
-
-	useEffect(() => {}, [boastFeedNonDuple]);
-	const openModalHandler = () => {
-		setOpenModal(true);
+	const addTagInput = e => {
+		console.log(tagInput);
+		if (tagInput.length < 3) {
+			setTagInput(
+				tagInput.concat(
+					<TagList tagInput={tagInput} deleteTagInput={deleteTagInput} />,
+				),
+			);
+		} else {
+			return;
+		}
+		addTagHandler(e);
 	};
+	const deleteTagInput = e => {
+		if (e.target.readOnly) {
+			console.log(e.target);
+			dispatch(deleteTag({ value: e.target.value }));
 
-	const closeModalHandler = () => {
-		setOpenModal(false);
-	};
-
-	console.log(color);
-	const addHashtag = e => {
-		if (e?.keyCode === 32 && hashtagArr.length < 3) {
-			setHashtagArr([...hashtagArr, hashtag.value]);
-			hashtag.onReset();
-		} else if (hashtagArr.length >= 3) {
-			hashtagArr.splice(3, 1);
+			setTagInput(
+				tagInput.filter((tag, index) => {
+					console.log(tag);
+					return tagInput.indexOf(tag);
+				}),
+			);
 		}
 	};
+	const addTagHandler = e => {
+		if (e.keyCode === 13 && tagList.length < 3) {
+			setTagInput(...tagInput, e.target.value);
+			setIsReadOnly(true);
+			dispatch(addTag({ value: tagValue }));
+		}
+	};
+
+	useEffect(() => {}, [boastFeedNonDuple, tagList]);
+	const openModalHandler = () => {
+		setOpenModal(true);
+		dispatch(resetTodo());
+	};
+
+	// const addHashtag = e => {
+	// 	if (e?.keyCode === 32 && hashtagArr.length < 3) {
+	// 		setHashtagArr([...hashtagArr, hashtag.value]);
+	// 		hashtag.onReset();
+	// 	} else if (hashtagArr.length >= 3) {
+	// 		hashtagArr.splice(3, 1);
+	// 	}
+	// };
 
 	return (
 		<>
@@ -146,9 +191,6 @@ const AddFeedPage = () => {
 							최대 30자 입력 가능합니다
 						</Flex>
 					</Flex>
-					<Flex wd="335px" ht="40px" ai="flex-start" gap="13px">
-						<StInput variant="addFeedInput" />
-					</Flex>
 				</Flex>
 				<Flex
 					dir="column"
@@ -157,6 +199,7 @@ const AddFeedPage = () => {
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
+					gap="13px"
 				>
 					<Flex jc="flex-start" gap="6px" ai="baseline">
 						<Flex
@@ -171,6 +214,7 @@ const AddFeedPage = () => {
 						>
 							자랑하고 싶은 투두
 						</Flex>
+
 						<Flex
 							dir="row"
 							ai="flex-start"
@@ -185,57 +229,21 @@ const AddFeedPage = () => {
 						>
 							최대 3개 선택 가능합니다
 						</Flex>
-						<StButton onClick={openModalHandler}>선택버튼</StButton>
 					</Flex>
+					<Box variant="feedTodo">
+						<Flex jc="space-between" wd="335px">
+							<Flex fs="14" color="#808080">
+								투두 추가
+							</Flex>
+							<Flex wd="14px" ht="14px" onClick={openModalHandler}>
+								<Svg variant="plusTodo" />
+							</Flex>
+						</Flex>
+					</Box>
 					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
 						{boastFeedNonDuple?.map(todo => {
 							return <BoastFeed todo={todo} />;
 						})}
-					</Flex>
-				</Flex>
-				<Flex
-					dir="column"
-					wd="375px"
-					ht="72px"
-					jc="flex-start"
-					pd="0 20px"
-					ai="normal"
-				>
-					<Flex jc="flex-start" gap="6px" ai="baseline">
-						<Flex
-							dir="row"
-							ai="flex-start"
-							gap="6px"
-							wd="65px"
-							ht="26px"
-							fs="14"
-							fw="600"
-							jc="flex-start"
-						>
-							태그 추가
-						</Flex>
-						<Flex
-							dir="row"
-							ai="flex-start"
-							gap="6px"
-							wd="148px"
-							ht="26px"
-							fs="12"
-							jc="flex-start"
-							color="#131313"
-							oc="0.4"
-							fw="600"
-						>
-							최대 3개 입력 가능합니다
-						</Flex>
-					</Flex>
-					<Flex wd="335px" ht="40px" ai="flex-start" gap="13px">
-						<StInput
-							onKeyDown={addHashtag}
-							variant="addFeedInput"
-							value={hashtag.value}
-							onChange={hashtag.onChange}
-						/>
 					</Flex>
 				</Flex>
 				<Flex
@@ -277,6 +285,50 @@ const AddFeedPage = () => {
 					</Flex>
 					<Flex wd="335px" ht="160px" ai="flex-start" gap="13px">
 						<StDetailContent maxLength={100} />
+					</Flex>
+					<Flex
+						dir="row"
+						ai="flex-start"
+						gap="6px"
+						wd="65px"
+						ht="26px"
+						fs="14"
+						fw="600"
+						jc="flex-start"
+					>
+						태그 추가
+					</Flex>
+					<Flex
+						dir="row"
+						ai="flex-start"
+						gap="6px"
+						wd="148px"
+						ht="26px"
+						fs="12"
+						jc="flex-start"
+						color="#131313"
+						oc="0.4"
+						fw="600"
+					>
+						최대 3개 입력 가능합니다
+					</Flex>
+					<Flex dir="row" ai="center" jc="flex-start" gap="7px">
+						<Button variant="addTag" onClick={addTagInput}>
+							<Svg variant="plus" />
+						</Button>
+						{tagInput.map((tag, idx) => {
+							return (
+								<TagList
+									tagInput={tagInput}
+									deleteTagInput={deleteTagInput}
+									setTagInput={setTagInput}
+									key={tag.idx}
+								/>
+							);
+						})}
+						{/* {tagList?.map(tag => {
+							return <TagList />;
+						})} */}
 					</Flex>
 					<Flex
 						wd="100vw"

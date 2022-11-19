@@ -44,6 +44,8 @@ export const StFlex = styled.div`
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
 	overflow: ${({ overflow }) => overflow};
+	overflow-x: ${({ overflowX }) => overflowX};
+	overflow-y: ${({ overflowY }) => overflowY};
 
 	/* 폰트 */
 	color: ${({ color }) => color};

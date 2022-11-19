@@ -32,6 +32,31 @@ const StBtn = styled.button`
 					font-size: 14px;
 					color: #ffffff;
 				`;
+			case "addBoastTodo":
+				return css`
+					width: 261px;
+					height: 55px;
+					background-color: #7474ff;
+					color: white;
+					border-radius: 10px;
+					border: 1px solid #7474ff;
+					font-size: 15px;
+					font-weight: 600;
+					line-height: 19px;
+				`;
+
+			case "addTag":
+				return css`
+					width: 38px;
+					height: 38px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding: 4px 12px;
+					gap: 8px;
+					background-color: #f8f8f8;
+					border-radius: 10px;
+				`;
 			default:
 				break;
 		}
