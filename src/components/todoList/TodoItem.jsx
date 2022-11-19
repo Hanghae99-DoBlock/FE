@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
 import { ModalDetailTodo } from "../../components";
-import { __checkTodo } from "../../redux/modules/todoListSlice";
+import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
 
 const TodoItem = ({ todoItem }) => {
 	const { todoContent, completed } = todoItem;

@@ -10,7 +10,7 @@ import {
 	Svg,
 	TextArea,
 } from "../../common";
-import { __addTodo } from "../../redux/modules/todoListSlice";
+import { __addTodo } from "../../redux/modules/middleware/todoListThunk.js";
 
 const ModalAddTodo = ({ setIsAddTodoModalOpen }) => {
 	const dispatch = useDispatch();

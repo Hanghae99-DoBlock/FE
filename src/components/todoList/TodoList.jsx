@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
-import { __getTodoList } from "../../redux/modules/todoListSlice";
+import { __getTodoList } from "../../redux/modules/middleware/todoListThunk.js";
 
 const TodoList = () => {
 	const dispatch = useDispatch();

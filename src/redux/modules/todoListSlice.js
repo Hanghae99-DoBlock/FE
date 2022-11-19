@@ -1,71 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { serverUrl } from "../api";
-import axios from "axios";
-
-const accessToken = localStorage.getItem("accessToken");
-axios.defaults.withCredentials = true;
+import { createSlice } from "@reduxjs/toolkit";
+import {
+	__addTodo,
+	__getTodoList,
+	__checkTodo,
+} from "./middleware/todoListThunk";
 
 const initialState = {
 	todoList: [],
 	selectedDate: {},
 };
 
-// 투두 업로드 Thunk
-export const __addTodo = createAsyncThunk(
-	"todo/addTodo",
-	async (payload, thunkAPI) => {
-		try {
-			const response = await axios.post(`${serverUrl}/api/todolist`, payload, {
-				headers: { Authorization: accessToken },
-			});
-			return thunkAPI.fulfillWithValue(response.data);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두리스트 조회 Thunk
-export const __getTodoList = createAsyncThunk(
-	"todo/getTodoList",
-	async (payload, thunkAPI) => {
-		try {
-			const { year, month, day } = payload;
-			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=${year}&month=${month}&day=${day}`,
-				{
-					headers: { Authorization: accessToken },
-				},
-			);
-			return thunkAPI.fulfillWithValue(response.data);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두 체크 Thunk
-export const __checkTodo = createAsyncThunk(
-	"todo/checkTodo",
-	async (todoItem, thunkAPI) => {
-		try {
-			await axios.patch(
-				`${serverUrl}/api/todolist/${todoItem.todoId}/completed`,
-				{
-					withCredentials: true,
-				},
-				{
-					headers: { Authorization: accessToken },
-				},
-			);
-			return thunkAPI.fulfillWithValue(todoItem);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두리스트 슬라이스
 export const todoListSlice = createSlice({
 	name: "todoList",
 	initialState,
