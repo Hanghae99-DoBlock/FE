@@ -5,6 +5,8 @@ import TodoListPage from "./todoList/TodoListPage";
 import ProfilePage from "./profile/ProfilePage";
 import ProfileEditPage from "./profile/ProfileEditPage";
 import PasswordChangePage from "./profile/PasswordChangePage";
+import FollowingPage from "./profile/FollowingPage";
+import FollowerPage from "./profile/FollowerPage";
 
 export {
 	FeedPage,
@@ -14,4 +16,6 @@ export {
 	ProfilePage,
 	ProfileEditPage,
 	PasswordChangePage,
+	FollowingPage,
+	FollowerPage,
 };

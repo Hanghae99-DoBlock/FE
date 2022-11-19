@@ -6,6 +6,8 @@ import {
 	TodoListPage,
 	ProfileEditPage,
 	PasswordChangePage,
+	FollowingPage,
+	FollowerPage,
 } from "../pages";
 
 const Router = () => {
@@ -16,11 +18,13 @@ const Router = () => {
 					<Route path="/signin" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/profile/:id" element={<ProfilePage />} />
-					<Route path="/profile/edit/:id" element={<ProfileEditPage />} />
+					<Route path="/profile/edit" element={<ProfileEditPage />} />
 					<Route
 						path="/profile/edit/password"
 						element={<PasswordChangePage />}
 					/>
+					<Route path="/profile/:id/following" element={<FollowingPage />} />
+					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/" element={<TodoListPage />} />
 				</Routes>
 			</BrowserRouter>
