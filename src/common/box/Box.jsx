@@ -25,7 +25,7 @@ const StBox = styled.div`
 				return css`
 					background-color: white;
 					width: 279px;
-					height: 356px;
+					height: 258px;
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
 					position: fixed;
@@ -38,6 +38,15 @@ const StBox = styled.div`
 					height: 48px;
 					padding: 12px 0;
 				`;
+
+			// 메모 아이콘 박스
+			case "memoIconBox":
+				return css`
+					width: 20px;
+					height: 20px;
+					padding: 5px 0 0 2px;
+				`;
+
 			// 텍스트 박스
 			case "textArea":
 				return css`

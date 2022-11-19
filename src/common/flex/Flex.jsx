@@ -38,6 +38,7 @@ export const StFlex = styled.div`
 
 	/* 위치 */
 	top: ${({ top }) => top};
+	bottom: ${({ bottom }) => bottom};
 	left: ${({ left }) => left};
 	right: ${({ right }) => right};
 	position: ${({ position }) => position};
