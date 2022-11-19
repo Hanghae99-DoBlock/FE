@@ -1,10 +1,6 @@
 import { useDispatch } from "react-redux";
-import { Box, Flex, Svg } from "../../common";
-import {
-	TodoListCalendar,
-	ListingTodos,
-	TodoListHeader,
-} from "../../components";
+import { Flex, Svg } from "../../common";
+import { TodoListCalendar, NavBelow } from "../../components";
 import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
 const TodoListPage = () => {
@@ -23,6 +19,7 @@ const TodoListPage = () => {
 					<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
 				</Flex>
 			</Flex>
+			<NavBelow />
 		</>
 	);
 };
