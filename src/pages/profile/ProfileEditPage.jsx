@@ -74,8 +74,6 @@ const ProfileEdit = () => {
 
 	const user = useSelector(state => state.profileSlice.profile);
 
-	console.log(user);
-
 	return (
 		<Flex
 			dir="column"
@@ -88,12 +86,7 @@ const ProfileEdit = () => {
 			<Flex wd="375px" mg="auto" dir="column">
 				<Flex wd="335px" jc="space-between">
 					<Svg variant="chevron" onClick={() => navigate("/profile/:id")} />
-					<Flex
-						fs="18"
-						fw="600"
-						style={{ cursor: "pointer" }}
-						onClick={updateHandler}
-					>
+					<Flex fs="18" fw="600" onClick={updateHandler}>
 						저장
 					</Flex>
 				</Flex>
@@ -257,7 +250,6 @@ const ProfileEdit = () => {
 						bc="#DDDDDD"
 						radius="10px"
 						mg="0 0 26px 10px"
-						style={{ cursor: "pointer" }}
 						onClick={() => {
 							navigate(`/profile/edit/password`);
 						}}

@@ -10,7 +10,6 @@ const TodoListCalendar = () => {
 	const [value, onChange] = useState(new Date());
 	const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 	const week = WEEKDAY[value.getDay()];
-	console.log(value.getDate(), week);
 
 	return (
 		<>

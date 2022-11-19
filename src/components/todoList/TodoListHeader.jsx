@@ -11,7 +11,6 @@ const TodoListHeader = props => {
 
 	const todoList = useSelector(state => state.todoListSlice.todoList);
 
-	console.log(todoList);
 	useEffect(() => {
 		dispatch(__getTodoList(props));
 	}, []);

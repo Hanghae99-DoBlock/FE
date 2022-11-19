@@ -15,8 +15,6 @@ const Follower = () => {
 
 	const user = useSelector(state => state.profileSlice.profile);
 
-	console.log(user);
-
 	useEffect(() => {
 		dispatch(__getUsers(id));
 	}, []);
@@ -53,7 +51,7 @@ const Follower = () => {
 						</FirstHeading>
 					</Flex>
 					<Flex>
-						{user.followOrNot === false ? (
+						{user.followOrNot === true ? (
 							<Svg
 								variant="follow"
 								onClick={() => {

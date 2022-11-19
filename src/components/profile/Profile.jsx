@@ -20,7 +20,6 @@ const Profile = () => {
 	const decodeToken = jwtDecode(token);
 
 	const profile = useSelector(state => state.profileSlice.profile);
-	console.log(profile);
 
 	useEffect(() => {
 		dispatch(__getUser(id));
@@ -61,7 +60,7 @@ const Profile = () => {
 							</FirstHeading>
 						</Flex>
 						{decodeToken.memberId === profile.memberId ? (
-							<Svg variant="Setting" onClick={profileEditHandler} />
+							<Svg variant="setting" onClick={profileEditHandler} />
 						) : profile.followOrNot === false ? (
 							<Svg
 								variant="profileFollow"
@@ -108,7 +107,6 @@ const Profile = () => {
 							onClick={() => {
 								navigate(`/profile/${id}/following`);
 							}}
-							style={{ cursor: "pointer" }}
 						>
 							{profile.countFollowing}
 						</Flex>
@@ -125,7 +123,6 @@ const Profile = () => {
 							onClick={() => {
 								navigate(`/profile/${id}/follower`);
 							}}
-							style={{ cursor: "pointer" }}
 						>
 							{profile.countFollower}
 						</Flex>
