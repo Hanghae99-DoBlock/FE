@@ -32,11 +32,6 @@ const ListingTodos = ({ todoList }) => {
 					<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
 				</Flex>
 			)}
-
-			{/* 투두 추가 모달 오픈 버튼 */}
-			<Flex wd="100%" jc="flex-end">
-				<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
-			</Flex>
 		</Flex>
 	);
 };
