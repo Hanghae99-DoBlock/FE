@@ -19,11 +19,11 @@ const ModalAddTodo = () => {
 	const isAddTodoModalOpen = useSelector(
 		state => state.modalSlice.isAddTodoModalOpen,
 	);
+	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const onChangeHandler = e => {
-		// 날짜는 하드코딩만 해두었습니다
 		const { name, value } = e.target;
-		setTodo({ ...todo, year: 2022, month: 11, day: 14, [name]: value });
+		setTodo({ ...todo, ...selectedDate, [name]: value });
 	};
 
 	const uploadHandler = e => {

@@ -17,7 +17,6 @@ export const __checkPassWord = createAsyncThunk(
 	"profile/checkPassword",
 	async (payload, thunkAPI) => {
 		try {
-			console.log(payload);
 			await axios.patch(
 				// `${serverUrl}/api/members/profile/edit/password`,
 				`${serverUrl}/api/members/profile/edit/password`,
@@ -33,7 +32,6 @@ export const __checkPassWord = createAsyncThunk(
 const updateProfile = payload => {
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
-	console.log(payload);
 	const frm = new FormData();
 	frm.append("nickname", payload.nickname);
 	frm.append("profileImage", payload.profileImage);
@@ -60,14 +58,12 @@ const updateProfile = payload => {
 		})
 		.catch(function (error) {
 			alert("알수없는 오류가 발생했습니다. 관리자에게 문의하세요.");
-			console.log(error);
 		});
 };
 
 export const __getUsers = createAsyncThunk(
 	"user/getUsers",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			const products = await axios.get(
 				`${serverUrl}/api/members/profile/${payload}`,
