@@ -1,21 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Form, Label, Svg, Text } from "../../common";
-import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
 
-const ModalDetailTodo = () => {
-	const dispatch = useDispatch();
+const ModalDetailTodo = ({ todoItem, setIsDetailTodoModalOpen }) => {
+	const { todoContent, todoMemo } = todoItem;
 
-	const isDetailTodoModalOpen = useSelector(
-		state => state.modalSlice.isDetailTodoModalOpen,
-	);
-
-	const todoItem = useSelector(state => state.modalSlice.todoItem);
-
+	// 모달 닫기 핸들러
 	const closeDetailModalHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen());
+		setIsDetailTodoModalOpen(false);
 	};
-
-	if (!isDetailTodoModalOpen) return null;
 
 	return (
 		// 오버레이
@@ -40,14 +31,14 @@ const ModalDetailTodo = () => {
 							<Flex dir="column" ai="flex-start">
 								<Label variant="grey">할 일</Label>
 								<Box variant="todoContent">
-									<Text variant="medium">{todoItem.todoContent}</Text>
+									<Text variant="medium">{todoContent}</Text>
 								</Box>
 							</Flex>
 							<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
 								{/* 메모 */}
 								<Flex gap="18.5px">
 									<Svg variant="memo" />
-									<Text variant="small">{todoItem.todoMemo}</Text>
+									<Text variant="small">{todoMemo}</Text>
 								</Flex>
 							</Flex>
 						</div>

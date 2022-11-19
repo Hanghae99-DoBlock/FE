@@ -10,37 +10,36 @@ import {
 	Svg,
 	TextArea,
 } from "../../common";
-import { updateIsAddTodoModalOpen } from "../../redux/modules/modal/modalSlice";
-import { __addTodo } from "../../redux/modules/todoList/todoListSlice";
+import { __addTodo } from "../../redux/modules/todoListSlice";
 
-const ModalAddTodo = () => {
-	const [todo, setTodo] = useState({});
+const ModalAddTodo = ({ setIsAddTodoModalOpen }) => {
 	const dispatch = useDispatch();
-	const isAddTodoModalOpen = useSelector(
-		state => state.modalSlice.isAddTodoModalOpen,
-	);
+
+	// 투두 상태 관리
+	const [todo, setTodo] = useState({});
+
+	// 선택된 날짜 구독
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
+	// onChange 핸들러
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
-		setTodo({ ...todo, ...selectedDate, [name]: value });
+		setTodo({ ...selectedDate, ...todo, [name]: value });
 	};
 
+	// 투두 업로드 핸들러
 	const uploadHandler = e => {
 		e.preventDefault();
 		dispatch(__addTodo(todo));
-
-		setTodo("");
-		dispatch(updateIsAddTodoModalOpen());
 		setTodo({});
+		setIsAddTodoModalOpen(false);
 	};
 
+	// 모달 닫기 핸들러
 	const closeAddTodoModalHandler = () => {
-		dispatch(updateIsAddTodoModalOpen());
+		setIsAddTodoModalOpen(false);
 		setTodo({});
 	};
-
-	if (!isAddTodoModalOpen) return null;
 
 	return (
 		// 오버레이
@@ -58,6 +57,7 @@ const ModalAddTodo = () => {
 					<Flex jc="flex-end">
 						<Svg onClick={closeAddTodoModalHandler} variant="close"></Svg>
 					</Flex>
+
 					{/* 폼 */}
 					<Form variant="todoForm" onSubmit={uploadHandler}>
 						<div>
@@ -91,6 +91,7 @@ const ModalAddTodo = () => {
 								/>
 							</Flex>
 						</div>
+
 						{/* 추가 버튼 */}
 						<Button variant="addTodo">추가하기</Button>
 					</Form>

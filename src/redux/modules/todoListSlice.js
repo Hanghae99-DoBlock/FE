@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { serverUrl } from "../../api";
+import { serverUrl } from "../api";
 import axios from "axios";
 
 const accessToken = localStorage.getItem("accessToken");
@@ -30,12 +30,9 @@ export const __getTodoList = createAsyncThunk(
 	"todo/getTodoList",
 	async (payload, thunkAPI) => {
 		try {
-			const { year, month, date } = payload;
-			const intYear = parseInt(year);
-			const intMonth = parseInt(month);
-			const intDay = parseInt(date);
+			const { year, month, day } = payload;
 			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=${intYear}&month=${intMonth}&day=${intDay}`,
+				`${serverUrl}/api/todolist?year=${year}&month=${month}&day=${day}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -52,9 +49,8 @@ export const __checkTodo = createAsyncThunk(
 	"todo/checkTodo",
 	async (todoItem, thunkAPI) => {
 		try {
-			const response = await axios.patch(
+			await axios.patch(
 				`${serverUrl}/api/todolist/${todoItem.todoId}/completed`,
-				// 401 에러 해결
 				{
 					withCredentials: true,
 				},
@@ -76,11 +72,7 @@ export const todoListSlice = createSlice({
 	reducers: {
 		// 날짜 선택
 		updateSelectedDate: (state, action) => {
-			state.selectedDate = {
-				year: parseInt(action.payload.year),
-				month: parseInt(action.payload.month),
-				day: parseInt(action.payload.date),
-			};
+			state.selectedDate = action.payload;
 		},
 	},
 	extraReducers: builder => {

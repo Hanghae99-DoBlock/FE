@@ -1,13 +1,11 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import join from "../modules/joinSlice";
-import modalSlice from "../modules/modal/modalSlice";
-import todoListSlice from "../modules/todoList/todoListSlice";
+import todoListSlice from "../modules/todoListSlice";
 import profileSlice from "../modules/profileSlice";
 
 const store = configureStore({
 	reducer: {
 		join,
-		modalSlice,
 		todoListSlice,
 		profileSlice,
 	},

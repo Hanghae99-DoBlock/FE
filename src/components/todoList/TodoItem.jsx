@@ -1,18 +1,24 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
-import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
-import { __checkTodo } from "../../redux/modules/todoList/todoListSlice";
+import { ModalDetailTodo } from "../../components";
+import { __checkTodo } from "../../redux/modules/todoListSlice";
 
-const TodoItem = props => {
-	const { todoContent, todoId, completed, todoMemo } = props;
+const TodoItem = ({ todoItem }) => {
+	const { todoContent, completed } = todoItem;
 	const dispatch = useDispatch();
 
-	const onClickTodoItemHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen(props));
+	// 디테일 모달 상태 관리
+	const [isDetailTodoModalOpen, setIsDetailTodoModalOpen] = useState(false);
+
+	// 디테일 모달 오픈 핸들러
+	const openDetailModalHandler = () => {
+		setIsDetailTodoModalOpen(true);
 	};
 
+	// 투두 완료 여부 체크 핸들러
 	const checkTodoHandler = () => {
-		dispatch(__checkTodo(props));
+		dispatch(__checkTodo(todoItem));
 	};
 
 	return (
@@ -28,7 +34,7 @@ const TodoItem = props => {
 
 				{/* 투두 컨텐트 */}
 				<Flex
-					onClick={onClickTodoItemHandler}
+					onClick={openDetailModalHandler}
 					jc="flex-start"
 					wd="100%"
 					mg="0 0 0 13px"
@@ -40,6 +46,14 @@ const TodoItem = props => {
 				{/* 햄버거 */}
 				<Svg variant="hamburger" />
 			</Flex>
+
+			{/* 모달 */}
+			{isDetailTodoModalOpen ? (
+				<ModalDetailTodo
+					todoItem={todoItem}
+					setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+				/>
+			) : null}
 		</>
 	);
 };
