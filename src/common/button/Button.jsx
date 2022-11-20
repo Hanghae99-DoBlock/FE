@@ -32,6 +32,28 @@ const StBtn = styled.button`
 					font-size: 14px;
 					color: #ffffff;
 				`;
+
+			// 투두 수정 버튼
+			case "modTodo":
+				return css`
+					width: 185px;
+					height: 49px;
+					background: #7474ff;
+					border-radius: 10px;
+					font-weight: 600;
+					font-size: 14px;
+					color: #ffffff;
+				`;
+
+			// 투두 공유 버튼
+			case "shareTodo":
+				return css`
+					width: 54px;
+					height: 49px;
+					background: #efefff;
+					border-radius: 10px;
+					border-radius: 10px;
+				`;
 			default:
 				break;
 		}

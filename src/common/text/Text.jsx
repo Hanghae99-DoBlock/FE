@@ -43,6 +43,12 @@ const StText = styled.span`
 					font-weight: 500;
 					font-size: 15px;
 				`;
+			case "white":
+				return css`
+					font-weight: 600;
+					font-size: 14px;
+					color: #ffffff;
+				`;
 			default:
 				break;
 		}

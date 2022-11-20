@@ -58,7 +58,17 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 					</Flex>
 
 					{/* 버튼 */}
-					<Button variant="addTodo">수정하기</Button>
+					<Flex dir="row" gap="9px">
+						<Button variant="modTodo">
+							<Flex wd="100%" dir="row" gap="5px">
+								<Svg variant="write" />
+								수정하기
+							</Flex>
+						</Button>
+						<Button variant="shareTodo">
+							<Svg variant="share" />
+						</Button>
+					</Flex>
 				</Form>
 			</Box>
 		</Flex>
