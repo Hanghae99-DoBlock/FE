@@ -50,4 +50,8 @@ export const StFlex = styled.div`
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
+
+	/* 스크롤 */
+	overflow-x: ${({ overflowX }) => overflowX};
+	overflow-y: ${({ overflowY }) => overflowY};
 `;

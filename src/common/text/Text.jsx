@@ -23,6 +23,7 @@ const StText = styled.span`
 				return css`
 					font-weight: 500;
 					font-size: 13px;
+					line-height: 13px;
 					color: #131313;
 				`;
 			case "greyBig":

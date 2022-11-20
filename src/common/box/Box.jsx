@@ -18,6 +18,7 @@ const StBox = styled.div`
 					background: #f9f9f9;
 					height: 100%;
 					width: 100%;
+					border-radius: 20px 20px 0 0;
 				`;
 
 			// 모달창
@@ -28,8 +29,6 @@ const StBox = styled.div`
 					height: 258px;
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
-					position: fixed;
-					top: 20vh;
 				`;
 
 			// 투두 박스
@@ -43,8 +42,10 @@ const StBox = styled.div`
 			case "memoIconBox":
 				return css`
 					width: 20px;
-					height: 20px;
-					padding: 5px 0 0 2px;
+					height: 100%;
+					padding: 4px 0 0 2px;
+					display: flex;
+					align-items: flex-start;
 				`;
 
 			// 텍스트 박스

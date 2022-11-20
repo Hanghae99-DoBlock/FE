@@ -51,6 +51,10 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: none;
     outline: none;      
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  } 
 `;
 
 export default GlobalStyles;

@@ -5,6 +5,7 @@ import {
 	NavBelow,
 	TodoList,
 	ModalAddTodo,
+	ModalDetailTodo,
 } from "../../components";
 
 const TodoListPage = () => {
@@ -16,29 +17,46 @@ const TodoListPage = () => {
 		setIsAddTodoModalOpen(true);
 	};
 
+	// 디테일 모달 상태 관리
+	const [isDetailTodoModalOpen, setIsDetailTodoModalOpen] = useState(false);
+
 	return (
 		<>
-			<Flex dir="column" ht="100vh" bg="#F9F9F9">
+			{/* 투두 추가 모달 */}
+			{isAddTodoModalOpen ? (
+				<Flex wd="100%" ht="100%" position="absolute" zIndex="2">
+					<ModalAddTodo setIsAddTodoModalOpen={setIsAddTodoModalOpen} />
+				</Flex>
+			) : null}
+
+			{/* 디테일 모달 */}
+			{isDetailTodoModalOpen ? (
+				<Flex wd="100%" ht="100%" position="absolute">
+					<ModalDetailTodo
+						setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+					/>
+				</Flex>
+			) : null}
+
+			{/* 투두 추가 모달 오픈 버튼 */}
+			<Flex wd="100%" position="relative">
+				<Flex wd="100%" position="absolute" jc="flex-end">
+					<Flex position="fixed" bottom="80px" zIndex="1" mg="0 5px 0 0">
+						<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
+					</Flex>
+				</Flex>
+			</Flex>
+
+			<Flex dir="column" jc="flex-start" ht="100vh">
 				{/* 캘린더 */}
 				<TodoListCalendar />
 
 				{/* 투두리스트 */}
-				<TodoList />
+				<TodoList setIsDetailTodoModalOpen={setIsDetailTodoModalOpen} />
 
-				{/* 투두 추가 모달 오픈 버튼 */}
-				<Flex wd="100%" position="sticky" bottom="70px" jc="flex-end" pd="10px">
-					<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
-					{/* <Svg onClick={openAddTodoModalHandler} variant="addTodo" /> */}
-				</Flex>
+				{/* 네비게이션 바 */}
+				<NavBelow />
 			</Flex>
-
-			{/* 네비게이션 바 */}
-			<NavBelow />
-
-			{/* 모달 */}
-			{isAddTodoModalOpen ? (
-				<ModalAddTodo setIsAddTodoModalOpen={setIsAddTodoModalOpen} />
-			) : null}
 		</>
 	);
 };

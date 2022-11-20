@@ -7,6 +7,7 @@ import {
 
 const initialState = {
 	todoList: [],
+	todoItem: {},
 	selectedDate: {},
 };
 
@@ -17,6 +18,10 @@ export const todoListSlice = createSlice({
 		// 날짜 선택
 		updateSelectedDate: (state, action) => {
 			state.selectedDate = action.payload;
+		},
+		// 투두 단건 조회
+		getTodoItem: (state, action) => {
+			state.todoItem = action.payload;
 		},
 	},
 	extraReducers: builder => {
@@ -46,5 +51,5 @@ export const todoListSlice = createSlice({
 	},
 });
 
-export const { updateSelectedDate } = todoListSlice.actions;
+export const { updateSelectedDate, getTodoItem } = todoListSlice.actions;
 export default todoListSlice.reducer;

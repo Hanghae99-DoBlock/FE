@@ -1,18 +1,15 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
-import { ModalDetailTodo } from "../../components";
 import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
+import { getTodoItem } from "../../redux/modules/todoListSlice";
 
-const TodoItem = ({ todoItem }) => {
+const TodoItem = ({ todoItem, setIsDetailTodoModalOpen }) => {
 	const { todoContent, completed } = todoItem;
 	const dispatch = useDispatch();
 
-	// 디테일 모달 상태 관리
-	const [isDetailTodoModalOpen, setIsDetailTodoModalOpen] = useState(false);
-
 	// 디테일 모달 오픈 핸들러
 	const openDetailModalHandler = () => {
+		dispatch(getTodoItem(todoItem));
 		setIsDetailTodoModalOpen(true);
 	};
 
@@ -24,7 +21,14 @@ const TodoItem = ({ todoItem }) => {
 	return (
 		<>
 			{/* 투두 박스 */}
-			<Flex wd="100%" ht="51px" radius="10px" bg="#FFFFFF" pd="13.5px 15px">
+			<Flex
+				wd="100%"
+				ht="51px"
+				radius="10px"
+				bg="#FFFFFF"
+				pd="13.5px 15px"
+				mg="0 0 10px 0"
+			>
 				{/* 체크박스 */}
 				{completed ? (
 					<Svg onClick={checkTodoHandler} variant="todoCompleted" />
@@ -35,6 +39,7 @@ const TodoItem = ({ todoItem }) => {
 				{/* 투두 컨텐트 */}
 				<Flex
 					onClick={openDetailModalHandler}
+					cursor="pointer"
 					jc="flex-start"
 					wd="100%"
 					mg="0 0 0 13px"
@@ -46,14 +51,6 @@ const TodoItem = ({ todoItem }) => {
 				{/* 햄버거 */}
 				<Svg variant="hamburger" />
 			</Flex>
-
-			{/* 모달 */}
-			{isDetailTodoModalOpen ? (
-				<ModalDetailTodo
-					todoItem={todoItem}
-					setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
-				/>
-			) : null}
 		</>
 	);
 };
