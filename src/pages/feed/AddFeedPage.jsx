@@ -315,9 +315,6 @@ const AddFeedPage = () => {
 								/>
 							);
 						})}
-						{/* {tagList?.map(tag => {
-							return <TagList />;
-						})} */}
 					</Flex>
 					<Flex
 						wd="100vw"
@@ -331,6 +328,15 @@ const AddFeedPage = () => {
 						ai="center"
 					>
 						<Button variant="join">업로드 하기</Button>
+					</Flex>
+					<Flex gap="5px">
+						<Flex>
+							<Svg variant="alert" />
+						</Flex>
+						<Flex fs="12" color="#131313" oc="0.4">
+							태그 입력후 엔터키 입력시 등록되며, 등록된 태그를 누르면
+							삭제됩니다.
+						</Flex>
 					</Flex>
 				</Flex>
 			</Flex>

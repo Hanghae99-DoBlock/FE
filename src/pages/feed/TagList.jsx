@@ -19,7 +19,9 @@ const TagList = props => {
 	const changeTagValueHandler = e => {
 		setTagValue(e.target.value);
 	};
-
+	{
+		/*태그가 빈값인상태로 포커스아웃될경우 자동으로 해당 인풋을 삭제한다*/
+	}
 	const isEmptyInputHandler = () => {
 		if (tagValue.trim() === "") {
 			setTagInput([tagInput.pop()]);
