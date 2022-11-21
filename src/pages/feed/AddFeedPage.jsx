@@ -1,5 +1,5 @@
 import { Box, Button, Flex } from "../../common";
-import { StInput } from "../../common/input/Input";
+import Input, { StInput } from "../../common/input/Input";
 import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
@@ -23,6 +23,7 @@ const AddFeedPage = () => {
 	const tagList = useSelector(state => state.feed.tagList);
 	const [id, setId] = useState(tagList.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
+	const [detail, setDetail] = useState("");
 
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
@@ -56,7 +57,11 @@ const AddFeedPage = () => {
 	};
 
 	const changeTagHandler = e => {
-		setTagValue(e.target.value);
+		if (e.target.value.includes("#")) {
+			setTagValue(e.target.value);
+		} else {
+			setTagValue("#" + "  " + e.target.value);
+		}
 	};
 
 	const addTagHandler = e => {
@@ -70,6 +75,10 @@ const AddFeedPage = () => {
 			setIsInputHidden(true);
 			setTagValue("");
 		}
+	};
+
+	const changeDetail = e => {
+		setDetail(e.target.value);
 	};
 	console.log(tagList);
 	useEffect(() => {}, [boastFeedNonDuple, tagList]);
@@ -88,7 +97,7 @@ const AddFeedPage = () => {
 				mh="667px"
 				mg="0 auto"
 				jc="flex-start"
-				gap="20px"
+				gap="25px"
 				ai="flex-start"
 			>
 				<Flex
@@ -118,7 +127,7 @@ const AddFeedPage = () => {
 				>
 					<Flex
 						dir="row"
-						ai="flex-start"
+						ai="center"
 						gap="6px"
 						wd="70px"
 						ht="26px"
@@ -142,11 +151,12 @@ const AddFeedPage = () => {
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
+					gap="6px"
 				>
 					<Flex jc="flex-start" ai="baseline" gap="6px">
 						<Flex
 							dir="row"
-							ai="flex-start"
+							ai="center"
 							gap="6px"
 							wd="28px"
 							ht="26px"
@@ -158,7 +168,7 @@ const AddFeedPage = () => {
 						</Flex>
 						<Flex
 							dir="row"
-							ai="flex-start"
+							ai="center"
 							gap="6px"
 							wd="148px"
 							ht="26px"
@@ -171,6 +181,7 @@ const AddFeedPage = () => {
 							최대 30자 입력 가능합니다
 						</Flex>
 					</Flex>
+					<Input variant="addFeedInput" />
 				</Flex>
 				<Flex
 					dir="column"
@@ -179,44 +190,44 @@ const AddFeedPage = () => {
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
-					gap="13px"
+					gap="6px"
 				>
-					<Flex jc="flex-start" gap="6px" ai="baseline">
-						<Flex
-							dir="row"
-							ai="flex-start"
-							gap="6px"
-							wd="108px"
-							ht="26px"
-							fs="14"
-							fw="600"
-							jc="flex-start"
-						>
-							자랑하고 싶은 투두
-						</Flex>
+					<Flex jc="space-between" ai="baseline" wd="328px" ht="26px" gap="6px">
+						<Flex gap="6px">
+							<Flex
+								dir="row"
+								ai="center"
+								wd="125px"
+								ht="26px"
+								fs="14"
+								fw="600"
+								jc="flex-start"
+							>
+								자랑하고 싶은 투두
+							</Flex>
 
-						<Flex
-							dir="row"
-							ai="flex-start"
-							gap="6px"
-							wd="148px"
-							ht="26px"
-							fs="12"
-							jc="flex-start"
-							color="#131313"
-							oc="0.4"
-							fw="600"
-						>
-							최대 3개 선택 가능합니다
+							<Flex
+								dir="row"
+								ai="center"
+								wd="148px"
+								ht="26px"
+								fs="12"
+								jc="flex-start"
+								color="#131313"
+								oc="0.4"
+								fw="600"
+							>
+								최대 3개 선택 가능합니다
+							</Flex>
+						</Flex>
+						<Flex onClick={openModalHandler}>
+							<Svg variant="addBoastTodo" />
 						</Flex>
 					</Flex>
 					<Box variant="feedTodo">
 						<Flex jc="space-between" wd="335px">
 							<Flex fs="14" color="#808080">
 								투두 추가
-							</Flex>
-							<Flex wd="14px" ht="14px" onClick={openModalHandler}>
-								<Svg variant="plusTodo" />
 							</Flex>
 						</Flex>
 					</Box>
@@ -229,16 +240,16 @@ const AddFeedPage = () => {
 				<Flex
 					dir="column"
 					wd="375px"
-					ht="72px"
+					ht="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
-					gap="20px"
+					gap="6px"
 				>
-					<Flex jc="flex-start" gap="6px" ai="baseline">
+					<Flex jc="flex-start" gap="6px">
 						<Flex
 							dir="row"
-							ai="flex-start"
+							ai="center"
 							gap="6px"
 							wd="65px"
 							ht="26px"
@@ -250,9 +261,9 @@ const AddFeedPage = () => {
 						</Flex>
 						<Flex
 							dir="row"
-							ai="flex-start"
+							ai="center"
 							gap="6px"
-							wd="148px"
+							wd="155px"
 							ht="26px"
 							fs="12"
 							jc="flex-start"
@@ -263,47 +274,64 @@ const AddFeedPage = () => {
 							최대 100자 입력 가능합니다
 						</Flex>
 					</Flex>
-					<Flex wd="335px" ht="160px" ai="flex-start" gap="13px">
-						<StDetailContent maxLength={100} />
-					</Flex>
 					<Flex
-						dir="row"
+						wd="335px"
+						ht="160px"
 						ai="flex-start"
-						gap="6px"
-						wd="65px"
-						ht="26px"
-						fs="14"
-						fw="600"
-						jc="flex-start"
+						gap="13px"
+						position="relative"
 					>
-						태그 추가
+						<StDetailContent
+							value={detail}
+							onChange={changeDetail}
+							maxLength={100}
+						/>
+						{!detail.length > 0 ? (
+							<StTextCount>{detail.length}/100</StTextCount>
+						) : (
+							<StTextCountBlack>{detail.length}/100</StTextCountBlack>
+						)}
 					</Flex>
-					<Flex
-						dir="row"
-						ai="flex-start"
-						gap="6px"
-						wd="148px"
-						ht="26px"
-						fs="12"
-						jc="flex-start"
-						color="#131313"
-						oc="0.4"
-						fw="600"
-					>
-						최대 3개 입력 가능합니다
+				</Flex>
+				<Flex
+					dir="column"
+					wd="375px"
+					ht="72px"
+					jc="flex-start"
+					pd="0 20px"
+					ai="normal"
+					gap="6px"
+				>
+					<Flex dir="row" jc="flex-start">
+						<Flex
+							dir="row"
+							ai="center"
+							gap="6px"
+							wd="65px"
+							ht="26px"
+							fs="14"
+							fw="600"
+							jc="flex-start"
+						>
+							해시 태그
+						</Flex>
+						<Flex
+							dir="row"
+							ai="center"
+							gap="6px"
+							wd="148px"
+							ht="26px"
+							fs="12"
+							jc="flex-start"
+							color="#131313"
+							oc="0.4"
+							fw="600"
+						>
+							최대 3개 입력 가능합니다
+						</Flex>
 					</Flex>
-					<Flex dir="row" ai="center" jc="flex-start" gap="7px">
-						<Button variant="addTag" onClick={addTagInput}>
-							<Svg variant="plus" />
-						</Button>
-						{isInputHidden === false ? (
-							<StInputTag
-								value={tagValue}
-								onChange={changeTagHandler}
-								onKeyDown={addTagHandler}
-								autoFocus={true}
-							/>
-						) : null}
+
+					<Flex dir="row" ai="center" jc="flex-start" gap="7px" wrap="wrap">
 						{tagList?.map((tag, idx) => {
 							return (
 								<TagList
@@ -315,29 +343,44 @@ const AddFeedPage = () => {
 								/>
 							);
 						})}
-					</Flex>
-					<Flex
-						wd="100vw"
-						ht="94px"
-						pd="17px 20px"
-						position="fixed"
-						left="-8px"
-						bottom="0"
-						bg="white"
-						jc="center"
-						ai="center"
-					>
-						<Button variant="join">업로드 하기</Button>
-					</Flex>
-					<Flex gap="5px">
-						<Flex>
-							<Svg variant="alert" />
-						</Flex>
-						<Flex fs="12" color="#131313" oc="0.4">
-							태그 입력후 엔터키 입력시 등록되며, 등록된 태그를 누르면
-							삭제됩니다.
+						{isInputHidden === false ? (
+							<StInputTag
+								value={tagValue}
+								onChange={changeTagHandler}
+								onKeyDown={addTagHandler}
+								autoFocus={true}
+							/>
+						) : null}
+						<Button variant="addTag" onClick={addTagInput}>
+							<Svg variant="bluePlus" />
+						</Button>
+						<Flex gap="5px">
+							<Flex>
+								<Svg variant="alert" />
+							</Flex>
+							<Flex fs="12" color="#131313" oc="0.4">
+								태그 입력후 엔터키 입력시 등록되며, 등록된 태그를 누르면
+								삭제됩니다.
+							</Flex>
 						</Flex>
 					</Flex>
+					<Flex dir="coulmn" wd="335px" ht="102px">
+						dsfsd
+					</Flex>
+				</Flex>
+
+				<Flex
+					wd="100vw"
+					ht="94px"
+					pd="17px 20px"
+					position="fixed"
+					left="-8px"
+					bottom="0"
+					bg="white"
+					jc="center"
+					ai="center"
+				>
+					<Button variant="join">업로드 하기</Button>
 				</Flex>
 			</Flex>
 		</>
@@ -346,7 +389,24 @@ const AddFeedPage = () => {
 
 export default AddFeedPage;
 
+export const StTextCountBlack = styled.span`
+	font-size: 16px;
+	color: black;
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+`;
+
+export const StTextCount = styled.span`
+	font-size: 16px;
+	color: #a2a2a2;
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+`;
+
 export const StInputTag = styled.input`
+	display: flex;
 	height: 38px;
 	min-width: 38px;
 	background-color: #f8f8f8;
@@ -416,6 +476,7 @@ export const StDetailContent = styled.textarea`
 	border-radius: 10px;
 	padding: 12px 16px 12px 16px;
 	outline-color: #7474ff;
+	resize: none;
 `;
 
 export const StButton = styled.button`

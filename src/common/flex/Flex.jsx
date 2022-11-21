@@ -30,6 +30,7 @@ export const StFlex = styled.div`
 	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
+	border : ${({ border }) => border}
 
 	/* 여백 */
 	margin: ${({ mg }) => mg};
@@ -46,6 +47,7 @@ export const StFlex = styled.div`
 	overflow: ${({ overflow }) => overflow};
 	overflow-x: ${({ overflowX }) => overflowX};
 	overflow-y: ${({ overflowY }) => overflowY};
+	flex-wrap: ${({ wrap }) => wrap};
 
 	/* 폰트 */
 	color: ${({ color }) => color};

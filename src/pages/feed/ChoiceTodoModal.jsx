@@ -73,7 +73,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	);
 };
 
-export default React.memo(ChoiceTodoModal);
+export default ChoiceTodoModal;
 
 export const StCheckBox = styled.input`
 	border: 1px solid red;

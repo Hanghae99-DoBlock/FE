@@ -22,8 +22,7 @@ const GlobalStyles = createGlobalStyle`
 	padding: 0;
 	border: 0;
   font-weight: normal;
-  letter-spacing: -1px;
-  word-spacing: -2px;
+
   
   /* font-family: */
   }

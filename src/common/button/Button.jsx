@@ -54,7 +54,7 @@ const StBtn = styled.button`
 					align-items: center;
 					padding: 4px 12px;
 					gap: 8px;
-					background-color: #f8f8f8;
+					background-color: #ededff;
 					border-radius: 10px;
 				`;
 			default:
