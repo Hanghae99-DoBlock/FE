@@ -13,7 +13,7 @@ const FeedPage = () => {
 	}, []);
 
 	return (
-		<Flex dir="column">
+		<Flex dir="column" wd="100%">
 			{/* 상단 탭 메뉴 */}
 			<Flex wd="100%" ht="41px" position="sticky" top="0">
 				<Box variant="tabMenu">
@@ -25,7 +25,14 @@ const FeedPage = () => {
 			</Flex>
 
 			{/* 피드 리스트 */}
-			<Flex wd="100%" ht="100vh" pd="32px 20px" dir="column" jc="flex-start">
+			<Flex
+				wd="100%"
+				ht="100vh"
+				pd="32px 20px"
+				dir="column"
+				jc="flex-start"
+				gap="11px"
+			>
 				{feedList.map(feedItem => (
 					<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 				))}

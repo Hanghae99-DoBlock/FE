@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant }) => {
+	${({ variant, profileImageUrl }) => {
 		switch (variant) {
 			// 투두리스트 전체 영역
 			case "todoListArea":
@@ -154,10 +154,23 @@ const StBox = styled.div`
 			// 피드 아이템 블루
 			case "blueFeedItem":
 				return css`
+					width: 335px;
+					height: 193px;
 					background-image: url(/images/feed/blueFeedItem.svg);
 					background-size: contain;
 					background-repeat: no-repeat;
-					padding: 35px;
+					padding: 45px 35px 25px;
+				`;
+
+			// 프로필 이미지 스몰
+			case "profilePicSmall":
+				return css`
+					background-image: url(${profileImageUrl});
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
 				`;
 			default:
 				break;
