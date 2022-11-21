@@ -1,7 +1,17 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Box, Flex, Text } from "../../common";
 import { FeedItem } from "../../components";
+import { __getFollowingFeeds } from "../../redux/modules/feedSlice";
 
 const FeedPage = () => {
+	const dispatch = useDispatch();
+	const feedList = useSelector(state => state.feedSlice.feedList);
+
+	useEffect(() => {
+		dispatch(__getFollowingFeeds());
+	}, []);
+
 	return (
 		<Flex dir="column">
 			{/* 상단 탭 메뉴 */}
@@ -16,8 +26,9 @@ const FeedPage = () => {
 
 			{/* 피드 리스트 */}
 			<Flex wd="100%" ht="100vh" pd="32px 20px" dir="column" jc="flex-start">
-				<FeedItem />
-				<FeedItem />
+				{feedList.map(feedItem => (
+					<FeedItem key={feedItem.feedId} feedItem={feedItem} />
+				))}
 			</Flex>
 		</Flex>
 	);

@@ -3,6 +3,7 @@ import join from "../modules/joinSlice";
 import modalSlice from "../modules/modal/modalSlice";
 import todoListSlice from "../modules/todoList/todoListSlice";
 import profileSlice from "../modules/profileSlice";
+import feedSlice from "../modules/feedSlice";
 
 const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
 		modalSlice,
 		todoListSlice,
 		profileSlice,
+		feedSlice,
 	},
 	middleware: getDefaultMiddleware({
 		serializableCheck: false,

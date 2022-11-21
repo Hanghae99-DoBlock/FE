@@ -1,13 +1,24 @@
 import { Box, Flex, Image, Svg, Text } from "../../common";
 
-const FeedItem = () => {
+const FeedItem = ({ feedItem }) => {
+	const {
+		feedContent,
+		nickname,
+		profileImageUrl,
+		commentResponseDtoList,
+		reactionResponseDtoList,
+		tagList,
+		todoList,
+	} = feedItem;
 	return (
 		<Box variant="blueFeedItem">
 			{/* 상단 */}
 			<Flex dir="column" ai="center" gap="15px" mg="0 0 10px 0">
-				<Text variant="whiteTiny">6시 기상하기</Text>
-				<Text variant="whiteBig">미라클 모닝 성공</Text>
-				<Text variant="whiteMedium"># 미라클모닝 # 내가해냄 # 6시기상</Text>
+				<Text variant="whiteTiny">{todoList[0]}</Text>
+				<Text variant="whiteBig">{feedContent}</Text>
+				{tagList.map(tagItem => (
+					<Text variant="whiteMedium"># {tagItem}</Text>
+				))}
 			</Flex>
 
 			{/* 하단 */}
@@ -16,20 +27,20 @@ const FeedItem = () => {
 					{/* 리액션 */}
 					<Flex gap="3px">
 						<Svg variant="reaction" />
-						<Text variant="whiteSmall">3</Text>
+						<Text variant="whiteSmall">{reactionResponseDtoList.length}</Text>
 					</Flex>
 
 					{/* 댓글 */}
 					<Flex gap="3px">
 						<Svg variant="comment" />
-						<Text variant="whiteSmall">2</Text>
+						<Text variant="whiteSmall">{commentResponseDtoList.length}</Text>
 					</Flex>
 				</Flex>
 
 				{/* 프로필, 닉네임 */}
 				<Flex gap="4px">
-					<Image variant="profilePicSmall" />
-					<Text variant="whiteMicro">어쩌구</Text>
+					<Box variant="profilePicSmall" profileImageUrl={profileImageUrl} />
+					<Text variant="whiteMicro">{nickname}</Text>
 				</Flex>
 			</Flex>
 		</Box>
