@@ -24,9 +24,12 @@ export const StFlex = styled.div`
 	max-width: ${({ mxw }) => mxw};
 
 	/* 스타일 */
+	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
 	border-right: ${({ br }) => br};
+	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
+	box-shadow: ${({ bs }) => bs};
 
 	/* 여백 */
 	margin: ${({ mg }) => mg};
@@ -37,12 +40,17 @@ export const StFlex = styled.div`
 	top: ${({ top }) => top};
 	left: ${({ left }) => left};
 	right: ${({ right }) => right};
+	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
+	overflow: ${({ overflow }) => overflow};
+	overflow-x: ${({ overflowX }) => overflowX};
+	overflow-y: ${({ overflowY }) => overflowY};
 
 	/* 폰트 */
 	color: ${({ color }) => color};
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
+	opacity: ${({ oc }) => oc};
 `;

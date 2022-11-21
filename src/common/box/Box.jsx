@@ -16,19 +16,20 @@ const StBox = styled.div`
 			case "todoListArea":
 				return css`
 					background: #f9f9f9;
+					height: 100%;
 					width: 100%;
 				`;
 
 			// 모달창
 			case "modalBox":
 				return css`
-					position: fixed;
-					margin: 0 auto;
 					background-color: white;
 					width: 279px;
 					height: 356px;
 					border-radius: 10px;
-					padding: 21px 20px 14px 20px;
+					padding: 21px 26px 14px 26px;
+					position: fixed;
+					top: 20vh;
 				`;
 
 			// 투두 박스
@@ -36,6 +37,35 @@ const StBox = styled.div`
 				return css`
 					height: 48px;
 					padding: 12px 0;
+				`;
+
+			case "feedTodo":
+				return css`
+					display: flex;
+					width: 335px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 16px 12px 16px;
+					outline-color: #7474ff;
+					align-items: center;
+				`;
+			case "feedModal":
+				return css`
+					position: fixed;
+					margin: 0 auto;
+					background-color: white;
+					width: 279px;
+					height: 402px;
+					border-radius: 10px;
+					padding: 21px 20px 14px 20px;
+					// 메모 아이콘 박스
+				`;
+			case "memoIconBox":
+				return css`
+					width: 20px;
+					height: 20px;
+					padding: 5px 0 0 2px;
 				`;
 			default:
 				break;

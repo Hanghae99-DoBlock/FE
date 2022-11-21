@@ -53,6 +53,21 @@ export const StInput = styled.input`
 					font-size: 19px;
 					color: #131313;
 				`;
+			case "addFeedInput":
+				return css`
+					width: 335px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 16px 12px 16px;
+					outline-color: #7474ff;
+					::placeholder {
+						color: #c8c8c8;
+						margin-left: 16px;
+						font-weight: 500;
+						padding: 12px 0 16px;
+					}
+				`;
 		}
 	}}
 `;

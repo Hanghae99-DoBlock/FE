@@ -2,14 +2,6 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import chevron from "../../images/chevron.left.svg";
-import useMediaQuery from "react-responsive";
-import {
-	BrowserView,
-	MobileView,
-	isBrowser,
-	isMobile,
-} from "react-device-detect";
 import { useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +9,7 @@ import {
 	__checkEmail,
 	__checkNick,
 	__signUp,
-} from "../../redux/modules/joinSlice";
+} from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
 

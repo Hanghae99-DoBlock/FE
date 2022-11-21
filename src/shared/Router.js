@@ -1,5 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ProfilePage, SignInPage, SignUpPage, TodoListPage } from "../pages";
+import {
+	ProfilePage,
+	SignInPage,
+	SignUpPage,
+	TodoListPage,
+	AddFeedPage,
+} from "../pages";
 
 const Router = () => {
 	return (
@@ -10,6 +16,7 @@ const Router = () => {
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/:id" element={<ProfilePage />} />
 					<Route path="/" element={<TodoListPage />} />
+					<Route path="/addFeed" element={<AddFeedPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>
