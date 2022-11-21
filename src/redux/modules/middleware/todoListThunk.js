@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
 	addTodoApi,
+	updateTodoApi,
 	getTodoListApi,
 	checkTodoApi,
 } from "../../../api/todoListApi";
@@ -12,6 +13,19 @@ export const __addTodo = createAsyncThunk(
 		try {
 			const response = await addTodoApi(payload);
 			return thunkAPI.fulfillWithValue(response);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+// 투두 수정 Thunk
+export const __updateTodo = createAsyncThunk(
+	"todo/updateTodo",
+	async (payload, thunkAPI) => {
+		try {
+			await updateTodoApi(payload);
+			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}

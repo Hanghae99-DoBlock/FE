@@ -3,6 +3,7 @@ import {
 	__addTodo,
 	__getTodoList,
 	__checkTodo,
+	__updateTodo,
 } from "./middleware/todoListThunk";
 
 const initialState = {
@@ -45,6 +46,15 @@ export const todoListSlice = createSlice({
 				state.todoList = state.todoList.map(todoItem => {
 					return todoItem.todoId === action.payload.todoId
 						? { ...todoItem, completed: !todoItem.completed }
+						: todoItem;
+				});
+			})
+
+			// 투두 수정 성공
+			.addCase(__updateTodo.fulfilled, (state, action) => {
+				state.todoList = state.todoList.map(todoItem => {
+					return todoItem.todoId === action.payload.todoId
+						? action.payload
 						: todoItem;
 				});
 			});

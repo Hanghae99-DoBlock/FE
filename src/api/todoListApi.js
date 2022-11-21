@@ -6,6 +6,13 @@ export const addTodoApi = async payload => {
 	return response.data;
 };
 
+// 투두 수정
+export const updateTodoApi = async payload => {
+	const { todoId, year, month, day, todoContent, todoMemo } = payload;
+	const updatedTodoItem = { year, month, day, todoContent, todoMemo };
+	await instance.patch(`/api/todolist/${todoId}/edit`, updatedTodoItem);
+};
+
 // 투두리스트 조회
 export const getTodoListApi = async payload => {
 	const { year, month, day } = payload;
