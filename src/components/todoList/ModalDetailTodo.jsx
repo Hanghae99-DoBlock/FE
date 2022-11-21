@@ -76,7 +76,17 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 				maxLength="100"
 			/>
 		),
-		memoExist: <Text variant="small">{todoItem.todoMemo}</Text>,
+		memoExist: (
+			<Flex
+				ht="50px"
+				mg="2px 0 0 0"
+				overflowX="hidden"
+				overflowY="auto"
+				ai="flex-start"
+			>
+				<Text variant="small">{todoItem.todoMemo}</Text>
+			</Flex>
+		),
 		memoNotExist: <Text variant="grey">작성한 메모가 없습니다</Text>,
 	};
 
@@ -115,37 +125,27 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 					{/* 할 일 라벨 + 인풋*/}
 					<Flex dir="column" ai="flex-start">
 						<Label variant="grey">할 일</Label>
-						<Box variant="todoContent">
-							{isEdit ? (
-								<Input
-									autoFocus
-									onChange={onChangeHandler}
-									value={todo.todoContent}
-									variant="todoInput"
-									name="todoContent"
-								/>
-							) : (
+						{isEdit ? (
+							<Input
+								autoFocus
+								onChange={onChangeHandler}
+								value={todo.todoContent}
+								variant="todoInput"
+								name="todoContent"
+							/>
+						) : (
+							<Box variant="todoContent">
 								<Text variant="medium">{todoItem.todoContent}</Text>
-							)}
-						</Box>
-						<Flex gap="17px" dir="column" ai="flex-start" mg="12px 0 0 0">
-							<Flex gap="18.5px">
-								{/* 메모 아이콘*/}
-								<Box variant="memoIconBox">
-									<Svg variant="memo" />
-								</Box>
+							</Box>
+						)}
+						<Flex gap="10px" jc="flex-start" mg="14px 0 0 0" wd="100%">
+							{/* 메모 아이콘*/}
+							<Box variant="memoIconBox">
+								<Svg variant="memo" />
+							</Box>
 
-								{/* 메모 */}
-								<Flex
-									ht="50px"
-									mg="2px 0 0 0"
-									overflowX="hidden"
-									overflowY="auto"
-									ai="flex-start"
-								>
-									{memoUi[memoStatus]}
-								</Flex>
-							</Flex>
+							{/* 메모 */}
+							{memoUi[memoStatus]}
 						</Flex>
 					</Flex>
 
