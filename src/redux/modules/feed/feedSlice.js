@@ -28,7 +28,7 @@ export const feedSlice = createSlice({
 		},
 		addTag: (state, action) => {
 			if (state.tagList.length < 3) {
-				state.tagList.push(action.payload.value);
+				state.tagList.push(action.payload);
 			} else {
 				state.tagList = state.tagList.filter(tag => {
 					return action.payload.value !== tag;
@@ -37,7 +37,7 @@ export const feedSlice = createSlice({
 		},
 		deleteTag: (state, action) => {
 			state.tagList = state.tagList.filter((tag, index) => {
-				return action.payload.value !== tag;
+				return action.payload.id !== tag.id;
 			});
 		},
 	},

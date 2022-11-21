@@ -19,9 +19,10 @@ const AddFeedPage = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [tagInput, setTagInput] = useState([]);
 	const [tagValue, setTagValue] = useState("");
-	const [isReadOnly, setIsReadOnly] = useState(false);
 	const boastFeed = useSelector(state => state.feed.checkedList);
 	const tagList = useSelector(state => state.feed.tagList);
+	const [id, setId] = useState(tagList.length);
+	const [isInputHidden, setIsInputHidden] = useState(true);
 
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
@@ -49,54 +50,33 @@ const AddFeedPage = () => {
 	const greenHandler = () => {
 		setColor("#4CCCB5");
 	};
+
 	const addTagInput = e => {
-		console.log(tagInput);
-		if (tagInput.length < 3) {
-			setTagInput(
-				tagInput.concat(
-					<TagList tagInput={tagInput} deleteTagInput={deleteTagInput} />,
-				),
-			);
-		} else {
-			return;
-		}
-		addTagHandler(e);
+		setIsInputHidden(!isInputHidden);
 	};
-	const deleteTagInput = e => {
-		if (e.target.readOnly) {
-			console.log(e.target);
-			dispatch(deleteTag({ value: e.target.value }));
 
-			setTagInput(
-				tagInput.filter((tag, index) => {
-					console.log(tag);
-					return tagInput.indexOf(tag);
-				}),
-			);
-		}
+	const changeTagHandler = e => {
+		setTagValue(e.target.value);
 	};
+
 	const addTagHandler = e => {
-		if (e.keyCode === 13 && tagList.length < 3) {
-			setTagInput(...tagInput, e.target.value);
-			setIsReadOnly(true);
-			dispatch(addTag({ value: tagValue }));
+		if (e.keyCode === 13 && tagValue.trim() === "") {
+			return alert("태그를 입력해주세요");
+		} else if (e.keyCode === 13 && tagList.length <= 3) {
+			setId(prev => prev + 1);
+			console.log(id);
+
+			dispatch(addTag({ id: id, value: tagValue }));
+			setIsInputHidden(true);
+			setTagValue("");
 		}
 	};
-
+	console.log(tagList);
 	useEffect(() => {}, [boastFeedNonDuple, tagList]);
 	const openModalHandler = () => {
 		setOpenModal(true);
 		dispatch(resetTodo());
 	};
-
-	// const addHashtag = e => {
-	// 	if (e?.keyCode === 32 && hashtagArr.length < 3) {
-	// 		setHashtagArr([...hashtagArr, hashtag.value]);
-	// 		hashtag.onReset();
-	// 	} else if (hashtagArr.length >= 3) {
-	// 		hashtagArr.splice(3, 1);
-	// 	}
-	// };
 
 	return (
 		<>
@@ -316,13 +296,22 @@ const AddFeedPage = () => {
 						<Button variant="addTag" onClick={addTagInput}>
 							<Svg variant="plus" />
 						</Button>
-						{tagInput.map((tag, idx) => {
+						{isInputHidden === false ? (
+							<StInputTag
+								value={tagValue}
+								onChange={changeTagHandler}
+								onKeyDown={addTagHandler}
+								autoFocus={true}
+							/>
+						) : null}
+						{tagList?.map((tag, idx) => {
 							return (
 								<TagList
+									tag={tag}
 									tagInput={tagInput}
-									deleteTagInput={deleteTagInput}
 									setTagInput={setTagInput}
-									key={tag.idx}
+									key={idx}
+									id={id}
 								/>
 							);
 						})}
@@ -350,6 +339,13 @@ const AddFeedPage = () => {
 };
 
 export default AddFeedPage;
+
+export const StInputTag = styled.input`
+	height: 38px;
+	min-width: 38px;
+	background-color: #f8f8f8;
+	border-radius: 10px;
+`;
 
 export const StYellowBox = styled.button`
 	width: 40px;

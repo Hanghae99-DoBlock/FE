@@ -4,46 +4,35 @@ import styled from "styled-components";
 import { addTag, deleteTag } from "../../redux/modules/feed/feedSlice";
 
 const TagList = props => {
-	const { tagInput, deleteTagInput, setTagInput } = props;
+	const { tag, tagInput, setTagInput } = props;
 	const dispatch = useDispatch();
 	const tagList = useSelector(state => state.feed.tagList);
 	const [tagValue, setTagValue] = useState("");
 	const [isReadOnly, setIsReadOnly] = useState(false);
-	// const deleteTagInputHandler = e => {
-	// 	console.log(e.target.readOnly);
-	// 	if (e.target.readOnly === true) {
-	// 		deleteTagInput();
-	// 	} else {
-	// 		return;
-	// 	}
-	// };
+	const [id, setId] = useState(tagList.length);
 
-	const addTagHandler = e => {
-		if (e.keyCode === 13 && tagList.length < 3) {
-			setIsReadOnly(true);
-			dispatch(addTag({ value: tagValue }));
-		}
+	const deleteTagInput = e => {
+		setId(prev => prev + 1);
+		dispatch(deleteTag({ id: tag.id, value: e.target.value }));
 	};
+
 	const changeTagValueHandler = e => {
 		setTagValue(e.target.value);
 	};
 
 	const isEmptyInputHandler = () => {
-		console.log(tagInput);
 		if (tagValue.trim() === "") {
-			console.log("tagInput:", tagInput);
 			setTagInput([tagInput.pop()]);
-			console.log("변경tagInput : ", tagInput);
 		}
 	};
-
+	console.log(tag.id);
 	return (
 		<StTagInput
 			onClick={deleteTagInput}
-			onKeyDown={addTagHandler}
+			//onKeyDown={addTagHandler}
 			onChange={changeTagValueHandler}
-			value={tagValue}
-			readOnly={isReadOnly}
+			value={tag.value}
+			readOnly={true}
 			onBlur={isEmptyInputHandler}
 			autoFocus={true}
 		/>
@@ -57,4 +46,7 @@ export const StTagInput = styled.input`
 	min-width: 38px;
 	background-color: #f8f8f8;
 	border-radius: 10px;
+	:hover {
+		cursor: pointer;
+	}
 `;
