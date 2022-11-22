@@ -22,6 +22,8 @@ const StLayout = styled.div`
 					margin: 0 auto;
 					height: 100%;
 					position: relative;
+					display: flex;
+					flex-direction: column;
 				`;
 			default:
 				break;

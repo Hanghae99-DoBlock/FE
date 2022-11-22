@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 
 const initialState = {
 	todoList: [],
+	selectedDate: {},
 };
 
 // 투두 업로드 Thunk
@@ -14,6 +15,7 @@ export const __addTodo = createAsyncThunk(
 	"todo/addTodo",
 	async (payload, thunkAPI) => {
 		try {
+<<<<<<< HEAD
 			await axios.post(
 				`${serverUrl}/api/todolist`,
 				payload,
@@ -27,6 +29,12 @@ export const __addTodo = createAsyncThunk(
 			);
 
 			return thunkAPI.fulfillWithValue(payload);
+=======
+			const response = await axios.post(`${serverUrl}/api/todolist`, payload, {
+				headers: { Authorization: accessToken },
+			});
+			return thunkAPI.fulfillWithValue(response.data);
+>>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
@@ -38,8 +46,12 @@ export const __getTodoList = createAsyncThunk(
 	"todo/getTodoList",
 	async (payload, thunkAPI) => {
 		try {
+			const { year, month, date } = payload;
+			const intYear = parseInt(year);
+			const intMonth = parseInt(month);
+			const intDay = parseInt(date);
 			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=2022&month=11&day=14`,
+				`${serverUrl}/api/todolist?year=${intYear}&month=${intMonth}&day=${intDay}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -77,7 +89,16 @@ export const __checkTodo = createAsyncThunk(
 export const todoListSlice = createSlice({
 	name: "todoList",
 	initialState,
-	reducers: {},
+	reducers: {
+		// 날짜 선택
+		updateSelectedDate: (state, action) => {
+			state.selectedDate = {
+				year: parseInt(action.payload.year),
+				month: parseInt(action.payload.month),
+				day: parseInt(action.payload.date),
+			};
+		},
+	},
 	extraReducers: builder => {
 		builder
 			// 투두 업로드 성공
@@ -88,6 +109,10 @@ export const todoListSlice = createSlice({
 			// 투두리스트 조회 성공
 			.addCase(__getTodoList.fulfilled, (state, action) => {
 				state.todoList = action.payload;
+			})
+			// 투두리스트 조회 실패
+			.addCase(__getTodoList.rejected, (state, action) => {
+				state.todoList = [];
 			})
 
 			// 투두 체크 성공
@@ -101,5 +126,5 @@ export const todoListSlice = createSlice({
 	},
 });
 
-export const {} = todoListSlice.actions;
+export const { updateSelectedDate } = todoListSlice.actions;
 export default todoListSlice.reducer;

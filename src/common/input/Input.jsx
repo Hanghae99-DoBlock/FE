@@ -53,6 +53,7 @@ export const StInput = styled.input`
 					font-size: 19px;
 					color: #131313;
 				`;
+<<<<<<< HEAD
 			case "addFeedInput":
 				return css`
 					width: 335px;
@@ -68,6 +69,20 @@ export const StInput = styled.input`
 						padding: 12px 0 16px;
 					}
 				`;
+=======
+			case "imageInput":
+				return css`
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: 2;
+				`;
+			default:
+				break;
+>>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
 		}
 	}}
 `;
