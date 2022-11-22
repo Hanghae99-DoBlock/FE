@@ -7,7 +7,7 @@ const GlobalStyles = createGlobalStyle`
 
 
   html{
-    overflow : auto;
+    overflow : hidden;
   }
 
   * {
@@ -50,6 +50,10 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: none;
     outline: none;      
   }
+
+  textarea {
+  resize: none;
+  }  
 `;
 
 export default GlobalStyles;

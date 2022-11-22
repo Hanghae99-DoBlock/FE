@@ -10,8 +10,10 @@ const NavBelow = () => {
 
 	return (
 		<Nav>
-			<Flex wd="100%" jc="space-between" pd="19px 60px">
+			<Flex wd="100%" jc="space-between" pd="0 40px">
 				<Flex
+					wd="70px"
+					ht="100%"
 					gap="8px"
 					dir="column"
 					cursor="pointer"
@@ -21,6 +23,8 @@ const NavBelow = () => {
 					<Text variant="navText">캘린더</Text>
 				</Flex>
 				<Flex
+					wd="70px"
+					ht="100%"
 					gap="8px"
 					dir="column"
 					cursor="pointer"
@@ -29,11 +33,13 @@ const NavBelow = () => {
 					<Box variant="navIconBox" type="speechBubble" />
 					<Text variant="navText">피드</Text>
 				</Flex>
-				<Flex gap="8px" dir="column">
+				<Flex wd="70px" ht="100%" cursor="pointer" gap="8px" dir="column">
 					<Box variant="navIconBox" type="magnifyingGlass" />
 					<Text variant="navText">검색</Text>
 				</Flex>
 				<Flex
+					wd="70px"
+					ht="100%"
 					gap="8px"
 					dir="column"
 					cursor="pointer"

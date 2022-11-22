@@ -1,9 +1,8 @@
 import {
 	TodoListCalendar,
-	ListingTodos,
-	TodoListHeader,
-	ModalAddTodo,
+	TodoList,
 	TodoItem,
+	ModalAddTodo,
 	ModalDetailTodo,
 } from "./todoList";
 
@@ -12,10 +11,9 @@ import NavBelow from "./nav/NavBelow";
 
 export {
 	TodoListCalendar,
-	ListingTodos,
-	TodoListHeader,
-	ModalAddTodo,
+	TodoList,
 	TodoItem,
+	ModalAddTodo,
 	ModalDetailTodo,
 	FeedItem,
 	FeedItemUi,

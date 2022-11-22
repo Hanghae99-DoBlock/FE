@@ -18,6 +18,57 @@ const StBox = styled.div`
 					background: #f9f9f9;
 					height: 100%;
 					width: 100%;
+					border-radius: 20px 20px 0 0;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				`;
+
+			// 투두리스트 스크롤 영역
+			case "todoListScrollArea":
+				return css`
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					width: 100%;
+					height: 100%;
+					background: #f9f9f9;
+					overflow-x: hidden;
+					overflow-y: auto;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				`;
+
+			// 피드 페이지 스크롤 영역
+			case "feedScrollArea":
+				return css`
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					width: 100%;
+					height: 100vh;
+					padding: 85px 20px;
+					gap: 11px;
+					overflow-x: hidden;
+					overflow-y: auto;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				`;
+
+			// 메모 조회 스크롤 영역
+			case "memocrollArea":
+				return css`
+					display: flex;
+					height: 50px;
+					margin: 2px 0 0 0;
+					overflow-x: hidden;
+					overflow-y: auto;
+					align-items: flex-start;
+					::-webkit-scrollbar {
+						display: none;
+					}
 				`;
 
 			// 모달창
@@ -28,8 +79,6 @@ const StBox = styled.div`
 					height: 258px;
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
-					position: fixed;
-					top: 20vh;
 				`;
 
 			// 투두 박스
@@ -59,13 +108,16 @@ const StBox = styled.div`
 					height: 402px;
 					border-radius: 10px;
 					padding: 21px 20px 14px 20px;
-					// 메모 아이콘 박스
 				`;
+
+			// 메모 아이콘 박스
 			case "memoIconBox":
 				return css`
 					width: 20px;
-					height: 20px;
-					padding: 5px 0 0 2px;
+					height: 100%;
+					padding: 4px 0 0 2px;
+					display: flex;
+					align-items: flex-start;
 				`;
 
 			// 텍스트 박스
@@ -213,6 +265,7 @@ const StBox = styled.div`
 					outline: 1px solid #7474ff;
 					justify-content: space-between;
 				`;
+
 			// 기본 탭 메뉴
 			case "tabMenu":
 				return css`
@@ -223,6 +276,7 @@ const StBox = styled.div`
 					align-items: center;
 					background: white;
 					border-bottom: 1px solid #e0e0e0;
+					cursor: pointer;
 				`;
 
 			// 선택된 탭 메뉴
@@ -235,6 +289,7 @@ const StBox = styled.div`
 					align-items: center;
 					background: white;
 					border-bottom: 2px solid #333333;
+					cursor: pointer;
 				`;
 
 			// 피드 아이템 레고 바디

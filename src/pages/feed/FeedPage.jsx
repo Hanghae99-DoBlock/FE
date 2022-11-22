@@ -5,11 +5,11 @@ import { FeedItem, NavBelow } from "../../components";
 import {
 	__getFollowingFeeds,
 	__getRecommendedFeeds,
-} from "../../redux/modules/feedSlice";
+} from "../../redux/modules/feed/feedSlice";
 
 const FeedPage = () => {
 	const dispatch = useDispatch();
-	const feedList = useSelector(state => state.feedSlice.feedList);
+	const feedList = useSelector(state => state.feed.feedList);
 
 	useEffect(() => {
 		dispatch(__getFollowingFeeds());
@@ -54,18 +54,11 @@ const FeedPage = () => {
 				</Flex>
 
 				{/* 피드 리스트 */}
-				<Flex
-					wd="100%"
-					ht="100vh"
-					pd="85px 20px"
-					dir="column"
-					jc="flex-start"
-					gap="11px"
-				>
+				<Box variant="feedScrollArea">
 					{feedList.map(feedItem => (
 						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 					))}
-				</Flex>
+				</Box>
 			</Flex>
 			<NavBelow />
 		</>

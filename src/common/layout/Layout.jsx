@@ -6,9 +6,6 @@ const Layout = ({ children, ...props }) => {
 export default Layout;
 
 const StLayout = styled.div`
-	display: flex;
-	align-items: center;
-
 	${({ variant }) => {
 		switch (variant) {
 			// 전체 페이지 공통 레이아웃
