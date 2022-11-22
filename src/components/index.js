@@ -7,7 +7,7 @@ import {
 	ModalDetailTodo,
 } from "./todoList";
 
-import { FeedItem } from "./feed";
+import { FeedItem, FeedItemUi } from "./feed";
 
 export {
 	TodoListCalendar,
@@ -17,4 +17,5 @@ export {
 	TodoItem,
 	ModalDetailTodo,
 	FeedItem,
+	FeedItemUi,
 };
