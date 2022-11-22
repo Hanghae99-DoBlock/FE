@@ -39,7 +39,6 @@ export const __editPassword = createAsyncThunk(
 export const __followThunk = createAsyncThunk(
 	"profile/follow",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/members/profile/${payload}/follow`,
@@ -218,13 +217,11 @@ const profileSlice = createSlice({
 		[__followThunk.fulfilled]: (state, action) => {
 			state.isLoading = false;
 			state.followingList = state.followingList.map(followMember => {
-				console.log(followMember.memberId);
 				return action.payload === followMember.memberId
 					? { ...followMember, followOrNot: !followMember.followOrNot }
 					: followMember;
 			});
 			state.followerList = state.followerList.map(followMember => {
-				console.log(followMember.memberId);
 				return action.payload === followMember.memberId
 					? { ...followMember, followOrNot: !followMember.followOrNot }
 					: followMember;
