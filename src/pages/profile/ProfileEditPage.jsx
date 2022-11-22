@@ -10,17 +10,11 @@ import { updatePro } from "../../redux/modules/profileSlice";
 const ProfileEdit = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { id } = useParams();
 
 	const nickname = useInput("");
 
 	const [isBlue, setIsBlue] = useState(false);
 	const [name, setName] = useState("");
-	const [profile, setProfile] = useState({
-		id: id,
-		nickname: "",
-		profileImage: "",
-	});
 
 	const checkNickname = useSelector(
 		state => state?.join?.checkNickResult.status,
@@ -34,6 +28,34 @@ const ProfileEdit = () => {
 		if (regNick.test(nickname.value)) {
 			dispatch(__checkNick({ nickname: nickname.value }));
 		}
+	};
+
+	// image preview useState
+	const [previewImage, setPreviewImage] = useState("");
+	const [uploadImageForm, setUploadImageForm] = useState(null);
+
+	//profile useState
+	const [profile, setProfile] = useState({
+		nickname: "",
+		profileImage: "",
+	});
+
+	const imgFileHandler = e => {
+		setUploadImageForm(e.target.files[0]);
+		// 닉네임 선, 이미지 후 수정 시 오류로 빠지는 부분 수정
+		setProfile({ ...profile, profileImage: e.target.files[0] });
+
+		let reader = new FileReader();
+		if (e.target.files[0]) {
+			reader.readAsDataURL(e.target.files[0]);
+		}
+		reader.onload = () => {
+			const previewImgUrl = reader.result;
+			if (previewImgUrl) {
+				// 이미지 연속 업로드 시 엑박 발생하는 부분 수정: 얕은 복사 제거
+				setPreviewImage(previewImgUrl);
+			}
+		};
 	};
 
 	const postHandler = e => {
@@ -50,25 +72,6 @@ const ProfileEdit = () => {
 		dispatch(updatePro(profile));
 	};
 
-	// image preview useState
-	const [previewImage, setPreviewImage] = useState("");
-	const [uploadImageForm, setUploadImageForm] = useState(null);
-
-	const imgFileHandler = e => {
-		setUploadImageForm(e.target.files[0]);
-
-		let reader = new FileReader();
-		if (e.target.files[0]) {
-			reader.readAsDataURL(e.target.files[0]);
-		}
-		reader.onload = () => {
-			const previewImgUrl = reader.result;
-			if (previewImgUrl) {
-				setPreviewImage([...previewImage, previewImgUrl]);
-			}
-		};
-	};
-
 	const user = useSelector(state => state.profileSlice.profile);
 
 	return (
@@ -82,13 +85,8 @@ const ProfileEdit = () => {
 		>
 			<Flex wd="375px" mg="auto" dir="column">
 				<Flex wd="335px" jc="space-between">
-					<Svg variant="chevron" onClick={() => navigate("/profile/:id")} />
-					<Flex
-						fs="18"
-						fw="600"
-						style={{ cursor: "pointer" }}
-						onClick={updateHandler}
-					>
+					<Svg variant="chevron" onClick={() => navigate(-1)} />
+					<Flex fs="18" fw="600" onClick={updateHandler}>
 						저장
 					</Flex>
 				</Flex>
@@ -236,15 +234,28 @@ const ProfileEdit = () => {
 					비밀번호
 				</Flex>
 				<Flex>
-					<Box variant="stPassword" style={{ marginBottom: "26px" }}>
+					<Box variant="passworadChange" style={{ marginBottom: "26px" }}>
 						<Input
 							type="password"
 							defaultValue="12341234!"
-							variant="join"
+							variant="passwordInput"
 							disabled
-							style={{ fontSize: "16px", fontWeight: 400, color: "#C8C8C8" }}
+							style={{ fontSize: "35px", fontWeight: 400, color: "#C8C8C8" }}
 						/>
 					</Box>
+					<Flex
+						pd="12px"
+						wd="69px"
+						ht="50px"
+						bc="#DDDDDD"
+						radius="10px"
+						mg="0 0 26px 10px"
+						onClick={() => {
+							navigate(`/profile/edit/password`);
+						}}
+					>
+						변경
+					</Flex>
 				</Flex>
 				<Flex
 					wd="335px"
