@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant }) => {
+	${({ variant, profileImageUrl, feedColor, type }) => {
 		switch (variant) {
 			// 투두리스트 전체 영역
 			case "todoListArea":
@@ -213,6 +213,81 @@ const StBox = styled.div`
 					outline: 1px solid #7474ff;
 					justify-content: space-between;
 				`;
+			// 기본 탭 메뉴
+			case "tabMenu":
+				return css`
+					display: flex;
+					width: 100%;
+					height: 100%;
+					justify-content: center;
+					align-items: center;
+					background: white;
+					border-bottom: 1px solid #e0e0e0;
+				`;
+
+			// 선택된 탭 메뉴
+			case "selectedTabMenu":
+				return css`
+					display: flex;
+					width: 100%;
+					height: 100%;
+					justify-content: center;
+					align-items: center;
+					background: white;
+					border-bottom: 2px solid #333333;
+				`;
+
+			// 피드 아이템 레고 바디
+			case "feedItemBody":
+				return css`
+					width: 100%;
+					height: 178px;
+					background-color: ${feedColor};
+					padding: 35px 20px 20px;
+					border-radius: 20px;
+				`;
+
+			// 피드 아이템 레고 머리
+			case "feedItemHead":
+				return css`
+					width: 89.95px;
+					height: 15px;
+					background-color: ${feedColor};
+					border-radius: 10px 10px 0 0;
+				`;
+
+			// 프로필 이미지 스몰
+			case "profilePicSmall":
+				return css`
+					background-image: url(${profileImageUrl});
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+				`;
+
+			// 프로필 이미지 디폴트 스몰
+			case "profilePicDefaultSmall":
+				return css`
+					background-image: url(/images/defaultProfile.svg);
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+				`;
+
+			// 네비게이션 바 아이콘
+			case "navIconBox":
+				return css`
+					background-image: url(/images/${type}.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 17px;
+					height: 16px;
+				`;
+
 			default:
 				break;
 		}
