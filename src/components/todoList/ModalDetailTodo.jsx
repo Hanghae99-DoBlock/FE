@@ -77,15 +77,9 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 			/>
 		),
 		memoExist: (
-			<Flex
-				ht="50px"
-				mg="2px 0 0 0"
-				overflowX="hidden"
-				overflowY="auto"
-				ai="flex-start"
-			>
+			<Box variant="memocrollArea">
 				<Text variant="small">{todoItem.todoMemo}</Text>
-			</Flex>
+			</Box>
 		),
 		memoNotExist: <Text variant="grey">작성한 메모가 없습니다</Text>,
 	};

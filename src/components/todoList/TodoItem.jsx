@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
 import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
-import { getTodoItem } from "../../redux/modules/todoListSlice";
+import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 
 const TodoItem = ({ todoItem, setIsDetailTodoModalOpen }) => {
 	const { todoContent, completed } = todoItem;

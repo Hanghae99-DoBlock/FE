@@ -4,7 +4,7 @@ import {
 	__getTodoList,
 	__checkTodo,
 	__updateTodo,
-} from "./middleware/todoListThunk";
+} from "../middleware/todoListThunk";
 
 const initialState = {
 	todoList: [],

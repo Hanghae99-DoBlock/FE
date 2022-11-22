@@ -2,7 +2,7 @@ import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import { useDispatch } from "react-redux";
-import { updateSelectedDate } from "../../redux/modules/todoListSlice";
+import { updateSelectedDate } from "../../redux/modules/todoList/todoListSlice";
 import "../todoList/style/calendar.css";
 
 const TodoListCalendar = () => {

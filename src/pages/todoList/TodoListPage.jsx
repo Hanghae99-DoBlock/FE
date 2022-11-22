@@ -24,17 +24,25 @@ const TodoListPage = () => {
 		<>
 			{/* 투두 추가 모달 */}
 			{isAddTodoModalOpen ? (
-				<Flex wd="100%" ht="100%" position="absolute" zIndex="2">
-					<ModalAddTodo setIsAddTodoModalOpen={setIsAddTodoModalOpen} />
+				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+					<Flex wd="100%" ht="100vh" position="relative">
+						<Flex wd="100%" ht="100%" zIndex="2">
+							<ModalAddTodo setIsAddTodoModalOpen={setIsAddTodoModalOpen} />
+						</Flex>
+					</Flex>
 				</Flex>
 			) : null}
 
 			{/* 디테일 모달 */}
 			{isDetailTodoModalOpen ? (
-				<Flex wd="100%" ht="100%" position="absolute">
-					<ModalDetailTodo
-						setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
-					/>
+				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+					<Flex wd="100%" ht="100vh" position="relative">
+						<Flex wd="100%" ht="100%" zIndex="2">
+							<ModalDetailTodo
+								setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+							/>
+						</Flex>
+					</Flex>
 				</Flex>
 			) : null}
 
@@ -53,7 +61,6 @@ const TodoListPage = () => {
 
 				{/* 투두리스트 */}
 				<TodoList setIsDetailTodoModalOpen={setIsDetailTodoModalOpen} />
-
 				{/* 네비게이션 바 */}
 				<NavBelow />
 			</Flex>

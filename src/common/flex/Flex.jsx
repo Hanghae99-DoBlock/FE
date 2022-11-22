@@ -14,6 +14,7 @@ export const StFlex = styled.div`
 	flex-direction: ${({ dir }) => (dir ? dir : "row")};
 	justify-content: ${({ jc }) => (jc ? jc : "center")};
 	align-items: ${({ ai }) => (ai ? ai : "center")};
+	flex-wrap: ${({ wrap }) => wrap};
 
 	/* 사이즈 */
 	width: ${({ wd }) => wd};
@@ -27,9 +28,13 @@ export const StFlex = styled.div`
 	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
 	border: ${({ border }) => border};
+	border-top: ${({ bt }) => bt};
+	border-left: ${({ bl }) => bl};
 	border-right: ${({ br }) => br};
+	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
+	opacity: ${({ oc }) => oc};
 	cursor: ${({ cursor }) => cursor};
 
 	/* 여백 */
@@ -42,6 +47,7 @@ export const StFlex = styled.div`
 	bottom: ${({ bottom }) => bottom};
 	left: ${({ left }) => left};
 	right: ${({ right }) => right};
+	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
 
@@ -52,6 +58,7 @@ export const StFlex = styled.div`
 	line-height: ${({ lh }) => `${lh}px`};
 
 	/* 스크롤 */
+	overflow: ${({ overflow }) => overflow};
 	overflow-x: ${({ overflowX }) => overflowX};
 	overflow-y: ${({ overflowY }) => overflowY};
 `;

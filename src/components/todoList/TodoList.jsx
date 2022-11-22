@@ -43,21 +43,14 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 				<Flex
 					dir="column"
 					jc="center"
-					pd="0 16px 72px"
+					pd="0 16px"
 					position="absolute"
 					wd="100%"
 					ht="100%"
 				>
 					{todoList[0] ? (
 						// 투두가 있을 때
-						<Flex
-							wd="100%"
-							ht="100%"
-							dir="column"
-							overflowX="hidden"
-							overflowY="auto"
-							jc="flex-start"
-						>
+						<Box variant="todoListScrollArea">
 							{todoList.map(todoItem => (
 								<TodoItem
 									todoItem={todoItem}
@@ -65,14 +58,15 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 									setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
 								/>
 							))}
-						</Flex>
+						</Box>
 					) : (
 						// 투두가 없을 때
-						<Flex dir="column" gap="21.5px">
+						<Flex ht="100%" dir="column" gap="21.5px">
 							<Svg variant="todoEmpty" />
 							<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
 						</Flex>
 					)}
+					<Flex wd="100%" ht="198px" />
 				</Flex>
 			</Flex>
 		</Box>

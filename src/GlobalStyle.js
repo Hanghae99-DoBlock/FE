@@ -5,6 +5,11 @@ const GlobalStyles = createGlobalStyle`
 
     ${reset}
 
+
+  html{
+    overflow : hidden;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -20,11 +25,6 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
   }
 
-  textarea {
-  resize: none;
-  overflow: hidden;
-  }
-  
   a {
     color: inherit;
     text-decoration: none;
@@ -33,7 +33,6 @@ const GlobalStyles = createGlobalStyle`
   button,svg {
     cursor: pointer;
     background-color: transparent;
-    letter-spacing: 0.1em;
   }
 
   ul, ol, li {
@@ -52,9 +51,9 @@ const GlobalStyles = createGlobalStyle`
     outline: none;      
   }
 
-  ::-webkit-scrollbar {
-    display: none;
-  } 
+  textarea {
+  resize: none;
+  }  
 `;
 
 export default GlobalStyles;
