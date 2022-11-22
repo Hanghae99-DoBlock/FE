@@ -147,6 +147,42 @@ const StBox = styled.div`
 						outline: 1px solid #7474ff;
 					}
 				`;
+			case "stPasswordBlue":
+				return css`
+					display: flex;
+					flex-direction: row;
+					width: 335px;
+					background-color: #f4f4f4;
+					align-items: center;
+					border-radius: 10px;
+					outline: 1px solid #7474ff;
+					justify-content: space-between;
+				`;
+			case "stRePassword":
+				return css`
+					display: flex;
+					flex-direction: row;
+					width: 335px;
+					background-color: #f4f4f4;
+					align-items: center;
+					border-radius: 10px;
+					justify-content: space-between;
+
+					:focus-within {
+						outline: 1px solid #7474ff;
+					}
+				`;
+			case "stRePasswordBlue":
+				return css`
+					display: flex;
+					flex-direction: row;
+					width: 335px;
+					background-color: #f4f4f4;
+					align-items: center;
+					border-radius: 10px;
+					outline: 1px solid #7474ff;
+					justify-content: space-between;
+				`;
 			default:
 				break;
 		}
