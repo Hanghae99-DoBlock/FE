@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 
 const initialState = {
 	todoList: [],
+	selectedDate: {},
 };
 
 // 투두 업로드 Thunk
@@ -14,10 +15,19 @@ export const __addTodo = createAsyncThunk(
 	"todo/addTodo",
 	async (payload, thunkAPI) => {
 		try {
-			const response = await axios.post(`${serverUrl}/api/todolist`, payload, {
-				headers: { Authorization: accessToken },
-			});
-			return thunkAPI.fulfillWithValue(response.data);
+			await axios.post(
+				`${serverUrl}/api/todolist`,
+				payload,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					/*서로 다른 도메인(크로스 도메인)에 요청을 보낼 때 요청에 credential 정보를 담아서 보낼 지를 결정하는 항목*/
+					withCredentials: true,
+				},
+			);
+
+			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
@@ -30,11 +40,11 @@ export const __getTodoList = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const { year, month, date } = payload;
-			console.log(year, month, date);
+			const intYear = parseInt(year);
+			const intMonth = parseInt(month);
+			const intDay = parseInt(date);
 			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=${parseInt(year)}&month=${parseInt(
-					month,
-				)}&day=${date}`,
+				`${serverUrl}/api/todolist?year=${intYear}&month=${intMonth}&day=${intDay}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -72,7 +82,16 @@ export const __checkTodo = createAsyncThunk(
 export const todoListSlice = createSlice({
 	name: "todoList",
 	initialState,
-	reducers: {},
+	reducers: {
+		// 날짜 선택
+		updateSelectedDate: (state, action) => {
+			state.selectedDate = {
+				year: parseInt(action.payload.year),
+				month: parseInt(action.payload.month),
+				day: parseInt(action.payload.date),
+			};
+		},
+	},
 	extraReducers: builder => {
 		builder
 			// 투두 업로드 성공
@@ -83,6 +102,10 @@ export const todoListSlice = createSlice({
 			// 투두리스트 조회 성공
 			.addCase(__getTodoList.fulfilled, (state, action) => {
 				state.todoList = action.payload;
+			})
+			// 투두리스트 조회 실패
+			.addCase(__getTodoList.rejected, (state, action) => {
+				state.todoList = [];
 			})
 
 			// 투두 체크 성공
@@ -96,5 +119,5 @@ export const todoListSlice = createSlice({
 	},
 });
 
-export const {} = todoListSlice.actions;
+export const { updateSelectedDate } = todoListSlice.actions;
 export default todoListSlice.reducer;

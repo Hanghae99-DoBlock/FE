@@ -20,7 +20,6 @@ const Profile = () => {
 	const decodeToken = jwtDecode(token);
 
 	const profile = useSelector(state => state.profileSlice.profile);
-	console.log(profile);
 
 	useEffect(() => {
 		dispatch(__getUsers(id));

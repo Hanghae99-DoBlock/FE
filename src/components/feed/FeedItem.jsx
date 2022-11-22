@@ -21,7 +21,9 @@ const FeedItem = ({ feedItem }) => {
 					<Text variant="whiteBig">{feedTitle}</Text>
 					<Flex dir="row" jc="center" wd="100%" gap="6px">
 						{tagList.map(tagItem => (
-							<Text variant="whiteMedium"># {tagItem}</Text>
+							<Text key={tagList.indexOf(tagItem)} variant="whiteMedium">
+								# {tagItem}
+							</Text>
 						))}
 					</Flex>
 				</Flex>

@@ -25,8 +25,6 @@ const PasswordChange = () => {
 
 	const [passWord, setPassWord] = useState("");
 
-	console.log(passWord);
-
 	//비밀번호 정규식
 	// 1. 영문 대소문자, 숫자, 특수문자 !@#$%^&* 를 적어도 하나씩 포함해야됨
 	// 2. 8-20자

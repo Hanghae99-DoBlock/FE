@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Box, Flex, Image, Label, Svg, Input } from "../../common";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "../../common/hooks/useInput";
-import { __checkNick } from "../../redux/modules/joinSlice";
+import { __checkNick } from "../../redux/modules/join/joinSlice";
 import { updatePro } from "../../redux/modules/profileSlice";
 
 const ProfileEdit = () => {
@@ -70,8 +70,6 @@ const ProfileEdit = () => {
 	};
 
 	const user = useSelector(state => state.profileSlice.profile);
-
-	console.log(user);
 
 	return (
 		<Flex

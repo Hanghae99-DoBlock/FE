@@ -4,6 +4,7 @@ import {
 	SignInPage,
 	SignUpPage,
 	TodoListPage,
+	AddFeedPage,
 	ProfileEditPage,
 	PasswordChangePage,
 	FeedPage,
@@ -24,6 +25,7 @@ const Router = () => {
 					/>
 					<Route path="/" element={<TodoListPage />} />
 					<Route path="/feed" element={<FeedPage />} />
+					<Route path="/addFeed" element={<AddFeedPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

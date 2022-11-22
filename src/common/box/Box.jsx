@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl, feedColor }) => {
+	${({ variant, profileImageUrl, feedColor, type }) => {
 		switch (variant) {
 			// 투두리스트 전체 영역
 			case "todoListArea":
@@ -25,7 +25,7 @@ const StBox = styled.div`
 				return css`
 					background-color: white;
 					width: 279px;
-					height: 356px;
+					height: 258px;
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
 					position: fixed;
@@ -38,6 +38,36 @@ const StBox = styled.div`
 					height: 48px;
 					padding: 12px 0;
 				`;
+
+			case "feedTodo":
+				return css`
+					display: flex;
+					width: 335px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 16px 12px 16px;
+					outline-color: #7474ff;
+					align-items: center;
+				`;
+			case "feedModal":
+				return css`
+					position: fixed;
+					margin: 0 auto;
+					background-color: white;
+					width: 279px;
+					height: 402px;
+					border-radius: 10px;
+					padding: 21px 20px 14px 20px;
+					// 메모 아이콘 박스
+				`;
+			case "memoIconBox":
+				return css`
+					width: 20px;
+					height: 20px;
+					padding: 5px 0 0 2px;
+				`;
+
 			// 텍스트 박스
 			case "textArea":
 				return css`
@@ -184,13 +214,24 @@ const StBox = styled.div`
 			// 프로필 이미지 디폴트 스몰
 			case "profilePicDefaultSmall":
 				return css`
-					background-image: url(/images/feed/defaultProfile.jpg);
+					background-image: url(/images/defaultProfile.svg);
 					background-repeat: no-repeat;
 					background-size: cover;
 					border-radius: 50%;
 					width: 24px;
 					height: 24px;
 				`;
+
+			// 네비게이션 바 아이콘
+			case "navIconBox":
+				return css`
+					background-image: url(/images/${type}.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 17px;
+					height: 16px;
+				`;
+
 			default:
 				break;
 		}

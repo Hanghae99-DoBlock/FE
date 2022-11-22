@@ -85,6 +85,11 @@ const StText = styled.span`
 					font-weight: 700;
 					font-size: 14px;
 				`;
+			case "navText":
+				return css`
+					font-weight: 400;
+					font-size: 10px;
+				`;
 			default:
 				break;
 		}

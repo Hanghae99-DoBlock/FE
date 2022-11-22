@@ -26,9 +26,16 @@ export const StFlex = styled.div`
 	/* 스타일 */
 	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
+	border: ${({ border }) => border};
 	border-right: ${({ br }) => br};
+	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
+<<<<<<< HEAD
+	border : ${({ border }) => border}
+=======
+	cursor: ${({ cursor }) => cursor};
+>>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
 
 	/* 여백 */
 	margin: ${({ mg }) => mg};
@@ -37,14 +44,21 @@ export const StFlex = styled.div`
 
 	/* 위치 */
 	top: ${({ top }) => top};
+	bottom: ${({ bottom }) => bottom};
 	left: ${({ left }) => left};
 	right: ${({ right }) => right};
+	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
+	overflow: ${({ overflow }) => overflow};
+	overflow-x: ${({ overflowX }) => overflowX};
+	overflow-y: ${({ overflowY }) => overflowY};
+	flex-wrap: ${({ wrap }) => wrap};
 
 	/* 폰트 */
 	color: ${({ color }) => color};
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
+	opacity: ${({ oc }) => oc};
 `;

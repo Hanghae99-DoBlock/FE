@@ -1,16 +1,27 @@
 import moment from "moment/moment";
 import { useState } from "react";
 import { Calendar } from "react-calendar";
+import { useDispatch } from "react-redux";
 import { Box } from "../../common";
+import { updateSelectedDate } from "../../redux/modules/todoList/todoListSlice";
 import "../todoList/style/style.css";
-import ListingTodos from "./ListingTodos";
 import TodoListHeader from "./TodoListHeader";
 
 const TodoListCalendar = () => {
+	const dispatch = useDispatch();
+
 	const [value, onChange] = useState(new Date());
 	const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 	const week = WEEKDAY[value.getDay()];
-	console.log(value.getDate(), week);
+
+	const selectedDate = {
+		year: moment(value).format("YYYY"),
+		month: moment(value).format("MM"),
+		date: moment(value).format("DD"),
+		day: week,
+	};
+
+	dispatch(updateSelectedDate(selectedDate));
 
 	return (
 		<>

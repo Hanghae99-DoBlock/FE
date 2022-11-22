@@ -8,6 +8,7 @@ import {
 } from "./todoList";
 
 import { FeedItem, FeedItemUi } from "./feed";
+import NavBelow from "./nav/NavBelow";
 
 export {
 	TodoListCalendar,
@@ -18,4 +19,5 @@ export {
 	ModalDetailTodo,
 	FeedItem,
 	FeedItemUi,
+	NavBelow,
 };

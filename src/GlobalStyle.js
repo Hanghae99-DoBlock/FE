@@ -5,26 +5,36 @@ const GlobalStyles = createGlobalStyle`
 
     ${reset}
 
+
+  html{
+    overflow : auto;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
   }
-
+  
   body, div, span, h1, h2, h3, h4, h5, h6,
   p, i, ol, ul, li, form, label, header, nav, 
   input, textarea, button {
+<<<<<<< HEAD
 	margin: 0;
 	padding: 0;
 	border: 0;
   font-weight: normal;
+
+  
   /* font-family: */
+=======
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: normal;
+    font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
+>>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
   }
 
-  textarea {
-  resize: none;
-  overflow: hidden;
-  }
-  
   a {
     color: inherit;
     text-decoration: none;
@@ -33,7 +43,6 @@ const GlobalStyles = createGlobalStyle`
   button,svg {
     cursor: pointer;
     background-color: transparent;
-    letter-spacing: 0.1em;
   }
 
   ul, ol, li {
