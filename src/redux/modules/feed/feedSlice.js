@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	checkedList: [],
 	tagList: [],
+	photoList: [],
 };
 
 export const feedSlice = createSlice({
@@ -40,8 +41,24 @@ export const feedSlice = createSlice({
 				return action.payload.id !== tag.id;
 			});
 		},
+		addPhoto: (state, action) => {
+			console.log("외않되");
+			if (state.photoList.length < 4) state.photoList.push(action.payload);
+		},
+		deletePhoto: (state, action) => {
+			state.photoList = state.photoList.filter((photo, index) => {
+				return photo.id !== action.payload.id;
+			});
+		},
 	},
 });
-export const { choiceTodo, deleteTodo, resetTodo, addTag, deleteTag } =
-	feedSlice.actions;
+export const {
+	choiceTodo,
+	deleteTodo,
+	resetTodo,
+	addTag,
+	deleteTag,
+	addPhoto,
+	deletePhoto,
+} = feedSlice.actions;
 export default feedSlice.reducer;
