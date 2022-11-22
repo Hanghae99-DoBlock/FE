@@ -15,7 +15,6 @@ export const __addTodo = createAsyncThunk(
 	"todo/addTodo",
 	async (payload, thunkAPI) => {
 		try {
-<<<<<<< HEAD
 			await axios.post(
 				`${serverUrl}/api/todolist`,
 				payload,
@@ -29,12 +28,6 @@ export const __addTodo = createAsyncThunk(
 			);
 
 			return thunkAPI.fulfillWithValue(payload);
-=======
-			const response = await axios.post(`${serverUrl}/api/todolist`, payload, {
-				headers: { Authorization: accessToken },
-			});
-			return thunkAPI.fulfillWithValue(response.data);
->>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}

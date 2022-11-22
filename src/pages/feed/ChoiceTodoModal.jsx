@@ -13,7 +13,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 
 	/*목록 가져오기*/
 	useEffect(() => {
-		dispatch(__getTodoList());
+		dispatch(__getTodoList({ year: 2022, month: 11, date: 22 }));
 	}, []);
 
 	const closeModalHandler = () => {
@@ -75,4 +75,5 @@ export default ChoiceTodoModal;
 
 export const StCheckBox = styled.input`
 	border: 1px solid red;
+	display: none;
 `;

@@ -4,12 +4,9 @@ import {
 	SignInPage,
 	SignUpPage,
 	TodoListPage,
-<<<<<<< HEAD
 	AddFeedPage,
-=======
 	ProfileEditPage,
 	PasswordChangePage,
->>>>>>> d9b7bc5989a2551f0c5704c47b05a3995ccb68bf
 } from "../pages";
 
 const Router = () => {

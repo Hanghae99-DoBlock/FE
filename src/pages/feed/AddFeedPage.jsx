@@ -7,6 +7,7 @@ import useInput from "../../common/hooks/useInput";
 import AddFeedModal from "./ChoiceTodoModal";
 import { useDispatch, useSelector } from "react-redux";
 import BoastFeed from "./BoastFeed";
+import "./style/AddFeedStyle.css";
 import {
 	addTag,
 	deleteTag,
