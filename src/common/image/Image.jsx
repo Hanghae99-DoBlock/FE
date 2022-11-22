@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import ProfileImage from "../../images/profile.jpeg";
 
 const Image = ({ children, ...props }) => {
 	return <StImage {...props}>{children}</StImage>;
@@ -12,7 +11,6 @@ const StImage = styled.img`
 			// 이미지 작성 폼
 			case "image":
 				return css`
-					background-image: url(${ProfileImage});
 					background-repeat: no-repeat;
 					background-size: cover;
 					width: 60px;
