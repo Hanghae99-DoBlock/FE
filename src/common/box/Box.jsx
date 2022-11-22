@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl }) => {
+	${({ variant, profileImageUrl, feedColor }) => {
 		switch (variant) {
 			// 투두리스트 전체 영역
 			case "todoListArea":
@@ -151,21 +151,40 @@ const StBox = styled.div`
 					border-bottom: 2px solid #333333;
 				`;
 
-			// 피드 아이템 블루
-			case "blueFeedItem":
+			// 피드 아이템 레고 바디
+			case "feedItemBody":
 				return css`
-					width: 335px;
-					height: 193px;
-					background-image: url(/images/feed/blueFeedItem.svg);
-					background-size: contain;
-					background-repeat: no-repeat;
-					padding: 45px 35px 25px;
+					width: 100%;
+					height: 178px;
+					background-color: ${feedColor};
+					padding: 35px 20px 20px;
+					border-radius: 20px;
+				`;
+
+			// 피드 아이템 레고 머리
+			case "feedItemHead":
+				return css`
+					width: 89.95px;
+					height: 15px;
+					background-color: ${feedColor};
+					border-radius: 10px 10px 0 0;
 				`;
 
 			// 프로필 이미지 스몰
 			case "profilePicSmall":
 				return css`
 					background-image: url(${profileImageUrl});
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+				`;
+
+			// 프로필 이미지 디폴트 스몰
+			case "profilePicDefaultSmall":
+				return css`
+					background-image: url(/images/feed/defaultProfile.jpg);
 					background-repeat: no-repeat;
 					background-size: cover;
 					border-radius: 50%;
