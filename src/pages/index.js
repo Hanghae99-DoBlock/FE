@@ -1,4 +1,5 @@
-import FeedPage from "./feed/ChoiceTodo";
+import FeedPage from "./feed/FeedPage";
+// import FeedPage from "./feed/ChoiceTodo";
 import SignInPage from "./join/SignInPage";
 import SignUpPage from "./join/SignUpPage";
 import TodoListPage from "./todoList/TodoListPage";

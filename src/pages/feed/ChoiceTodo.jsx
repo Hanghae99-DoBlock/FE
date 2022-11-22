@@ -39,11 +39,11 @@ const ChoiceTodo = ({ todo }) => {
 					onClick={changeCheckedHandler}
 					type="checkbox"
 					name="todo"
-					value={todo.todoContent}
+					value={todo?.todoContent}
 				/>
 			</label>
 			<Flex jc="flex-start" ai="flex-start" fs="14" lh="22">
-				{todo.todoContent}
+				{todo?.todoContent}
 			</Flex>
 		</Flex>
 	);

@@ -7,6 +7,7 @@ import {
 	ModalDetailTodo,
 } from "./todoList";
 
+import { FeedItem, FeedItemUi } from "./feed";
 import NavBelow from "./nav/NavBelow";
 
 export {
@@ -16,5 +17,7 @@ export {
 	ModalAddTodo,
 	TodoItem,
 	ModalDetailTodo,
+	FeedItem,
+	FeedItemUi,
 	NavBelow,
 };
