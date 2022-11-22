@@ -11,6 +11,8 @@ export const __editPassword = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.patch(
+			await axios.patch(
+				// `${serverUrl}/api/members/profile/edit/password`,
 				`${serverUrl}/api/members/profile/edit/password`,
 				{
 					currentPassword: payload.currentPassword,
@@ -61,6 +63,8 @@ export const __followThunk = createAsyncThunk(
 
 // 프로필 수정
 const updateProfile = payload => {
+	const accessToken = localStorage.getItem("accessToken");
+	const refreshToken = localStorage.getItem("refreshToken");
 	const frm = new FormData();
 	if (payload.nickname === "") {
 	} else {

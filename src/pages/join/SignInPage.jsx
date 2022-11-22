@@ -6,10 +6,13 @@ import { useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { __signIn } from "../../redux/modules/joinSlice";
+import { __signIn } from "../../redux/modules/join/joinSlice";
+import jwtDecode from "jwt-decode";
 import Svg from "../../common/svg/Svg";
 
 const SignInPage = () => {
+	const token = localStorage.getItem("accessToken");
+	const decodeToken = jwtDecode(token);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 

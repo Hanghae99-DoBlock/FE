@@ -19,11 +19,11 @@ const ModalAddTodo = () => {
 	const isAddTodoModalOpen = useSelector(
 		state => state.modalSlice.isAddTodoModalOpen,
 	);
+	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const onChangeHandler = e => {
-		// 날짜는 하드코딩만 해두었습니다
 		const { name, value } = e.target;
-		setTodo({ ...todo, year: 2022, month: 11, day: 14, [name]: value });
+		setTodo({ ...todo, ...selectedDate, [name]: value });
 	};
 
 	const uploadHandler = e => {
@@ -74,7 +74,7 @@ const ModalAddTodo = () => {
 								/>
 							</Flex>
 
-							<Flex gap="18.5px" ai="flex-start" mg="14px 0 0 0">
+							<Flex gap="10px" ai="flex-start" mg="14px 0 0 0">
 								{/* 메모 아이콘 */}
 								<Box variant="memoIconBox">
 									<Svg variant="memo" />
@@ -88,8 +88,6 @@ const ModalAddTodo = () => {
 									variant="memo"
 									placeholder="메모"
 									maxLength="100"
-									rows="5"
-									cols="29"
 								/>
 							</Flex>
 						</div>

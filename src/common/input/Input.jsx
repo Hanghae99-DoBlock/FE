@@ -47,12 +47,26 @@ export const StInput = styled.input`
 			case "todoInput":
 				return css`
 					height: 48px;
-					width: 100%;
 					padding: 12px 0;
 					caret-color: #7474ff;
 					font-weight: 600;
 					font-size: 19px;
 					color: #131313;
+				`;
+			case "addFeedInput":
+				return css`
+					width: 335px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 16px 12px 16px;
+					outline-color: #7474ff;
+					::placeholder {
+						color: #c8c8c8;
+						margin-left: 16px;
+						font-weight: 500;
+						padding: 12px 0 16px;
+					}
 				`;
 			case "imageInput":
 				return css`

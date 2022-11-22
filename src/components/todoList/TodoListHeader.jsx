@@ -13,7 +13,7 @@ const TodoListHeader = props => {
 
 	useEffect(() => {
 		dispatch(__getTodoList(props));
-	}, []);
+	}, [props]);
 
 	return (
 		<>
@@ -24,7 +24,7 @@ const TodoListHeader = props => {
 						{date}.{day}
 					</Text>
 					{/* 할 일 개수 */}
-					<Text variant="grey">할 일 {todoList.length}개</Text>
+					<Text variant="grey">할 일 {todoList?.length || 0}개</Text>
 				</Flex>
 
 				{/* 휴지통 */}

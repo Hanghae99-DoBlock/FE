@@ -18,28 +18,27 @@ const TodoItem = props => {
 	return (
 		<>
 			{/* 투두 박스 */}
-			<Flex wd="100%" ht="51px" radius="10px" bg="#FFFFFF" pd="12px 10px">
-				{/* icons: 햄버거, 체크박스 */}
-				<Flex gap="7px">
-					{/* 햄버거 */}
-					<Svg variant="hamburger" />
-					{/* 체크박스 */}
-					{completed ? (
-						<Svg onClick={checkTodoHandler} variant="todoCompleted" />
-					) : (
-						<Svg onClick={checkTodoHandler} variant="checkBox" />
-					)}
-				</Flex>
+			<Flex wd="100%" ht="51px" radius="10px" bg="#FFFFFF" pd="13.5px 15px">
+				{/* 체크박스 */}
+				{completed ? (
+					<Svg onClick={checkTodoHandler} variant="todoCompleted" />
+				) : (
+					<Svg onClick={checkTodoHandler} variant="checkBox" />
+				)}
 
 				{/* 투두 컨텐트 */}
 				<Flex
 					onClick={onClickTodoItemHandler}
 					jc="flex-start"
 					wd="100%"
-					mg="0 0 0 16px"
+					mg="0 0 0 13px"
+					pd="3px 0 0 0"
 				>
 					<Text variant="normal">{todoContent}</Text>
 				</Flex>
+
+				{/* 햄버거 */}
+				<Svg variant="hamburger" />
 			</Flex>
 		</>
 	);

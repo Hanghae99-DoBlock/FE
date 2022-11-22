@@ -10,6 +10,7 @@ const StTextArea = styled.textarea`
 		switch (variant) {
 			case "memo":
 				return css`
+					width: 100%;
 					vertical-align: center;
 					font-size: 13px;
 					font-weight: 500;
