@@ -15,7 +15,7 @@ const FeedPage = () => {
 	return (
 		<Flex dir="column" wd="100%">
 			{/* 상단 탭 메뉴 */}
-			<Flex wd="100%" ht="41px" position="sticky" top="0">
+			<Flex wd="100%" mxw="430px" ht="41px" position="fixed" top="0">
 				<Box variant="tabMenu">
 					<Text variant="tabMenu">팔로잉</Text>
 				</Box>
@@ -28,7 +28,7 @@ const FeedPage = () => {
 			<Flex
 				wd="100%"
 				ht="100vh"
-				pd="32px 20px"
+				pd="85px 20px"
 				dir="column"
 				jc="flex-start"
 				gap="11px"
