@@ -467,6 +467,8 @@ const Svg = ({ variant, onClick }) => {
 						rx="4.5"
 						stroke="#E5E5E5"
 					/>
+				</svg>
+			);
 		case "plus":
 			return (
 				<svg

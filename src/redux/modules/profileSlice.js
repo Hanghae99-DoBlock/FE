@@ -11,7 +11,6 @@ export const __editPassword = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.patch(
-			await axios.patch(
 				// `${serverUrl}/api/members/profile/edit/password`,
 				`${serverUrl}/api/members/profile/edit/password`,
 				{
