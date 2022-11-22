@@ -1,4 +1,4 @@
-import { Flex, Nav, Text } from "../../common";
+import { Box, Flex, Nav, Text } from "../../common";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
@@ -11,25 +11,36 @@ const NavBelow = () => {
 	return (
 		<Nav>
 			<Flex wd="100%" jc="space-between" pd="19px 60px">
-				<Flex dir="column" cursor="pointer" onClick={() => navigate(`/`)}>
-					<Text variant="grey">아이콘</Text>
-					<Text variant="grey">캘린더</Text>
-				</Flex>
-				<Flex dir="column" cursor="pointer" onClick={() => navigate(`/feed`)}>
-					<Text variant="grey">아이콘</Text>
-					<Text variant="grey">피드</Text>
-				</Flex>
-				<Flex dir="column">
-					<Text variant="grey">아이콘</Text>
-					<Text variant="grey">검색</Text>
+				<Flex
+					gap="8px"
+					dir="column"
+					cursor="pointer"
+					onClick={() => navigate(`/`)}
+				>
+					<Box variant="navIconBox" type="calendar" />
+					<Text variant="navText">캘린더</Text>
 				</Flex>
 				<Flex
+					gap="8px"
+					dir="column"
+					cursor="pointer"
+					onClick={() => navigate(`/feed`)}
+				>
+					<Box variant="navIconBox" type="speechBubble" />
+					<Text variant="navText">피드</Text>
+				</Flex>
+				<Flex gap="8px" dir="column">
+					<Box variant="navIconBox" type="magnifyingGlass" />
+					<Text variant="navText">검색</Text>
+				</Flex>
+				<Flex
+					gap="8px"
 					dir="column"
 					cursor="pointer"
 					onClick={() => navigate(`/profile/${memberId}`)}
 				>
-					<Text variant="grey">아이콘</Text>
-					<Text variant="grey">프로필</Text>
+					<Box variant="navIconBox" type="myProfile" />
+					<Text variant="navText">프로필</Text>
 				</Flex>
 			</Flex>
 		</Nav>
