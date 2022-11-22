@@ -19,8 +19,6 @@ const Following = () => {
 	const followingList = useSelector(state => state.profileSlice.followingList);
 	const profile = useSelector(state => state.profileSlice.profile);
 
-	console.log(followingList);
-
 	useEffect(() => {
 		dispatch(__getFollowing(id));
 	}, []);

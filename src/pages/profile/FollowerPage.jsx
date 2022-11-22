@@ -1,22 +1,15 @@
-import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FirstHeading, Flex, Image, Svg } from "../../common";
 import { __followThunk, __getFollower } from "../../redux/modules/profileSlice";
 
-const Following = () => {
+const Follower = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { id } = useParams();
 
-	const token = localStorage.getItem("accessToken");
-	const decodeToken = jwtDecode(token);
-
 	const followerList = useSelector(state => state.profileSlice.followerList);
-	const profile = useSelector(state => state.profileSlice.profile);
-
-	console.log(followerList);
 
 	useEffect(() => {
 		dispatch(__getFollower(id));
@@ -95,4 +88,4 @@ const Following = () => {
 	);
 };
 
-export default Following;
+export default Follower;
