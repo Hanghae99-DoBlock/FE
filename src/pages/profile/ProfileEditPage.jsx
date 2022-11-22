@@ -85,7 +85,7 @@ const ProfileEdit = () => {
 		>
 			<Flex wd="375px" mg="auto" dir="column">
 				<Flex wd="335px" jc="space-between">
-					<Svg variant="chevron" onClick={() => navigate("/profile/:id")} />
+					<Svg variant="chevron" onClick={() => navigate(-1)} />
 					<Flex fs="18" fw="600" onClick={updateHandler}>
 						저장
 					</Flex>

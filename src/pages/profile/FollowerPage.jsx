@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FirstHeading, Flex, Image, Svg } from "../../common";
-import { __followThunk, __getUsers } from "../../redux/modules/profileSlice";
+import { __followThunk, __getFollower } from "../../redux/modules/profileSlice";
 
-const Follower = () => {
+const Following = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { id } = useParams();
@@ -13,22 +13,35 @@ const Follower = () => {
 	const token = localStorage.getItem("accessToken");
 	const decodeToken = jwtDecode(token);
 
-	const user = useSelector(state => state.profileSlice.profile);
+	const followerList = useSelector(state => state.profileSlice.followerList);
+	const profile = useSelector(state => state.profileSlice.profile);
+
+	console.log(followerList);
 
 	useEffect(() => {
-		dispatch(__getUsers(id));
+		dispatch(__getFollower(id));
 	}, []);
 
+	const anotherMemberPage = memberId => {
+		navigate(`/profile/${memberId}`);
+	};
+	const unfollowHandler = memberId => {
+		dispatch(__followThunk(memberId));
+	};
+	const followingHandler = memberId => {
+		dispatch(__followThunk(memberId));
+	};
+
 	return (
-		<Flex
-			dir="column"
-			mw="375px"
-			mxw="375px"
-			mh="667px"
-			mg="0 auto"
-			style={{ overflow: "auto" }}
-		>
-			<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
+		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex
+				dir="row"
+				wd="100%"
+				ht="58px"
+				jc="space-between"
+				pd="8px 0"
+				ai="center"
+			>
 				<Flex wd="113px" ht="42px" jc="flex-start" mg="0 0 0 17px">
 					<Svg variant="chevron" onClick={() => navigate(-1)} />
 				</Flex>
@@ -37,32 +50,41 @@ const Follower = () => {
 				</Flex>
 				<Flex wd="113px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 			</Flex>
-			{user.map(data => (
-				<Flex jc="space-between" mg="0 0 20px 0 " wd="100%">
+			{Array.from(followerList).map(data => (
+				<Flex jc="space-between" mg="0 0 20px 0 " wd="100%" key={data.memberId}>
 					<Flex>
 						<Image
 							variant="image"
 							src={data.profileImage}
 							alt=""
 							style={{ marginTop: "4px" }}
+							onClick={() => {
+								anotherMemberPage(data.memberId);
+							}}
 						/>
-						<FirstHeading fw="600" fs="13px">
+						<FirstHeading
+							fw="600"
+							fs="13px"
+							onClick={() => {
+								anotherMemberPage(data.memberId);
+							}}
+						>
 							{data.nickname}
 						</FirstHeading>
 					</Flex>
 					<Flex>
-						{user.followOrNot === true ? (
+						{data.followOrNot === false ? (
 							<Svg
 								variant="follow"
 								onClick={() => {
-									dispatch(__followThunk(id));
+									followingHandler(data.memberId);
 								}}
 							></Svg>
 						) : (
 							<Svg
 								variant="followCancel"
 								onClick={() => {
-									dispatch(__followThunk(id));
+									unfollowHandler(data.memberId);
 								}}
 							></Svg>
 						)}
@@ -73,4 +95,4 @@ const Follower = () => {
 	);
 };
 
-export default Follower;
+export default Following;

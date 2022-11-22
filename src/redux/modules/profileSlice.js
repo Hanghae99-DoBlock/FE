@@ -1,31 +1,47 @@
-import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../api";
 
 const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
 
+// 비밀번호 변경
 export const __editPassword = createAsyncThunk(
 	"profile/editPassword",
 	async (payload, thunkAPI) => {
 		try {
-			await axios.put(
-				`${serverUrl}/profile/edit/${payload.id}/password`,
-				payload,
+			const response = await axios.patch(
+				`${serverUrl}/api/members/profile/edit/password`,
+				{
+					currentPassword: payload.currentPassword,
+					newPassword: payload.newPassword,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
 			);
-			return thunkAPI.fulfillWithValue(payload);
+			alert("수정 완료");
+			window.history.back();
+			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
+			alert("수정 실패");
 			return thunkAPI.rejectWithValue(error);
 		}
 	},
 );
 
-// 팔로우
+// 팔로우 버튼
 export const __followThunk = createAsyncThunk(
 	"profile/follow",
 	async (payload, thunkAPI) => {
+		console.log(payload);
 		try {
-			const response = await axios.post(
+			await axios.post(
 				`${serverUrl}/api/members/profile/${payload}/follow`,
 				{
 					withCredentials: true,
@@ -34,27 +50,29 @@ export const __followThunk = createAsyncThunk(
 					headers: {
 						Authorization: accessToken,
 						"Refresh-Token": refreshToken,
-						"Content-Type": "multipart/form-data",
 					},
 				},
 			);
-			return thunkAPI.fulfillWithValue(response.data.data);
+			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
-			return console.log(error);
+			return thunkAPI.rejectWithValue(error);
 		}
 	},
 );
 
+// 프로필 수정
 const updateProfile = payload => {
-	console.log(payload);
 	const frm = new FormData();
-	frm.append("nickname", payload.nickname);
-	frm.append("profileImage", payload.profileImage);
-	frm.append("currentPassword", null);
-	frm.append("password", null);
-	frm.append("tagList", []);
+	if (payload.nickname === "") {
+	} else {
+		frm.append("nickname", payload.nickname);
+	}
+	if (payload.profileImage === null) {
+	} else {
+		frm.append("profileImage", payload.profileImage);
+	}
 	axios
-		.put(
+		.patch(
 			`${serverUrl}/api/members/profile/edit`,
 			frm,
 
@@ -75,7 +93,6 @@ const updateProfile = payload => {
 		})
 		.catch(function (error) {
 			alert("알수없는 오류가 발생했습니다. 관리자에게 문의하세요.");
-			console.log(error);
 		});
 };
 
@@ -83,12 +100,36 @@ const updateProfile = payload => {
 export const __getUser = createAsyncThunk(
 	"user/getUsers",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
-			const profile = await axios.get(
+			const response = await axios.get(
 				`${serverUrl}/api/members/profile/${payload}`,
 				{
 					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(response.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
+// 팔로잉 리스트 전체 조회
+export const __getFollowing = createAsyncThunk(
+	// 이름 잘 정해줘야 함 안 그러면 뒤바껴서 들어간다!!
+	"user/getFollowing",
+	async (payload, thunkAPI) => {
+		try {
+			const profile = await axios.get(
+				`${serverUrl}/api/members/profile/${payload}/following`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
 				},
 			);
 			return thunkAPI.fulfillWithValue(profile.data);
@@ -98,16 +139,18 @@ export const __getUser = createAsyncThunk(
 	},
 );
 
-// 유저 전체 조회
-export const __getUsers = createAsyncThunk(
-	"user/getUsers",
+// 팔로워 리스트 전체 조회
+export const __getFollower = createAsyncThunk(
+	"user/getFollower",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			const profile = await axios.get(
-				`${serverUrl}/api/members/profile/${payload}/following`,
+				`${serverUrl}/api/members/profile/${payload}/follower`,
 				{
 					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
 				},
 			);
 			return thunkAPI.fulfillWithValue(profile.data);
@@ -118,13 +161,16 @@ export const __getUsers = createAsyncThunk(
 );
 
 const initialState = {
-	follow: false,
-	profile: [],
+	following: false,
+	follower: false,
+	followerList: [],
+	followingList: [],
+	profile: {},
 	isLoading: false,
 	error: "",
 };
 
-const profileSliece = createSlice({
+const profileSlice = createSlice({
 	name: "profile",
 	initialState,
 	reducers: {
@@ -142,7 +188,28 @@ const profileSliece = createSlice({
 		},
 		[__getUser.rejected]: (state, action) => {
 			state.isLoading = false;
-			state.checkMailResult = action.payload;
+			state.isError = true;
+		},
+		[__getFollowing.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__getFollowing.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.followingList = action.payload;
+		},
+		[__getFollowing.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+		},
+		[__getFollower.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__getFollower.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.followerList = action.payload;
+		},
+		[__getFollower.rejected]: (state, action) => {
+			state.isLoading = false;
 			state.isError = true;
 		},
 		[__followThunk.pending]: (state, action) => {
@@ -150,6 +217,18 @@ const profileSliece = createSlice({
 		},
 		[__followThunk.fulfilled]: (state, action) => {
 			state.isLoading = false;
+			state.followingList = state.followingList.map(followMember => {
+				console.log(followMember.memberId);
+				return action.payload === followMember.memberId
+					? { ...followMember, followOrNot: !followMember.followOrNot }
+					: followMember;
+			});
+			state.followerList = state.followerList.map(followMember => {
+				console.log(followMember.memberId);
+				return action.payload === followMember.memberId
+					? { ...followMember, followOrNot: !followMember.followOrNot }
+					: followMember;
+			});
 			state.profile.followOrNot = !state.profile.followOrNot;
 			state.profile.countFollower =
 				state.profile.followOrNot === false
@@ -158,11 +237,10 @@ const profileSliece = createSlice({
 		},
 		[__followThunk.rejected]: (state, action) => {
 			state.isLoading = false;
-			state.checkMailResult = action.payload;
 			state.isError = true;
 		},
 	},
 });
 
-export const { updatePro } = profileSliece.actions;
-export default profileSliece.reducer;
+export const { updatePro, editPassword } = profileSlice.actions;
+export default profileSlice.reducer;

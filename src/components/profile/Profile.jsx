@@ -9,7 +9,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { __followThunk, __getUser } from "../../redux/modules/profileSlice";
 const Profile = () => {
 	const dispatch = useDispatch();
@@ -38,9 +38,13 @@ const Profile = () => {
 				mxw="375px"
 				mh="667px"
 				mg="0 auto"
-				bc="#F9F9F9"
 				style={{ overflow: "auto" }}
 			>
+				<Flex wd="375px" ht="62px" bb="2px solid #EFEFEF">
+					<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
+						내 프로필
+					</Flex>
+				</Flex>
 				<Flex wd="335px" mg="0px auto 20px auto;">
 					<Flex wd="100%" jc="space-between">
 						<Flex jc="space-around">
