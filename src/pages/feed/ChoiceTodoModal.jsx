@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
-import FeedPage from "./ChoiceTodo";
-import "./style/AddFeedStyle.css";
 import React from "react";
 import ChoiceTodo from "./ChoiceTodo";
 

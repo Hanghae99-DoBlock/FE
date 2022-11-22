@@ -35,7 +35,6 @@ const GlobalStyles = createGlobalStyle`
   button,svg {
     cursor: pointer;
     background-color: transparent;
-    letter-spacing: 0.1em;
   }
 
   ul, ol, li {
