@@ -1,24 +1,34 @@
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
-import { updateIsDetailTodoModalOpen } from "../../redux/modules/modal/modalSlice";
-import { __checkTodo } from "../../redux/modules/todoList/todoListSlice";
+import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
+import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 
-const TodoItem = props => {
-	const { todoContent, todoId, completed, todoMemo } = props;
+const TodoItem = ({ todoItem, setIsDetailTodoModalOpen }) => {
+	const { todoContent, completed } = todoItem;
 	const dispatch = useDispatch();
 
-	const onClickTodoItemHandler = () => {
-		dispatch(updateIsDetailTodoModalOpen(props));
+	// 디테일 모달 오픈 핸들러
+	const openDetailModalHandler = () => {
+		dispatch(getTodoItem(todoItem));
+		setIsDetailTodoModalOpen(true);
 	};
 
+	// 투두 완료 여부 체크 핸들러
 	const checkTodoHandler = () => {
-		dispatch(__checkTodo(props));
+		dispatch(__checkTodo(todoItem));
 	};
 
 	return (
 		<>
 			{/* 투두 박스 */}
-			<Flex wd="100%" ht="51px" radius="10px" bg="#FFFFFF" pd="13.5px 15px">
+			<Flex
+				wd="100%"
+				ht="51px"
+				radius="10px"
+				bg="#FFFFFF"
+				pd="13.5px 15px"
+				mg="0 0 10px 0"
+			>
 				{/* 체크박스 */}
 				{completed ? (
 					<Svg onClick={checkTodoHandler} variant="todoCompleted" />
@@ -28,7 +38,8 @@ const TodoItem = props => {
 
 				{/* 투두 컨텐트 */}
 				<Flex
-					onClick={onClickTodoItemHandler}
+					onClick={openDetailModalHandler}
+					cursor="pointer"
 					jc="flex-start"
 					wd="100%"
 					mg="0 0 0 13px"

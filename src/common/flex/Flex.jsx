@@ -14,6 +14,7 @@ export const StFlex = styled.div`
 	flex-direction: ${({ dir }) => (dir ? dir : "row")};
 	justify-content: ${({ jc }) => (jc ? jc : "center")};
 	align-items: ${({ ai }) => (ai ? ai : "center")};
+	flex-wrap: ${({ wrap }) => wrap};
 
 	/* 사이즈 */
 	width: ${({ wd }) => wd};
@@ -34,6 +35,7 @@ export const StFlex = styled.div`
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
 	border: ${({ border }) => border};
+	opacity: ${({ oc }) => oc};
 	cursor: ${({ cursor }) => cursor};
 
 	/* 여백 */
@@ -49,15 +51,15 @@ export const StFlex = styled.div`
 	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
-	overflow: ${({ overflow }) => overflow};
-	overflow-x: ${({ overflowX }) => overflowX};
-	overflow-y: ${({ overflowY }) => overflowY};
-	flex-wrap: ${({ wrap }) => wrap};
 
 	/* 폰트 */
 	color: ${({ color }) => color};
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
-	opacity: ${({ oc }) => oc};
+
+	/* 스크롤 */
+	overflow: ${({ overflow }) => overflow};
+	overflow-x: ${({ overflowX }) => overflowX};
+	overflow-y: ${({ overflowY }) => overflowY};
 `;

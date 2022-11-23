@@ -1,15 +1,7 @@
 import TodoListCalendar from "./TodoListCalendar";
-import ListingTodos from "./ListingTodos";
-import TodoListHeader from "./TodoListHeader";
+import TodoList from "./TodoList";
+import TodoItem from "./TodoItem";
 import ModalAddTodo from "./ModalAddTodo";
 import ModalDetailTodo from "./ModalDetailTodo";
-import TodoItem from "./TodoItem";
 
-export {
-  TodoListCalendar,
-	ListingTodos,
-	TodoListHeader,
-	ModalAddTodo,
-	TodoItem,
-	ModalDetailTodo,
-};
+export { TodoListCalendar, TodoList, TodoItem, ModalAddTodo, ModalDetailTodo };

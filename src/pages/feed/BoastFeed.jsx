@@ -8,7 +8,6 @@ const BoastFeed = ({ todo }) => {
 
 	const deleteTodoHandler = () => {
 		dispatch(deleteTodo(todo));
-		console.log("클릭");
 	};
 
 	return (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
-import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
+import { __getTodoList } from "../../redux/modules/middleware/todoListThunk";
 import React from "react";
 import ChoiceTodo from "./ChoiceTodo";
 
