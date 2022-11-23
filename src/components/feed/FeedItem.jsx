@@ -3,6 +3,7 @@ import { FeedItemUi } from "../../components";
 
 const FeedItem = ({ feedItem }) => {
 	const {
+		feedId,
 		feedTitle,
 		nickname,
 		profileImageUrl,
@@ -13,7 +14,7 @@ const FeedItem = ({ feedItem }) => {
 		feedColor,
 	} = feedItem;
 	return (
-		<FeedItemUi feedColor={feedColor}>
+		<FeedItemUi feedId={feedId} feedColor={feedColor}>
 			<Flex ht="100%" dir="column" jc="space-between">
 				{/* 상단 */}
 				<Flex dir="column" ai="center" gap="15px">
