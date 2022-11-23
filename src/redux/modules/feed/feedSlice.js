@@ -1,33 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { serverUrl } from "../../api";
 import axios from "axios";
+import { serverUrl } from "../../api";
 
 const accessToken = localStorage.getItem("accessToken");
 
-export const __getSuccessTodo = createAsyncThunk(
-	"SUCCESS_TODO",
-	async (payload, thunkAPI) => {
-		try {
-			const { year, month, date } = payload;
-			const intYear = parseInt(year);
-			const intMonth = parseInt(month);
-			const intDay = parseInt(date);
-			const { data } = await axios.get(
-				`${serverUrl}/api/feed?year=${intYear}&month=${intMonth}&day=${intDay}`,
-
-				{
-					headers: { Authorization: accessToken },
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			return thunkAPI.fulfillWithValue(data);
-		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
-		}
-	},
-);
 // 팔로잉 피드 조회 Thunk
 export const __getFollowingFeeds = createAsyncThunk(
 	"feed/getFollowingFeeds",
@@ -73,55 +49,10 @@ export const __getRecommendedFeeds = createAsyncThunk(
 	},
 );
 
-export const __uploadFeed = createAsyncThunk(
-	"UPLOAD_FEED",
-	async (payload, thunkAPI) => {
-		try {
-			const {
-				feedTitle,
-				todoIdList,
-				feedContent,
-				feedImageList,
-				tagList,
-				feedColor,
-			} = payload;
-
-			const frm = new FormData();
-			frm.append("todoIdList", todoIdList);
-			frm.append("feedTitle", feedTitle);
-			frm.append("feedContent", feedContent);
-			for (let i = 0; i < feedImageList.length; i++) {
-				frm.append("feedImageList", feedImageList[i]);
-			}
-
-			frm.append("feedColor", feedColor);
-			frm.append("tagList", tagList);
-			const { data } = await axios.post(
-				`${serverUrl}/api/feed`,
-				frm,
-
-				{
-					headers: { Authorization: accessToken },
-					"Content-Type": "multipart/form-data",
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			return thunkAPI.fulfillWithValue(data);
-		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
-		}
-	},
-);
-
 const initialState = {
 	feedList: [],
 	checkedList: [],
 	tagList: [],
-	photoList: [],
-	formPhotoList: [],
-	successTodo: [],
 	feedItem: {},
 };
 
@@ -131,10 +62,10 @@ export const feedSlice = createSlice({
 	reducers: {
 		choiceTodo: (state, action) => {
 			if (action.payload.isChecked && state.checkedList.length < 3) {
-				state.checkedList.push(action.payload);
-			} else if (action.payload.isChecked === false) {
+				state.checkedList.push(action.payload.value);
+			} else {
 				state.checkedList = state.checkedList.filter(list => {
-					return action.payload.todoContent !== list.todoContent;
+					return action.payload.value !== list;
 				});
 			}
 		},
@@ -160,32 +91,9 @@ export const feedSlice = createSlice({
 				return action.payload.id !== tag.id;
 			});
 		},
-		addPhoto: (state, action) => {
-			if (state.photoList.length < 4) state.photoList.push(action.payload);
-		},
-		deletePhoto: (state, action) => {
-			state.photoList = state.photoList.filter((photo, index) => {
-				return photo.id !== action.payload.id;
-			});
-		},
-		addFormPhoto: (state, action) => {
-			state.formPhotoList.push(action.payload);
-		},
 	},
 	extraReducers: builder => {
 		builder
-			//피드 업로드
-			.addCase(__uploadFeed.fulfilled, (state, action) => {
-				state.feedList.push(action.payload);
-			})
-			//피드 업로드 실패
-			.addCase(__uploadFeed.rejected, (state, action) => {
-				state.feedList = [];
-			})
-			//완료된 피드 목록 불러오기
-			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
-				state.successTodo = action.payload;
-			})
 			// 팔로잉 피드 조회 성공
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
 				state.feedList = action.payload;
@@ -200,14 +108,7 @@ export const feedSlice = createSlice({
 			});
 	},
 });
-export const {
-	choiceTodo,
-	deleteTodo,
-	resetTodo,
-	addTag,
-	deleteTag,
-	addPhoto,
-	deletePhoto,
-	addFormPhoto,
-} = feedSlice.actions;
+
+export const { choiceTodo, deleteTodo, resetTodo, addTag, deleteTag } =
+	feedSlice.actions;
 export default feedSlice.reducer;

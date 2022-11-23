@@ -15,13 +15,8 @@ const ChoiceTodo = ({ todo }) => {
 	const changeCheckedHandler = e => {
 		setChecked(!checked);
 		dispatch(
-			choiceTodo({
-				id: todo.todoId,
-				todoContent: e.target.value,
-				isChecked: e.target.checked,
-			}),
+			choiceTodo({ value: e.target.value, isChecked: e.target.checked }),
 		);
-		//3개 이상 체크하지 못하도록 막음
 		if (boastTodo.length >= 3) {
 			setChecked(false);
 		}
