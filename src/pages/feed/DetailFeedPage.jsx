@@ -22,7 +22,7 @@ const DetailFeedPage = () => {
 	} = feedItem;
 
 	useEffect(() => {
-		dispatch(__getFeedItem(4));
+		dispatch(__getFeedItem(id));
 	}, []);
 
 	return (
