@@ -13,23 +13,52 @@ import {
 	addTag,
 	deleteTag,
 	resetTodo,
+	__uploadFeed,
 } from "../../redux/modules/feed/feedSlice";
 import TagList, { StTagInput } from "./TagList";
 import PhotoList from "./PhotoList";
 import uuid from "react-uuid";
+import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
+	const title = useInput();
 	const [openModal, setOpenModal] = useState(false);
 	const [tagInput, setTagInput] = useState([]);
 	const [tagValue, setTagValue] = useState("");
 	const boastFeed = useSelector(state => state.feed.checkedList);
 	const tagList = useSelector(state => state.feed.tagList);
 	const photoList = useSelector(state => state.feed.photoList);
+	const todoList = useSelector(state => state?.todoListSlice?.todoList);
 	const [id, setId] = useState(tagList.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
 	const [detail, setDetail] = useState("");
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
-	console.log(photoList);
+	const todoIdArray = boastFeed.map(todo => {
+		return todo.id;
+	});
+	const photoUrlArray = photoList.map(photo => {
+		return photo.url;
+	});
+	console.log(tagList);
+	const today = new Date();
+	const year = today.getFullYear();
+	const month = today.getMonth();
+	const day = today.getDate();
+
+	//색상변경
+	const [isYellowChecked, setIsYellowChecked] = useState(false);
+	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
+	const [isBlueChecked, setIsBlueChecked] = useState(false);
+	const [isGreenChecked, setIsGreenChecked] = useState(false);
+	useEffect(() => {
+		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
+		if (photoList.length >= 4) {
+			setIsPhotoFull(true);
+		} else {
+			setIsPhotoFull(false);
+		}
+		dispatch(__getTodoList({ year: year, month: month + 1, date: day }));
+	}, [photoList]);
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
 	}
@@ -43,18 +72,34 @@ const AddFeedPage = () => {
 	}
 	const yeollowHandler = () => {
 		setColor("#FFAC33");
+		setIsYellowChecked(true);
+		setIsBlueChecked(false);
+		setIsGreenChecked(false);
+		setIsOrangeChecked(false);
 	};
 
 	const orangeHandler = () => {
 		setColor("#FE8358");
+		setIsYellowChecked(false);
+		setIsBlueChecked(false);
+		setIsGreenChecked(false);
+		setIsOrangeChecked(true);
 	};
 
 	const blueHandler = () => {
 		setColor("#49AFFA");
+		setIsYellowChecked(false);
+		setIsBlueChecked(true);
+		setIsGreenChecked(false);
+		setIsOrangeChecked(false);
 	};
 
 	const greenHandler = () => {
 		setColor("#4CCCB5");
+		setIsYellowChecked(false);
+		setIsBlueChecked(false);
+		setIsGreenChecked(true);
+		setIsOrangeChecked(false);
 	};
 
 	const addTagInput = e => {
@@ -62,11 +107,7 @@ const AddFeedPage = () => {
 	};
 
 	const changeTagHandler = e => {
-		if (e.target.value.includes("#")) {
-			setTagValue(e.target.value);
-		} else {
-			setTagValue("#" + "  " + e.target.value);
-		}
+		setTagValue(e.target.value);
 	};
 
 	const addTagHandler = e => {
@@ -85,6 +126,7 @@ const AddFeedPage = () => {
 		setDetail(e.target.value);
 	};
 
+	// 사진 추가 핸들러
 	const photoChangeHandler = e => {
 		e.preventDefault();
 		for (let i = 0; i < 4; i++) {
@@ -102,14 +144,19 @@ const AddFeedPage = () => {
 			}
 		}
 	};
+	console.log(color);
+	const uploadFeedHandler = () => {
+		dispatch(
+			__uploadFeed({
+				feedTitle: title.value,
+				todoIdList: todoIdArray,
+				feedContent: detail,
+				feedImageList: photoUrlArray,
+				tagList: tagList,
+			}),
+		);
+	};
 
-	useEffect(() => {
-		if (photoList.length >= 4) {
-			setIsPhotoFull(true);
-		} else {
-			setIsPhotoFull(false);
-		}
-	}, [photoList]);
 	const openModalHandler = () => {
 		setOpenModal(true);
 		dispatch(resetTodo());
@@ -166,10 +213,26 @@ const AddFeedPage = () => {
 						피드 컬러
 					</Flex>
 					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
-						<StYellowBox onClick={yeollowHandler}></StYellowBox>
-						<StOrangeBox onClick={orangeHandler}></StOrangeBox>
-						<StBlueBox onClick={blueHandler}></StBlueBox>
-						<StGreenBox onClick={greenHandler}></StGreenBox>
+						{!isYellowChecked ? (
+							<StYellowBox onClick={yeollowHandler}></StYellowBox>
+						) : (
+							<StCheckedYellowBox></StCheckedYellowBox>
+						)}
+						{!isOrangeChecked ? (
+							<StOrangeBox onClick={orangeHandler}></StOrangeBox>
+						) : (
+							<StCheckedOrangeBox></StCheckedOrangeBox>
+						)}
+						{!isBlueChecked ? (
+							<StBlueBox onClick={blueHandler}></StBlueBox>
+						) : (
+							<StCheckedBlueBox></StCheckedBlueBox>
+						)}
+						{!isGreenChecked ? (
+							<StGreenBox onClick={greenHandler}></StGreenBox>
+						) : (
+							<StCheckedGreenBox></StCheckedGreenBox>
+						)}
 					</Flex>
 				</Flex>
 				<Flex
@@ -209,7 +272,11 @@ const AddFeedPage = () => {
 							최대 30자 입력 가능합니다
 						</Flex>
 					</Flex>
-					<Input variant="addFeedInput" />
+					<Input
+						variant="addFeedInput"
+						value={title.value}
+						onChange={title.onChange}
+					/>
 				</Flex>
 				<Flex
 					dir="column"
@@ -260,7 +327,7 @@ const AddFeedPage = () => {
 						</Flex>
 					</Box>
 					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
-						{boastFeedNonDuple?.map(todo => {
+						{boastFeed?.map(todo => {
 							return <BoastFeed todo={todo} />;
 						})}
 					</Flex>
@@ -472,7 +539,9 @@ const AddFeedPage = () => {
 					jc="center"
 					ai="center"
 				>
-					<Button variant="join">업로드 하기</Button>
+					<Button variant="join" onClick={uploadFeedHandler}>
+						업로드 하기
+					</Button>
 				</Flex>
 			</Flex>
 		</>
@@ -524,12 +593,18 @@ export const StYellowBox = styled.button`
 	:hover {
 		cursor: pointer;
 	}
-
-	:focus {
-		outline: 2px solid #7474ff;
-	}
 `;
 
+export const StCheckedYellowBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #ffac33;
+	border-radius: 10px;
+	outline: 2px solid #7474ff;
+	:hover {
+		cursor: pointer;
+	}
+`;
 export const StOrangeBox = styled.button`
 	width: 40px;
 	height: 40px;
@@ -538,11 +613,19 @@ export const StOrangeBox = styled.button`
 	:hover {
 		cursor: pointer;
 	}
-	:focus {
-		outline: 2px solid #7474ff;
-	}
 `;
 
+export const StCheckedOrangeBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #fe8358;
+	border-radius: 10px;
+	:hover {
+		cursor: pointer;
+	}
+
+	outline: 2px solid #7474ff;
+`;
 export const StBlueBox = styled.button`
 	width: 40px;
 	height: 40px;
@@ -552,8 +635,17 @@ export const StBlueBox = styled.button`
 	:hover {
 		cursor: pointer;
 	}
-	:focus {
-		outline: 2px solid #7474ff;
+`;
+
+export const StCheckedBlueBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #49affa;
+	border-radius: 10px;
+	outline: 2px solid #7474ff;
+
+	:hover {
+		cursor: pointer;
 	}
 `;
 
@@ -567,6 +659,17 @@ export const StGreenBox = styled.button`
 	}
 	:focus {
 		outline: 2px solid #7474ff;
+	}
+`;
+
+export const StCheckedGreenBox = styled.button`
+	width: 40px;
+	height: 40px;
+	background-color: #4cccb5;
+	border-radius: 10px;
+	outline: 2px solid #7474ff;
+	:hover {
+		cursor: pointer;
 	}
 `;
 

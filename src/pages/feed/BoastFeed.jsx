@@ -10,11 +10,10 @@ const BoastFeed = ({ todo }) => {
 		dispatch(deleteTodo(todo));
 		console.log("클릭");
 	};
-
 	return (
 		<Box variant="feedTodo">
 			<Flex jc="space-between" wd="335px">
-				<Flex>{todo}</Flex>
+				<Flex>{todo.todoContent}</Flex>
 			</Flex>
 		</Box>
 	);
