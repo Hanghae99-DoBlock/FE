@@ -70,7 +70,6 @@ const AddFeedPage = () => {
 			return alert("태그를 입력해주세요");
 		} else if (e.keyCode === 13 && tagList.length <= 3) {
 			setId(prev => prev + 1);
-			console.log(id);
 
 			dispatch(addTag({ id: id, value: tagValue }));
 			setIsInputHidden(true);
