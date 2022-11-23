@@ -13,14 +13,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-<<<<<<< HEAD:src/components/feed/ChoiceTodoModal.jsx
-<<<<<<< HEAD:src/components/feed/ChoiceTodoModal.jsx
-=======
 
->>>>>>> parent of 511a201 (Feat : 피드남기기 성공 issue:#45):src/pages/feed/ChoiceTodoModal.jsx
-=======
-
->>>>>>> parent of 511a201 (Feat : 피드남기기 성공 issue:#45):src/pages/feed/ChoiceTodoModal.jsx
 	/*목록 가져오기*/
 	useEffect(() => {
 		dispatch(__getTodoList({ year: year, month: month + 1, date: day }));
