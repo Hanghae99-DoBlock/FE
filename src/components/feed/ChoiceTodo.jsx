@@ -13,6 +13,7 @@ const ChoiceTodo = ({ todo }) => {
 	const boastTodo = useSelector(state => state.feed.checkedList);
 
 	const changeCheckedHandler = e => {
+		console.log(e.target);
 		setChecked(!checked);
 		dispatch(
 			choiceTodo({
