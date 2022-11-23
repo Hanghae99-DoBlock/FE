@@ -1,12 +1,29 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
 import { FeedComment } from "../../components";
+import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
 
 const DetailFeedPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { id } = useParams();
+
+	const feedItem = useSelector(state => state.feed.feedItem);
+
+	const {
+		commentResponseDtoList,
+		countComment,
+		countReaction,
+		currentReactionType,
+		reactionResponseDtoList,
+	} = feedItem;
+
+	useEffect(() => {
+		dispatch(__getFeedItem(4));
+	}, []);
 
 	return (
 		<>
@@ -212,7 +229,13 @@ const DetailFeedPage = () => {
 						</Flex>
 					</Flex>
 				</Flex>
-				<FeedComment />
+				<FeedComment
+					commentResponseDtoList={commentResponseDtoList}
+					countComment={countComment}
+					countReaction={countReaction}
+					currentReactionType={currentReactionType}
+					reactionResponseDtoList={reactionResponseDtoList}
+				/>
 			</Flex>
 		</>
 	);

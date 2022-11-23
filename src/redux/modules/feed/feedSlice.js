@@ -19,6 +19,21 @@ export const __getFollowingFeeds = createAsyncThunk(
 	},
 );
 
+// 피드 단건 조회 Thunk
+export const __getFeedItem = createAsyncThunk(
+	"feed/getFeedItem",
+	async (payload, thunkAPI) => {
+		try {
+			const response = await axios.get(`${serverUrl}/api/feed/${payload}`, {
+				headers: { Authorization: accessToken },
+			});
+			return thunkAPI.fulfillWithValue(response.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
 // 추천 피드 조회 Thunk
 export const __getRecommendedFeeds = createAsyncThunk(
 	"feed/getRecommendedFeeds",
@@ -38,6 +53,7 @@ const initialState = {
 	feedList: [],
 	checkedList: [],
 	tagList: [],
+	feedItem: {},
 };
 
 export const feedSlice = createSlice({
@@ -85,6 +101,10 @@ export const feedSlice = createSlice({
 			// 추천 피드 조회 성공
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
 				state.feedList = action.payload;
+			})
+			// 피드 단건 조회 성공
+			.addCase(__getFeedItem.fulfilled, (state, action) => {
+				state.feedItem = action.payload;
 			});
 	},
 });
