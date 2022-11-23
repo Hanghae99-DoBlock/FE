@@ -21,6 +21,8 @@ const Profile = () => {
 
 	const profile = useSelector(state => state.profileSlice.profile);
 
+	console.log(profile);
+
 	useEffect(() => {
 		dispatch(__getUser(id));
 	}, []);
@@ -40,11 +42,13 @@ const Profile = () => {
 				mg="0 auto"
 				style={{ overflow: "auto" }}
 			>
-				<Flex wd="375px" ht="62px" bb="2px solid #EFEFEF">
-					<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
-						내 프로필
+				{decodeToken.memberId === profile.memberId ? (
+					<Flex wd="375px" ht="62px" bb="2px solid #EFEFEF">
+						<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
+							내 프로필
+						</Flex>
 					</Flex>
-				</Flex>
+				) : null}
 				<Flex wd="335px" mg="0px auto 20px auto;">
 					<Flex wd="100%" jc="space-between">
 						<Flex jc="space-around">

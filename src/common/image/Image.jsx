@@ -21,6 +21,30 @@ const StImage = styled.img`
 					outline: 2px solid white;
 					outline-offset: -1px;
 				`;
+			case "followImage":
+				return css`
+					background-repeat: no-repeat;
+					background-size: cover;
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					margin-top: 27px;
+					margin-right: 10px;
+					outline: 2px solid white;
+					outline-offset: -1px;
+				`;
+			case "commentImage":
+				return css`
+					background-repeat: no-repeat;
+					background-size: cover;
+					width: 22px;
+					height: 22px;
+					border-radius: 50%;
+					margin-top: 27px;
+					margin-right: 5px;
+					outline: 2px solid white;
+					outline-offset: -1px;
+				`;
 			case "imagePreview":
 				return css`
 					position: absolute;

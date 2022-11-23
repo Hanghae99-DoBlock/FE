@@ -33,7 +33,7 @@ export const StFlex = styled.div`
 	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
-	border : ${({ border }) => border}
+	border: ${({ border }) => border};
 	cursor: ${({ cursor }) => cursor};
 
 	/* 여백 */

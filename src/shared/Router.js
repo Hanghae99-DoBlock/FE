@@ -9,6 +9,7 @@ import {
 	PasswordChangePage,
 	FollowingPage,
 	FollowerPage,
+	DetailFeedPage,
 } from "../pages";
 
 const Router = () => {
@@ -28,6 +29,7 @@ const Router = () => {
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/" element={<TodoListPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />
+					<Route path="/feed/:id" element={<DetailFeedPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>
