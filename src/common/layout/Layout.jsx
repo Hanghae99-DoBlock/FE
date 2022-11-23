@@ -13,7 +13,6 @@ const StLayout = styled.div`
 				return css`
 					min-width: 320px;
 					max-width: 430px;
-					min-height: 130vh;
 					margin: 0 auto;
 					align-items: flex-start;
 					margin: 0 auto;
