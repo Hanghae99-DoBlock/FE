@@ -4,33 +4,64 @@ import axios from "axios";
 
 const accessToken = localStorage.getItem("accessToken");
 
+export const __getSuccessTodo = createAsyncThunk(
+	"SUCCESS_TODO",
+	async (payload, thunkAPI) => {
+		try {
+			const { year, month, date } = payload;
+			const intYear = parseInt(year);
+			const intMonth = parseInt(month);
+			const intDay = parseInt(date);
+			const { data } = await axios.get(
+				`${serverUrl}/api/feed?year=${intYear}&month=${intMonth}&day=${intDay}`,
+
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
 export const __uploadFeed = createAsyncThunk(
 	"UPLOAD_FEED",
 	async (payload, thunkAPI) => {
 		try {
 			const {
 				feedTitle,
-				todoList,
+				todoIdList,
 				feedContent,
 				feedImageList,
 				tagList,
 				feedColor,
-			} = frm;
+			} = payload;
+
 			const frm = new FormData();
-			frm.append("todoList", todoList);
+			frm.append("todoIdList", todoIdList);
 			frm.append("feedTitle", feedTitle);
 			frm.append("feedContent", feedContent);
-			frm.append("feedImageList", feedImageList);
+			for (let i = 0; i < feedImageList.length; i++) {
+				frm.append("feedImageList", feedImageList[i]);
+			}
+
 			frm.append("feedColor", feedColor);
 			frm.append("tagList", tagList);
 			const { data } = await axios.post(
 				`${serverUrl}/api/feed`,
 				frm,
-				{
-					withCredentials: true,
-				},
+
 				{
 					headers: { Authorization: accessToken },
+					"Content-Type": "multipart/form-data",
+				},
+				{
+					withCredentials: true,
 				},
 			);
 			return thunkAPI.fulfillWithValue(data);
@@ -45,6 +76,8 @@ const initialState = {
 	tagList: [],
 	photoList: [],
 	feedList: [],
+	formPhotoList: [],
+	successTodo: [],
 };
 
 export const feedSlice = createSlice({
@@ -90,6 +123,9 @@ export const feedSlice = createSlice({
 				return photo.id !== action.payload.id;
 			});
 		},
+		addFormPhoto: (state, action) => {
+			state.formPhotoList.push(action.payload);
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -100,6 +136,10 @@ export const feedSlice = createSlice({
 			//피드 업로드 실패
 			.addCase(__uploadFeed.rejected, (state, action) => {
 				state.feedList = [];
+			})
+			//완료된 피드 목록 불러오기
+			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
+				state.successTodo = action.payload;
 			});
 	},
 });
@@ -111,5 +151,6 @@ export const {
 	deleteTag,
 	addPhoto,
 	deletePhoto,
+	addFormPhoto,
 } = feedSlice.actions;
 export default feedSlice.reducer;

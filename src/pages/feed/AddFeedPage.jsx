@@ -4,21 +4,23 @@ import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
-import AddFeedModal from "./ChoiceTodoModal";
 import { useDispatch, useSelector } from "react-redux";
-import BoastFeed from "./BoastFeed";
+import BoastFeed from "../../components/feed/BoastFeed";
 import "./style/AddFeedStyle.css";
 import {
+	addFormPhoto,
 	addPhoto,
 	addTag,
 	deleteTag,
 	resetTodo,
+	__getSuccessTodo,
 	__uploadFeed,
 } from "../../redux/modules/feed/feedSlice";
 import TagList, { StTagInput } from "./TagList";
 import PhotoList from "./PhotoList";
 import uuid from "react-uuid";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
+import ChoiceTodoModal from "../../components/feed/ChoiceTodoModal";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const title = useInput();
@@ -28,7 +30,8 @@ const AddFeedPage = () => {
 	const boastFeed = useSelector(state => state.feed.checkedList);
 	const tagList = useSelector(state => state.feed.tagList);
 	const photoList = useSelector(state => state.feed.photoList);
-	const todoList = useSelector(state => state?.todoListSlice?.todoList);
+	const successTodoList = useSelector(state => state?.feed.successTodo);
+	const formPhotoList = useSelector(state => state.feed.formPhotoList);
 	const [id, setId] = useState(tagList.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
 	const [detail, setDetail] = useState("");
@@ -39,12 +42,15 @@ const AddFeedPage = () => {
 	const photoUrlArray = photoList.map(photo => {
 		return photo.url;
 	});
-	console.log(boastFeed);
+	const tagArray = tagList.map(tag => {
+		return tag.value;
+	});
+	console.log(photoUrlArray);
 	const today = new Date();
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-
+	console.log(formPhotoList);
 	//색상변경
 	const [isYellowChecked, setIsYellowChecked] = useState(false);
 	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
@@ -57,9 +63,8 @@ const AddFeedPage = () => {
 		} else {
 			setIsPhotoFull(false);
 		}
-		dispatch(__getTodoList({ year: year, month: month + 1, date: day }));
+		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 	}, [photoList]);
-
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
 	}
@@ -134,6 +139,10 @@ const AddFeedPage = () => {
 			let photoId = uuid();
 			let reader = new FileReader();
 			let file = e.target.files[i];
+			console.log(file);
+			if (file !== undefined) {
+				dispatch(addFormPhoto(file));
+			}
 			reader.onloadend = () => {
 				const previewImg = reader.result;
 
@@ -145,25 +154,23 @@ const AddFeedPage = () => {
 			}
 		}
 	};
-	console.log(color);
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (todoIdArray.length < 1 || photoUrlArray.length < 1) {
-			alert("필수 항목을 입력해주세요");
+			alert("사진과 자랑하고싶은 투두는 필수항목입니다");
 		} else {
 			dispatch(
 				__uploadFeed({
 					todoIdList: todoIdArray,
 					feedTitle: title.value,
 					feedContent: detail,
-					feedImageList: photoUrlArray,
+					feedImageList: formPhotoList,
 					feedColor: color,
-					tagList: tagList,
+					tagList: tagArray,
 				}),
 			);
 		}
 	};
-
 	const openModalHandler = () => {
 		setOpenModal(true);
 		dispatch(resetTodo());
@@ -171,7 +178,7 @@ const AddFeedPage = () => {
 
 	return (
 		<>
-			{openModal && <AddFeedModal setOpenModal={setOpenModal} />}
+			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
 			<Flex
 				dir="column"
 				mw="375px"
@@ -473,8 +480,66 @@ const AddFeedPage = () => {
 							</Flex>
 						</Flex>
 					</Flex>
-					<Flex dir="coulmn" wd="335px" ht="102px">
-						dsfsd
+				</Flex>
+				<Flex
+					dir="column"
+					wd="335px"
+					ht="102px"
+					jc="center"
+					ai="flex-start"
+					mg="25px 0 0 0"
+					gap="10px"
+				>
+					<Flex jc="flex-start" gap="6px">
+						<Flex
+							dir="row"
+							ai="center"
+							gap="6px"
+							wd="30px"
+							ht="18px"
+							fs="14"
+							fw="600"
+							jc="flex-start"
+						>
+							사진
+						</Flex>
+						<Flex
+							dir="row"
+							ai="center"
+							gap="6px"
+							wd="160px"
+							ht="26px"
+							fs="12"
+							jc="flex-start"
+							color="#131313"
+							oc="0.4"
+							fw="600"
+						>
+							최대 4장 업로드 가능합니다
+						</Flex>
+					</Flex>
+					<Flex dir="row" gap="10px">
+						{isPhotoFull === false ? (
+							<StPhotoUploadLabel
+								htmlFor="upLoadPhoto"
+								onChange={photoChangeHandler}
+							>
+								<Flex jc="center" ai="center" wd="72px" ht="72px">
+									<Svg variant="plusPhoto" />
+								</Flex>
+								<input type="file" id="upLoadPhoto" multiple />
+							</StPhotoUploadLabel>
+						) : null}
+						{photoList?.map(photo => {
+							return (
+								<PhotoList
+									setIsPhotoFull={setIsPhotoFull}
+									isPhotoFull={isPhotoFull}
+									photo={photo}
+									key={photo.id}
+								/>
+							);
+						})}
 					</Flex>
 				</Flex>
 				<Flex
