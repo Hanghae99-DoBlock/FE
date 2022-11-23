@@ -21,8 +21,6 @@ const Profile = () => {
 
 	const profile = useSelector(state => state.profileSlice.profile);
 
-	console.log(profile);
-
 	useEffect(() => {
 		dispatch(__getUser(id));
 	}, []);
