@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import ProfileImage from "../../images/profile.jpeg";
 
 const Image = ({ children, ...props }) => {
 	return <StImage {...props}>{children}</StImage>;
@@ -12,7 +11,6 @@ const StImage = styled.img`
 			// 이미지 작성 폼
 			case "image":
 				return css`
-					background-image: url(${ProfileImage});
 					background-repeat: no-repeat;
 					background-size: cover;
 					width: 60px;
@@ -20,6 +18,30 @@ const StImage = styled.img`
 					border-radius: 50%;
 					margin-top: 27px;
 					margin-right: 10px;
+					outline: 2px solid white;
+					outline-offset: -1px;
+				`;
+			case "followImage":
+				return css`
+					background-repeat: no-repeat;
+					background-size: cover;
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					margin-top: 27px;
+					margin-right: 10px;
+					outline: 2px solid white;
+					outline-offset: -1px;
+				`;
+			case "commentImage":
+				return css`
+					background-repeat: no-repeat;
+					background-size: cover;
+					width: 22px;
+					height: 22px;
+					border-radius: 50%;
+					margin-top: 27px;
+					margin-right: 5px;
 					outline: 2px solid white;
 					outline-offset: -1px;
 				`;

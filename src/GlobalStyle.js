@@ -5,11 +5,6 @@ const GlobalStyles = createGlobalStyle`
 
     ${reset}
 
-
-  html{
-    overflow : auto;
-  }
-
   * {
     box-sizing: border-box;
     margin: 0;
@@ -50,6 +45,10 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: none;
     outline: none;      
   }
+
+  textarea {
+  resize: none;
+  }  
 `;
 
 export default GlobalStyles;

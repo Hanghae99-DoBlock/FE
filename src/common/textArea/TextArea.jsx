@@ -15,7 +15,9 @@ const StTextArea = styled.textarea`
 					font-size: 13px;
 					font-weight: 500;
 					line-height: 22px;
-					padding: 2px 0 0 0;
+					::-webkit-scrollbar {
+						display: none;
+					}
 					::placeholder {
 						color: #979797;
 					}

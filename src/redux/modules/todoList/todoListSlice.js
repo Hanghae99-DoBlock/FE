@@ -1,95 +1,28 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { serverUrl } from "../../api";
-import axios from "axios";
-
-const accessToken = localStorage.getItem("accessToken");
-axios.defaults.withCredentials = true;
+import { createSlice } from "@reduxjs/toolkit";
+import {
+	__addTodo,
+	__getTodoList,
+	__checkTodo,
+	__updateTodo,
+} from "../middleware/todoListThunk";
 
 const initialState = {
 	todoList: [],
+	todoItem: {},
 	selectedDate: {},
 };
 
-// 투두 업로드 Thunk
-export const __addTodo = createAsyncThunk(
-	"todo/addTodo",
-	async (payload, thunkAPI) => {
-		try {
-			await axios.post(
-				`${serverUrl}/api/todolist`,
-				payload,
-				{
-					headers: { Authorization: accessToken },
-				},
-				{
-					/*서로 다른 도메인(크로스 도메인)에 요청을 보낼 때 요청에 credential 정보를 담아서 보낼 지를 결정하는 항목*/
-					withCredentials: true,
-				},
-			);
-
-			return thunkAPI.fulfillWithValue(payload);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두리스트 조회 Thunk
-export const __getTodoList = createAsyncThunk(
-	"todo/getTodoList",
-	async (payload, thunkAPI) => {
-		try {
-			const { year, month, date } = payload;
-			const intYear = parseInt(year);
-			const intMonth = parseInt(month);
-			const intDay = parseInt(date);
-			const response = await axios.get(
-				`${serverUrl}/api/todolist?year=${intYear}&month=${intMonth}&day=${intDay}`,
-				{
-					headers: { Authorization: accessToken },
-				},
-			);
-			return thunkAPI.fulfillWithValue(response.data);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두 체크 Thunk
-export const __checkTodo = createAsyncThunk(
-	"todo/checkTodo",
-	async (todoItem, thunkAPI) => {
-		try {
-			const response = await axios.patch(
-				`${serverUrl}/api/todolist/${todoItem.todoId}/completed`,
-				// 401 에러 해결
-				{
-					withCredentials: true,
-				},
-				{
-					headers: { Authorization: accessToken },
-				},
-			);
-			return thunkAPI.fulfillWithValue(todoItem);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
-
-// 투두리스트 슬라이스
 export const todoListSlice = createSlice({
 	name: "todoList",
 	initialState,
 	reducers: {
 		// 날짜 선택
 		updateSelectedDate: (state, action) => {
-			state.selectedDate = {
-				year: parseInt(action.payload.year),
-				month: parseInt(action.payload.month),
-				day: parseInt(action.payload.date),
-			};
+			state.selectedDate = action.payload;
+		},
+		// 투두 단건 조회
+		getTodoItem: (state, action) => {
+			state.todoItem = action.payload;
 		},
 	},
 	extraReducers: builder => {
@@ -115,9 +48,18 @@ export const todoListSlice = createSlice({
 						? { ...todoItem, completed: !todoItem.completed }
 						: todoItem;
 				});
+			})
+
+			// 투두 수정 성공
+			.addCase(__updateTodo.fulfilled, (state, action) => {
+				state.todoList = state.todoList.map(todoItem => {
+					return todoItem.todoId === action.payload.todoId
+						? action.payload
+						: todoItem;
+				});
 			});
 	},
 });
 
-export const { updateSelectedDate } = todoListSlice.actions;
+export const { updateSelectedDate, getTodoItem } = todoListSlice.actions;
 export default todoListSlice.reducer;

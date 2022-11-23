@@ -78,6 +78,32 @@ export const StInput = styled.input`
 					left: 0;
 					z-index: 2;
 				`;
+			//프로필 비밀번호 보여주는 인풋
+			case "passwordInput":
+				return css`
+					width: 257px;
+					height: 50px;
+					background-color: #f4f4f4;
+					border-radius: 10px;
+					padding: 12px 0 12px 16px;
+					outline-color: #7474ff;
+					::placeholder {
+						color: #c8c8c8;
+						margin-left: 16px;
+						font-weight: 500;
+						padding: 12px 0 16px;
+					}
+				`;
+			case "feedInput":
+				return css`
+					width: 319px;
+					height: 36px;
+					background-color: #ffffff;
+					border: 1px solid #e5e5e5;
+					border-radius: 50px;
+					padding: 9px 16px;
+					margin-right: 10px;
+				`;
 			default:
 				break;
 		}

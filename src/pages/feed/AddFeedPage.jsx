@@ -5,22 +5,19 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
-import BoastFeed from "../../components/feed/BoastFeed";
+import { BoastFeed } from "../../components";
 import "./style/AddFeedStyle.css";
 import {
 	addFormPhoto,
 	addPhoto,
 	addTag,
-	deleteTag,
 	resetTodo,
 	__getSuccessTodo,
 	__uploadFeed,
 } from "../../redux/modules/feed/feedSlice";
-import TagList, { StTagInput } from "./TagList";
-import PhotoList from "./PhotoList";
+import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
-import ChoiceTodoModal from "../../components/feed/ChoiceTodoModal";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const title = useInput();
@@ -45,12 +42,10 @@ const AddFeedPage = () => {
 	const tagArray = tagList.map(tag => {
 		return tag.value;
 	});
-	console.log(photoUrlArray);
 	const today = new Date();
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-	console.log(formPhotoList);
 	//색상변경
 	const [isYellowChecked, setIsYellowChecked] = useState(false);
 	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
@@ -139,7 +134,6 @@ const AddFeedPage = () => {
 			let photoId = uuid();
 			let reader = new FileReader();
 			let file = e.target.files[i];
-			console.log(file);
 			if (file !== undefined) {
 				dispatch(addFormPhoto(file));
 			}

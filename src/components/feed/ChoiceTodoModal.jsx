@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
-import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
+import { __getTodoList } from "../../redux/modules/middleware/todoListThunk";
 import React from "react";
-import ChoiceTodo from "./ChoiceTodo";
+import { ChoiceTodo } from "../../components/feed";
 import { __getSuccessTodo } from "../../redux/modules/feed/feedSlice";
 
 const ChoiceTodoModal = ({ setOpenModal }) => {
@@ -14,7 +14,6 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-	console.log(successTodolist);
 	/*목록 가져오기*/
 	useEffect(() => {
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));

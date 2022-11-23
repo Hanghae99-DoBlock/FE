@@ -28,6 +28,50 @@ export const __getSuccessTodo = createAsyncThunk(
 		}
 	},
 );
+// 팔로잉 피드 조회 Thunk
+export const __getFollowingFeeds = createAsyncThunk(
+	"feed/getFollowingFeeds",
+	async (_, thunkAPI) => {
+		try {
+			const response = await axios.get(`${serverUrl}/api/feed/following`, {
+				headers: { Authorization: accessToken },
+			});
+			return thunkAPI.fulfillWithValue(response.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+// 피드 단건 조회 Thunk
+export const __getFeedItem = createAsyncThunk(
+	"feed/getFeedItem",
+	async (payload, thunkAPI) => {
+		try {
+			const response = await axios.get(`${serverUrl}/api/feed/${payload}`, {
+				headers: { Authorization: accessToken },
+			});
+			return thunkAPI.fulfillWithValue(response.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+// 추천 피드 조회 Thunk
+export const __getRecommendedFeeds = createAsyncThunk(
+	"feed/getRecommendedFeeds",
+	async (_, thunkAPI) => {
+		try {
+			const response = await axios.get(`${serverUrl}/api/feed/recommended`, {
+				headers: { Authorization: accessToken },
+			});
+			return thunkAPI.fulfillWithValue(response.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
 
 export const __uploadFeed = createAsyncThunk(
 	"UPLOAD_FEED",
@@ -72,12 +116,13 @@ export const __uploadFeed = createAsyncThunk(
 );
 
 const initialState = {
+	feedList: [],
 	checkedList: [],
 	tagList: [],
 	photoList: [],
-	feedList: [],
 	formPhotoList: [],
 	successTodo: [],
+	feedItem: {},
 };
 
 export const feedSlice = createSlice({
@@ -140,6 +185,18 @@ export const feedSlice = createSlice({
 			//완료된 피드 목록 불러오기
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
+			})
+			// 팔로잉 피드 조회 성공
+			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
+				state.feedList = action.payload;
+			})
+			// 추천 피드 조회 성공
+			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
+				state.feedList = action.payload;
+			})
+			// 피드 단건 조회 성공
+			.addCase(__getFeedItem.fulfilled, (state, action) => {
+				state.feedItem = action.payload;
 			});
 	},
 });
