@@ -1,4 +1,4 @@
 import Profile from "./Profile";
-import DetailFeed from "./DetailFeed";
+import FeedComment from "./FeedComment";
 
-export { Profile, DetailFeed };
+export { Profile, FeedComment };

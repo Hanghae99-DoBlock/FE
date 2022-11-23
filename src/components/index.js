@@ -8,7 +8,7 @@ import {
 } from "./todoList";
 
 import NavBelow from "./nav/NavBelow";
-import { DetailFeed } from "./profile";
+import { FeedComment } from "./profile";
 
 export {
 	TodoListCalendar,
@@ -18,5 +18,5 @@ export {
 	TodoItem,
 	ModalDetailTodo,
 	NavBelow,
-	DetailFeed,
+	FeedComment,
 };

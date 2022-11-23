@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
-import { DetailFeed } from "../../components";
+import { FeedComment } from "../../components";
 
 const DetailFeedPage = () => {
 	const navigate = useNavigate();
@@ -212,7 +212,7 @@ const DetailFeedPage = () => {
 						</Flex>
 					</Flex>
 				</Flex>
-				<DetailFeed />
+				<FeedComment />
 			</Flex>
 		</>
 	);

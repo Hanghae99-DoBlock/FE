@@ -1,6 +1,6 @@
 import { FirstHeading, Flex, Hr, Image, Input, Svg } from "../../common";
 
-const DetailFeed = () => {
+const FeedComment = () => {
 	return (
 		<>
 			<Flex
@@ -128,4 +128,4 @@ const DetailFeed = () => {
 	);
 };
 
-export default DetailFeed;
+export default FeedComment;
