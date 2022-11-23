@@ -4,9 +4,8 @@ import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
-import AddFeedModal from "./ChoiceTodoModal";
 import { useDispatch, useSelector } from "react-redux";
-import BoastFeed from "./BoastFeed";
+import BoastFeed from "../../components/feed/BoastFeed";
 import "./style/AddFeedStyle.css";
 import {
 	addFormPhoto,
@@ -21,6 +20,7 @@ import TagList, { StTagInput } from "./TagList";
 import PhotoList from "./PhotoList";
 import uuid from "react-uuid";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
+import ChoiceTodoModal from "../../components/feed/ChoiceTodoModal";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const title = useInput();
@@ -178,7 +178,7 @@ const AddFeedPage = () => {
 
 	return (
 		<>
-			{openModal && <AddFeedModal setOpenModal={setOpenModal} />}
+			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
 			<Flex
 				dir="column"
 				mw="375px"

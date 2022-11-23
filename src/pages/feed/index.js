@@ -1,7 +1,15 @@
 import AddFeedPage from "./AddFeedPage";
-import BoastFeed from "./BoastFeed";
-import ChoiceTodo from "./ChoiceTodo";
-import ChoiceTodoModal from "./ChoiceTodoModal";
+import BoastFeed from "../../components/feed/BoastFeed";
+import ChoiceTodo from "../../components/feed/ChoiceTodo";
+import ChoiceTodoModal from "../../components/feed/ChoiceTodoModal";
 import TagList from "./TagList";
+import PhotoList from "./PhotoList";
 
-export { AddFeedPage, BoastFeed, ChoiceTodo, ChoiceTodoModal, TagList };
+export {
+	PhotoList,
+	AddFeedPage,
+	BoastFeed,
+	ChoiceTodo,
+	ChoiceTodoModal,
+	TagList,
+};

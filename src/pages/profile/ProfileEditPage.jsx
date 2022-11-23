@@ -61,6 +61,7 @@ const ProfileEdit = () => {
 		if (e.target.files[0]) {
 			reader.readAsDataURL(e.target.files[0]);
 		}
+
 		reader.onload = () => {
 			const previewImgUrl = reader.result;
 			if (previewImgUrl) {
