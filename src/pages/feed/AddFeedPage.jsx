@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import BoastFeed from "./BoastFeed";
 import "./style/AddFeedStyle.css";
 import {
+	addFormPhoto,
 	addPhoto,
 	addTag,
 	deleteTag,
 	resetTodo,
+	__getSuccessTodo,
 	__uploadFeed,
 } from "../../redux/modules/feed/feedSlice";
 import TagList, { StTagInput } from "./TagList";
@@ -28,7 +30,8 @@ const AddFeedPage = () => {
 	const boastFeed = useSelector(state => state.feed.checkedList);
 	const tagList = useSelector(state => state.feed.tagList);
 	const photoList = useSelector(state => state.feed.photoList);
-	const todoList = useSelector(state => state?.todoListSlice?.todoList);
+	const successTodoList = useSelector(state => state?.feed.successTodo);
+	const formPhotoList = useSelector(state => state.feed.formPhotoList);
 	const [id, setId] = useState(tagList.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
 	const [detail, setDetail] = useState("");
@@ -39,12 +42,15 @@ const AddFeedPage = () => {
 	const photoUrlArray = photoList.map(photo => {
 		return photo.url;
 	});
-	console.log(boastFeed);
+	const tagArray = tagList.map(tag => {
+		return tag.value;
+	});
+	console.log(photoUrlArray);
 	const today = new Date();
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-
+	console.log(formPhotoList);
 	//색상변경
 	const [isYellowChecked, setIsYellowChecked] = useState(false);
 	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
@@ -57,7 +63,7 @@ const AddFeedPage = () => {
 		} else {
 			setIsPhotoFull(false);
 		}
-		dispatch(__getTodoList({ year: year, month: month + 1, date: day }));
+		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 	}, [photoList]);
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
@@ -133,6 +139,10 @@ const AddFeedPage = () => {
 			let photoId = uuid();
 			let reader = new FileReader();
 			let file = e.target.files[i];
+			console.log(file);
+			if (file !== undefined) {
+				dispatch(addFormPhoto(file));
+			}
 			reader.onloadend = () => {
 				const previewImg = reader.result;
 
@@ -144,25 +154,23 @@ const AddFeedPage = () => {
 			}
 		}
 	};
-	console.log(color);
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (todoIdArray.length < 1 || photoUrlArray.length < 1) {
-			alert("필수 항목을 입력해주세요");
+			alert("사진과 자랑하고싶은 투두는 필수항목입니다");
 		} else {
 			dispatch(
 				__uploadFeed({
 					todoIdList: todoIdArray,
 					feedTitle: title.value,
 					feedContent: detail,
-					feedImageList: photoUrlArray,
+					feedImageList: formPhotoList,
 					feedColor: color,
-					tagList: tagList,
+					tagList: tagArray,
 				}),
 			);
 		}
 	};
-
 	const openModalHandler = () => {
 		setOpenModal(true);
 		dispatch(resetTodo());

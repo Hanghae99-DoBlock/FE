@@ -5,18 +5,19 @@ import { Box, Button, Flex, Form, Input, Label, Svg } from "../../common";
 import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import React from "react";
 import ChoiceTodo from "./ChoiceTodo";
+import { __getSuccessTodo } from "../../redux/modules/feed/feedSlice";
 
 const ChoiceTodoModal = ({ setOpenModal }) => {
 	const dispatch = useDispatch();
-	const todolist = useSelector(state => state.todoListSlice.todoList);
+	const successTodolist = useSelector(state => state.feed.successTodo);
 	const today = new Date();
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-
+	console.log(successTodolist);
 	/*목록 가져오기*/
 	useEffect(() => {
-		dispatch(__getTodoList({ year: year, month: month + 1, date: day }));
+		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 	}, []);
 
 	const closeModalHandler = () => {
@@ -59,7 +60,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 						jc="flex-start"
 					>
 						{/*등록된 투두리스트 목록을 체크박스에서 체크할 수 있게 불러옴*/}
-						{todolist?.map(todo => {
+						{successTodolist?.map(todo => {
 							return <ChoiceTodo todo={todo} key={todo.id} />;
 						})}
 					</Flex>
