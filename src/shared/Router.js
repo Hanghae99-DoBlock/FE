@@ -8,7 +8,8 @@ import {
 	ProfileEditPage,
 	PasswordChangePage,
 	FollowingPage,
-	FollowerPage,
+	FollowerPage
+	DetailFeedPage,
 	FeedPage,
 } from "../pages";
 
@@ -30,6 +31,7 @@ const Router = () => {
 					<Route path="/" element={<TodoListPage />} />
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />
+					<Route path="/feed/:id" element={<DetailFeedPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

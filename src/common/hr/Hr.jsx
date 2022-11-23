@@ -17,6 +17,12 @@ const StHr = styled.hr`
 					color: #f4f4f4;
 					background-color: #f4f4f4;
 				`;
+			case "feedHr":
+				return css`
+					width: 375px;
+					height: 2px;
+					background-color: #efefef;
+				`;
 			default:
 				break;
 		}

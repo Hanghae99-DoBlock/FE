@@ -8,6 +8,7 @@ import {
 
 import { FeedItem, FeedItemUi } from "./feed";
 import NavBelow from "./nav/NavBelow";
+import { FeedComment } from "./profile";
 
 export {
 	TodoListCalendar,
@@ -18,4 +19,5 @@ export {
 	FeedItem,
 	FeedItemUi,
 	NavBelow,
+	FeedComment,
 };

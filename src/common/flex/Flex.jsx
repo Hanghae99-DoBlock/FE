@@ -34,6 +34,7 @@ export const StFlex = styled.div`
 	border-bottom: ${({ bb }) => bb};
 	border-radius: ${({ radius }) => radius};
 	box-shadow: ${({ bs }) => bs};
+	border: ${({ border }) => border};
 	opacity: ${({ oc }) => oc};
 	cursor: ${({ cursor }) => cursor};
 
