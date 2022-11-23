@@ -47,7 +47,7 @@ const Follower = () => {
 				<Flex jc="space-between" mg="0 0 20px 0 " wd="100%" key={data.memberId}>
 					<Flex>
 						<Image
-							variant="image"
+							variant="followImage"
 							src={data.profileImage}
 							alt=""
 							style={{ marginTop: "4px" }}
