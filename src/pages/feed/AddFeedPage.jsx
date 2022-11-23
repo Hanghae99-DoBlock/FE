@@ -39,7 +39,7 @@ const AddFeedPage = () => {
 	const photoUrlArray = photoList.map(photo => {
 		return photo.url;
 	});
-	console.log(tagList);
+	console.log(boastFeed);
 	const today = new Date();
 	const year = today.getFullYear();
 	const month = today.getMonth();
@@ -146,15 +146,21 @@ const AddFeedPage = () => {
 	};
 	console.log(color);
 	const uploadFeedHandler = () => {
-		dispatch(
-			__uploadFeed({
-				feedTitle: title.value,
-				todoIdList: todoIdArray,
-				feedContent: detail,
-				feedImageList: photoUrlArray,
-				tagList: tagList,
-			}),
-		);
+		//필수 항목 입력 검사
+		if (todoIdArray.length < 1 || photoUrlArray.length < 1) {
+			alert("필수 항목을 입력해주세요");
+		} else {
+			dispatch(
+				__uploadFeed({
+					todoIdList: todoIdArray,
+					feedTitle: title.value,
+					feedContent: detail,
+					feedImageList: photoUrlArray,
+					feedColor: color,
+					tagList: tagList,
+				}),
+			);
+		}
 	};
 
 	const openModalHandler = () => {

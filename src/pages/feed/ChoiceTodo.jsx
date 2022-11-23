@@ -13,6 +13,7 @@ const ChoiceTodo = ({ todo }) => {
 	const boastTodo = useSelector(state => state.feed.checkedList);
 
 	const changeCheckedHandler = e => {
+		console.log(e.target);
 		setChecked(!checked);
 		dispatch(
 			choiceTodo({
@@ -21,6 +22,7 @@ const ChoiceTodo = ({ todo }) => {
 				isChecked: e.target.checked,
 			}),
 		);
+		//3개 이상 체크하지 못하도록 막음
 		if (boastTodo.length >= 3) {
 			setChecked(false);
 		}

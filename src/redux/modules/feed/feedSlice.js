@@ -7,9 +7,22 @@ const accessToken = localStorage.getItem("accessToken");
 export const __uploadFeed = createAsyncThunk(
 	"UPLOAD_FEED",
 	async (payload, thunkAPI) => {
-		const frm = new FormData();
 		try {
-			const { feedTitle, todoList, feedContent, feedImageList, tagList } = frm;
+			const {
+				feedTitle,
+				todoList,
+				feedContent,
+				feedImageList,
+				tagList,
+				feedColor,
+			} = frm;
+			const frm = new FormData();
+			frm.append("todoList", todoList);
+			frm.append("feedTitle", feedTitle);
+			frm.append("feedContent", feedContent);
+			frm.append("feedImageList", feedImageList);
+			frm.append("feedColor", feedColor);
+			frm.append("tagList", tagList);
 			const { data } = await axios.post(
 				`${serverUrl}/api/feed`,
 				frm,
@@ -41,9 +54,9 @@ export const feedSlice = createSlice({
 		choiceTodo: (state, action) => {
 			if (action.payload.isChecked && state.checkedList.length < 3) {
 				state.checkedList.push(action.payload);
-			} else {
+			} else if (action.payload.isChecked === false) {
 				state.checkedList = state.checkedList.filter(list => {
-					return action.payload.value !== list;
+					return action.payload.todoContent !== list.todoContent;
 				});
 			}
 		},
