@@ -23,7 +23,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 				ht="70px"
 				jc="space-between"
 				pd="23px 20px"
-				position="sticky"
+				// position="sticky"
 				top="388px"
 			>
 				<Flex gap="15px">
@@ -39,7 +39,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 			</Flex>
 
 			{/* 리스트 */}
-			<Flex wd="100%" ht="100%" position="relative">
+			<Flex wd="100%" ht="85%" position="relative">
 				<Flex
 					dir="column"
 					jc="center"
@@ -66,7 +66,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 							<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
 						</Flex>
 					)}
-					<Flex wd="100%" ht="198px" />
+					<Flex wd="100%" ht="80px" />
 				</Flex>
 			</Flex>
 		</Box>

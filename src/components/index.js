@@ -6,9 +6,8 @@ import {
 	ModalDetailTodo,
 } from "./todoList";
 
-import { FeedItem, FeedItemUi } from "./feed";
+import { FeedItem, FeedItemUi, FeedComment } from "./feed";
 import NavBelow from "./nav/NavBelow";
-import { FeedComment } from "./profile";
 
 export {
 	TodoListCalendar,

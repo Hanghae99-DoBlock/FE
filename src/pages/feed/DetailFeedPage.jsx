@@ -16,7 +16,7 @@ const DetailFeedPage = () => {
 				mxw="375px"
 				mh="667px"
 				mg="0 auto"
-				style={{ overflow: "auto" }}
+				overflow="auto"
 			>
 				<Flex wd="375px" mg="auto" dir="column">
 					<Flex wd="335px" jc="space-between" mg=" 0 0 10px 0">

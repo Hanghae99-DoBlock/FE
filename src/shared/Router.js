@@ -8,7 +8,7 @@ import {
 	ProfileEditPage,
 	PasswordChangePage,
 	FollowingPage,
-	FollowerPage
+	FollowerPage,
 	DetailFeedPage,
 	FeedPage,
 } from "../pages";
