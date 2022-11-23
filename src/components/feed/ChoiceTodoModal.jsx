@@ -14,6 +14,10 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	const month = today.getMonth();
 	const day = today.getDate();
 <<<<<<< HEAD:src/components/feed/ChoiceTodoModal.jsx
+<<<<<<< HEAD:src/components/feed/ChoiceTodoModal.jsx
+=======
+
+>>>>>>> parent of 511a201 (Feat : 피드남기기 성공 issue:#45):src/pages/feed/ChoiceTodoModal.jsx
 =======
 
 >>>>>>> parent of 511a201 (Feat : 피드남기기 성공 issue:#45):src/pages/feed/ChoiceTodoModal.jsx
