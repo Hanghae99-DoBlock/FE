@@ -14,7 +14,6 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 	const year = today.getFullYear();
 	const month = today.getMonth();
 	const day = today.getDate();
-	console.log(successTodolist);
 	/*목록 가져오기*/
 	useEffect(() => {
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
