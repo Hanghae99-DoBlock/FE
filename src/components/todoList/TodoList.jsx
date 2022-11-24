@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
 import { __getTodoList } from "../../redux/modules/middleware/todoListThunk.js";
+import { Droppable } from "react-beautiful-dnd";
 
 const TodoList = ({ setIsDetailTodoModalOpen }) => {
 	const dispatch = useDispatch();
@@ -50,15 +51,40 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 				>
 					{todoList[0] ? (
 						// 투두가 있을 때
-						<Box variant="todoListScrollArea">
-							{todoList.map(todoItem => (
-								<TodoItem
-									todoItem={todoItem}
-									key={todoItem.todoId}
-									setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
-								/>
-							))}
-						</Box>
+						<Droppable droppableId="todoList">
+							{provided => (
+								// <Box
+								// 	variant="todoListScrollArea"
+								// >
+								<div
+									style={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "flex-start",
+										width: "100%",
+										height: "100%",
+										background: "#f9f9f9",
+										overflowX: "hidden",
+										overflowY: "auto",
+										scrollbarWidth: "none",
+										"&::-webkit-scrollbar": { display: "none" },
+									}}
+									{...provided.droppableProps}
+									ref={provided.innerRef}
+								>
+									{todoList.map((todoItem, index) => (
+										<TodoItem
+											index={index}
+											todoItem={todoItem}
+											key={todoItem.todoId}
+											setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+										/>
+									))}
+									{provided.placeholder}
+								</div>
+								// </Box>
+							)}
+						</Droppable>
 					) : (
 						// 투두가 없을 때
 						<Flex ht="100%" dir="column" gap="21.5px">
