@@ -11,8 +11,6 @@ import jwtDecode from "jwt-decode";
 import Svg from "../../common/svg/Svg";
 
 const SignInPage = () => {
-	const token = localStorage.getItem("accessToken");
-	const decodeToken = jwtDecode(token);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 

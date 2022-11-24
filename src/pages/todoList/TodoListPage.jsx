@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Flex, Svg } from "../../common";
 import {
 	TodoListCalendar,
@@ -13,6 +14,11 @@ import { __switchTodo } from "../../redux/modules/middleware/todoListThunk";
 
 const TodoListPage = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const token = localStorage.getItem("accessToken");
+	if (!token) {
+		navigate("/signin");
+	}
 
 	// 투두 추가 모달 상태 관리
 	const [isAddTodoModalOpen, setIsAddTodoModalOpen] = useState(false);
