@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirstHeading, Flex, Form, Hr, Image, Input, Svg } from "../../common";
+import { Flex, Hr, Image, Input, Svg, Text } from "../../common";
 import {
 	__addComment,
 	__deleteComment,
@@ -53,17 +53,17 @@ const FeedComment = props => {
 	return (
 		<>
 			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
-				<FirstHeading color="red" mg="0 5px 0 0">
+				<Text variant="comment" color="red" mg="0 5px 0 0">
 					❤
-				</FirstHeading>{" "}
+				</Text>{" "}
 				👍 리액션 3
 			</Flex>
 			<Hr variant="feedHr" />
 			<Flex dir="column" jc="center">
 				<Flex wd="335px" jc="space-between">
 					<Flex fw="600" fs="14px" color="#666666" jc="flex-start" mg="10px 0">
-						<Svg variant="smile"></Svg>{" "}
-						<FirstHeading mg="0 0 0 5px">리액션하기</FirstHeading>
+						<Svg variant="smile"></Svg>
+						<Text variant="comment">리액션하기</Text>
 					</Flex>
 					<Flex>💬 댓글 {comments?.length}</Flex>
 				</Flex>
