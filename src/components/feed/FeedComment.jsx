@@ -123,7 +123,7 @@ const FeedComment = props => {
 					))}
 			</Flex>
 			<Flex wd="335px" mg="10px">
-				<Form variant="feedCommentForm" onSubmit={addCommentHandler}>
+				<form onSubmit={addCommentHandler}>
 					<Flex>
 						<Input
 							variant="feedInput"
@@ -134,7 +134,7 @@ const FeedComment = props => {
 						/>
 						<Svg variant="paperAirplane" onClick={addCommentHandler}></Svg>
 					</Flex>
-				</Form>
+				</form>
 				<Flex mg="190px 0 0 0"></Flex>
 			</Flex>
 		</>
