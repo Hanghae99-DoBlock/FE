@@ -1,0 +1,31 @@
+.mySwiper {
+	margin-top: 20px;
+	width: 331px;
+}
+.swiper-slide {
+	width: 138px;
+	height: 138px;
+	background: #f3f3f3;
+}
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.badge-slide {
+	width: 100px;
+	height: 100px;
+	background: #f3f3f3;
+}
+.h2 {
+	margin-top: 90px;
+	margin-left: 10px;
+	font-weight: 600;
+	font-size: 17px;
+}
+.h2 p {
+	margin-top: 5px;
+	font-weight: 600;
+	font-size: 14px;
+}
