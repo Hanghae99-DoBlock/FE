@@ -100,7 +100,7 @@ const SignUpPage = () => {
 					password: password.value,
 				}),
 			);
-			navigate("-1");
+			navigate(-1);
 		}
 	};
 
