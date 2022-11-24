@@ -18,7 +18,7 @@ const Router = () => {
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/signin" element={<SignInPage />} />
+					<Route path="/" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/profile/:id" element={<ProfilePage />} />
 					<Route path="/profile/edit" element={<ProfileEditPage />} />
@@ -28,7 +28,7 @@ const Router = () => {
 					/>
 					<Route path="/profile/:id/following" element={<FollowingPage />} />
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
-					<Route path="/" element={<TodoListPage />} />
+					<Route path="/todolist" element={<TodoListPage />} />
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />
 					<Route path="/feed/:id" element={<DetailFeedPage />} />
