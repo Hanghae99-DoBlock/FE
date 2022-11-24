@@ -1,9 +1,8 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, FirstHeading, Flex, SecondHeading, Svg } from "../../common";
+import { Box, Flex, Svg, Text } from "../../common";
 import { FeedComment } from "../../components";
 import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
 
@@ -39,132 +38,113 @@ const DetailFeedPage = () => {
 
 	return (
 		<>
-			<Flex
-				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
-				mg="0 auto"
-				overflow="auto"
-			>
-				<Flex wd="375px" mg="auto" dir="column">
-					<Flex wd="335px" jc="space-between" mg=" 0 0 10px 0">
+			<Flex dir="column" wd="100%">
+				<Flex wd="100%" dir="column">
+					{/* 헤더 */}
+					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
-						<Flex>
-							<FirstHeading color="#A2A2A2" mg="0 10px 0 0" fs="16" fw="600">
-								수정
-							</FirstHeading>
-							<FirstHeading color="#FD3049" fs="16" fw="600">
-								삭제
-							</FirstHeading>
+						<Flex gap="14px">
+							<Text variant="grey">수정</Text>
+							<Text variant="red">삭제</Text>
 						</Flex>
 					</Flex>
-					<Flex wd="335px" jc="space-between" mg="0 0 20px 0">
-						<Flex wd="335px" jc="flex-start">
+
+					{/* 프로필 영역 */}
+					<Flex wd="100%" ht="66px" jc="space-between" pd="14px 20px">
+						<Flex jc="flex-start" gap="10px">
+							{/* 프로필 사진 */}
 							<Flex>
 								<Box
 									variant="profilePicNormal"
 									profileImageUrl={profileImageUrl}
 								/>
 							</Flex>
-							<Flex dir="column" ai="flex-start">
-								<Flex ai="flex-start" mg="0 0 5px 0">
+							<Flex
+								ht="100%"
+								dir="column"
+								ai="flex-start"
+								jc="space-between"
+								gap="3px"
+							>
+								{/* 닉네임, 뱃지 */}
+								<Flex ht="100%" ai="center" gap="4px">
+									<Text variant="selectedTabMenu">{nickname}</Text>
 									<Flex
-										fw="600"
-										fs="13"
-										onClick={() => {
-											// anotherMemberPage(.memberId);
-										}}
+										wd="60px"
+										ht="20px"
+										bg="#FFF4ED"
+										jc="center"
+										radius="5px"
 									>
-										{nickname}
-										<Flex
-											bc="#FFF4ED"
-											color="#FF8737"
-											fs="10"
-											radius="5px"
-											pd="4px 8px;"
-										>
-											뱃지입니다
-										</Flex>
+										<Text variant="orange">뱃지</Text>
 									</Flex>
 								</Flex>
+
+								{/* 게시글 생성 날짜 */}
 								<Flex>
-									<SecondHeading fw="600" fs="12px" color="#A2A2A2">
+									<Text variant="grey">
 										{dayjs(postedAt).format(`YYYY.MM.DD HH:mm`)}
-									</SecondHeading>
+									</Text>
 								</Flex>
 							</Flex>
 						</Flex>
 						<Flex>
+							{/* 팔로우 버튼 */}
 							<Flex>
 								<Svg variant="follow" onClick={() => {}}></Svg>
 							</Flex>
 						</Flex>
 					</Flex>
-					<Flex
-						wd="335px"
-						fw="600"
-						fs="22"
-						color="#131313"
-						mg="0 0 30px 0"
-						lh="30"
-						jc="flex-start"
-					>
-						{feedTitle}
+
+					{/* 제목 */}
+					<Flex wd="100%" pd="8px 29px 16px" jc="flex-start">
+						<Text variant="title">{feedTitle}</Text>
 					</Flex>
-					<Flex
-						dir="column"
-						ai="flex-start"
-						wd="335px"
-						ht="133px"
-						bc="#F8F8F8"
-						radius="5px"
-						pd="20px"
-						mg="0 0 20px 0"
-					>
-						<Flex mg="5px" dir="column">
-							{todoList?.map((todoItem, index) => (
-								<Flex key={index} dir="row">
-									<Svg variant="feedCheck"></Svg>
-									<FirstHeading fw="300" fs="14px" color="#131313">
-										{todoItem}
-									</FirstHeading>
-								</Flex>
-							))}
-						</Flex>
+
+					{/* 투두리스트 영역 */}
+					<Flex wd="100%" dir="column" radius="5px" pd="8px 18px">
+						{todoList?.map((todoItem, index) => (
+							<Flex
+								key={index}
+								jc="flex-start"
+								wd="100%"
+								dir="row"
+								gap="10px"
+								pd="20px"
+								bg="#F8F8F8"
+							>
+								<Svg variant="feedCheck"></Svg>
+								<Text variant="tabMenu">{todoItem}</Text>
+							</Flex>
+						))}
 					</Flex>
-					<Flex
-						wd="335px"
-						lh="25"
-						fw="300"
-						fs="14px"
-						color="#131313"
-						mg="0 0 20px 0"
-						jc="flex-start"
-					>
-						{feedContent}
+
+					{/* 본문 */}
+					<Flex wd="100%" jc="flex-start" pd="16px 20px 32px">
+						<Text variant="tabMenu">{feedContent}</Text>
 					</Flex>
-					{feedImagesUrlList?.map((feedImg, index) => (
-						<Box variant="feedImg" feedImgUrl={feedImg} />
-					))}
-					<Flex wd="335px" dir="column">
-						<Flex wd="335px" jc="flex-start" mg="0 0 10px 0">
-							{tagList?.map((tagItem, index) => (
-								<Flex
-									key={index}
-									wd="95px"
-									ht="29px"
-									bg="#fff"
-									border="1px solid #E5E5E5"
-									radius="24px"
-									mg="0 5px"
-								>
-									<FirstHeading fw="300" fs="13px" color="#131313">
-										# {tagItem}
-									</FirstHeading>
-								</Flex>
-							))}
-						</Flex>
+
+					{/* 사진 영역*/}
+					<Flex wd="100%" bg="#f8f8f8" dir="column">
+						{feedImagesUrlList?.map((feedImg, index) => (
+							<Box key={index} variant="feedImg" feedImgUrl={feedImg} />
+						))}
+					</Flex>
+
+					{/* 태그 영역 */}
+					<Flex wrap="wrap" gap="8px" wd="100%" jc="flex-start" pd="24px 18px">
+						{tagList?.map((tagItem, index) => (
+							<Flex
+								key={index}
+								ht="29px"
+								border="1px solid #E5E5E5"
+								radius="24px"
+								pd="0 14px"
+								ai="center"
+							>
+								<Text variant="tabMenu"># {tagItem}</Text>
+							</Flex>
+						))}
 					</Flex>
 				</Flex>
 				<FeedComment

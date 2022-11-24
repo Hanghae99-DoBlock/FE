@@ -329,8 +329,8 @@ const StBox = styled.div`
 					background-repeat: no-repeat;
 					background-size: cover;
 					border-radius: 50%;
-					width: 24px;
-					height: 24px;
+					width: 34px;
+					height: 34px;
 				`;
 
 			// 프로필 이미지 디폴트 스몰
@@ -351,10 +351,10 @@ const StBox = styled.div`
 					background-repeat: no-repeat;
 					background-size: cover;
 					background-position: center;
-					width: 375px;
+					width: 100%;
 					height: 200px;
-					background-color: #f8f8f8;
 				`;
+
 			// 네비게이션 바 아이콘
 			case "navIconBox":
 				return css`
