@@ -4,6 +4,7 @@ import {
 	__getTodoList,
 	__checkTodo,
 	__updateTodo,
+	__switchTodo,
 } from "../middleware/todoListThunk";
 
 const initialState = {
@@ -57,6 +58,11 @@ export const todoListSlice = createSlice({
 						? action.payload
 						: todoItem;
 				});
+			})
+
+			// 투두 드래그 앤 드롭 성공
+			.addCase(__switchTodo.fulfilled, (state, action) => {
+				state.todoList = action.payload.todoList;
 			});
 	},
 });
