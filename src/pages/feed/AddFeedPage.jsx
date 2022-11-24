@@ -280,6 +280,7 @@ const AddFeedPage = () => {
 							최대 30자 입력 가능합니다
 						</Flex>
 					</Flex>
+					{/*제목 입력*/}
 					<Input
 						variant="addFeedInput"
 						value={title.value}
