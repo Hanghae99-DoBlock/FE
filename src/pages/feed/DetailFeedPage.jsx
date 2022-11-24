@@ -1,8 +1,9 @@
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
+import { Box, FirstHeading, Flex, SecondHeading, Svg } from "../../common";
 import { FeedComment } from "../../components";
 import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
 
@@ -14,6 +15,17 @@ const DetailFeedPage = () => {
 	const feedItem = useSelector(state => state.feed.feedItem);
 
 	const {
+		feedId,
+		feedTitle,
+		feedContent,
+		todoList,
+		feedImagesUrlList,
+		tagList,
+		postedAt,
+		memberId,
+		nickname,
+		profileImageUrl,
+		followOrNot,
 		commentResponseDtoList,
 		countComment,
 		countReaction,
@@ -50,14 +62,9 @@ const DetailFeedPage = () => {
 					<Flex wd="335px" jc="space-between" mg="0 0 20px 0">
 						<Flex wd="335px" jc="flex-start">
 							<Flex>
-								<Image
-									variant="followImage"
-									// src={.profileImage}
-									alt=""
-									style={{ marginTop: "4px", backgroundColor: "blue" }}
-									onClick={() => {
-										// anotherMemberPage(.memberId);
-									}}
+								<Box
+									variant="profilePicNormal"
+									profileImageUrl={profileImageUrl}
 								/>
 							</Flex>
 							<Flex dir="column" ai="flex-start">
@@ -69,7 +76,7 @@ const DetailFeedPage = () => {
 											// anotherMemberPage(.memberId);
 										}}
 									>
-										닉네임입니다
+										{nickname}
 										<Flex
 											bc="#FFF4ED"
 											color="#FF8737"
@@ -83,7 +90,7 @@ const DetailFeedPage = () => {
 								</Flex>
 								<Flex>
 									<SecondHeading fw="600" fs="12px" color="#A2A2A2">
-										2022.11.21 14:34
+										{dayjs(postedAt).format(`YYYY.MM.DD HH:mm`)}
 									</SecondHeading>
 								</Flex>
 							</Flex>
@@ -101,9 +108,9 @@ const DetailFeedPage = () => {
 						color="#131313"
 						mg="0 0 30px 0"
 						lh="30"
+						jc="flex-start"
 					>
-						피드 제목입니다. 피드 제목입니다. 피드 제목입니다. 피드 제목입니다.
-						피드 제목입니다.
+						{feedTitle}
 					</Flex>
 					<Flex
 						dir="column"
@@ -115,23 +122,15 @@ const DetailFeedPage = () => {
 						pd="20px"
 						mg="0 0 20px 0"
 					>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								아침 5시에 일어나기
-							</FirstHeading>
-						</Flex>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								영양제 챙겨먹기
-							</FirstHeading>
-						</Flex>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								일어나서 콩이 산책 다녀오기
-							</FirstHeading>
+						<Flex mg="5px" dir="column">
+							{todoList?.map((todoItem, index) => (
+								<Flex key={index} dir="row">
+									<Svg variant="feedCheck"></Svg>
+									<FirstHeading fw="300" fs="14px" color="#131313">
+										{todoItem}
+									</FirstHeading>
+								</Flex>
+							))}
 						</Flex>
 					</Flex>
 					<Flex
@@ -141,91 +140,30 @@ const DetailFeedPage = () => {
 						fs="14px"
 						color="#131313"
 						mg="0 0 20px 0"
+						jc="flex-start"
 					>
-						상세 내용은 사용자에게 최대 100자 보여집니다. 상세 내용은 사용자에게
-						최대 100자 보여집니다. 상세 내용은 사용자에게 최대 100자 보여집니다.
-						상세 내용은 사용자에게 최대 100자 보여집니다. 상세 내용은 사용자에게
-						최대
+						{feedContent}
 					</Flex>
-					<Flex wd="375px" ht="200px" bc="#F8F8F8" mg="0 0 20px 0"></Flex>
+					{feedImagesUrlList?.map((feedImg, index) => (
+						<Box variant="feedImg" feedImgUrl={feedImg} />
+					))}
 					<Flex wd="335px" dir="column">
 						<Flex wd="335px" jc="flex-start" mg="0 0 10px 0">
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-						</Flex>
-						<Flex mg="0 0 10px 0">
-							<Flex
-								wd="220px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 태그가많거나길어지면아래로
-								</FirstHeading>
-							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-						</Flex>
-						<Flex wd="335px" jc="flex-start">
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
+							{tagList?.map((tagItem, index) => (
+								<Flex
+									key={index}
+									wd="95px"
+									ht="29px"
+									bg="#fff"
+									border="1px solid #E5E5E5"
+									radius="24px"
+									mg="0 5px"
+								>
+									<FirstHeading fw="300" fs="13px" color="#131313">
+										# {tagItem}
+									</FirstHeading>
+								</Flex>
+							))}
 						</Flex>
 					</Flex>
 				</Flex>

@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl, feedColor, type }) => {
+	${({ variant, profileImageUrl, feedColor, type, feedImgUrl }) => {
 		switch (variant) {
 			// 투두리스트 전체 영역
 			case "todoListArea":
@@ -322,6 +322,17 @@ const StBox = styled.div`
 					height: 24px;
 				`;
 
+			// 프로필 이미지 보통
+			case "profilePicNormal":
+				return css`
+					background-image: url(${profileImageUrl});
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 50%;
+					width: 24px;
+					height: 24px;
+				`;
+
 			// 프로필 이미지 디폴트 스몰
 			case "profilePicDefaultSmall":
 				return css`
@@ -333,6 +344,17 @@ const StBox = styled.div`
 					height: 24px;
 				`;
 
+			// 피드 사진
+			case "feedImg":
+				return css`
+					background-image: url(${feedImgUrl});
+					background-repeat: no-repeat;
+					background-size: cover;
+					background-position: center;
+					width: 375px;
+					height: 200px;
+					background-color: #f8f8f8;
+				`;
 			// 네비게이션 바 아이콘
 			case "navIconBox":
 				return css`
@@ -342,7 +364,6 @@ const StBox = styled.div`
 					width: 17px;
 					height: 16px;
 				`;
-
 			default:
 				break;
 		}
