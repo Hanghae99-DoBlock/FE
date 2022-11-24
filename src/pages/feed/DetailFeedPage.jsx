@@ -53,7 +53,10 @@ const DetailFeedPage = () => {
 					<Flex wd="100%" ht="66px" jc="space-between" pd="14px 20px">
 						<Flex jc="flex-start" gap="10px">
 							{/* 프로필 사진 */}
-							<Flex>
+							<Flex
+								onClick={() => navigate(`/profile/${memberId}`)}
+								cursor="pointer"
+							>
 								<Box
 									variant="profilePicNormal"
 									profileImageUrl={profileImageUrl}
@@ -68,7 +71,12 @@ const DetailFeedPage = () => {
 							>
 								{/* 닉네임, 뱃지 */}
 								<Flex ht="100%" ai="center" gap="4px">
-									<Text variant="selectedTabMenu">{nickname}</Text>
+									<Flex
+										onClick={() => navigate(`/profile/${memberId}`)}
+										cursor="pointer"
+									>
+										<Text variant="selectedTabMenu">{nickname}</Text>
+									</Flex>
 									<Flex
 										wd="60px"
 										ht="20px"
