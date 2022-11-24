@@ -6,21 +6,10 @@ import {
 	ModalDetailTodo,
 } from "./todoList";
 
-import {
-	FeedItem,
-	FeedItemUi,
-	FeedComment,
-	BoastFeed,
-	ChoiceTodo,
-	ChoiceTodoModal,
-	PhotoList,
-	TagList,
-} from "./feed";
+import { FeedItem, FeedItemUi, FeedComment } from "./feed";
 import NavBelow from "./nav/NavBelow";
 
 export {
-	PhotoList,
-	TagList,
 	TodoListCalendar,
 	TodoList,
 	TodoItem,
@@ -30,7 +19,4 @@ export {
 	FeedItemUi,
 	NavBelow,
 	FeedComment,
-	BoastFeed,
-	ChoiceTodo,
-	ChoiceTodoModal,
 };
