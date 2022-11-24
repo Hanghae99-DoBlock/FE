@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Hr, Image, Input, Svg, Text } from "../../common";
 import {
 	__addComment,
 	__deleteComment,
 	__editComment,
-} from "../../redux/modules/commentSlice";
+} from "../../redux/modules/feed/feedSlice";
 
 const FeedComment = props => {
 	const dispatch = useDispatch();
@@ -15,6 +15,8 @@ const FeedComment = props => {
 
 	const comments = props?.commentResponseDtoList;
 	const feedId = props?.feedId;
+
+	const comment = useSelector(state => state);
 
 	//Comments 추가
 	const [content, setContent] = useState("");
@@ -52,15 +54,15 @@ const FeedComment = props => {
 
 	return (
 		<>
-			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
+			<Flex wd="430px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
 				<Text variant="comment" color="red" mg="0 5px 0 0">
 					❤
-				</Text>{" "}
+				</Text>
 				👍 리액션 3
 			</Flex>
 			<Hr variant="feedHr" />
 			<Flex dir="column" jc="center">
-				<Flex wd="335px" jc="space-between">
+				<Flex wd="430px" jc="space-between">
 					<Flex fw="600" fs="14px" color="#666666" jc="flex-start" mg="10px 0">
 						<Svg variant="smile"></Svg>
 						<Text variant="comment">리액션하기</Text>
@@ -70,14 +72,9 @@ const FeedComment = props => {
 				<Hr variant="feedHr" />
 				{comments &&
 					comments.map(content => (
-						<>
-							<Flex
-								wd="335px"
-								mg="10px 0"
-								jc="flex-start"
-								key={content.memberId}
-							>
-								<Flex wd="335px" jc="space-between">
+						<Flex key={content.commentId} dir="column">
+							<Flex wd="430px" mg="10px 0" jc="flex-start">
+								<Flex wd="430px" jc="space-between">
 									<Flex>
 										<Flex>
 											<Image
@@ -103,26 +100,28 @@ const FeedComment = props => {
 											</Flex>
 										</Flex>
 									</Flex>
-									<Flex>
-										<Flex>
-											<Svg variant="editComment" onClick={editComment}></Svg>
-											<Svg
-												variant="trashCanComment"
-												onClick={() => {
-													deleteComment(content.commentId);
-												}}
-											></Svg>
-										</Flex>
-									</Flex>
 								</Flex>
 							</Flex>
-							<Flex wd="335px" fw="300" fs="14" lh="20" jc="flex-start">
+							<Flex wd="430px" fw="300" fs="14" lh="20" jc="flex-start">
 								{content.commentContent}
 							</Flex>
-						</>
+							<Flex wd="430px" jc="flex-start">
+								<Flex mg="2px 0 0 0">
+									<Text variant="comment">수정</Text>
+									<Text
+										variant="deleteComment"
+										onClick={() => {
+											deleteComment(content.commentId);
+										}}
+									>
+										삭제
+									</Text>
+								</Flex>
+							</Flex>
+						</Flex>
 					))}
 			</Flex>
-			<Flex wd="335px" mg="10px">
+			<Flex wd="430px" mg="10px">
 				<form onSubmit={addCommentHandler}>
 					<Flex>
 						<Input

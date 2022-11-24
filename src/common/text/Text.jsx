@@ -103,6 +103,13 @@ const StText = styled.span`
 					font-size: 14px;
 					color: red;
 				`;
+			case "deleteComment":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+					color: red;
+					margin-left: 5px;
+				`;
 			// 피드 상세
 			case "red":
 				return css`
