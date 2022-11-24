@@ -349,7 +349,7 @@ const StBox = styled.div`
 				return css`
 					background-image: url(${feedImgUrl});
 					background-repeat: no-repeat;
-					background-size: cover;
+					background-size: contain;
 					background-position: center;
 					width: 100%;
 					height: 200px;
