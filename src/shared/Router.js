@@ -12,6 +12,7 @@ import {
 	DetailFeedPage,
 	FeedPage,
 } from "../pages";
+import SearchPage from "../pages/search/SearchPage";
 
 const Router = () => {
 	return (
@@ -32,6 +33,7 @@ const Router = () => {
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />
 					<Route path="/feed/:id" element={<DetailFeedPage />} />
+					<Route path="/search" element={<SearchPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

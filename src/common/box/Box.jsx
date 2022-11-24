@@ -342,6 +342,11 @@ const StBox = styled.div`
 					width: 17px;
 					height: 16px;
 				`;
+			case "recommendSearchBox":
+				return css`
+					width: 274px;
+					height: 112px;
+				`;
 
 			default:
 				break;
