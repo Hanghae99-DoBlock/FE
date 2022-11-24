@@ -12,6 +12,7 @@ const DetailFeedPage = () => {
 	const { id } = useParams();
 
 	const feedItem = useSelector(state => state.feed.feedItem);
+	const commentList = useSelector(state => state.commentSlice.commentList);
 
 	const {
 		commentResponseDtoList,
@@ -19,6 +20,7 @@ const DetailFeedPage = () => {
 		countReaction,
 		currentReactionType,
 		reactionResponseDtoList,
+		feedId,
 	} = feedItem;
 
 	useEffect(() => {
@@ -235,6 +237,7 @@ const DetailFeedPage = () => {
 					countReaction={countReaction}
 					currentReactionType={currentReactionType}
 					reactionResponseDtoList={reactionResponseDtoList}
+					feedId={feedId}
 				/>
 			</Flex>
 			<NavBelow />

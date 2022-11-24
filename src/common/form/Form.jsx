@@ -17,6 +17,8 @@ const StForm = styled.form`
 					color: #979797;
 					justify-content: space-between;
 				`;
+			case "feedCommentForm":
+				return css``;
 			default:
 				break;
 		}
