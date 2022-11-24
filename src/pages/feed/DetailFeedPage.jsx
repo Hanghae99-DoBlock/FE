@@ -13,7 +13,7 @@ const DetailFeedPage = () => {
 	const { id } = useParams();
 
 	const feedItem = useSelector(state => state.feed.feedItem);
-	const commentList = useSelector(state => state.commentSlice.commentList);
+	const commentList = useSelector(state => state.feed.commentList);
 
 	const {
 		feedTitle,
