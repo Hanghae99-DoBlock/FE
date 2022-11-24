@@ -11,7 +11,6 @@ import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
 
 export {
-	FeedPage,
 	SignInPage,
 	SignUpPage,
 	TodoListPage,
@@ -22,4 +21,5 @@ export {
 	FollowingPage,
 	FollowerPage,
 	DetailFeedPage,
+	FeedPage,
 };
