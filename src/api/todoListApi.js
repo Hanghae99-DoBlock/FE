@@ -26,3 +26,14 @@ export const getTodoListApi = async payload => {
 export const checkTodoApi = async payload => {
 	await instance.patch(`/api/todolist/${payload}/completed`);
 };
+
+// 투두 드래그 앤 드롭
+export const swithTodoApi = async payload => {
+	const request = {
+		year: payload.year,
+		month: payload.month,
+		day: payload.day,
+		todoIdList: payload.todoIdList,
+	};
+	await instance.put(`/api/todolist/switch`, request);
+};
