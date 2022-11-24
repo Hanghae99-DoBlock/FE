@@ -2,7 +2,9 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Flex, Svg, Text } from "../../common";
+import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
+import { FeedComment, NavBelow } from "../../components";
+import { Box, Text } from "../../common";
 import { FeedComment } from "../../components";
 import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
@@ -13,6 +15,7 @@ const DetailFeedPage = () => {
 	const { id } = useParams();
 
 	const feedItem = useSelector(state => state.feed.feedItem);
+	const commentList = useSelector(state => state.commentSlice.commentList);
 
 	const {
 		feedId,
@@ -31,6 +34,7 @@ const DetailFeedPage = () => {
 		countReaction,
 		currentReactionType,
 		reactionResponseDtoList,
+		feedId,
 	} = feedItem;
 
 	const [isfollowing, setIsFollowing] = useState(followOrNot);
@@ -174,8 +178,10 @@ const DetailFeedPage = () => {
 					countReaction={countReaction}
 					currentReactionType={currentReactionType}
 					reactionResponseDtoList={reactionResponseDtoList}
+					feedId={feedId}
 				/>
 			</Flex>
+			<NavBelow />
 		</>
 	);
 };
