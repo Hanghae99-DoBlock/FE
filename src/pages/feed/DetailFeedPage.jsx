@@ -124,21 +124,21 @@ const DetailFeedPage = () => {
 					</Flex>
 
 					{/* 투두리스트 영역 */}
-					<Flex wd="100%" dir="column" radius="5px" pd="8px 18px">
-						{todoList?.map((todoItem, index) => (
-							<Flex
-								key={index}
-								jc="flex-start"
-								wd="100%"
-								dir="row"
-								gap="10px"
-								pd="20px"
-								bg="#F8F8F8"
-							>
-								<Svg variant="feedCheck"></Svg>
-								<Text variant="tabMenu">{todoItem}</Text>
-							</Flex>
-						))}
+					<Flex wd="100%" radius="5px" pd="8px 18px">
+						<Flex wd="100%" pd="20px" dir="column" bg="#F8F8F8">
+							{todoList?.map((todoItem, index) => (
+								<Flex
+									key={index}
+									jc="flex-start"
+									wd="100%"
+									dir="row"
+									gap="10px"
+								>
+									<Svg variant="feedCheck"></Svg>
+									<Text variant="tabMenu">{todoItem}</Text>
+								</Flex>
+							))}
+						</Flex>
 					</Flex>
 
 					{/* 본문 */}
