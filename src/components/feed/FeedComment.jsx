@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirstHeading, Flex, Hr, Image, Input, Svg } from "../../common";
-import { __addComment } from "../../redux/modules/commentSlice";
+import { Flex, Hr, Image, Input, Svg, Text } from "../../common";
+import {
+	__addComment,
+	__deleteComment,
+	__editComment,
+} from "../../redux/modules/commentSlice";
 
-const FeedComment = () => {
+const FeedComment = props => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams();
 
-	const comments = useSelector(state => state.commentSlice.commentContent);
-	console.log(comments);
-
-	useEffect(() => {
-		dispatch();
-	}, []);
+	const comments = props?.commentResponseDtoList;
+	const feedId = props?.feedId;
 
 	//Comments 추가
 	const [content, setContent] = useState("");
@@ -24,73 +24,118 @@ const FeedComment = () => {
 	};
 
 	const addCommentHandler = e => {
-		e.preventDetault();
-		dispatch(__addComment(content, id));
+		e.preventDefault();
+		dispatch(__addComment({ content, id }));
+		setContent("");
+	};
+
+	const [selected, setSelected] = useState(null);
+
+	const [commentText, setCommentText] = useState("");
+
+	const editComment = () => {
+		if (commentText !== "") {
+			dispatch(__editComment({ id: selected, text: commentText }));
+		} else {
+			return;
+		}
+		setCommentText("");
+	};
+	const deleteComment = commentId => {
+		dispatch(
+			__deleteComment({
+				feedId,
+				commentId,
+			}),
+		);
 	};
 
 	return (
 		<>
-			<Flex
-				wd="335px"
-				fw="600"
-				fs="14px"
-				color="#666666"
-				jc="flex-end"
-				mg="0 auto 10px auto"
-			>
-				❤ 👍 리액션 3
+			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
+				<Text variant="comment" color="red" mg="0 5px 0 0">
+					❤
+				</Text>{" "}
+				👍 리액션 3
 			</Flex>
 			<Hr variant="feedHr" />
 			<Flex dir="column" jc="center">
 				<Flex wd="335px" jc="space-between">
 					<Flex fw="600" fs="14px" color="#666666" jc="flex-start" mg="10px 0">
-						<Svg variant="smile"></Svg>{" "}
-						<FirstHeading mg="0 0 0 5px">리액션하기</FirstHeading>
+						<Svg variant="smile"></Svg>
+						<Text variant="comment">리액션하기</Text>
 					</Flex>
-					<Flex>💬 댓글 3</Flex>
+					<Flex>💬 댓글 {comments?.length}</Flex>
 				</Flex>
 				<Hr variant="feedHr" />
-				<Flex wd="335px" mg="10px 0" jc="flex-start">
-					<Flex>
-						<Image
-							variant="commentImage"
-							// src={.profileImage}
-							alt=""
-							style={{ marginTop: "4px", backgroundColor: "blue" }}
-							onClick={() => {
-								// anotherMemberPage(.memberId);
-							}}
-						/>
-					</Flex>
-					<Flex
-						fw="600"
-						fs="13"
-						onClick={() => {
-							// anotherMemberPage(.memberId);
-						}}
-					>
-						닉네임
-						<Flex color="#A2A2A2" fs="13" mg="0 0 0 5px">
-							2022.11.21
-						</Flex>
-					</Flex>
-				</Flex>
-				<Flex wd="335px" fw="300" fs="14" lh="20">
-					모바일에서는 최대 3줄까지 노출이 됩니다. 더 많아질 경우 더보기를
-					붙입니다. 모바일에서는 최대 3줄까지 노출이 됩니다. 더 많아질 경우
-					더보기를 붙입니다 이렇게붙여주세요 ...더보기
-				</Flex>
+				{comments &&
+					comments.map(content => (
+						<>
+							<Flex
+								wd="335px"
+								mg="10px 0"
+								jc="flex-start"
+								key={content.memberId}
+							>
+								<Flex wd="335px" jc="space-between">
+									<Flex>
+										<Flex>
+											<Image
+												variant="commentImage"
+												src={content.profileImage}
+												alt=""
+												style={{ marginTop: "4px" }}
+												onClick={() => {
+													// anotherMemberPage(.memberId);
+												}}
+											/>
+										</Flex>
+										<Flex
+											fw="600"
+											fs="13"
+											onClick={() => {
+												// anotherMemberPage(.memberId);
+											}}
+										>
+											{content.nickname}
+											<Flex color="#A2A2A2" fs="13" mg="0 0 0 5px">
+												{content.postedAt}
+											</Flex>
+										</Flex>
+									</Flex>
+									<Flex>
+										<Flex>
+											<Svg variant="editComment" onClick={editComment}></Svg>
+											<Svg
+												variant="trashCanComment"
+												onClick={() => {
+													deleteComment(content.commentId);
+												}}
+											></Svg>
+										</Flex>
+									</Flex>
+								</Flex>
+							</Flex>
+							<Flex wd="335px" fw="300" fs="14" lh="20" jc="flex-start">
+								{content.commentContent}
+							</Flex>
+						</>
+					))}
 			</Flex>
-			<Flex mg="100px 0 0 0"></Flex>
-			<Hr variant="feedHr" />
 			<Flex wd="335px" mg="10px">
-				<Input
-					variant="feedInput"
-					type="text"
-					placeholder="댓글을 입력하세요"
-					onChange={onChangeHandler}
-				/>
-				<Svg variant="paperAirplane" onClick={addCommentHandler}></Svg>
+				<form onSubmit={addCommentHandler}>
+					<Flex>
+						<Input
+							variant="feedInput"
+							type="text"
+							name="comments"
+							placeholder="댓글을 입력하세요"
+							onChange={onChangeHandler}
+						/>
+						<Svg variant="paperAirplane" onClick={addCommentHandler}></Svg>
+					</Flex>
+				</form>
+				<Flex mg="190px 0 0 0"></Flex>
 			</Flex>
 		</>
 	);

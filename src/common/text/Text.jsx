@@ -91,6 +91,17 @@ const StText = styled.span`
 					font-weight: 400;
 					font-size: 10px;
 				`;
+			case "comment":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+				`;
+			case "commentHeart":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+					color: red;
+				`;
 			default:
 				break;
 		}

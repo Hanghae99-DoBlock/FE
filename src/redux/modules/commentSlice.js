@@ -32,15 +32,18 @@ export const __addComment = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
-				`${serverUrl}/api/feed/${payload.feed_id}/comment`,
+				`${serverUrl}/api/feed/${payload.id}/comment`,
 				{
-					withCredentials: true,
+					commentContent: payload.content,
 				},
 				{
 					headers: {
 						Authorization: accessToken,
 						"Refresh-Token": refreshToken,
 					},
+				},
+				{
+					withCredentials: true,
 				},
 			);
 			return thunkAPI.fulfillWithValue(payload);
@@ -80,9 +83,10 @@ export const __editComment = createAsyncThunk(
 export const __deleteComment = createAsyncThunk(
 	"comment/deleteComment",
 	async (payload, thunkAPI) => {
+		console.log(payload);
 		try {
 			const response = await axios.delete(
-				`${serverUrl}/api/feed/${payload.feed_id}/comment?${payload.comment_id}=${payload.id}`,
+				`${serverUrl}/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
 				{
 					headers: {
 						Authorization: accessToken,
@@ -93,7 +97,6 @@ export const __deleteComment = createAsyncThunk(
 				},
 			);
 			alert("삭제 완료");
-			window.history.back();
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			alert("삭제 실패");
@@ -103,7 +106,7 @@ export const __deleteComment = createAsyncThunk(
 );
 
 const initialState = {
-	commentContent: [],
+	commentList: [],
 	isLoading: false,
 	error: "",
 };
@@ -118,9 +121,22 @@ const commentSlice = createSlice({
 		},
 		[__addComment.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.profile = action.payload;
+			state.commentList?.push(action.payload);
 		},
 		[__addComment.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+		},
+		[__deleteComment.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__deleteComment.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.commentList = state.commentList?.filter(
+				item => item.id !== action.payload,
+			);
+		},
+		[__deleteComment.rejected]: (state, action) => {
 			state.isLoading = false;
 			state.isError = true;
 		},
