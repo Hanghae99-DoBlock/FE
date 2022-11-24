@@ -103,21 +103,23 @@ const FeedComment = props => {
 											</Flex>
 										</Flex>
 									</Flex>
-									<Flex>
-										<Flex>
-											<Svg variant="editComment" onClick={editComment}></Svg>
-											<Svg
-												variant="trashCanComment"
-												onClick={() => {
-													deleteComment(content.commentId);
-												}}
-											></Svg>
-										</Flex>
-									</Flex>
 								</Flex>
 							</Flex>
 							<Flex wd="335px" fw="300" fs="14" lh="20" jc="flex-start">
 								{content.commentContent}
+							</Flex>
+							<Flex wd="335px" jc="flex-start">
+								<Flex mg="2px 0 0 0">
+									<Text variant="comment">수정</Text>
+									<Text
+										variant="deleteComment"
+										onClick={() => {
+											deleteComment(content.commentId);
+										}}
+									>
+										삭제
+									</Text>
+								</Flex>
 							</Flex>
 						</>
 					))}
