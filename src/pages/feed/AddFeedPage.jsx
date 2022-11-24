@@ -283,7 +283,7 @@ const AddFeedPage = () => {
 					{/*제목 입력*/}
 					<Input
 						variant="addFeedInput"
-						value={title.value}
+						value={title.value || ""}
 						onChange={title.onChange}
 					/>
 				</Flex>

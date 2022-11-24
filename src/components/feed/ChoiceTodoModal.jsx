@@ -60,7 +60,7 @@ const ChoiceTodoModal = ({ setOpenModal }) => {
 					>
 						{/*등록된 투두리스트 목록을 체크박스에서 체크할 수 있게 불러옴*/}
 						{successTodolist?.map(todo => {
-							return <ChoiceTodo todo={todo} key={todo.id} />;
+							return <ChoiceTodo todo={todo} key={todo.todoId} />;
 						})}
 					</Flex>
 					<Flex>
