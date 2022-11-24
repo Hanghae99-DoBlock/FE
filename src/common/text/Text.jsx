@@ -102,6 +102,7 @@ const StText = styled.span`
 					font-weight: 400;
 					font-size: 14px;
 					color: red;
+				`;
 			// 피드 상세
 			case "red":
 				return css`

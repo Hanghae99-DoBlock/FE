@@ -2,10 +2,8 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
+import { Flex, Box, Text, Svg } from "../../common";
 import { FeedComment, NavBelow } from "../../components";
-import { Box, Text } from "../../common";
-import { FeedComment } from "../../components";
 import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
 
@@ -18,7 +16,6 @@ const DetailFeedPage = () => {
 	const commentList = useSelector(state => state.commentSlice.commentList);
 
 	const {
-		feedId,
 		feedTitle,
 		feedContent,
 		todoList,
