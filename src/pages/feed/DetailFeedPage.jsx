@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box, Flex, Svg, Text } from "../../common";
 import { FeedComment } from "../../components";
 import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
+import { __followThunk } from "../../redux/modules/profileSlice";
 
 const DetailFeedPage = () => {
 	const navigate = useNavigate();
@@ -32,9 +33,17 @@ const DetailFeedPage = () => {
 		reactionResponseDtoList,
 	} = feedItem;
 
+	const [isfollowing, setIsFollowing] = useState(followOrNot);
+
 	useEffect(() => {
 		dispatch(__getFeedItem(id));
+		setIsFollowing(followOrNot);
 	}, []);
+
+	const onClickFollowHandler = () => {
+		dispatch(__followThunk(memberId));
+		setIsFollowing(!isfollowing);
+	};
 
 	return (
 		<>
@@ -99,7 +108,11 @@ const DetailFeedPage = () => {
 						<Flex>
 							{/* 팔로우 버튼 */}
 							<Flex>
-								<Svg variant="follow" onClick={() => {}}></Svg>
+								{isfollowing ? (
+									<Svg variant="followCancel" onClick={onClickFollowHandler} />
+								) : (
+									<Svg variant="follow" onClick={onClickFollowHandler} />
+								)}
 							</Flex>
 						</Flex>
 					</Flex>
