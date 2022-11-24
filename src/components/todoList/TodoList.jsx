@@ -67,7 +67,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 										overflowX: "hidden",
 										overflowY: "auto",
 										scrollbarWidth: "none",
-										"&::-webkit-scrollbar": { display: "none" },
+										"&::WebkitScrollbar": { display: "none" },
 									}}
 									{...provided.droppableProps}
 									ref={provided.innerRef}
