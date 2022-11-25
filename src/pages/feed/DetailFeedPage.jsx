@@ -1,10 +1,14 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Box, Text, Svg } from "../../common";
 import { FeedComment, NavBelow } from "../../components";
-import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
+import {
+	updateFeedItem,
+	__getFeedItem,
+} from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
 
 const DetailFeedPage = () => {
@@ -13,7 +17,6 @@ const DetailFeedPage = () => {
 	const { id } = useParams();
 
 	const feedItem = useSelector(state => state.feed.feedItem);
-	const commentList = useSelector(state => state.feed.commentList);
 
 	const {
 		feedTitle,
@@ -34,17 +37,32 @@ const DetailFeedPage = () => {
 		feedId,
 	} = feedItem;
 
-	const [isfollowing, setIsFollowing] = useState(followOrNot);
-
 	useEffect(() => {
 		dispatch(__getFeedItem(id));
-		setIsFollowing(followOrNot);
 	}, []);
 
 	const onClickFollowHandler = () => {
 		dispatch(__followThunk(memberId));
-		setIsFollowing(!isfollowing);
+		dispatch(updateFeedItem());
 	};
+
+	// 토큰 디코드
+	const token = localStorage.getItem("accessToken");
+	const decodedToken = jwtDecode(token);
+
+	// 팔로우 버튼 영역에 보여줄 컴포넌트
+	const followBtnUi = {
+		following: <Svg variant="followCancel" onClick={onClickFollowHandler} />,
+		notFollowing: <Svg variant="follow" onClick={onClickFollowHandler} />,
+	};
+
+	// 팔로우 버튼 상태에 따라 변수 재할당
+	let followBtnStatus;
+	if (followOrNot) {
+		followBtnStatus = "following";
+	} else {
+		followBtnStatus = "notFollowing";
+	}
 
 	return (
 		<>
@@ -109,11 +127,9 @@ const DetailFeedPage = () => {
 						<Flex>
 							{/* 팔로우 버튼 */}
 							<Flex>
-								{isfollowing ? (
-									<Svg variant="followCancel" onClick={onClickFollowHandler} />
-								) : (
-									<Svg variant="follow" onClick={onClickFollowHandler} />
-								)}
+								{decodedToken.memberId === memberId
+									? null
+									: followBtnUi[followBtnStatus]}
 							</Flex>
 						</Flex>
 					</Flex>
