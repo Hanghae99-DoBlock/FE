@@ -364,6 +364,16 @@ const StBox = styled.div`
 					width: 17px;
 					height: 16px;
 				`;
+
+			// 피드 아이템 아이콘
+			case "feedPageIcon":
+				return css`
+					background-image: url(/images/${type}.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 14px;
+					height: 14px;
+				`;
 			default:
 				break;
 		}
