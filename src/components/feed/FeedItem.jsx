@@ -47,14 +47,7 @@ const FeedItem = ({ feedItem }) => {
 
 					{/* 프로필, 닉네임 */}
 					<Flex gap="4px">
-						{profileImageUrl ? (
-							<Box
-								variant="profilePicSmall"
-								profileImageUrl={profileImageUrl}
-							/>
-						) : (
-							<Box variant="profilePicDefaultSmall" />
-						)}
+						<Box variant="profilePicSmall" profileImageUrl={profileImageUrl} />
 						<Text variant="whiteMicro">{nickname}</Text>
 					</Flex>
 				</Flex>

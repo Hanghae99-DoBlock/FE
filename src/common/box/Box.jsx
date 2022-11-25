@@ -314,6 +314,7 @@ const StBox = styled.div`
 			// 프로필 이미지 스몰
 			case "profilePicSmall":
 				return css`
+					background-color: white;
 					background-image: url(${profileImageUrl});
 					background-repeat: no-repeat;
 					background-size: cover;
@@ -331,17 +332,6 @@ const StBox = styled.div`
 					border-radius: 50%;
 					width: 34px;
 					height: 34px;
-				`;
-
-			// 프로필 이미지 디폴트 스몰
-			case "profilePicDefaultSmall":
-				return css`
-					background-image: url(/images/defaultProfile.svg);
-					background-repeat: no-repeat;
-					background-size: cover;
-					border-radius: 50%;
-					width: 24px;
-					height: 24px;
 				`;
 
 			// 피드 사진
