@@ -108,7 +108,6 @@ export const __uploadFeed = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
-			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -261,13 +260,9 @@ export const feedSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			//피드 업로드
-			.addCase(__uploadFeed.fulfilled, (state, action) => {
-				state.feedList.push(action.payload);
-			})
+			.addCase(__uploadFeed.fulfilled, (state, action) => {})
 			//피드 업로드 실패
-			.addCase(__uploadFeed.rejected, (state, action) => {
-				state.feedList = [];
-			})
+			.addCase(__uploadFeed.rejected, (state, action) => {})
 			//완료된 피드 목록 불러오기
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
