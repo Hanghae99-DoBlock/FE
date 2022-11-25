@@ -1,11 +1,14 @@
 import dayjs from "dayjs";
 import jwtDecode from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Box, Text, Svg } from "../../common";
 import { FeedComment, NavBelow } from "../../components";
-import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
+import {
+	updateFeedItem,
+	__getFeedItem,
+} from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
 
 const DetailFeedPage = () => {
@@ -34,16 +37,13 @@ const DetailFeedPage = () => {
 		feedId,
 	} = feedItem;
 
-	const [isfollowing, setIsFollowing] = useState(followOrNot);
-
 	useEffect(() => {
 		dispatch(__getFeedItem(id));
-		setIsFollowing(followOrNot);
 	}, []);
 
 	const onClickFollowHandler = () => {
 		dispatch(__followThunk(memberId));
-		setIsFollowing(!isfollowing);
+		dispatch(updateFeedItem());
 	};
 
 	// 토큰 디코드
@@ -58,7 +58,7 @@ const DetailFeedPage = () => {
 
 	// 팔로우 버튼 상태에 따라 변수 재할당
 	let followBtnStatus;
-	if (isfollowing) {
+	if (followOrNot) {
 		followBtnStatus = "following";
 	} else {
 		followBtnStatus = "notFollowing";

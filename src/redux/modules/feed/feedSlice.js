@@ -251,6 +251,12 @@ export const feedSlice = createSlice({
 		addFormPhoto: (state, action) => {
 			state.formPhotoList.push(action.payload);
 		},
+		updateFeedItem: (state, action) => {
+			state.feedItem = {
+				...state.feedItem,
+				followOrNot: !state.feedItem.followOrNot,
+			};
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -299,5 +305,6 @@ export const {
 	addPhoto,
 	deletePhoto,
 	addFormPhoto,
+	updateFeedItem,
 } = feedSlice.actions;
 export default feedSlice.reducer;
