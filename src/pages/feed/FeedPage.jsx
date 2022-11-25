@@ -70,6 +70,7 @@ const FeedPage = () => {
 						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 					))}
 				</Box>
+				<Flex ht="80px" />
 			</Flex>
 			<NavBelow />
 		</>
