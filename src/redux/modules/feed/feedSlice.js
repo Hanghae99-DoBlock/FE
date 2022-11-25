@@ -108,7 +108,6 @@ export const __uploadFeed = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
-			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -251,17 +250,19 @@ export const feedSlice = createSlice({
 		addFormPhoto: (state, action) => {
 			state.formPhotoList.push(action.payload);
 		},
+		updateFeedItem: (state, action) => {
+			state.feedItem = {
+				...state.feedItem,
+				followOrNot: !state.feedItem.followOrNot,
+			};
+		},
 	},
 	extraReducers: builder => {
 		builder
 			//피드 업로드
-			.addCase(__uploadFeed.fulfilled, (state, action) => {
-				state.feedList.push(action.payload);
-			})
+			.addCase(__uploadFeed.fulfilled, (state, action) => {})
 			//피드 업로드 실패
-			.addCase(__uploadFeed.rejected, (state, action) => {
-				state.feedList = [];
-			})
+			.addCase(__uploadFeed.rejected, (state, action) => {})
 			//완료된 피드 목록 불러오기
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
@@ -299,5 +300,6 @@ export const {
 	addPhoto,
 	deletePhoto,
 	addFormPhoto,
+	updateFeedItem,
 } = feedSlice.actions;
 export default feedSlice.reducer;

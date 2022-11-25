@@ -7,11 +7,11 @@ const FeedItem = ({ feedItem }) => {
 		feedTitle,
 		nickname,
 		profileImageUrl,
-		commentResponseDtoList,
-		reactionResponseDtoList,
 		tagList,
 		todoList,
 		feedColor,
+		countReaction,
+		countComment,
 	} = feedItem;
 	return (
 		<FeedItemUi feedId={feedId} feedColor={feedColor}>
@@ -34,31 +34,20 @@ const FeedItem = ({ feedItem }) => {
 					<Flex gap="10px">
 						{/* 리액션 */}
 						<Flex gap="3px">
-							<Svg variant="reaction" />
-							<Text variant="whiteSmall">
-								{reactionResponseDtoList?.length || 0}
-							</Text>
+							<Box variant="feedPageIcon" type="reaction" />
+							<Text variant="whiteSmall">{countReaction}</Text>
 						</Flex>
 
 						{/* 댓글 */}
 						<Flex gap="3px">
-							<Svg variant="comment" />
-							<Text variant="whiteSmall">
-								{commentResponseDtoList?.length || 0}
-							</Text>
+							<Box variant="feedPageIcon" type="speechBubble" />
+							<Text variant="whiteSmall">{countComment}</Text>
 						</Flex>
 					</Flex>
 
 					{/* 프로필, 닉네임 */}
 					<Flex gap="4px">
-						{profileImageUrl ? (
-							<Box
-								variant="profilePicSmall"
-								profileImageUrl={profileImageUrl}
-							/>
-						) : (
-							<Box variant="profilePicDefaultSmall" />
-						)}
+						<Box variant="profilePicSmall" profileImageUrl={profileImageUrl} />
 						<Text variant="whiteMicro">{nickname}</Text>
 					</Flex>
 				</Flex>
