@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +14,6 @@ const DetailFeedPage = () => {
 	const { id } = useParams();
 
 	const feedItem = useSelector(state => state.feed.feedItem);
-	const commentList = useSelector(state => state.feed.commentList);
 
 	const {
 		feedTitle,
@@ -45,6 +45,24 @@ const DetailFeedPage = () => {
 		dispatch(__followThunk(memberId));
 		setIsFollowing(!isfollowing);
 	};
+
+	// 토큰 디코드
+	const token = localStorage.getItem("accessToken");
+	const decodedToken = jwtDecode(token);
+
+	// 팔로우 버튼 영역에 보여줄 컴포넌트
+	const followBtnUi = {
+		following: <Svg variant="followCancel" onClick={onClickFollowHandler} />,
+		notFollowing: <Svg variant="follow" onClick={onClickFollowHandler} />,
+	};
+
+	// 팔로우 버튼 상태에 따라 변수 재할당
+	let followBtnStatus;
+	if (isfollowing) {
+		followBtnStatus = "following";
+	} else {
+		followBtnStatus = "notFollowing";
+	}
 
 	return (
 		<>
@@ -109,11 +127,9 @@ const DetailFeedPage = () => {
 						<Flex>
 							{/* 팔로우 버튼 */}
 							<Flex>
-								{isfollowing ? (
-									<Svg variant="followCancel" onClick={onClickFollowHandler} />
-								) : (
-									<Svg variant="follow" onClick={onClickFollowHandler} />
-								)}
+								{decodedToken.memberId === memberId
+									? null
+									: followBtnUi[followBtnStatus]}
 							</Flex>
 						</Flex>
 					</Flex>
