@@ -33,7 +33,7 @@ const SignInPage = () => {
 
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
-		navigate("/");
+		navigate("/feed");
 	};
 
 	return (
