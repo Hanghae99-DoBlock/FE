@@ -8,6 +8,9 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
+    ::-webkit-scrollbar {
+  display: none;
+}
   }
   
   body, div, span, h1, h2, h3, h4, h5, h6,

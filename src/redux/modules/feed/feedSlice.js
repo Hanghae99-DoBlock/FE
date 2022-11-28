@@ -147,6 +147,7 @@ const initialState = {
 	successTodo: [],
 	feedItem: {},
 	isLoading: "",
+	searchTag: "",
 };
 
 export const feedSlice = createSlice({
@@ -225,7 +226,7 @@ export const feedSlice = createSlice({
 				state.feedItem = action.payload;
 			})
 			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
-				console.log(action.payload);
+				state.searchTag = action.payload;
 			});
 	},
 });

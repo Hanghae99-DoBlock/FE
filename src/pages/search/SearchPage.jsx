@@ -25,6 +25,8 @@ const FeedPage = () => {
 	const [userSearchMenuType, setUserSearchMenuType] = useState("tabMenu");
 	const [category, setCatagory] = useState("feed");
 	const searchInput = useInput();
+	const searchTagItem = useSelector(state => state.feed.searchTag);
+	console.log(searchTagItem);
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {
@@ -39,8 +41,15 @@ const FeedPage = () => {
 			setCatagory("member");
 		}
 	};
-
-	const searchHandler = e => {
+	const searchHandler = () => {
+		dispatch(
+			__SearchTagAndMember({
+				keyword: searchInput.value,
+				category: category,
+			}),
+		);
+	};
+	const searchEnterHandler = e => {
 		if (e.keyCode === 13) {
 			return dispatch(
 				__SearchTagAndMember({
@@ -49,14 +58,11 @@ const FeedPage = () => {
 				}),
 			);
 		}
-		dispatch(
-			__SearchTagAndMember({ keyword: searchInput.value, category: category }),
-		);
 	};
 
 	return (
 		<>
-			<Flex dir="column" wd="100%">
+			<Flex dir="column" wd="100%" ht="100vh">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -64,6 +70,7 @@ const FeedPage = () => {
 					ai="center"
 					gap="10px"
 					jc="flex-start"
+					position="sticky"
 				>
 					<Flex mg="0 0 0 14px" onClick={searchHandler}>
 						<Svg variant="search" />
@@ -72,7 +79,7 @@ const FeedPage = () => {
 						placeholder="검색어를 입력하세요"
 						value={searchInput.value || ""}
 						onChange={searchInput.onChange}
-						onKeyDown={searchHandler}
+						onKeyDown={searchEnterHandler}
 					/>
 					<Flex
 						wd="34px"
@@ -108,7 +115,15 @@ const FeedPage = () => {
 				</Flex>
 
 				{/* 검색 리스트 */}
-				<Box variant="feedScrollArea"></Box>
+				{category === "feed" ? (
+					<Box variant="searchScrollArea">
+						{searchTagItem.length >= 1
+							? searchTagItem?.map(feedItem => {
+									return <FeedItem key={feedItem.feedId} feedItem={feedItem} />;
+							  })
+							: null}
+					</Box>
+				) : null}
 			</Flex>
 			<NavBelow />
 		</>
