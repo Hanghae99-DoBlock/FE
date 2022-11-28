@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Flex, Text, Svg } from "../../common";
+import { Box, Flex, Text, Svg, FirstHeading, Image } from "../../common";
 import { FeedItem, NavBelow } from "../../components";
 import {
 	__getFollowingFeeds,
@@ -10,15 +10,15 @@ import {
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../common/hooks/useInput";
+import {
+	__followThunk,
+	__getFollowing,
+} from "../../redux/modules/profileSlice";
 
 const FeedPage = () => {
 	const dispatch = useDispatch();
 	const feedList = useSelector(state => state.feed.feedList);
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		dispatch(__getFollowingFeeds());
-	}, []);
 
 	// 상단 탭 메뉴 ui 상태 관리
 	const [tagSearchMenuType, setTagSearchMenuType] = useState("selectedTabMenu");
@@ -26,7 +26,32 @@ const FeedPage = () => {
 	const [category, setCatagory] = useState("feed");
 	const searchInput = useInput();
 	const searchTagItem = useSelector(state => state.feed.searchTag);
-	console.log(searchTagItem);
+	const searchMemberItem = useSelector(state => state.feed.searchMember);
+	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
+	const [follow, setFollow] = useState(isFollow);
+
+	console.log(isFollow);
+	console.log("###", follow);
+
+	useEffect(() => {
+		setFollow(isFollow);
+	}, [isFollow]);
+
+	const anotherMemberPage = memberId => {
+		navigate(`/profile/${memberId}`);
+	};
+	const unfollowHandler = memberId => {
+		dispatch(__followThunk(memberId));
+		//searchHandler();
+		setFollow(false);
+	};
+	const followingHandler = memberId => {
+		dispatch(__followThunk(memberId));
+		//searchHandler();
+		setFollow(true);
+	};
+
+	console.log(searchMemberItem);
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {
@@ -123,7 +148,58 @@ const FeedPage = () => {
 							  })
 							: null}
 					</Box>
-				) : null}
+				) : (
+					<Box variant="searchScrollArea">
+						{searchMemberItem.length >= 1
+							? searchMemberItem.map(data => (
+									<Flex
+										jc="space-between"
+										mg="0 0 20px 0 "
+										wd="100%"
+										key={data.memberId}
+									>
+										<Flex>
+											<Image
+												variant="followImage"
+												src={data.profileImage}
+												alt=""
+												style={{ marginTop: "4px" }}
+												onClick={() => {
+													anotherMemberPage(data.memberId);
+												}}
+											/>
+											<FirstHeading
+												fw="600"
+												fs="13px"
+												onClick={() => {
+													anotherMemberPage(data.memberId);
+												}}
+											>
+												{data.nickname}
+											</FirstHeading>
+										</Flex>
+										<Flex>
+											{follow === false ? (
+												<Svg
+													variant="follow"
+													onClick={() => {
+														followingHandler(data.memberId);
+													}}
+												></Svg>
+											) : (
+												<Svg
+													variant="followCancel"
+													onClick={() => {
+														unfollowHandler(data.memberId);
+													}}
+												></Svg>
+											)}
+										</Flex>
+									</Flex>
+							  ))
+							: null}
+					</Box>
+				)}
 			</Flex>
 			<NavBelow />
 		</>

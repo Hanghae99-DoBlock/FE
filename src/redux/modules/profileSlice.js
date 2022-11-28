@@ -41,6 +41,7 @@ export const __followThunk = createAsyncThunk(
 	"profile/follow",
 	async (payload, thunkAPI) => {
 		try {
+			console.log(payload);
 			await axios.post(
 				`${serverUrl}/api/members/profile/${payload}/follow`,
 				{

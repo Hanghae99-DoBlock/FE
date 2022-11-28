@@ -131,7 +131,7 @@ export const __SearchTagAndMember = createAsyncThunk(
 				},
 				payload,
 			);
-			return thunkAPI.fulfillWithValue(data);
+			return thunkAPI.fulfillWithValue({ data: data, category: category });
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -148,6 +148,7 @@ const initialState = {
 	feedItem: {},
 	isLoading: "",
 	searchTag: "",
+	searchMember: "",
 };
 
 export const feedSlice = createSlice({
@@ -226,7 +227,11 @@ export const feedSlice = createSlice({
 				state.feedItem = action.payload;
 			})
 			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
-				state.searchTag = action.payload;
+				{
+					action.payload.category === "feed"
+						? (state.searchTag = action.payload.data)
+						: (state.searchMember = action.payload.data);
+				}
 			});
 	},
 });
