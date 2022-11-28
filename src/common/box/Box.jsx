@@ -102,7 +102,9 @@ const StBox = styled.div`
 			case "feedModal":
 				return css`
 					position: fixed;
-					margin: 0 auto;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
 					background-color: white;
 					width: 279px;
 					height: 402px;

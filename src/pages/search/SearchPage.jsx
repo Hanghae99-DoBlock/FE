@@ -40,7 +40,15 @@ const FeedPage = () => {
 		}
 	};
 
-	const searchHandler = () => {
+	const searchHandler = e => {
+		if (e.keyCode === 13) {
+			return dispatch(
+				__SearchTagAndMember({
+					keyword: searchInput.value,
+					category: category,
+				}),
+			);
+		}
 		dispatch(
 			__SearchTagAndMember({ keyword: searchInput.value, category: category }),
 		);
@@ -62,8 +70,9 @@ const FeedPage = () => {
 					</Flex>
 					<StSearchInput
 						placeholder="검색어를 입력하세요"
-						value={searchInput.value}
+						value={searchInput.value || ""}
 						onChange={searchInput.onChange}
+						onKeyDown={searchHandler}
 					/>
 					<Flex
 						wd="34px"
