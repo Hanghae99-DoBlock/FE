@@ -30,9 +30,6 @@ const FeedPage = () => {
 	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
 	const [follow, setFollow] = useState(isFollow);
 
-	console.log(isFollow);
-	console.log("###", follow);
-
 	useEffect(() => {
 		setFollow(isFollow);
 	}, [isFollow]);

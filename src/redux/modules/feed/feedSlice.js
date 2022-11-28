@@ -205,7 +205,6 @@ export const feedSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(__uploadFeed.fulfilled, (state, action) => {
-				console.log(action.payload);
 				state.isLoading = false;
 			})
 			//피드 업로드 실패
