@@ -1,4 +1,3 @@
-import FeedPage from "./feed/FeedPage";
 import SignInPage from "./join/SignInPage";
 import SignUpPage from "./join/SignUpPage";
 import TodoListPage from "./todoList/TodoListPage";
@@ -9,6 +8,11 @@ import ProfileEditPage from "./profile/ProfileEditPage";
 import PasswordChangePage from "./profile/PasswordChangePage";
 import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
+import {
+	FollowingFeedListPage,
+	RecommendedFeedListPage,
+	FeedPage,
+} from "./feed";
 
 export {
 	SignInPage,
@@ -21,5 +25,7 @@ export {
 	FollowingPage,
 	FollowerPage,
 	DetailFeedPage,
+	FollowingFeedListPage,
+	RecommendedFeedListPage,
 	FeedPage,
 };
