@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,13 @@ import Svg from "../../common/svg/Svg";
 const SignInPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const token = localStorage.getItem("accessToken");
 
+	useEffect(() => {
+		if (token) {
+			navigate("/feed");
+		}
+	}, []);
 	const [passwordType, setPasswordType] = useState({
 		type: "password",
 		visible: false,
