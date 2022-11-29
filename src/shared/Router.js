@@ -13,6 +13,7 @@ import {
 	FeedPage,
 } from "../pages";
 import SearchPage from "../pages/search/SearchPage";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = () => {
 	return (
@@ -21,19 +22,86 @@ const Router = () => {
 				<Routes>
 					<Route path="/" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
-					<Route path="/profile/:id" element={<ProfilePage />} />
-					<Route path="/profile/edit" element={<ProfileEditPage />} />
+					<Route
+						path="/profile/:id"
+						element={
+							<PrivateRoute>
+								<ProfilePage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/edit"
+						element={
+							<PrivateRoute>
+								<ProfileEditPage />
+							</PrivateRoute>
+						}
+					/>
 					<Route
 						path="/profile/edit/password"
-						element={<PasswordChangePage />}
+						element={
+							<PrivateRoute>
+								<PasswordChangePage />
+							</PrivateRoute>
+						}
 					/>
-					<Route path="/profile/:id/following" element={<FollowingPage />} />
-					<Route path="/profile/:id/follower" element={<FollowerPage />} />
-					<Route path="/todolist" element={<TodoListPage />} />
-					<Route path="/feed" element={<FeedPage />} />
-					<Route path="/addFeed" element={<AddFeedPage />} />
-					<Route path="/feed/:id" element={<DetailFeedPage />} />
-					<Route path="/search" element={<SearchPage />} />
+					<Route
+						path="/profile/:id/following"
+						element={
+							<PrivateRoute>
+								<FollowingPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/:id/follower"
+						element={
+							<PrivateRoute>
+								<FollowerPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/todolist"
+						element={
+							<PrivateRoute>
+								<TodoListPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/feed"
+						element={
+							<PrivateRoute>
+								<FeedPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/addFeed"
+						element={
+							<PrivateRoute>
+								<AddFeedPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/feed/:id"
+						element={
+							<PrivateRoute>
+								<DetailFeedPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/search"
+						element={
+							<PrivateRoute>
+								<SearchPage />
+							</PrivateRoute>
+						}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</>

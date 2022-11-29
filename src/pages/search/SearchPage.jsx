@@ -48,7 +48,6 @@ const FeedPage = () => {
 		setFollow(true);
 	};
 
-	console.log(searchMemberItem);
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {
