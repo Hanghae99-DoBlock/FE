@@ -9,6 +9,7 @@ import ProfileEditPage from "./profile/ProfileEditPage";
 import PasswordChangePage from "./profile/PasswordChangePage";
 import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
+import MyBadgesPage from "./profile/MyBadgesPage";
 
 export {
 	SignInPage,
@@ -22,4 +23,5 @@ export {
 	FollowerPage,
 	DetailFeedPage,
 	FeedPage,
+	MyBadgesPage,
 };

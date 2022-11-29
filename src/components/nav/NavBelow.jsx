@@ -8,8 +8,8 @@ const NavBelow = () => {
 	if (!localStorage.getItem("accessToken")) {
 		navigate("/signin");
 	}
-
-	//const memberId = jwtDecode(token).memberId;
+	const token = localStorage.getItem("accessToken");
+	const memberId = jwtDecode(token).memberId;
 
 	return (
 		<Nav>
@@ -47,16 +47,14 @@ const NavBelow = () => {
 					<Box variant="navIconBox" type="magnifyingGlass" />
 					<Text variant="navText">검색</Text>
 				</Flex>
-				<Flex
-					wd="70px"
-					ht="100%"
-					gap="8px"
-					dir="column"
-					cursor="pointer"
-					//onClick={() => navigate(`/profile/${memberId}`)}
-				>
+				<Flex wd="70px" ht="100%" gap="8px" dir="column" cursor="pointer">
 					<Box variant="navIconBox" type="myProfile" />
-					<Text variant="navText">프로필</Text>
+					<Text
+						variant="navText"
+						onClick={() => navigate(`/profile/${memberId}`)}
+					>
+						프로필
+					</Text>
 				</Flex>
 			</Flex>
 		</Nav>

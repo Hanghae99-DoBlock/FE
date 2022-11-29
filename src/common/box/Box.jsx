@@ -136,12 +136,10 @@ const StBox = styled.div`
 				return css`
 					position: relative;
 					border-radius: 100%;
-					height: 100px;
-					width: 100px;
+					height: 80px;
+					width: 80px;
 					overflow: hidden;
 					resize: none;
-					margin: 20px 0 40px 0;
-					border: 3px solid #c8c8c8;
 				`;
 			case "stSvg":
 				return css`
@@ -363,6 +361,16 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 17px;
 					height: 16px;
+				`;
+			case "profileBox":
+				return css`
+					position: relative;
+					padding-bottom: 100px;
+				`;
+			case "profileEditBox":
+				return css`
+					position: relative;
+					margin: 20px 0 40px 0;
 				`;
 			default:
 				break;

@@ -26,3 +26,30 @@ export const getTodoListApi = async payload => {
 export const checkTodoApi = async payload => {
 	await instance.patch(`/api/todolist/${payload}/completed`);
 };
+
+export const getCommentsApi = async payload => {
+	const response = await instance.get(`/api/feed/${payload}/comment`);
+	return response.data;
+};
+export const addCommentsApi = async payload => {
+	const response = await instance.post(`/api/feed/${payload.id}/comment`, {
+		commentContent: payload.content,
+	});
+	return response.data;
+};
+export const removeCommentsApi = async payload => {
+	const response = await instance.delete(
+		`/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
+	);
+	return response.data;
+};
+export const editCommentsApi = async payload => {
+	console.log(payload);
+	const response = await instance.put(
+		`/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
+		{
+			commentContent: payload.content,
+		},
+	);
+	return response.data;
+};
