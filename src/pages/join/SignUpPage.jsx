@@ -148,9 +148,14 @@ const SignUpPage = () => {
 								variant="join"
 								placeholder="닉네임을 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+							<Flex
+								wd="24px"
+								ht="24px"
+								mg="0 13px 0 0"
+								onClick={nickname.onReset}
+							>
 								{nickname.value.trim() === "" ? null : (
-									<Svg onClick={nickname.onReset} variant="InputReset" />
+									<Svg variant="InputReset" />
 								)}
 							</Flex>
 						</Stnickname>
@@ -249,9 +254,9 @@ const SignUpPage = () => {
 								variant="join"
 								placeholder="이메일을 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0" onClick={email.onReset}>
 								{email.value.trim() === "" ? null : (
-									<Svg variant="InputReset" onClick={email.onReset} />
+									<Svg variant="InputReset" />
 								)}
 							</Flex>
 						</StEmail>
