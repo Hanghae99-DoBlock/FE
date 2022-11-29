@@ -1,20 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Flex, Svg, Text } from "../../common";
 import { FeedItem, NavBelow } from "../../components";
-import {
-	__getFollowingFeeds,
-	__getRecommendedFeeds,
-} from "../../redux/modules/feed/feedSlice";
+import { __getRecommendedFeeds } from "../../redux/modules/feed/feedSlice";
+import { __getFollowingFeeds } from "../../redux/modules/middleware/feedListThunk";
 
 const FeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const feedList = useSelector(state => state.feed.feedList);
+	const target = useRef(null);
+	const { feedList } = useSelector(state => state.feed);
 
 	useEffect(() => {
-		dispatch(__getFollowingFeeds());
+		const observer = new IntersectionObserver(([entry]) => {
+			if (entry.isIntersecting) {
+				dispatch(__getFollowingFeeds());
+			}
+		});
+		observer.observe(target.current);
+		return () => {
+			observer.disconnect(observer);
+		};
 	}, []);
 
 	// 상단 탭 메뉴 ui 상태 관리
@@ -69,8 +76,8 @@ const FeedPage = () => {
 					{feedList.map(feedItem => (
 						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 					))}
+					<div ref={target} />
 				</Box>
-				<Flex ht="80px" />
 			</Flex>
 			<NavBelow />
 		</>

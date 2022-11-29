@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
+import { __getFollowingFeeds } from "../middleware/feedListThunk";
 
 const accessToken = localStorage.getItem("accessToken");
 
@@ -25,20 +26,6 @@ export const __getSuccessTodo = createAsyncThunk(
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
-		}
-	},
-);
-// 팔로잉 피드 조회 Thunk
-export const __getFollowingFeeds = createAsyncThunk(
-	"feed/getFollowingFeeds",
-	async (_, thunkAPI) => {
-		try {
-			const response = await axios.get(`${serverUrl}/api/feed/following`, {
-				headers: { Authorization: accessToken },
-			});
-			return thunkAPI.fulfillWithValue(response.data);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
 );
@@ -202,6 +189,7 @@ const initialState = {
 	successTodo: [],
 	feedItem: {},
 	commentList: [],
+	page: 0,
 };
 
 export const feedSlice = createSlice({
@@ -269,7 +257,8 @@ export const feedSlice = createSlice({
 			})
 			// 팔로잉 피드 조회 성공
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
-				state.feedList = action.payload;
+				state.feedList.push(...action.payload);
+				state.page += 1;
 			})
 			// 추천 피드 조회 성공
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
