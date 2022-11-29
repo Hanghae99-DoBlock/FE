@@ -96,13 +96,21 @@ export const StInput = styled.input`
 				`;
 			case "feedInput":
 				return css`
-					width: 410px;
+					width: 335px;
 					height: 36px;
 					background-color: #ffffff;
 					border: 1px solid #e5e5e5;
 					border-radius: 50px;
 					padding: 9px 16px;
 					margin-right: 10px;
+				`;
+			case "feedCommentInput":
+				return css`
+					width: 335px;
+					height: 54px;
+					border: 1px solid #e5e5e5;
+					border-radius: 10px;
+					padding: 16px;
 				`;
 			default:
 				break;
