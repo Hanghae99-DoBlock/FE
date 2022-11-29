@@ -10,19 +10,21 @@ const FeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const target = useRef(null);
-	const { feedList } = useSelector(state => state.feed);
+	const { feedList, isNextPageExist } = useSelector(state => state.feed);
 
 	useEffect(() => {
-		const observer = new IntersectionObserver(([entry]) => {
-			if (entry.isIntersecting) {
-				dispatch(__getFollowingFeeds());
-			}
-		});
-		observer.observe(target.current);
-		return () => {
-			observer.disconnect(observer);
-		};
-	}, []);
+		if (isNextPageExist) {
+			const observer = new IntersectionObserver(([entry]) => {
+				if (entry.isIntersecting) {
+					dispatch(__getFollowingFeeds());
+				}
+			});
+			observer.observe(target.current);
+			return () => {
+				observer.disconnect(observer);
+			};
+		}
+	}, [isNextPageExist]);
 
 	// 상단 탭 메뉴 ui 상태 관리
 	const [followingFeedListMenuUiType, setFollowingFeedListMenuUiType] =
@@ -76,6 +78,9 @@ const FeedPage = () => {
 					{feedList.map(feedItem => (
 						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 					))}
+					{isNextPageExist ? null : (
+						<Flex ht="80px" border="25px solid transparent" />
+					)}
 					<div ref={target} />
 				</Box>
 			</Flex>

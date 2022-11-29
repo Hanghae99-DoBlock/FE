@@ -190,6 +190,7 @@ const initialState = {
 	feedItem: {},
 	commentList: [],
 	page: 0,
+	isNextPageExist: true,
 };
 
 export const feedSlice = createSlice({
@@ -259,6 +260,9 @@ export const feedSlice = createSlice({
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
 				state.feedList.push(...action.payload);
 				state.page += 1;
+				if (action.payload.length < 5) {
+					state.isNextPageExist = false;
+				}
 			})
 			// 추천 피드 조회 성공
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
