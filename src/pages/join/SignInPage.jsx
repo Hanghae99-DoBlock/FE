@@ -9,17 +9,23 @@ import { useDispatch } from "react-redux";
 import { __signIn } from "../../redux/modules/join/joinSlice";
 import jwtDecode from "jwt-decode";
 import Svg from "../../common/svg/Svg";
+import Splash from "./Splash";
 
 const SignInPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const token = localStorage.getItem("accessToken");
+	const [isSplash, setIsSplash] = useState(true);
 
 	useEffect(() => {
 		if (token) {
 			navigate("/feed");
 		}
+		let timer = setTimeout(() => {
+			setIsSplash(false);
+		}, 2000);
 	}, []);
+	console.log(isSplash);
 	const [passwordType, setPasswordType] = useState({
 		type: "password",
 		visible: false,
@@ -44,82 +50,86 @@ const SignInPage = () => {
 
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
-				<Flex dir="row" ht="58px" jc="center" pd="8px 0" ai="center">
-					<Flex fs="18" ai="center" jc="center">
-						로그인
-					</Flex>
-				</Flex>
-				<Flex ht="98px" jc="center" ai="center" mg="0 0 9px 0">
-					<Flex wd="125px" ht="60px" bg="#C2C2C2" mg="6px 0 0 0">
-						LOGO
-					</Flex>
-				</Flex>
-				<Flex ht="102px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-						이메일
-					</Flex>
-					<StEmail>
-						<StInput
-							value={email.value}
-							onChange={email.onChange}
-							type="text"
-							variant="join"
-							placeholder="이메일을 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{email.value.trim() === "" ? null : (
-								<Svg variant="InputReset" onClick={email.onReset} />
-							)}
+			{isSplash === true ? (
+				<Splash />
+			) : (
+				<Flex dir="column" wd="100%" mg="0 auto">
+					<Flex dir="row" ht="58px" jc="center" pd="8px 0" ai="center">
+						<Flex fs="18" ai="center" jc="center">
+							로그인
 						</Flex>
-					</StEmail>
-				</Flex>
-				<Flex
-					wd="100%"
-					ht="100%"
-					dir="column"
-					ai="center"
-					pd="0 20px 20px"
-					gap="6px"
-					position="relative"
-				>
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-						비밀번호
 					</Flex>
-					<StPassword>
-						<StInput
-							type={passwordType.type}
-							value={password.value}
-							onChange={password.onChange}
-							variant="join"
-							placeholder="비밀번호를 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{passwordType.visible === false ? (
-								<Svg variant="noShow" onClick={passwordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={passwordTypeHandler} />
-							)}
+					<Flex ht="98px" jc="center" ai="center" mg="0 0 9px 0">
+						<Flex wd="125px" ht="60px" bg="#C2C2C2" mg="6px 0 0 0">
+							LOGO
 						</Flex>
-					</StPassword>
-				</Flex>
-				<Flex gap="16px" jc="center" ai="center" dir="column">
-					<Flex jc="center" ai="center">
-						<Button onClick={loginHandler} variant="join">
-							로그인하기
-						</Button>
 					</Flex>
-					<Flex jc="center" ai="center">
-						<Button
-							onClick={() => navigate("/signup")}
-							variant="join"
-							style={{ backgroundColor: "white", color: "#7474FF" }}
-						>
-							회원가입하기
-						</Button>
+					<Flex ht="102px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
+						<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+							이메일
+						</Flex>
+						<StEmail>
+							<StInput
+								value={email.value}
+								onChange={email.onChange}
+								type="text"
+								variant="join"
+								placeholder="이메일을 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{email.value.trim() === "" ? null : (
+									<Svg variant="InputReset" onClick={email.onReset} />
+								)}
+							</Flex>
+						</StEmail>
+					</Flex>
+					<Flex
+						wd="100%"
+						ht="100%"
+						dir="column"
+						ai="center"
+						pd="0 20px 20px"
+						gap="6px"
+						position="relative"
+					>
+						<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+							비밀번호
+						</Flex>
+						<StPassword>
+							<StInput
+								type={passwordType.type}
+								value={password.value}
+								onChange={password.onChange}
+								variant="join"
+								placeholder="비밀번호를 입력하세요"
+							/>
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+								{passwordType.visible === false ? (
+									<Svg variant="noShow" onClick={passwordTypeHandler} />
+								) : (
+									<Svg variant="show" onClick={passwordTypeHandler} />
+								)}
+							</Flex>
+						</StPassword>
+					</Flex>
+					<Flex gap="16px" jc="center" ai="center" dir="column">
+						<Flex jc="center" ai="center">
+							<Button onClick={loginHandler} variant="join">
+								로그인하기
+							</Button>
+						</Flex>
+						<Flex jc="center" ai="center">
+							<Button
+								onClick={() => navigate("/signup")}
+								variant="join"
+								style={{ backgroundColor: "white", color: "#7474FF" }}
+							>
+								회원가입하기
+							</Button>
+						</Flex>
 					</Flex>
 				</Flex>
-			</Flex>
+			)}
 		</>
 	);
 };

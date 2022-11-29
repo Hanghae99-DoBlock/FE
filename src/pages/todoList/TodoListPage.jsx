@@ -13,8 +13,7 @@ const TodoListPage = () => {
 	const navigate = useNavigate();
 	const token = localStorage.getItem("accessToken");
 	if (!token) {
-		navigate("/signin");
-		console.log("#############");
+		navigate("/");
 	}
 
 	// 투두 추가 모달 상태 관리

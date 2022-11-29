@@ -37,7 +37,6 @@ const AddFeedPage = () => {
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
 	const [isPostPossible, setIsPostPossible] = useState(false);
 	const loading = useSelector(state => state.feed.isLoading);
-	console.log(loading);
 	const todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});

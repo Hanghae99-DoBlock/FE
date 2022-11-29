@@ -6,7 +6,7 @@ const NavBelow = () => {
 	const navigate = useNavigate();
 	//const token = localStorage.getItem("accessToken");
 	if (!localStorage.getItem("accessToken")) {
-		navigate("/signin");
+		navigate("/");
 	}
 
 	//const memberId = jwtDecode(token).memberId;

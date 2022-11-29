@@ -12,6 +12,7 @@ import {
 	DetailFeedPage,
 	FeedPage,
 } from "../pages";
+import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 
