@@ -341,6 +341,10 @@ const StBox = styled.div`
 					background-repeat: no-repeat;
 					background-size: contain;
 					background-position: center;
+					background-color: #f8f8f8;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
 					width: 100%;
 					height: 200px;
 				`;
@@ -363,6 +367,13 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 14px;
 					height: 14px;
+				`;
+
+			case "imgPaginationIconBox":
+				return css`
+					background-image: url(/images/show${type}Img.svg);
+					width: 20px;
+					height: 40px;
 				`;
 			default:
 				break;
