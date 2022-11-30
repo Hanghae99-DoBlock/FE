@@ -1,10 +1,16 @@
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
-import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
+import { checkTodoApi } from "../../api/todoListApi";
 
-const TodoItem = ({ index, todoItem, setIsDetailTodoModalOpen }) => {
+const TodoItem = ({
+	index,
+	todoItem,
+	todoList,
+	setTodoList,
+	setIsDetailTodoModalOpen,
+}) => {
 	const { todoContent, completed } = todoItem;
 	const dispatch = useDispatch();
 
@@ -16,7 +22,13 @@ const TodoItem = ({ index, todoItem, setIsDetailTodoModalOpen }) => {
 
 	// 투두 완료 여부 체크 핸들러
 	const checkTodoHandler = () => {
-		dispatch(__checkTodo(todoItem));
+		checkTodoApi(todoItem.todoId);
+		const changedTodoList = todoList.map(todo => {
+			return todo.todoId === todoItem.todoId
+				? { ...todo, completed: !todo.completed }
+				: todo;
+		});
+		setTodoList(changedTodoList);
 	};
 
 	return (

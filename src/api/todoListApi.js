@@ -15,11 +15,15 @@ export const updateTodoApi = async payload => {
 
 // 투두리스트 조회
 export const getTodoListApi = async payload => {
-	const { year, month, day } = payload;
-	const response = await instance.get(
-		`/api/todolist?year=${year}&month=${month}&day=${day}`,
-	);
-	return response.data;
+	try {
+		const { year, month, day } = payload;
+		const response = await instance.get(
+			`/api/todolist?year=${year}&month=${month}&day=${day}`,
+		);
+		return response.data;
+	} catch (error) {
+		return null;
+	}
 };
 
 // 투두 체크
