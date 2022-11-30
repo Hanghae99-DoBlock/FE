@@ -6,7 +6,7 @@ const NavBelow = () => {
 	const navigate = useNavigate();
 	//const token = localStorage.getItem("accessToken");
 	if (!localStorage.getItem("accessToken")) {
-		navigate("/");
+		navigate("/toodlist");
 	}
 
 	//const memberId = jwtDecode(token).memberId;
@@ -20,7 +20,7 @@ const NavBelow = () => {
 					gap="8px"
 					dir="column"
 					cursor="pointer"
-					onClick={() => navigate(`/`)}
+					onClick={() => navigate(`/todolist`)}
 				>
 					<Box variant="navIconBox" type="calendar" />
 					<Text variant="navText">캘린더</Text>

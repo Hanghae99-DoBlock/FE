@@ -31,12 +31,21 @@ const SignUpPage = () => {
 
 	const loginResult = useSelector(state => state.join.loginResult);
 	console.log(loginResult);
+	console.log(toast);
 
 	useEffect(() => {
 		if (token) {
-			navigate("/feed");
+			navigate("/todolist", { replace: true });
 		}
 	}, [token]);
+
+	useEffect(() => {
+		if (loginResult.status === 200 || loginResult === "") {
+			return;
+		} else if (loginResult === 400) {
+			return setToast(true);
+		}
+	}, [loginResult]);
 
 	//password type 변경하는 함수
 	const passwordTypeHandler = e => {
@@ -50,8 +59,10 @@ const SignUpPage = () => {
 
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
-		if (loginResult.status === 200) {
+		if (loginResult.status === 200 || loginResult === "") {
 			return;
+		} else if (loginResult === 400) {
+			return setToast(true);
 		} else {
 			return setToast(true);
 		}

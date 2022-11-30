@@ -20,7 +20,7 @@ const SignInPage = () => {
 
 	useEffect(() => {
 		if (token) {
-			navigate("/feed");
+			navigate("/todolist", { replace: true });
 		}
 		let timer = setTimeout(() => {
 			setIsSplash(false);
