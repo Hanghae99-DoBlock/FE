@@ -26,28 +26,6 @@ const SignInPage = () => {
 			setIsSplash(false);
 		}, 2000);
 	}, []);
-	console.log(isSplash);
-	const [passwordType, setPasswordType] = useState({
-		type: "password",
-		visible: false,
-	});
-	const email = useInput("");
-	const password = useInput("");
-
-	//password type 변경하는 함수
-	const passwordTypeHandler = e => {
-		setPasswordType(() => {
-			if (!passwordType.visible) {
-				return { type: "text", visible: true };
-			}
-			return { type: "password", visible: false };
-		});
-	};
-
-	const loginHandler = () => {
-		dispatch(__signIn({ email: email.value, password: password.value }));
-		navigate("/feed");
-	};
 
 	return (
 		<>
@@ -99,6 +77,7 @@ const SignInPage = () => {
 							wd="113px"
 							jc="flex-start"
 							cursor="pointer"
+							onClick={() => navigate("/emailSignIn")}
 						>
 							이메일로 로그인
 						</Flex>

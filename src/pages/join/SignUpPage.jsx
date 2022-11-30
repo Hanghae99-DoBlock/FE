@@ -126,14 +126,29 @@ const SignUpPage = () => {
 	return (
 		<>
 			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
-				<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
+				<Flex
+					dir="row"
+					ht="61px"
+					jc="space-between"
+					mg="8px 0"
+					ai="center"
+					bb="1px solid #EFEFEF"
+				>
 					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
 						<Svg variant="chevron" onClick={() => navigate("/")} />
 					</Flex>
-					<Flex fs="18">회원가입</Flex>
+					<Flex fs="18" fw="bold">
+						회원가입
+					</Flex>
 					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
-				<Flex ht="124px" dir="column" pd="0 20px 20px" gap="6px">
+				<Flex
+					ht="124px"
+					dir="column"
+					pd="0 20px 20px"
+					gap="6px"
+					mg="16px 0 0 0"
+				>
 					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 						닉네임
 					</Flex>
@@ -277,53 +292,6 @@ const SignUpPage = () => {
 							</Flex>
 						</StEmailBlue>
 					)}
-					<Flex dir="row" wd="335px" ht="26px">
-						{email.value.trim() === "" ? (
-							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-						) : !regEmail.test(email.value) ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>올바른 이메일 형식을 입력해주세요.</StInfo>
-							</Flex>
-						) : checkEmail !== 200 ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>이미 사용중인 이메일입니다</StInfo>
-							</Flex>
-						) : (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>사용가능한 이메일입니다.</StInfo>
-							</Flex>
-						)}
-					</Flex>
 				</Flex>
 				<Flex
 					wd="100%"
@@ -337,51 +305,38 @@ const SignUpPage = () => {
 					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 						비밀번호
 					</Flex>
-					{isBlue === false ? (
-						<StPassword>
-							<StInput
-								onBlur={checkPasswordHandler}
-								type={passwordType.type}
-								value={password.value}
-								onChange={password.onChange}
-								variant="join"
-								placeholder="비밀번호를 입력하세요"
-							/>
-							<Flex
-								wd="24px"
-								ht="24px"
-								mg="0 13px 0 0"
-								onClick={passwordTypeHandler}
-							>
-								{passwordType.visible === false &&
-								password.value.length === 0 ? (
-									<Svg variant="noShow" onClick={passwordTypeHandler} />
-								) : passwordType.visible === false &&
-								  password.value.length > 0 ? (
-									<Svg variant="noShowBlack" onClick={passwordTypeHandler} />
-								) : passwordType.visible === true &&
-								  password.value.length === 0 ? (
-									<Svg variant="show" onClick={passwordTypeHandler} />
-								) : passwordType.visible === true &&
-								  password.value.length > 0 ? (
-									<Svg variant="showBlack" onClick={passwordTypeHandler} />
-								) : (
-									<Svg variant="noshow" onClick={passwordTypeHandler} />
-								)}
-							</Flex>
-						</StPassword>
-					) : (
-						<StPasswordBlue>
-							<StInput
-								onBlur={checkPasswordHandler}
-								type={passwordType.type}
-								value={password.value}
-								onChange={password.onChange}
-								variant="changeBlue"
-								placeholder="비밀번호를 입력하세요"
-							/>
-						</StPasswordBlue>
-					)}
+
+					<StPassword>
+						<StInput
+							onBlur={checkPasswordHandler}
+							type={passwordType.type}
+							value={password.value}
+							onChange={password.onChange}
+							variant="join"
+							placeholder="비밀번호를 입력하세요"
+						/>
+						<Flex
+							wd="24px"
+							ht="24px"
+							mg="0 13px 0 0"
+							onClick={passwordTypeHandler}
+						>
+							{passwordType.visible === false && password.value.length === 0 ? (
+								<Svg variant="noShow" onClick={passwordTypeHandler} />
+							) : passwordType.visible === false &&
+							  password.value.length > 0 ? (
+								<Svg variant="noShowBlack" onClick={passwordTypeHandler} />
+							) : passwordType.visible === true &&
+							  password.value.length === 0 ? (
+								<Svg variant="show" onClick={passwordTypeHandler} />
+							) : passwordType.visible === true && password.value.length > 0 ? (
+								<Svg variant="showBlack" onClick={passwordTypeHandler} />
+							) : (
+								<Svg variant="noshow" onClick={passwordTypeHandler} />
+							)}
+						</Flex>
+					</StPassword>
+
 					<Flex
 						dir="column"
 						wd="335px"
@@ -607,7 +562,7 @@ const StSvg = styled.div`
 	height: 22px;
 `;
 
-const StEmail = styled.div`
+export const StEmail = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
@@ -633,7 +588,7 @@ const StEmailBlue = styled.div`
 	justify-content: space-between;
 `;
 
-const StPassword = styled.div`
+export const StPassword = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;

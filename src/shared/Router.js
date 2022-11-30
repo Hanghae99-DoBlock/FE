@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Toast from "../common/toast/Toast";
 import {
 	ProfilePage,
 	SignInPage,
@@ -12,6 +13,7 @@ import {
 	DetailFeedPage,
 	FeedPage,
 } from "../pages";
+import EmailSignIn from "../pages/join/EmailSignIn";
 import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
@@ -21,6 +23,7 @@ const Router = () => {
 		<>
 			<BrowserRouter>
 				<Routes>
+					<Route path="/emailSignIn" element={<EmailSignIn />} />
 					<Route path="/" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route

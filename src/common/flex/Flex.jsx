@@ -51,6 +51,7 @@ export const StFlex = styled.div`
 	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
+	transform: ${({ transform }) => transform};
 
 	/* 폰트 */
 	color: ${({ color }) => color};
