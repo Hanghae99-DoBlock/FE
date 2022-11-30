@@ -171,7 +171,7 @@ const SignUpPage = () => {
 								loginHandler();
 							}}
 						>
-							가입하기
+							로그인하기
 						</Button>
 					</Flex>
 				</Flex>
