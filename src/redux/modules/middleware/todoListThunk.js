@@ -5,6 +5,7 @@ import {
 	getTodoListApi,
 	checkTodoApi,
 	swithTodoApi,
+	deleteTodoApi,
 } from "../../../api/todoListApi";
 
 // 투두 업로드 Thunk
@@ -65,6 +66,19 @@ export const __switchTodo = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			await swithTodoApi(payload);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+// 투두 삭제 Thunk
+export const __deleteTodo = createAsyncThunk(
+	"todo/deleteTodo",
+	async (payload, thunkAPI) => {
+		try {
+			await deleteTodoApi(payload);
 			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);

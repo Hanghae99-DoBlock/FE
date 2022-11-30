@@ -37,3 +37,8 @@ export const swithTodoApi = async payload => {
 	};
 	await instance.put(`/api/todolist/switch`, request);
 };
+
+// 투두 삭제
+export const deleteTodoApi = async payload => {
+	await instance.delete(`/api/todolist/${payload}/remove`);
+};

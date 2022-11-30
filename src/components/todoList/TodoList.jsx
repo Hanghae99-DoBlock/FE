@@ -17,6 +17,11 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 		if (selectedDate.year) dispatch(__getTodoList(selectedDate));
 	}, [dispatch, selectedDate]);
 
+	const [isDelBtnExist, setIsDelBtnExist] = useState(false);
+	const showDelBtnHandler = () => {
+		setIsDelBtnExist(!isDelBtnExist);
+	};
+
 	return (
 		<Box variant="todoListArea">
 			{/* 헤더 */}
@@ -36,7 +41,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 					<Text variant="grey">할 일 {todoList?.length || 0}개</Text>
 				</Flex>
 				{/* 휴지통 */}
-				<Svg variant="trashCan" />
+				<Svg onClick={showDelBtnHandler} variant="trashCan" />
 			</Flex>
 
 			{/* 리스트 */}
@@ -78,6 +83,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 											todoItem={todoItem}
 											key={todoItem.todoId}
 											setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+											isDelBtnExist={isDelBtnExist}
 										/>
 									))}
 									{provided.placeholder}
