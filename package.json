@@ -12,6 +12,8 @@
 		"cross-env": "^7.0.3",
 		"global": "^4.4.0",
 		"jwt-decode": "^3.1.2",
+		"lottie": "^0.0.1",
+		"lottie-react": "^2.3.1",
 		"moment": "^2.29.4",
 		"react": "^18.2.0",
 		"react-calendar": "^4.0.0",

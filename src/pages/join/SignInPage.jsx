@@ -10,7 +10,8 @@ import { __signIn } from "../../redux/modules/join/joinSlice";
 import jwtDecode from "jwt-decode";
 import Svg from "../../common/svg/Svg";
 import Splash from "./Splash";
-
+import Lottie from "lottie-react";
+import Block from "../../common/gif/building-blocks.json";
 const SignInPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -53,79 +54,62 @@ const SignInPage = () => {
 			{isSplash === true ? (
 				<Splash />
 			) : (
-				<Flex dir="column" wd="100%" mg="0 auto">
-					<Flex dir="row" ht="58px" jc="center" pd="8px 0" ai="center">
-						<Flex fs="18" ai="center" jc="center">
-							로그인
+				<Flex
+					dir="column"
+					mw="100%"
+					mxw="100%"
+					mh="100vh"
+					mxh="100%"
+					mg="0 auto"
+					bg="#FFFAF8"
+					gap="37px"
+					jc="flex-start"
+				>
+					<Flex dir="column" wd="100%" ht="100%" fs="22" jc="center" lh="33">
+						<Flex dir="row" ht="186px" mwd="375px" mg="118px 0 0 0">
+							<Lottie animationData={Block} />
 						</Flex>
+						<Flex fw="bold">투두를 달성하고</Flex>
+
+						<Flex fw="bold">블록을 쌓아보세요!</Flex>
 					</Flex>
-					<Flex ht="98px" jc="center" ai="center" mg="0 0 9px 0">
-						<Flex wd="125px" ht="60px" bg="#C2C2C2" mg="6px 0 0 0">
-							LOGO
+					<Flex dir="column" gap="10px">
+						<Flex>
+							<Svg variant="kakao" />
 						</Flex>
-					</Flex>
-					<Flex ht="102px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
-						<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-							이메일
+						<Flex>
+							<Svg variant="naver" />
 						</Flex>
-						<StEmail>
-							<StInput
-								value={email.value}
-								onChange={email.onChange}
-								type="text"
-								variant="join"
-								placeholder="이메일을 입력하세요"
-							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{email.value.trim() === "" ? null : (
-									<Svg variant="InputReset" onClick={email.onReset} />
-								)}
-							</Flex>
-						</StEmail>
+						<Flex>
+							<Svg variant="google" />
+						</Flex>
 					</Flex>
 					<Flex
-						wd="100%"
-						ht="100%"
-						dir="column"
-						ai="center"
-						pd="0 20px 20px"
-						gap="6px"
-						position="relative"
+						dir="row"
+						wd="239px"
+						ht="19px"
+						jc="space-between"
+						mg="0 0 82px 0"
 					>
-						<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
-							비밀번호
+						<Flex
+							fs="14"
+							fw="600"
+							color="#A2A2A2"
+							br="1px solid #E5E5E5"
+							wd="113px"
+							jc="flex-start"
+							cursor="pointer"
+						>
+							이메일로 로그인
 						</Flex>
-						<StPassword>
-							<StInput
-								type={passwordType.type}
-								value={password.value}
-								onChange={password.onChange}
-								variant="join"
-								placeholder="비밀번호를 입력하세요"
-							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{passwordType.visible === false ? (
-									<Svg variant="noShow" onClick={passwordTypeHandler} />
-								) : (
-									<Svg variant="show" onClick={passwordTypeHandler} />
-								)}
-							</Flex>
-						</StPassword>
-					</Flex>
-					<Flex gap="16px" jc="center" ai="center" dir="column">
-						<Flex jc="center" ai="center">
-							<Button onClick={loginHandler} variant="join">
-								로그인하기
-							</Button>
-						</Flex>
-						<Flex jc="center" ai="center">
-							<Button
-								onClick={() => navigate("/signup")}
-								variant="join"
-								style={{ backgroundColor: "white", color: "#7474FF" }}
-							>
-								회원가입하기
-							</Button>
+						<Flex
+							fs="14"
+							fw="600"
+							color="#A2A2A2"
+							onClick={() => navigate("/signup")}
+							cursor="pointer"
+						>
+							이메일로 회원가입
 						</Flex>
 					</Flex>
 				</Flex>
@@ -140,7 +124,7 @@ const StEmail = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 10px;
@@ -154,7 +138,7 @@ const StPassword = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
 	justify-content: space-between;
