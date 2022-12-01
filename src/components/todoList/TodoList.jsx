@@ -2,9 +2,15 @@ import { useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
 import { Droppable } from "react-beautiful-dnd";
+import { useState } from "react";
 
 const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
+
+	const [isDelBtnExist, setIsDelBtnExist] = useState(false);
+	const showDelBtnHandler = () => {
+		setIsDelBtnExist(!isDelBtnExist);
+	};
 
 	return (
 		<Box variant="todoListArea">
@@ -25,7 +31,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 					<Text variant="grey">할 일 {todoList?.length || 0}개</Text>
 				</Flex>
 				{/* 휴지통 */}
-				<Svg variant="trashCan" />
+				<Svg onClick={showDelBtnHandler} variant="trashCan" />
 			</Flex>
 
 			{/* 리스트 */}
@@ -75,6 +81,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 											setTodoList={setTodoList}
 											key={todoItem.todoId}
 											setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+											isDelBtnExist={isDelBtnExist}
 										/>
 									))}
 									{provided.placeholder}
