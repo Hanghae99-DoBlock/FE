@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { updateTodoApi } from "../../api/todoListApi";
 import {
 	Box,
 	Button,
@@ -12,11 +12,12 @@ import {
 	Text,
 	TextArea,
 } from "../../common";
-import { __updateTodo } from "../../redux/modules/middleware/todoListThunk";
 
-const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
-	const dispatch = useDispatch();
-
+const ModalDetailTodo = ({
+	todoList,
+	setTodoList,
+	setIsDetailTodoModalOpen,
+}) => {
 	// state 구독
 	const todoItem = useSelector(state => state.todoListSlice.todoItem);
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
@@ -50,7 +51,11 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 	// 수정한 투두 업로드 핸들러
 	const uploadHandler = e => {
 		e.preventDefault();
-		dispatch(__updateTodo(todo));
+		updateTodoApi(todo);
+		const updatedTodoList = todoList.map(todoItem => {
+			return todoItem.todoId === todo.todoId ? todo : todoItem;
+		});
+		setTodoList(updatedTodoList);
 		setIsDetailTodoModalOpen(false);
 	};
 
@@ -61,6 +66,7 @@ const ModalDetailTodo = ({ setIsDetailTodoModalOpen }) => {
 			todoId: todoItem.todoId,
 			todoContent: todoItem.todoContent,
 			todoMemo: todoItem.todoMemo || "",
+			completed: todoItem.completed,
 		});
 	}, []);
 

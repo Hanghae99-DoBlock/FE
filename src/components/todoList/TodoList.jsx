@@ -1,20 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
-import { __getTodoList } from "../../redux/modules/middleware/todoListThunk.js";
+import { Droppable } from "react-beautiful-dnd";
+import { useState } from "react";
 
-const TodoList = ({ setIsDetailTodoModalOpen }) => {
-	const dispatch = useDispatch();
-
-	// state 구독
+const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
-	const todoList = useSelector(state => state.todoListSlice.todoList);
 
-	useEffect(() => {
-		// 날짜를 받아온 후에 get 요청
-		if (selectedDate.year) dispatch(__getTodoList(selectedDate));
-	}, [dispatch, selectedDate]);
+	const [isDelBtnExist, setIsDelBtnExist] = useState(false);
+	const showDelBtnHandler = () => {
+		setIsDelBtnExist(!isDelBtnExist);
+	};
 
 	return (
 		<Box variant="todoListArea">
@@ -35,7 +31,7 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 					<Text variant="grey">할 일 {todoList?.length || 0}개</Text>
 				</Flex>
 				{/* 휴지통 */}
-				<Svg variant="trashCan" />
+				<Svg onClick={showDelBtnHandler} variant="trashCan" />
 			</Flex>
 
 			{/* 리스트 */}
@@ -48,23 +44,51 @@ const TodoList = ({ setIsDetailTodoModalOpen }) => {
 					wd="100%"
 					ht="100%"
 				>
-					{todoList[0] ? (
-						// 투두가 있을 때
-						<Box variant="todoListScrollArea">
-							{todoList.map(todoItem => (
-								<TodoItem
-									todoItem={todoItem}
-									key={todoItem.todoId}
-									setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
-								/>
-							))}
-						</Box>
-					) : (
+					{!todoList || !todoList[0] ? (
 						// 투두가 없을 때
 						<Flex ht="100%" dir="column" gap="21.5px">
 							<Svg variant="todoEmpty" />
 							<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
 						</Flex>
+					) : (
+						// 투두가 있을 때
+						<Droppable droppableId="todoList">
+							{provided => (
+								// <Box
+								// 	variant="todoListScrollArea"
+								// >
+								<div
+									style={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "flex-start",
+										width: "100%",
+										height: "100%",
+										background: "#f9f9f9",
+										overflowX: "hidden",
+										overflowY: "auto",
+										scrollbarWidth: "none",
+										"&::WebkitScrollbar": { display: "none" },
+									}}
+									{...provided.droppableProps}
+									ref={provided.innerRef}
+								>
+									{todoList.map((todoItem, index) => (
+										<TodoItem
+											index={index}
+											todoItem={todoItem}
+											todoList={todoList}
+											setTodoList={setTodoList}
+											key={todoItem.todoId}
+											setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}
+											isDelBtnExist={isDelBtnExist}
+										/>
+									))}
+									{provided.placeholder}
+								</div>
+								// </Box>
+							)}
+						</Droppable>
 					)}
 					<Flex wd="100%" ht="80px" />
 				</Flex>
