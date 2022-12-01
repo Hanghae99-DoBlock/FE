@@ -17,7 +17,6 @@ import {
 } from "../../redux/modules/feed/feedSlice";
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
-import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { useNavigate } from "react-router-dom";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();

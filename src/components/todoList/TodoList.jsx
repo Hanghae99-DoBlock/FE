@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
 import { Droppable } from "react-beautiful-dnd";
 
 const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
-	// state 구독
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	return (

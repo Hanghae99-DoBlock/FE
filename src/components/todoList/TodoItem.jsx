@@ -64,7 +64,7 @@ const TodoItem = ({
 						</Flex>
 
 						{/* 햄버거 */}
-						<Flex mg="0 0 0 25px">
+						<Flex mg="0 10px">
 							<Svg variant="hamburger" />
 						</Flex>
 					</Flex>

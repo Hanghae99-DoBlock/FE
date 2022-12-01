@@ -29,7 +29,11 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 	const uploadHandler = async e => {
 		e.preventDefault();
 		const newTodo = await addTodoApi(todo);
-		setTodoList([...todoList, newTodo]);
+		if (!todoList) {
+			setTodoList([newTodo]);
+		} else {
+			setTodoList([...todoList, newTodo]);
+		}
 		setTodo({});
 		setIsAddTodoModalOpen(false);
 	};
