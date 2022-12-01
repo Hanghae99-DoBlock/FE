@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const accessToken = localStorage.getItem("accessToken");
 
@@ -115,6 +116,28 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
+export const __SearchTagAndMember = createAsyncThunk(
+	"SEARCH",
+	async (payload, thunkAPI) => {
+		try {
+			const { keyword, category } = payload;
+			const { data } = await axios.get(
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({ data: data, category: category });
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
 const initialState = {
 	feedList: [],
 	checkedList: [],
@@ -123,6 +146,9 @@ const initialState = {
 	formPhotoList: [],
 	successTodo: [],
 	feedItem: {},
+	isLoading: "",
+	searchTag: "",
+	searchMember: "",
 };
 
 export const feedSlice = createSlice({
@@ -175,13 +201,14 @@ export const feedSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			//피드 업로드
+			.addCase(__uploadFeed.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__uploadFeed.fulfilled, (state, action) => {
-				state.feedList.push(action.payload);
+				state.isLoading = false;
 			})
 			//피드 업로드 실패
-			.addCase(__uploadFeed.rejected, (state, action) => {
-				state.feedList = [];
-			})
+			.addCase(__uploadFeed.rejected, (state, action) => {})
 			//완료된 피드 목록 불러오기
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
@@ -197,6 +224,13 @@ export const feedSlice = createSlice({
 			// 피드 단건 조회 성공
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
 				state.feedItem = action.payload;
+			})
+			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
+				{
+					action.payload.category === "feed"
+						? (state.searchTag = action.payload.data)
+						: (state.searchMember = action.payload.data);
+				}
 			});
 	},
 });

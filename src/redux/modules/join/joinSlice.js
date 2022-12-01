@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit";
+import {
+	createAsyncThunk,
+	createSlice,
+	isRejected,
+	TaskAbortError,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../../api";
 
@@ -30,7 +35,7 @@ export const __signIn = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -70,6 +75,7 @@ const initialState = {
 	isError: false,
 	checkMailResult: "",
 	checkNickResult: "",
+	loginResult: "",
 };
 
 const joinSliece = createSlice({
@@ -100,6 +106,15 @@ const joinSliece = createSlice({
 			state.isLoading = false;
 			state.checkNickResult = action.payload;
 			state.isError = true;
+		},
+		[__signIn.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__signIn.fulfilled]: (state, action) => {
+			state.loginResult = action.payload;
+		},
+		[__signIn.rejected]: (state, action) => {
+			state.loginResult = action.payload;
 		},
 	},
 });

@@ -49,6 +49,8 @@ const SignUpPage = () => {
 	// 2. 8-20자
 	const regPass =
 		/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]{8,20}$/;
+	const regPassNonLength =
+		/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]/;
 
 	//password type 변경하는 함수
 	const passwordTypeHandler = e => {
@@ -100,7 +102,7 @@ const SignUpPage = () => {
 					password: password.value,
 				}),
 			);
-			navigate("/signin");
+			navigate("/");
 		}
 	};
 
@@ -120,18 +122,33 @@ const SignUpPage = () => {
 		if (regPass.test(password.value)) {
 		}
 	};
-
+	console.log(7 < password.value.length);
 	return (
 		<>
 			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
-				<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
+				<Flex
+					dir="row"
+					ht="61px"
+					jc="space-between"
+					mg="8px 0"
+					ai="center"
+					bb="1px solid #EFEFEF"
+				>
 					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
-						<Svg variant="chevron" onClick={() => navigate("/signin")} />
+						<Svg variant="chevron" onClick={() => navigate("/")} />
 					</Flex>
-					<Flex fs="18">회원가입</Flex>
+					<Flex fs="18" fw="bold">
+						회원가입
+					</Flex>
 					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
-				<Flex ht="124px" dir="column" pd="0 20px 20px" gap="6px">
+				<Flex
+					ht="124px"
+					dir="column"
+					pd="0 20px 20px"
+					gap="6px"
+					mg="16px 0 0 0"
+				>
 					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 						닉네임
 					</Flex>
@@ -146,9 +163,14 @@ const SignUpPage = () => {
 								variant="join"
 								placeholder="닉네임을 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+							<Flex
+								wd="24px"
+								ht="24px"
+								mg="0 13px 0 0"
+								onClick={nickname.onReset}
+							>
 								{nickname.value.trim() === "" ? null : (
-									<Svg onClick={nickname.onReset} variant="InputReset" />
+									<Svg variant="InputReset" />
 								)}
 							</Flex>
 						</Stnickname>
@@ -169,53 +191,67 @@ const SignUpPage = () => {
 							</Flex>
 						</StnicknameBlue>
 					)}
-					<Flex dir="row" wd="335px" ht="26px">
-						{nickname.value.trim() === "" ? (
-							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-						) : !regNick.test(nickname.value) ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>
-									닉네임은 2-6자, 영어 대소문자,숫자 또는 한글로 구성됩니다.
-								</StInfo>
-							</Flex>
-						) : checkNickname !== 200 ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>이미 사용중인 닉네임입니다.</StInfo>
-							</Flex>
+					<Flex dir="column" wd="335px" ht="26px" ai="flex-start" gap="5px">
+						{nickname.value.length === 0 ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="joinCheck" />
+									</Flex>
+									<Flex color="#A2A2A2" fs="10">
+										2-6자의 영어 대소문자 또는 숫자 또는 한글만 가능해요
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="joinCheck" />
+									</Flex>
+									<Flex color="#A2A2A2" fs="10">
+										한글 초성 및 모음은 사용할 수 없어요
+									</Flex>
+								</Flex>
+							</>
+						) : regNick.test(nickname.value) && nickname.value.length > 0 ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										2-6자의 영어 대소문자 또는 숫자 또는 한글만 가능해요
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										한글 초성 및 모음은 사용할 수 없어요
+									</Flex>
+								</Flex>
+							</>
 						) : (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>사용가능한 닉네임입니다.</StInfo>
-							</Flex>
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										2-6자의 영어 대소문자 또는 숫자 또는 한글만 가능해요
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										한글 초성 및 모음은 사용할 수 없어요
+									</Flex>
+								</Flex>
+							</>
 						)}
 					</Flex>
 				</Flex>
@@ -233,9 +269,9 @@ const SignUpPage = () => {
 								variant="join"
 								placeholder="이메일을 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
+							<Flex wd="24px" ht="24px" mg="0 13px 0 0" onClick={email.onReset}>
 								{email.value.trim() === "" ? null : (
-									<Svg variant="InputReset" onClick={email.onReset} />
+									<Svg variant="InputReset" />
 								)}
 							</Flex>
 						</StEmail>
@@ -256,53 +292,6 @@ const SignUpPage = () => {
 							</Flex>
 						</StEmailBlue>
 					)}
-					<Flex dir="row" wd="335px" ht="26px">
-						{email.value.trim() === "" ? (
-							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-						) : !regEmail.test(email.value) ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>올바른 이메일 형식을 입력해주세요.</StInfo>
-							</Flex>
-						) : checkEmail !== 200 ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>이미 사용중인 이메일입니다</StInfo>
-							</Flex>
-						) : (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>사용가능한 이메일입니다.</StInfo>
-							</Flex>
-						)}
-					</Flex>
 				</Flex>
 				<Flex
 					wd="100%"
@@ -316,77 +305,150 @@ const SignUpPage = () => {
 					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 						비밀번호
 					</Flex>
-					{isBlue === false ? (
-						<StPassword>
-							<StInput
-								onBlur={checkPasswordHandler}
-								type={passwordType.type}
-								value={password.value}
-								onChange={password.onChange}
-								variant="join"
-								placeholder="비밀번호를 입력하세요"
-							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{passwordType.visible === false ? (
-									<Svg variant="noShow" onClick={passwordTypeHandler} />
-								) : (
-									<Svg variant="show" onClick={passwordTypeHandler} />
-								)}
-							</Flex>
-						</StPassword>
-					) : (
-						<StPasswordBlue>
-							<StInput
-								onBlur={checkPasswordHandler}
-								type={passwordType.type}
-								value={password.value}
-								onChange={password.onChange}
-								variant="changeBlue"
-								placeholder="비밀번호를 입력하세요"
-							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{passwordType.visible === false ? (
-									<Svg variant="noShow" onClick={passwordTypeHandler} />
-								) : (
-									<Svg variant="show" onClick={passwordTypeHandler} />
-								)}
-							</Flex>
-						</StPasswordBlue>
-					)}
-					<Flex dir="row" wd="335px" ht="26px">
-						{password.value.trim() === "" ? (
-							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-						) : !regPass.test(password.value) ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>
-									비밀번호는 8-20자, 영문 대소문자,숫자,특수문자 !@#$%^&*를
-									적어도 하나이상 포함해야합니다
-								</StInfo>
-							</Flex>
+
+					<StPassword>
+						<StInput
+							onBlur={checkPasswordHandler}
+							type={passwordType.type}
+							value={password.value}
+							onChange={password.onChange}
+							variant="join"
+							placeholder="비밀번호를 입력하세요"
+						/>
+						<Flex
+							wd="24px"
+							ht="24px"
+							mg="0 13px 0 0"
+							onClick={passwordTypeHandler}
+						>
+							{passwordType.visible === false && password.value.length === 0 ? (
+								<Svg variant="noShow" onClick={passwordTypeHandler} />
+							) : passwordType.visible === false &&
+							  password.value.length > 0 ? (
+								<Svg variant="noShowBlack" onClick={passwordTypeHandler} />
+							) : passwordType.visible === true &&
+							  password.value.length === 0 ? (
+								<Svg variant="show" onClick={passwordTypeHandler} />
+							) : passwordType.visible === true && password.value.length > 0 ? (
+								<Svg variant="showBlack" onClick={passwordTypeHandler} />
+							) : (
+								<Svg variant="noshow" onClick={passwordTypeHandler} />
+							)}
+						</Flex>
+					</StPassword>
+
+					<Flex
+						dir="column"
+						wd="335px"
+						ht="26px"
+						ai="flex-start"
+						gap="5px"
+						mg="7px 0 0 0"
+					>
+						{password.value.length === 0 ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="joinCheck" />
+									</Flex>
+									<Flex color="#A2A2A2" fs="10">
+										영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="joinCheck" />
+									</Flex>
+									<Flex color="#A2A2A2" fs="10">
+										최소 8자, 최대 20자 구성
+									</Flex>
+								</Flex>
+							</>
+						) : !regPassNonLength.test(password.value) &&
+						  !(7 < password.value.length && password.value.length <= 20) ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										최소 8자, 최대 20자 구성
+									</Flex>
+								</Flex>
+							</>
+						) : regPassNonLength.test(password.value) &&
+						  !(7 < password.value.length && password.value.length <= 20) ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										최소 8자, 최대 20자 구성
+									</Flex>
+								</Flex>
+							</>
+						) : !regPassNonLength.test(password.value) &&
+						  7 < password.value.length &&
+						  password.value.length <= 20 ? (
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regNon" />
+									</Flex>
+									<Flex color="#FF3B3B" fs="10">
+										영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										최소 8자, 최대 20자 구성
+									</Flex>
+								</Flex>
+							</>
 						) : (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<StSvg>
-									<Svg variant="alert" />
-								</StSvg>
-								<StInfo>사용가능한 비밀번호 입니다</StInfo>
-							</Flex>
+							<>
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+									</Flex>
+								</Flex>
+
+								<Flex dir="row" gap="5px">
+									<Flex>
+										<Svg variant="regOk" />
+									</Flex>
+									<Flex color="#06C270" fs="10">
+										최소 8자, 최대 20자 구성
+									</Flex>
+								</Flex>
+							</>
 						)}
 					</Flex>
 				</Flex>
@@ -411,11 +473,29 @@ const SignUpPage = () => {
 								variant="join"
 								placeholder="비밀번호를 한번 더 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{checkPasswordType.visible === false ? (
+							<Flex
+								wd="24px"
+								ht="24px"
+								mg="0 13px 0 0"
+								onClick={checkPasswordTypeHandler}
+							>
+								{checkPasswordType.visible === false &&
+								checkPass.value.length === 0 ? (
 									<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
-								) : (
+								) : checkPasswordType.visible === false &&
+								  checkPass.value.length > 0 ? (
+									<Svg
+										variant="noShowBlack"
+										onClick={checkPasswordTypeHandler}
+									/>
+								) : checkPasswordType.visible === true &&
+								  checkPass.value.length === 0 ? (
 									<Svg variant="show" onClick={checkPasswordTypeHandler} />
+								) : checkPasswordType.visible === true &&
+								  checkPass.value.length > 0 ? (
+									<Svg variant="showBlack" onClick={checkPasswordTypeHandler} />
+								) : (
+									<Svg variant="noshow" onClick={checkPasswordTypeHandler} />
 								)}
 							</Flex>
 						</StRePassword>
@@ -428,13 +508,12 @@ const SignUpPage = () => {
 								variant="changeBlue"
 								placeholder="비밀번호를 한번 더 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{checkPasswordType.visible === false ? (
-									<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
-								) : (
-									<Svg variant="show" onClick={checkPasswordTypeHandler} />
-								)}
-							</Flex>
+							<Flex
+								wd="24px"
+								ht="24px"
+								mg="0 13px 0 0"
+								onClick={checkPasswordTypeHandler}
+							></Flex>
 						</StRePasswordBlue>
 					)}
 					{checkPass.value.trim() !== "" &&
@@ -483,17 +562,18 @@ const StSvg = styled.div`
 	height: 22px;
 `;
 
-const StEmail = styled.div`
+export const StEmail = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
 	justify-content: space-between;
+	border: 1px solid #e5e5e5;
 
 	:focus-within {
-		outline: 1px solid #7474ff;
+		outline: 1px solid #666666;
 	}
 `;
 
@@ -508,16 +588,17 @@ const StEmailBlue = styled.div`
 	justify-content: space-between;
 `;
 
-const StPassword = styled.div`
+export const StPassword = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
 	justify-content: space-between;
+	border: 1px solid #e5e5e5;
 	:focus-within {
-		outline: 1px solid #7474ff;
+		outline: 1px solid #666666;
 	}
 `;
 
@@ -536,13 +617,14 @@ const Stnickname = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
 	justify-content: space-between;
+	border: 1px solid #e5e5e5;
 
 	:focus-within {
-		outline: 1px solid #7474ff;
+		outline: 1px solid #666666;
 	}
 `;
 
@@ -561,13 +643,14 @@ const StRePassword = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 335px;
-	background-color: #f4f4f4;
+	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
 	justify-content: space-between;
+	border: 1px solid #e5e5e5;
 
 	:focus-within {
-		outline: 1px solid #7474ff;
+		outline: 1px solid #666666;
 	}
 `;
 

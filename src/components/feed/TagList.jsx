@@ -29,7 +29,7 @@ const TagList = props => {
 	};
 	return (
 		<Flex dir="row" jc="center" ai="center">
-			<Flex bg="#f8f8f8" radius="10px">
+			<Flex bg="#f8f8f8" radius="10px" onClick={deleteTagInput}>
 				<StTagInput
 					onClick={deleteTagInput}
 					onChange={changeTagValueHandler}

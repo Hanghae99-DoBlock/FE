@@ -12,6 +12,21 @@ const StBox = styled.div`
 
 	${({ variant, profileImageUrl, feedColor, type }) => {
 		switch (variant) {
+			case "searchScrollArea":
+				return css`
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					width: 100%;
+					height: 100vh;
+					padding: 44px 20px;
+					gap: 11px;
+					overflow-x: hidden;
+					overflow-y: auto;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				`;
 			// 투두리스트 전체 영역
 			case "todoListArea":
 				return css`
@@ -102,7 +117,9 @@ const StBox = styled.div`
 			case "feedModal":
 				return css`
 					position: fixed;
-					margin: 0 auto;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
 					background-color: white;
 					width: 279px;
 					height: 402px;
@@ -341,6 +358,11 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 17px;
 					height: 16px;
+				`;
+			case "recommendSearchBox":
+				return css`
+					width: 274px;
+					height: 112px;
 				`;
 
 			default:
