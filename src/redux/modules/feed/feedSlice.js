@@ -90,7 +90,6 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
-
 export const __SearchTagAndMember = createAsyncThunk(
 	"SEARCH",
 	async (payload, thunkAPI) => {
@@ -100,6 +99,18 @@ export const __SearchTagAndMember = createAsyncThunk(
 				`${serverUrl}/api/search?keyword=${keyword}&category=${category}`,
 				{
 					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({ data: data, category: category });
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
 // 코멘트 추가
 export const __addComment = createAsyncThunk(
 	"comment/addComment",
@@ -293,6 +304,7 @@ export const feedSlice = createSlice({
 						? (state.searchTag = action.payload.data)
 						: (state.searchMember = action.payload.data);
 				}
+			})
 			.addCase(__addComment.fulfilled, (state, action) => {
 				state.feedItem.commentResponseDtoList = action.payload;
 				state.feedItem.countComment = action.payload;

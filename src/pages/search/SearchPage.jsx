@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Flex, Text, Svg, FirstHeading, Image } from "../../common";
 import { FeedItem, NavBelow } from "../../components";
-import {
-	__getFollowingFeeds,
-	__getRecommendedFeeds,
-	__SearchTagAndMember,
-} from "../../redux/modules/feed/feedSlice";
+import { __SearchTagAndMember } from "../../redux/modules/feed/feedSlice";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../common/hooks/useInput";
@@ -51,12 +47,10 @@ const FeedPage = () => {
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {
-			dispatch(__getFollowingFeeds());
 			setTagSearchMenuType("selectedTabMenu");
 			setUserSearchMenuType("tabMenu");
 			setCatagory("feed");
 		} else {
-			dispatch(__getRecommendedFeeds());
 			setUserSearchMenuType("selectedTabMenu");
 			setTagSearchMenuType("tabMenu");
 			setCatagory("member");
