@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { addTodoApi } from "../../api/todoListApi";
 import {
 	Box,
 	Button,
@@ -10,11 +11,8 @@ import {
 	Svg,
 	TextArea,
 } from "../../common";
-import { __addTodo } from "../../redux/modules/middleware/todoListThunk.js";
 
-const ModalAddTodo = ({ setIsAddTodoModalOpen }) => {
-	const dispatch = useDispatch();
-
+const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 	// 투두 상태 관리
 	const [todo, setTodo] = useState({});
 
@@ -28,9 +26,14 @@ const ModalAddTodo = ({ setIsAddTodoModalOpen }) => {
 	};
 
 	// 투두 업로드 핸들러
-	const uploadHandler = e => {
+	const uploadHandler = async e => {
 		e.preventDefault();
-		dispatch(__addTodo(todo));
+		const newTodo = await addTodoApi(todo);
+		if (!todoList) {
+			setTodoList([newTodo]);
+		} else {
+			setTodoList([...todoList, newTodo]);
+		}
 		setTodo({});
 		setIsAddTodoModalOpen(false);
 	};
