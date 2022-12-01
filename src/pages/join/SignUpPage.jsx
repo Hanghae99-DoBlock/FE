@@ -102,7 +102,7 @@ const SignUpPage = () => {
 					password: password.value,
 				}),
 			);
-			navigate("/");
+			navigate(-1);
 		}
 	};
 

@@ -4,12 +4,12 @@ import jwtDecode from "jwt-decode";
 
 const NavBelow = () => {
 	const navigate = useNavigate();
-	//const token = localStorage.getItem("accessToken");
+	const token = localStorage.getItem("accessToken");
 	if (!localStorage.getItem("accessToken")) {
 		navigate("/toodlist");
 	}
 
-	//const memberId = jwtDecode(token).memberId;
+	const memberId = jwtDecode(token).memberId;
 
 	return (
 		<Nav>
@@ -31,7 +31,7 @@ const NavBelow = () => {
 					gap="8px"
 					dir="column"
 					cursor="pointer"
-					onClick={() => navigate(`/feed`)}
+					onClick={() => navigate(`/feed/following`)}
 				>
 					<Box variant="navIconBox" type="speechBubble" />
 					<Text variant="navText">피드</Text>
@@ -53,7 +53,7 @@ const NavBelow = () => {
 					gap="8px"
 					dir="column"
 					cursor="pointer"
-					//onClick={() => navigate(`/profile/${memberId}`)}
+					onClick={() => navigate(`/profile/${memberId}`)}
 				>
 					<Box variant="navIconBox" type="myProfile" />
 					<Text variant="navText">프로필</Text>

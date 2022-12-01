@@ -29,7 +29,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  button,svg {
+  button {
     cursor: pointer;
     background-color: transparent;
   }

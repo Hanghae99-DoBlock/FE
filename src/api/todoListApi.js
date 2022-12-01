@@ -15,14 +15,34 @@ export const updateTodoApi = async payload => {
 
 // 투두리스트 조회
 export const getTodoListApi = async payload => {
-	const { year, month, day } = payload;
-	const response = await instance.get(
-		`/api/todolist?year=${year}&month=${month}&day=${day}`,
-	);
-	return response.data;
+	try {
+		const { year, month, day } = payload;
+		const response = await instance.get(
+			`/api/todolist?year=${year}&month=${month}&day=${day}`,
+		);
+		return response.data;
+	} catch (error) {
+		return null;
+	}
 };
 
 // 투두 체크
 export const checkTodoApi = async payload => {
 	await instance.patch(`/api/todolist/${payload}/completed`);
+};
+
+// 투두 드래그 앤 드롭
+export const swithTodoApi = async payload => {
+	const request = {
+		year: payload.year,
+		month: payload.month,
+		day: payload.day,
+		todoIdList: payload.todoIdList,
+	};
+	await instance.put(`/api/todolist/switch`, request);
+};
+
+// 투두 삭제
+export const deleteTodoApi = async payload => {
+	await instance.delete(`/api/todolist/${payload}/remove`);
 };

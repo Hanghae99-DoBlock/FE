@@ -80,6 +80,21 @@ const StBtn = styled.button`
 					background-color: #ededff;
 					border-radius: 10px;
 				`;
+
+			case "delTodo":
+				return css`
+					cursor: pointer;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 45px;
+					height: 27px;
+					background-color: #ffeff1;
+					border-radius: 5px;
+					color: #fd3049;
+					font-weight: 700;
+					font-size: 11px;
+				`;
 			default:
 				break;
 		}

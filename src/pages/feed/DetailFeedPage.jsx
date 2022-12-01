@@ -1,10 +1,15 @@
+import dayjs from "dayjs";
+import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirstHeading, Flex, Image, SecondHeading, Svg } from "../../common";
-import { FeedComment } from "../../components";
-import { __getFeedItem } from "../../redux/modules/feed/feedSlice";
+import { Flex, Box, Text, Svg } from "../../common";
+import { FeedComment, NavBelow } from "../../components";
+import {
+	updateFeedItem,
+	__getFeedItem,
+} from "../../redux/modules/feed/feedSlice";
+import { __followThunk } from "../../redux/modules/profileSlice";
 
 const DetailFeedPage = () => {
 	const navigate = useNavigate();
@@ -14,219 +19,170 @@ const DetailFeedPage = () => {
 	const feedItem = useSelector(state => state.feed.feedItem);
 
 	const {
+		feedTitle,
+		feedContent,
+		todoList,
+		feedImagesUrlList,
+		tagList,
+		postedAt,
+		memberId,
+		nickname,
+		profileImageUrl,
+		followOrNot,
 		commentResponseDtoList,
 		countComment,
 		countReaction,
 		currentReactionType,
 		reactionResponseDtoList,
+		feedId,
 	} = feedItem;
 
 	useEffect(() => {
 		dispatch(__getFeedItem(id));
 	}, []);
 
+	const onClickFollowHandler = () => {
+		dispatch(__followThunk(memberId));
+		dispatch(updateFeedItem());
+	};
+
+	// 토큰 디코드
+	const token = localStorage.getItem("accessToken");
+	const decodedToken = jwtDecode(token);
+
+	// 팔로우 버튼 영역에 보여줄 컴포넌트
+	const followBtnUi = {
+		following: <Svg variant="followCancel" onClick={onClickFollowHandler} />,
+		notFollowing: <Svg variant="follow" onClick={onClickFollowHandler} />,
+	};
+
+	// 팔로우 버튼 상태에 따라 변수 재할당
+	let followBtnStatus;
+	if (followOrNot) {
+		followBtnStatus = "following";
+	} else {
+		followBtnStatus = "notFollowing";
+	}
+
 	return (
 		<>
-			<Flex
-				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
-				mg="0 auto"
-				overflow="auto"
-			>
-				<Flex wd="375px" mg="auto" dir="column">
-					<Flex wd="335px" jc="space-between" mg=" 0 0 10px 0">
+			<Flex dir="column" wd="100%">
+				<Flex wd="100%" dir="column">
+					{/* 헤더 */}
+					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
-						<Flex>
-							<FirstHeading color="#A2A2A2" mg="0 10px 0 0" fs="16" fw="600">
-								수정
-							</FirstHeading>
-							<FirstHeading color="#FD3049" fs="16" fw="600">
-								삭제
-							</FirstHeading>
+						<Flex gap="14px">
+							<Text variant="grey">수정</Text>
+							<Text variant="red">삭제</Text>
 						</Flex>
 					</Flex>
-					<Flex wd="335px" jc="space-between" mg="0 0 20px 0">
-						<Flex wd="335px" jc="flex-start">
-							<Flex>
-								<Image
-									variant="followImage"
-									// src={.profileImage}
-									alt=""
-									style={{ marginTop: "4px", backgroundColor: "blue" }}
-									onClick={() => {
-										// anotherMemberPage(.memberId);
-									}}
+
+					{/* 프로필 영역 */}
+					<Flex wd="100%" ht="66px" jc="space-between" pd="14px 20px">
+						<Flex jc="flex-start" gap="10px">
+							{/* 프로필 사진 */}
+							<Flex
+								onClick={() => navigate(`/profile/${memberId}`)}
+								cursor="pointer"
+							>
+								<Box
+									variant="profilePicNormal"
+									profileImageUrl={profileImageUrl}
 								/>
 							</Flex>
-							<Flex dir="column" ai="flex-start">
-								<Flex ai="flex-start" mg="0 0 5px 0">
+							<Flex
+								ht="100%"
+								dir="column"
+								ai="flex-start"
+								jc="space-between"
+								gap="3px"
+							>
+								{/* 닉네임, 뱃지 */}
+								<Flex ht="100%" ai="center" gap="4px">
 									<Flex
-										fw="600"
-										fs="13"
-										onClick={() => {
-											// anotherMemberPage(.memberId);
-										}}
+										onClick={() => navigate(`/profile/${memberId}`)}
+										cursor="pointer"
 									>
-										닉네임입니다
-										<Flex
-											bc="#FFF4ED"
-											color="#FF8737"
-											fs="10"
-											radius="5px"
-											pd="4px 8px;"
-										>
-											뱃지입니다
-										</Flex>
+										<Text variant="selectedTabMenu">{nickname}</Text>
+									</Flex>
+									<Flex
+										wd="60px"
+										ht="20px"
+										bg="#FFF4ED"
+										jc="center"
+										radius="5px"
+									>
+										<Text variant="orange">뱃지</Text>
 									</Flex>
 								</Flex>
+
+								{/* 게시글 생성 날짜 */}
 								<Flex>
-									<SecondHeading fw="600" fs="12px" color="#A2A2A2">
-										2022.11.21 14:34
-									</SecondHeading>
+									<Text variant="grey">
+										{dayjs(postedAt).format(`YYYY.MM.DD HH:mm`)}
+									</Text>
 								</Flex>
 							</Flex>
 						</Flex>
 						<Flex>
+							{/* 팔로우 버튼 */}
 							<Flex>
-								<Svg variant="follow" onClick={() => {}}></Svg>
+								{decodedToken.memberId === memberId
+									? null
+									: followBtnUi[followBtnStatus]}
 							</Flex>
 						</Flex>
 					</Flex>
-					<Flex
-						wd="335px"
-						fw="600"
-						fs="22"
-						color="#131313"
-						mg="0 0 30px 0"
-						lh="30"
-					>
-						피드 제목입니다. 피드 제목입니다. 피드 제목입니다. 피드 제목입니다.
-						피드 제목입니다.
+
+					{/* 제목 */}
+					<Flex wd="100%" pd="8px 29px 16px" jc="flex-start">
+						<Text variant="title">{feedTitle}</Text>
 					</Flex>
-					<Flex
-						dir="column"
-						ai="flex-start"
-						wd="335px"
-						ht="133px"
-						bc="#F8F8F8"
-						radius="5px"
-						pd="20px"
-						mg="0 0 20px 0"
-					>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								아침 5시에 일어나기
-							</FirstHeading>
-						</Flex>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								영양제 챙겨먹기
-							</FirstHeading>
-						</Flex>
-						<Flex mg="5px">
-							<Svg variant="feedCheck"></Svg>
-							<FirstHeading fw="300" fs="14px" color="#131313">
-								일어나서 콩이 산책 다녀오기
-							</FirstHeading>
+
+					{/* 투두리스트 영역 */}
+					<Flex wd="100%" radius="5px" pd="8px 18px">
+						<Flex wd="100%" pd="20px" dir="column" bg="#F8F8F8">
+							{todoList?.map((todoItem, index) => (
+								<Flex
+									key={index}
+									jc="flex-start"
+									wd="100%"
+									dir="row"
+									gap="10px"
+								>
+									<Svg variant="feedCheck"></Svg>
+									<Text variant="tabMenu">{todoItem}</Text>
+								</Flex>
+							))}
 						</Flex>
 					</Flex>
-					<Flex
-						wd="335px"
-						lh="25"
-						fw="300"
-						fs="14px"
-						color="#131313"
-						mg="0 0 20px 0"
-					>
-						상세 내용은 사용자에게 최대 100자 보여집니다. 상세 내용은 사용자에게
-						최대 100자 보여집니다. 상세 내용은 사용자에게 최대 100자 보여집니다.
-						상세 내용은 사용자에게 최대 100자 보여집니다. 상세 내용은 사용자에게
-						최대
+
+					{/* 본문 */}
+					<Flex wd="100%" jc="flex-start" pd="16px 20px 32px">
+						<Text variant="tabMenu">{feedContent}</Text>
 					</Flex>
-					<Flex wd="375px" ht="200px" bc="#F8F8F8" mg="0 0 20px 0"></Flex>
-					<Flex wd="335px" dir="column">
-						<Flex wd="335px" jc="flex-start" mg="0 0 10px 0">
+
+					{/* 사진 영역*/}
+					<Flex wd="100%" bg="#f8f8f8" dir="column">
+						{feedImagesUrlList?.map((feedImg, index) => (
+							<Box key={index} variant="feedImg" feedImgUrl={feedImg} />
+						))}
+					</Flex>
+
+					{/* 태그 영역 */}
+					<Flex wrap="wrap" gap="8px" wd="100%" jc="flex-start" pd="24px 18px">
+						{tagList?.map((tagItem, index) => (
 							<Flex
-								wd="95px"
+								key={index}
 								ht="29px"
-								bg="#fff"
 								border="1px solid #E5E5E5"
 								radius="24px"
-								mg="0 5px"
+								pd="0 14px"
+								ai="center"
 							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
+								<Text variant="tabMenu"># {tagItem}</Text>
 							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-						</Flex>
-						<Flex mg="0 0 10px 0">
-							<Flex
-								wd="220px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 태그가많거나길어지면아래로
-								</FirstHeading>
-							</Flex>
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-						</Flex>
-						<Flex wd="335px" jc="flex-start">
-							<Flex
-								wd="95px"
-								ht="29px"
-								bg="#fff"
-								border="1px solid #E5E5E5"
-								radius="24px"
-								mg="0 5px"
-							>
-								<FirstHeading fw="300" fs="13px" color="#131313">
-									# 텍스트영역
-								</FirstHeading>
-							</Flex>
-						</Flex>
+						))}
 					</Flex>
 				</Flex>
 				<FeedComment
@@ -235,8 +191,10 @@ const DetailFeedPage = () => {
 					countReaction={countReaction}
 					currentReactionType={currentReactionType}
 					reactionResponseDtoList={reactionResponseDtoList}
+					feedId={feedId}
 				/>
 			</Flex>
+			<NavBelow />
 		</>
 	);
 };

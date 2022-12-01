@@ -10,7 +10,7 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl, feedColor, type }) => {
+	${({ variant, profileImageUrl, feedColor, type, feedImgUrl }) => {
 		switch (variant) {
 			case "searchScrollArea":
 				return css`
@@ -331,6 +331,7 @@ const StBox = styled.div`
 			// 프로필 이미지 스몰
 			case "profilePicSmall":
 				return css`
+					background-color: white;
 					background-image: url(${profileImageUrl});
 					background-repeat: no-repeat;
 					background-size: cover;
@@ -339,15 +340,26 @@ const StBox = styled.div`
 					height: 24px;
 				`;
 
-			// 프로필 이미지 디폴트 스몰
-			case "profilePicDefaultSmall":
+			// 프로필 이미지 보통
+			case "profilePicNormal":
 				return css`
-					background-image: url(/images/defaultProfile.svg);
+					background-image: url(${profileImageUrl});
 					background-repeat: no-repeat;
 					background-size: cover;
 					border-radius: 50%;
-					width: 24px;
-					height: 24px;
+					width: 34px;
+					height: 34px;
+				`;
+
+			// 피드 사진
+			case "feedImg":
+				return css`
+					background-image: url(${feedImgUrl});
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center;
+					width: 100%;
+					height: 200px;
 				`;
 
 			// 네비게이션 바 아이콘
@@ -365,6 +377,15 @@ const StBox = styled.div`
 					height: 112px;
 				`;
 
+			// 피드 아이템 아이콘
+			case "feedPageIcon":
+				return css`
+					background-image: url(/images/${type}.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 14px;
+					height: 14px;
+				`;
 			default:
 				break;
 		}

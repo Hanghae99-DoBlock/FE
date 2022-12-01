@@ -96,7 +96,7 @@ export const StInput = styled.input`
 				`;
 			case "feedInput":
 				return css`
-					width: 319px;
+					width: 410px;
 					height: 36px;
 					background-color: #ffffff;
 					border: 1px solid #e5e5e5;

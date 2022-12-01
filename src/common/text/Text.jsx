@@ -80,6 +80,7 @@ const StText = styled.span`
 				return css`
 					font-weight: 400;
 					font-size: 14px;
+					line-height: 27px;
 				`;
 			case "selectedTabMenu":
 				return css`
@@ -90,6 +91,44 @@ const StText = styled.span`
 				return css`
 					font-weight: 400;
 					font-size: 10px;
+				`;
+			case "comment":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+				`;
+			case "commentHeart":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+					color: red;
+				`;
+			case "deleteComment":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+					color: red;
+					margin-left: 5px;
+				`;
+			// 피드 상세
+			case "red":
+				return css`
+					font-weight: 500;
+					font-size: 12px;
+					color: #fd3049;
+				`;
+			case "orange":
+				return css`
+					font-weight: 500;
+					font-size: 10px;
+					color: #ff8737;
+				`;
+			case "title":
+				return css`
+					font-weight: 700;
+					font-size: 22px;
+					line-height: 33px;
+					color: #131313;
 				`;
 			default:
 				break;

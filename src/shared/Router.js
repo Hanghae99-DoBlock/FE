@@ -11,6 +11,8 @@ import {
 	FollowingPage,
 	FollowerPage,
 	DetailFeedPage,
+	FollowingFeedListPage,
+	RecommendedFeedListPage,
 	FeedPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
@@ -74,14 +76,10 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route
-						path="/feed"
-						element={
-							<PrivateRoute>
-								<FeedPage />
-							</PrivateRoute>
-						}
-					/>
+					<Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>}>
+						<Route path="following" element={<FollowingFeedListPage />} />
+						<Route path="recommended" element={<RecommendedFeedListPage />} />
+					</Route>
 					<Route
 						path="/addFeed"
 						element={
@@ -106,6 +104,7 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
+
 				</Routes>
 			</BrowserRouter>
 		</>

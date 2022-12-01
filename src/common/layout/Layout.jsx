@@ -15,7 +15,6 @@ const StLayout = styled.div`
 					max-width: 430px;
 					margin: 0 auto;
 					align-items: flex-start;
-					margin: 0 auto;
 					height: 100%;
 					position: relative;
 					display: flex;
