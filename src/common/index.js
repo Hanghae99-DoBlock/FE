@@ -11,6 +11,7 @@ import Image from "./image/Image";
 import Hr from "./hr/Hr";
 import TextArea from "./textArea/TextArea";
 import Nav from "./nav/Nav";
+import Toast from "./toast/Toast";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
 
 export {
@@ -30,4 +31,5 @@ export {
 	Hr,
 	TextArea,
 	Nav,
+	Toast,
 };
