@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Flex, Hr, Input, Svg, Text } from "../../common";
 import {
@@ -9,7 +9,7 @@ import {
 	removeCommentsApi,
 } from "../../api/todoListApi";
 import FeedCommentDetail from "./FeedCommentDetail";
-import Modal from "../profile/Modal";
+import ReactionModal from "./ReactionModal";
 
 const FeedComment = props => {
 	const { id } = useParams();
@@ -65,16 +65,21 @@ const FeedComment = props => {
 		setContent("");
 	};
 
+	const reaction = useSelector(
+		state => state.feed.feedItem.reactionResponseDtoList,
+	);
+	console.log(reaction);
+
 	return (
 		<>
 			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
-				<Flex></Flex>
-				리액션 {}
+				<Flex>{reaction?.reactionType}</Flex>
+				리액션
 			</Flex>
 			<Hr variant="feedHr" />
 			<Flex dir="column" jc="center">
 				<Flex wd="335px" jc="space-between">
-					{modal === true ? <Modal /> : null}
+					{modal === true ? <ReactionModal /> : null}
 					<Flex
 						fw="600"
 						fs="14px"
@@ -97,9 +102,6 @@ const FeedComment = props => {
 							key={content.commentId}
 							content={content}
 							onEditComments={onEditComments}
-							// onRemoveComment={() => {
-							// 	onRemoveComment(content?.commentId);
-							// }}
 							onRemoveComment={onRemoveComment}
 						/>
 					))}

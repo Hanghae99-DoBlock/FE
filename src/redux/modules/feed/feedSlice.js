@@ -115,6 +115,33 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
+// 리액션 추가 / 삭제
+export const __updateReactions = createAsyncThunk(
+	"feed/reaction",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		try {
+			await axios.post(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
+				{
+					reactionType: payload.reactionType,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
 const initialState = {
 	feedList: [],
 	checkedList: [],
@@ -198,6 +225,9 @@ export const feedSlice = createSlice({
 			// 피드 단건 조회 성공
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
 				state.feedItem = action.payload;
+			})
+			.addCase(__updateReactions.fulfilled, (state, action) => {
+				state.feedItem.reactionResponseDtoList = action.payload;
 			});
 	},
 });
