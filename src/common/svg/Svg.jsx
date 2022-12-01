@@ -4,6 +4,7 @@ const Svg = ({ variant, onClick }) => {
 		case "trashCan":
 			return (
 				<svg
+					onClick={onClick}
 					width="22"
 					height="22"
 					viewBox="0 0 22 22"

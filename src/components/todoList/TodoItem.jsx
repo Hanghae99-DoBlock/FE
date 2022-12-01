@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { Flex, Svg, Text } from "../../common";
+import { Button, Flex, Svg, Text } from "../../common";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
-import { checkTodoApi } from "../../api/todoListApi";
+import { checkTodoApi, deleteTodoApi } from "../../api/todoListApi";
 
 const TodoItem = ({
 	index,
@@ -10,8 +10,9 @@ const TodoItem = ({
 	todoList,
 	setTodoList,
 	setIsDetailTodoModalOpen,
+	isDelBtnExist,
 }) => {
-	const { todoContent, completed } = todoItem;
+	const { todoContent, completed, todoId } = todoItem;
 	const dispatch = useDispatch();
 
 	// 디테일 모달 오픈 핸들러
@@ -30,6 +31,14 @@ const TodoItem = ({
 				? { ...todo, completed: !todo.completed }
 				: todo;
 		});
+		setTodoList(changedTodoList);
+	};
+
+	const deleteTodoHandler = () => {
+		deleteTodoApi(todoId);
+		const changedTodoList = todoList.filter(
+			todoItem => todoItem.todoId !== todoId,
+		);
 		setTodoList(changedTodoList);
 	};
 
@@ -62,10 +71,14 @@ const TodoItem = ({
 						>
 							<Text variant="normal">{todoContent}</Text>
 						</Flex>
-
-						{/* 햄버거 */}
 						<Flex mg="0 10px">
-							<Svg variant="hamburger" />
+							{isDelBtnExist ? (
+								<Button onClick={deleteTodoHandler} variant="delTodo">
+									삭제
+								</Button>
+							) : (
+								<Svg variant="hamburger" />
+							)}
 						</Flex>
 					</Flex>
 				</div>
