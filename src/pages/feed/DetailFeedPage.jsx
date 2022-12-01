@@ -179,19 +179,27 @@ const DetailFeedPage = () => {
 								{imgPage === 0 ? (
 									<div />
 								) : (
-									<Box
+									<Flex
 										onClick={showPrevImgHandler}
-										variant="imgPaginationIconBox"
-										type="Prev"
-									/>
+										cursor="pointer"
+										jc="flex-start"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Prev" />
+									</Flex>
 								)}
 								{imgPage === feedImagesUrlList.length - 1 ||
 								feedImagesUrlList.length === 1 ? null : (
-									<Box
+									<Flex
 										onClick={showNextImgHandler}
-										variant="imgPaginationIconBox"
-										type="Nxt"
-									/>
+										cursor="pointer"
+										jc="flex-end"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Nxt" />
+									</Flex>
 								)}
 							</Flex>
 						</Box>

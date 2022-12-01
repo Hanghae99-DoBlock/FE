@@ -346,7 +346,7 @@ const StBox = styled.div`
 					flex-direction: column;
 					align-items: center;
 					width: 100%;
-					height: 200px;
+					height: 243px;
 				`;
 
 			// 네비게이션 바 아이콘
@@ -372,8 +372,11 @@ const StBox = styled.div`
 			case "imgPaginationIconBox":
 				return css`
 					background-image: url(/images/show${type}Img.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
 					width: 20px;
-					height: 40px;
+					height: 20px;
+					margin: 12px;
 				`;
 			default:
 				break;
