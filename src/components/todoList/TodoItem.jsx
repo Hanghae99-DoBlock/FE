@@ -1,22 +1,36 @@
 import { useDispatch } from "react-redux";
 import { Flex, Svg, Text } from "../../common";
-import { __checkTodo } from "../../redux/modules/middleware/todoListThunk.js";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
+import { checkTodoApi } from "../../api/todoListApi";
 
-const TodoItem = ({ index, todoItem, setIsDetailTodoModalOpen }) => {
+const TodoItem = ({
+	index,
+	todoItem,
+	todoList,
+	setTodoList,
+	setIsDetailTodoModalOpen,
+}) => {
 	const { todoContent, completed } = todoItem;
 	const dispatch = useDispatch();
 
 	// 디테일 모달 오픈 핸들러
-	const openDetailModalHandler = () => {
+	const openDetailModalHandler = e => {
+		e.stopPropagation();
 		dispatch(getTodoItem(todoItem));
 		setIsDetailTodoModalOpen(true);
 	};
 
 	// 투두 완료 여부 체크 핸들러
-	const checkTodoHandler = () => {
-		dispatch(__checkTodo(todoItem));
+	const checkTodoHandler = e => {
+		e.stopPropagation();
+		checkTodoApi(todoItem.todoId);
+		const changedTodoList = todoList.map(todo => {
+			return todo.todoId === todoItem.todoId
+				? { ...todo, completed: !todo.completed }
+				: todo;
+		});
+		setTodoList(changedTodoList);
 	};
 
 	return (
@@ -27,19 +41,15 @@ const TodoItem = ({ index, todoItem, setIsDetailTodoModalOpen }) => {
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 				>
-					<Flex
-						ht="51px"
-						radius="10px"
-						bg="#FFFFFF"
-						pd="13.5px 15px"
-						mg="0 0 10px 0"
-					>
-						{/* 체크박스 */}
-						{completed ? (
-							<Svg onClick={checkTodoHandler} variant="todoCompleted" />
-						) : (
-							<Svg onClick={checkTodoHandler} variant="checkBox" />
-						)}
+					<Flex ht="51px" radius="10px" bg="#FFFFFF" mg="0 0 10px 0">
+						<Flex onClick={e => e.stopPropagation()} ht="100%" pd="0 15px">
+							{/* 체크박스 */}
+							{completed ? (
+								<Svg onClick={checkTodoHandler} variant="todoCompleted" />
+							) : (
+								<Svg onClick={checkTodoHandler} variant="checkBox" />
+							)}
+						</Flex>
 
 						{/* 투두 컨텐트 */}
 						<Flex
@@ -47,14 +57,16 @@ const TodoItem = ({ index, todoItem, setIsDetailTodoModalOpen }) => {
 							cursor="pointer"
 							jc="flex-start"
 							wd="100%"
-							mg="0 0 0 13px"
-							pd="3px 0 0 0"
+							ht="100%"
+							pd="13.5px 0 13.5px 0"
 						>
 							<Text variant="normal">{todoContent}</Text>
 						</Flex>
 
 						{/* 햄버거 */}
-						<Svg variant="hamburger" />
+						<Flex mg="0 0 0 25px">
+							<Svg variant="hamburger" />
+						</Flex>
 					</Flex>
 				</div>
 			)}
