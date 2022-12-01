@@ -12,7 +12,9 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { getTodoListApi, swithTodoApi } from "../../api/todoListApi";
 
 const TodoListPage = () => {
+
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
+
 
 	const [todoList, setTodoList] = useState([]);
 

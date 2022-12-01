@@ -51,12 +51,14 @@ export const StFlex = styled.div`
 	bottom: ${({ bottom }) => bottom};
 	position: ${({ position }) => position};
 	z-index: ${({ zIndex }) => zIndex};
+	transform: ${({ transform }) => transform};
 
 	/* 폰트 */
 	color: ${({ color }) => color};
 	font-size: ${({ fs }) => `${fs}px`};
 	font-weight: ${({ fw }) => fw};
 	line-height: ${({ lh }) => `${lh}px`};
+	text-align: ${({ ta }) => ta};
 
 	/* 스크롤 */
 	overflow: ${({ overflow }) => overflow};
