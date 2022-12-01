@@ -1,24 +1,10 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import Flex from "../../common/flex/Flex";
-import Image from "../../common/image/Image";
-import Svg from "../../common/svg/Svg";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Flex, Image, Svg } from "../../common";
 import NavBelow from "../../components/nav/NavBelow";
-import { __getBadgeList } from "../../redux/modules/profileSlice";
 
-const MyBadgesPage = () => {
+const BadgeSetiingPage = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const { id } = useParams();
-
-	useEffect(() => {
-		dispatch(__getBadgeList(id));
-	}, []);
-
-	const badgeList = useSelector(state => state.profileSlice.badgeList);
-	console.log(badgeList);
-
 	return (
 		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
 			<Flex
@@ -29,7 +15,7 @@ const MyBadgesPage = () => {
 				ai="center"
 				bb="1px solid #EFEFEF"
 			>
-				<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
+				<Flex wd="115px" ht="42px" jc="flex-start" mg="0 0 0 17px">
 					<Svg
 						variant="chevron"
 						onClick={() => {
@@ -38,36 +24,10 @@ const MyBadgesPage = () => {
 					/>
 				</Flex>
 				<Flex fs="18" fw="600">
-					내 뱃지 {10}
+					대표 뱃지 설정
 				</Flex>
-				<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
+				<Flex wd="105px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 			</Flex>
-			<Flex fw="600" fs="18" mg="40px auto 15px auto">
-				대표 뱃지가 없습니다.
-			</Flex>
-			<Flex fw="300" fs="14">
-				뱃지는 피드에서 닉네임과 함께 노출됩니다.
-			</Flex>
-			<Svg variant="profileBlock"></Svg>
-			<Flex
-				pd="10px 10px 10px 12px"
-				wd="120px"
-				ht="37px"
-				bg="#131313"
-				radius="5px"
-				color="#fff"
-				fw="600"
-				fs="12"
-				mg="30px 0 0 0"
-				cursor="pointer"
-				onClick={() => {
-					navigate("/badgeSetting/");
-				}}
-			>
-				대표 뱃지 설정
-				<Svg variant="badgeRightArrow"></Svg>
-			</Flex>
-			<Flex wd="375px" ht="4px" bg="#F8F8F8" mg="40px 0 20px 0"></Flex>
 			<Flex wd="327px" wrap="wrap" mg="0 0 120px 0 ">
 				<Flex dir="column" color="#A2A2A2" fw="600" fs="14">
 					<Image
@@ -157,10 +117,22 @@ const MyBadgesPage = () => {
 					/>
 					센스쟁이
 				</Flex>
+				<Flex
+					wd="331px"
+					ht="60px"
+					bc="#F8F8F8"
+					radius="10px"
+					fw="600"
+					fs="16"
+					color="#CACACA"
+					mg="30px 0 0 0"
+				>
+					선택 완료
+				</Flex>
 			</Flex>
 			<NavBelow />
 		</Flex>
 	);
 };
 
-export default MyBadgesPage;
+export default BadgeSetiingPage;

@@ -11,7 +11,6 @@ export const __editPassword = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.patch(
-				// `${serverUrl}/api/members/profile/edit/password`,
 				`${serverUrl}/api/members/profile/edit/password`,
 				{
 					currentPassword: payload.currentPassword,
@@ -162,12 +161,34 @@ export const __getFollower = createAsyncThunk(
 	},
 );
 
+// 뱃지 리스트 조회
+export const __getBadgeList = createAsyncThunk(
+	"user/getBadgeList",
+	async (payload, thunkAPI) => {
+		try {
+			const badgeList = await axios.get(
+				`${serverUrl}/api/members/profile/${payload}/badgelist`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(badgeList.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
 const initialState = {
 	following: false,
 	follower: false,
 	followerList: [],
 	followingList: [],
 	profile: {},
+	badgeList: [],
 	isLoading: false,
 	error: "",
 };
@@ -236,6 +257,17 @@ const profileSlice = createSlice({
 					: state.profile.countFollower + 1;
 		},
 		[__followThunk.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+		},
+		[__getBadgeList.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__getBadgeList.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.profile = action.payload;
+		},
+		[__getBadgeList.rejected]: (state, action) => {
 			state.isLoading = false;
 			state.isError = true;
 		},

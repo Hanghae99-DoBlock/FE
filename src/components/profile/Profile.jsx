@@ -163,7 +163,12 @@ const Profile = () => {
 								획득한 뱃지 {}
 							</SecondHeading>
 						</Flex>
-						<Svg variant="rightArrow"></Svg>
+						<Svg
+							variant="rightArrow"
+							onClick={() => {
+								navigate(`/profile/${id}/badges`);
+							}}
+						></Svg>
 					</Flex>
 				</Flex>
 				<Swiper
