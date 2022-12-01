@@ -31,7 +31,7 @@ const NavBelow = () => {
 					gap="8px"
 					dir="column"
 					cursor="pointer"
-					onClick={() => navigate(`/feed`)}
+					onClick={() => navigate(`/feed/following`)}
 				>
 					<Box variant="navIconBox" type="speechBubble" />
 					<Text variant="navText">피드</Text>
