@@ -1,21 +1,10 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Box, Flex, Svg, Text } from "../../common";
-import { FeedItem, NavBelow } from "../../components";
-import {
-	__getFollowingFeeds,
-	__getRecommendedFeeds,
-} from "../../redux/modules/feed/feedSlice";
+import { NavBelow } from "../../components";
 
 const FeedPage = () => {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const feedList = useSelector(state => state.feed.feedList);
-
-	useEffect(() => {
-		dispatch(__getFollowingFeeds());
-	}, []);
 
 	// 상단 탭 메뉴 ui 상태 관리
 	const [followingFeedListMenuUiType, setFollowingFeedListMenuUiType] =
@@ -25,14 +14,14 @@ const FeedPage = () => {
 
 	// 피드 리스트 종류 변경 핸들러
 	const changeFeedListTypeHandler = feedListType => {
-		if (feedListType === "followingFeedList") {
-			dispatch(__getFollowingFeeds());
-			setFollowingFeedListMenuUiType("selectedTabMenu");
-			setRecommendedFeedListMenuUiType("tabMenu");
-		} else {
-			dispatch(__getRecommendedFeeds());
+		if (feedListType === "recommendedFeedList") {
+			navigate(`/feed/recommended`);
 			setRecommendedFeedListMenuUiType("selectedTabMenu");
 			setFollowingFeedListMenuUiType("tabMenu");
+		} else {
+			navigate(`/feed/following`);
+			setFollowingFeedListMenuUiType("selectedTabMenu");
+			setRecommendedFeedListMenuUiType("tabMenu");
 		}
 	};
 
@@ -57,7 +46,7 @@ const FeedPage = () => {
 						<Text variant={followingFeedListMenuUiType}>팔로잉</Text>
 					</Box>
 					<Box
-						onClick={() => changeFeedListTypeHandler("recommendedFeeds")}
+						onClick={() => changeFeedListTypeHandler("recommendedFeedList")}
 						variant={recommendedFeedListMenuUiType}
 					>
 						<Text variant={recommendedFeedListMenuUiType}>추천 피드</Text>
@@ -65,12 +54,7 @@ const FeedPage = () => {
 				</Flex>
 
 				{/* 피드 리스트 */}
-				<Box variant="feedScrollArea">
-					{feedList.map(feedItem => (
-						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
-					))}
-				</Box>
-				<Flex ht="80px" />
+				<Outlet></Outlet>
 			</Flex>
 			<NavBelow />
 		</>

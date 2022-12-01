@@ -10,6 +10,8 @@ import {
 	FollowingPage,
 	FollowerPage,
 	DetailFeedPage,
+	FollowingFeedListPage,
+	RecommendedFeedListPage,
 	FeedPage,
 } from "../pages";
 
@@ -29,7 +31,10 @@ const Router = () => {
 					<Route path="/profile/:id/following" element={<FollowingPage />} />
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/todolist" element={<TodoListPage />} />
-					<Route path="/feed" element={<FeedPage />} />
+					<Route path="/feed" element={<FeedPage />}>
+						<Route path="following" element={<FollowingFeedListPage />} />
+						<Route path="recommended" element={<RecommendedFeedListPage />} />
+					</Route>
 					<Route path="/addFeed" element={<AddFeedPage />} />
 					<Route path="/feed/:id" element={<DetailFeedPage />} />
 				</Routes>
