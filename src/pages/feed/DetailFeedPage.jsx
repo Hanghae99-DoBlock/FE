@@ -7,6 +7,7 @@ import { Flex, Box, Text, Svg } from "../../common";
 import { FeedComment, NavBelow } from "../../components";
 import {
 	updateFeedItem,
+	updateSearchKeyword,
 	__getFeedItem,
 } from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
@@ -63,6 +64,11 @@ const DetailFeedPage = () => {
 	} else {
 		followBtnStatus = "notFollowing";
 	}
+
+	const tagSearchHandler = tagItem => {
+		dispatch(updateSearchKeyword(tagItem));
+		navigate(`/search`);
+	};
 
 	return (
 		<>
@@ -173,6 +179,8 @@ const DetailFeedPage = () => {
 					<Flex wrap="wrap" gap="8px" wd="100%" jc="flex-start" pd="24px 18px">
 						{tagList?.map((tagItem, index) => (
 							<Flex
+								onClick={() => tagSearchHandler(tagItem)}
+								cursor="pointer"
 								key={index}
 								ht="29px"
 								border="1px solid #E5E5E5"
