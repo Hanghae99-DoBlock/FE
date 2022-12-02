@@ -164,7 +164,7 @@ const AddFeedPage = () => {
 					tagList: tagArray,
 				}),
 			);
-			navigate(`/feed`);
+			navigate(`/feed/following`);
 		}
 	};
 	const openModalHandler = () => {
@@ -182,9 +182,9 @@ const AddFeedPage = () => {
 		} else {
 			setIsPostPossible(false);
 		}
-		if (loading === false) {
-			navigate("/feed");
-		}
+		//if (loading === false) {
+		//	navigate("/feed");
+		//}
 	}, [boastFeed, formPhotoList, color, loading]);
 
 	return (

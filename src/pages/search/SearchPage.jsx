@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Flex, Text, Svg, FirstHeading, Image } from "../../common";
 import { FeedItem, NavBelow } from "../../components";
-import { __SearchTagAndMember } from "../../redux/modules/feed/feedSlice";
+import {
+	__infinitySearchTagAndMember,
+	__searchTagAndMember,
+	__infinitySearchTag,
+	__infinitySearchMember,
+} from "../../redux/modules/feed/feedSlice";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../common/hooks/useInput";
@@ -25,10 +30,64 @@ const FeedPage = () => {
 	const searchMemberItem = useSelector(state => state.feed.searchMember);
 	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
 	const [follow, setFollow] = useState(isFollow);
+	const target = useRef(null);
+	const {
+		isNextTagSearchExist,
+		isNextMemberSearchExist,
+		searchTagValue,
+		addedSearchTag,
+	} = useSelector(state => state.feed);
+	const [tagValue, setTagValue] = useState(searchTagValue);
+	const [keyword, setKeyword] = useState(tagValue);
 
 	useEffect(() => {
 		setFollow(isFollow);
 	}, [isFollow]);
+	console.log(searchTagItem);
+	console.log(searchMemberItem);
+	useEffect(() => {
+		console.log(addedSearchTag);
+		console.log(isNextTagSearchExist);
+
+		if (isNextTagSearchExist) {
+			const observer = new IntersectionObserver(([entry]) => {
+				if (entry.isIntersecting) {
+					console.log("$$$$", keyword);
+					dispatch(
+						__infinitySearchTag({
+							keyword: keyword,
+							category: category,
+						}),
+					);
+				}
+			});
+			observer.observe(target.current);
+			return () => {
+				observer.disconnect(observer);
+			};
+		}
+	}, [isNextTagSearchExist, keyword]);
+	useEffect(() => {
+		console.log("member", isNextMemberSearchExist);
+		if (isNextMemberSearchExist) {
+			console.log(isNextMemberSearchExist);
+			const observer = new IntersectionObserver(([entry]) => {
+				if (entry.isIntersecting) {
+					console.log("@@@@@@", keyword);
+					dispatch(
+						__infinitySearchMember({
+							keyword: keyword,
+							category: category,
+						}),
+					);
+				}
+			});
+			observer.observe(target.current);
+			return () => {
+				observer.disconnect(observer);
+			};
+		}
+	}, [isNextMemberSearchExist, keyword]);
 
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
@@ -43,7 +102,7 @@ const FeedPage = () => {
 		//searchHandler();
 		setFollow(true);
 	};
-
+	console.log(category);
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {
@@ -57,22 +116,28 @@ const FeedPage = () => {
 		}
 	};
 	const searchHandler = () => {
+		setKeyword(tagValue);
 		dispatch(
-			__SearchTagAndMember({
-				keyword: searchInput.value,
+			__searchTagAndMember({
+				keyword: tagValue,
 				category: category,
 			}),
 		);
 	};
 	const searchEnterHandler = e => {
 		if (e.keyCode === 13) {
-			return dispatch(
-				__SearchTagAndMember({
-					keyword: searchInput.value,
+			setKeyword(tagValue);
+			dispatch(
+				__searchTagAndMember({
+					keyword: tagValue,
 					category: category,
 				}),
 			);
 		}
+	};
+
+	const searchInputChangeHandler = e => {
+		setTagValue(e.target.value);
 	};
 
 	return (
@@ -92,8 +157,8 @@ const FeedPage = () => {
 					</Flex>
 					<StSearchInput
 						placeholder="검색어를 입력하세요"
-						value={searchInput.value || ""}
-						onChange={searchInput.onChange}
+						value={tagValue}
+						onChange={searchInputChangeHandler}
 						onKeyDown={searchEnterHandler}
 					/>
 					<Flex
@@ -137,6 +202,7 @@ const FeedPage = () => {
 									return <FeedItem key={feedItem.feedId} feedItem={feedItem} />;
 							  })
 							: null}
+						<div style={{ width: "335px", height: "90px" }} ref={target} />
 					</Box>
 				) : (
 					<Box variant="searchScrollArea">
@@ -188,8 +254,10 @@ const FeedPage = () => {
 									</Flex>
 							  ))
 							: null}
+						<div style={{ width: "335px", height: "150px" }} ref={target} />
 					</Box>
 				)}
+				<Flex wd="335px" ht="90px"></Flex>
 			</Flex>
 			<NavBelow />
 		</>
