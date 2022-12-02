@@ -43,16 +43,10 @@ const FeedPage = () => {
 	useEffect(() => {
 		setFollow(isFollow);
 	}, [isFollow]);
-	console.log(searchTagItem);
-	console.log(searchMemberItem);
 	useEffect(() => {
-		console.log(addedSearchTag);
-		console.log(isNextTagSearchExist);
-
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
-					console.log("$$$$", keyword);
 					dispatch(
 						__infinitySearchTag({
 							keyword: keyword,
@@ -68,12 +62,9 @@ const FeedPage = () => {
 		}
 	}, [isNextTagSearchExist, keyword]);
 	useEffect(() => {
-		console.log("member", isNextMemberSearchExist);
 		if (isNextMemberSearchExist) {
-			console.log(isNextMemberSearchExist);
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
-					console.log("@@@@@@", keyword);
 					dispatch(
 						__infinitySearchMember({
 							keyword: keyword,
@@ -102,7 +93,6 @@ const FeedPage = () => {
 		//searchHandler();
 		setFollow(true);
 	};
-	console.log(category);
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
 		if (searchType === "tagSearchList") {

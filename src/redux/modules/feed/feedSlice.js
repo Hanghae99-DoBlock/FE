@@ -116,8 +116,6 @@ export const __searchTagAndMember = createAsyncThunk(
 				},
 				payload,
 			);
-			console.log(data);
-			console.log(page);
 			return thunkAPI.fulfillWithValue({
 				keyword: keyword,
 				data: data,
@@ -134,7 +132,6 @@ export const __infinitySearchTag = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const { keyword, category } = payload;
-			console.log(keyword);
 			const { infiniteTagNumber } = thunkAPI.getState().feed;
 
 			let page;
@@ -410,7 +407,6 @@ export const feedSlice = createSlice({
 				}
 				if (state.addedSearchTag.length < 5) {
 					state.isNextTagSearchExist = false;
-					console.log(state.isNextTagSearchExist);
 				}
 			})
 			.addCase(__infinitySearchMember.fulfilled, (state, action) => {
