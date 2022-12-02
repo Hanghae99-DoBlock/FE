@@ -5,6 +5,7 @@ import axios from "axios";
 import {
 	__getFollowingFeeds,
 	__getRecommendedFeeds,
+	__deleteFeed,
 } from "../middleware/feedListThunk";
 
 const accessToken = localStorage.getItem("accessToken");
@@ -261,6 +262,9 @@ export const feedSlice = createSlice({
 				followOrNot: !state.feedItem.followOrNot,
 			};
 		},
+		updateIsLoading: (state, action) => {
+			state.isLoading = action.payload;
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -277,6 +281,13 @@ export const feedSlice = createSlice({
 			//완료된 피드 목록 불러오기
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
+			})
+			// 피드 삭제
+			.addCase(__deleteFeed.fulfilled, (state, action) => {
+				state.followingFeedList = state.followingFeedList.filter(
+					feedItem => feedItem.feedId !== action.payload,
+				);
+				state.isLoading = false;
 			})
 			// 팔로잉 피드 조회 성공
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
@@ -327,5 +338,6 @@ export const {
 	deletePhoto,
 	addFormPhoto,
 	updateFeedItem,
+	updateIsLoading,
 } = feedSlice.actions;
 export default feedSlice.reducer;

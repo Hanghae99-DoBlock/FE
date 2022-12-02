@@ -27,6 +27,7 @@ export const StFlex = styled.div`
 	/* 스타일 */
 	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
+	background-image: ${({ bi }) => bi};
 	border: ${({ border }) => border};
 	border-top: ${({ bt }) => bt};
 	border-left: ${({ bl }) => bl};
