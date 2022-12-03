@@ -30,8 +30,6 @@ const SignUpPage = () => {
 	const token = localStorage.getItem("accessToken");
 
 	const loginResult = useSelector(state => state.join.loginResult);
-	console.log(loginResult);
-	console.log(toast);
 
 	useEffect(() => {
 		if (token) {

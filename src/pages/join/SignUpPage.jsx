@@ -122,7 +122,6 @@ const SignUpPage = () => {
 		if (regPass.test(password.value)) {
 		}
 	};
-	console.log(7 < password.value.length);
 	return (
 		<>
 			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
