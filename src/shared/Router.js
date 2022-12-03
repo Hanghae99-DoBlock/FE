@@ -14,6 +14,8 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	MyBadgesPage,
+	BadgeSetiingPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import Splash from "../pages/join/Splash";
@@ -46,12 +48,19 @@ const Router = () => {
 					/>
 					<Route
 						path="/profile/edit/password"
-						element={
-							<PrivateRoute>
-								<PasswordChangePage />
-							</PrivateRoute>
-						}
+						element={<PasswordChangePage />}
 					/>
+					<Route path="/profile/:id/following" element={<FollowingPage />} />
+					<Route path="/profile/:id/follower" element={<FollowerPage />} />
+					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
+					<Route
+						path="/profile/:id/badgeSetting"
+						element={<BadgeSetiingPage />}
+					/>
+					<Route path="/todolist" element={<TodoListPage />} />
+					<Route path="/feed" element={<FeedPage />} />
+					<Route path="/addFeed" element={<AddFeedPage />} />
+					<Route path="/feed/:id" element={<DetailFeedPage />} />
 					<Route
 						path="/profile/:id/following"
 						element={
@@ -76,7 +85,14 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>}>
+					<Route
+						path="/feed"
+						element={
+							<PrivateRoute>
+								<FeedPage />
+							</PrivateRoute>
+						}
+					>
 						<Route path="following" element={<FollowingFeedListPage />} />
 						<Route path="recommended" element={<RecommendedFeedListPage />} />
 					</Route>
@@ -104,7 +120,6 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-
 				</Routes>
 			</BrowserRouter>
 		</>
