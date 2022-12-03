@@ -320,6 +320,11 @@ export const feedSlice = createSlice({
 				});
 			}
 		},
+		resetFeed: (state, action) => {
+			state.checkedList = [];
+			state.tagList = [];
+			state.photoList = [];
+		},
 		deleteTag: (state, action) => {
 			state.tagList = state.tagList.filter((tag, index) => {
 				return action.payload.id !== tag.id;
@@ -443,5 +448,6 @@ export const {
 	deletePhoto,
 	addFormPhoto,
 	updateFeedItem,
+	resetFeed,
 } = feedSlice.actions;
 export default feedSlice.reducer;
