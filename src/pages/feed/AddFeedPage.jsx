@@ -62,7 +62,6 @@ const AddFeedPage = () => {
 		setColor("");
 		title.value = "";
 		setDetail("");
-		console.log("@@@@@@");
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직

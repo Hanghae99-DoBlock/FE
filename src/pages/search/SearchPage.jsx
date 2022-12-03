@@ -45,8 +45,6 @@ const FeedPage = () => {
 		setFollow(isFollow);
 	}, [isFollow]);
 	useEffect(() => {
-		console.log("Tag", addedSearchTag);
-		console.log("nextTag", isNextTagSearchExist);
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
@@ -65,8 +63,6 @@ const FeedPage = () => {
 		}
 	}, [isNextTagSearchExist, addedSearchTag, keyword]);
 	useEffect(() => {
-		console.log("nextMember", isNextMemberSearchExist);
-		console.log("member", addedSearchMember);
 		if (isNextMemberSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
