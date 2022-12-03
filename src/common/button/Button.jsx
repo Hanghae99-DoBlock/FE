@@ -85,7 +85,7 @@ const StBtn = styled.button`
 					font-size: 18px;
 					margin: 0 5px;
 					cursor: pointer;
-
+				`;
 			case "delTodo":
 				return css`
 					cursor: pointer;

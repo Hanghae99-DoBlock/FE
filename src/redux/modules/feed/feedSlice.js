@@ -93,6 +93,29 @@ export const __uploadFeed = createAsyncThunk(
 // 리액션 추가 / 삭제
 export const __updateReactions = createAsyncThunk(
 	"feed/reaction",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		try {
+			await axios.post(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
+				{
+					reactionType: payload.reactionType,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
 export const __SearchTagAndMember = createAsyncThunk(
 	"SEARCH",
 	async (payload, thunkAPI) => {
@@ -251,22 +274,13 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__updateReactions.fulfilled, (state, action) => {
 				state.feedItem.reactionResponseDtoList = action.payload;
+			})
 			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
 				{
 					action.payload.category === "feed"
 						? (state.searchTag = action.payload.data)
 						: (state.searchMember = action.payload.data);
 				}
-			})
-			.addCase(__addComment.fulfilled, (state, action) => {
-				state.feedItem.commentResponseDtoList = action.payload;
-				state.feedItem.countComment = action.payload;
-				state.commentList?.push(action.payload);
-			})
-			.addCase(__deleteComment.fulfilled, (state, action) => {
-				state.commentList = state.commentList?.filter(item => {
-					return item !== action.payload;
-				});
 			});
 	},
 });

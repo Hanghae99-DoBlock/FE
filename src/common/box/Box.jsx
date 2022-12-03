@@ -386,6 +386,7 @@ const StBox = styled.div`
 				return css`
 					position: relative;
 					margin: 20px 0 40px 0;
+				`;
 			case "recommendSearchBox":
 				return css`
 					width: 274px;

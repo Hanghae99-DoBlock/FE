@@ -61,12 +61,6 @@ const Router = () => {
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />
 					<Route path="/feed/:id" element={<DetailFeedPage />} />
-						element={
-							<PrivateRoute>
-								<PasswordChangePage />
-							</PrivateRoute>
-						}
-					/>
 					<Route
 						path="/profile/:id/following"
 						element={
@@ -91,7 +85,14 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>}>
+					<Route
+						path="/feed"
+						element={
+							<PrivateRoute>
+								<FeedPage />
+							</PrivateRoute>
+						}
+					>
 						<Route path="following" element={<FollowingFeedListPage />} />
 						<Route path="recommended" element={<RecommendedFeedListPage />} />
 					</Route>
