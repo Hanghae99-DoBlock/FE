@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Flex, Svg, Text } from "../../common";
 import { updateIsLoading } from "../../redux/modules/feed/feedSlice";
 import { __deleteFeed } from "../../redux/modules/middleware/feedListThunk";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const ModalConfirmDelete = ({ setIsConfirmDeleteModalOpen, feedId }) => {
 	const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const ModalConfirmDelete = ({ setIsConfirmDeleteModalOpen, feedId }) => {
 
 	useEffect(() => {
 		if (isLoading === false) {
+			dispatch(updateIsToastExist("게시글 삭제가 완료되었습니다."));
 			navigate(`../feed/following`);
 			dispatch(updateIsLoading(null));
 		}
