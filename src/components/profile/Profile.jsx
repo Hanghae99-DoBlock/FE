@@ -36,14 +36,11 @@ const Profile = () => {
 
 	const profile = useSelector(state => state.profileSlice.profile);
 
-	const badgeList = useSelector(
-		state => state.profileSlice.profile.badgeResponseDtoList,
+	const acquisitionBadge = useSelector(
+		state => state.profileSlice.profile.badgeImageList,
 	);
-	console.log(badgeList);
 
-	useEffect(() => {
-		dispatch(__getBadgeList(id));
-	}, []);
+	console.log(profile);
 
 	useEffect(() => {
 		dispatch(__getUser(id));
@@ -194,20 +191,16 @@ const Profile = () => {
 					modules={[Pagination]}
 					className="mySwiper"
 				>
-					{/* <SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide> */}
-					<Flex>
-						{badgeList &&
-							badgeList.map(data => (
-								<SwiperSlide className="badge-slide" key={data.id}>
-									{data.badgeImage}
-								</SwiperSlide>
-							))}
-					</Flex>
+					{acquisitionBadge?.map(data => (
+						<SwiperSlide className="badge-slide" key={data.id}>
+							<Image
+								src={data}
+								onClick={() => {
+									navigate(`/profile/${id}/badges`);
+								}}
+							/>
+						</SwiperSlide>
+					))}
 				</Swiper>
 				<Flex wd="375px" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
@@ -235,53 +228,24 @@ const Profile = () => {
 						<Flex jc="flex-end" position="absolute" right="10px" top="-38px">
 							<Svg variant="block" />
 						</Flex>
-						<Flex
-							wd="333px"
-							ht="72px"
-							bc="#F8F8F8"
-							radius="10px"
-							jc="flex-start"
-							pd="20px"
-							mg="0 0 10px 0"
-						>
-							<FirstHeading fs="13px" fw="600">
-								미라클모닝 3개월째 성공😊
-								<Flex mg="5px 0 0 0" fs="13" fw="300">
-									#미라클모닝 #뿌듯 #오늘도성공
-								</Flex>
-							</FirstHeading>
-						</Flex>
-						<Flex
-							wd="333px"
-							ht="72px"
-							bc="#F8F8F8"
-							radius="10px"
-							jc="flex-start"
-							pd="20px"
-							mg="0 0 10px 0"
-						>
-							<FirstHeading fs="13px" fw="600">
-								미라클모닝 3개월째 성공😊
-								<Flex mg="5px 0 0 0" fs="13" fw="300">
-									#미라클모닝 #뿌듯 #오늘도성공
-								</Flex>
-							</FirstHeading>
-						</Flex>
-						<Flex
-							wd="333px"
-							ht="72px"
-							bc="#F8F8F8"
-							radius="10px"
-							jc="flex-start"
-							pd="20px"
-						>
-							<FirstHeading fs="13px" fw="600">
-								미라클모닝 3개월째 성공😊
-								<Flex mg="5px 0 0 0" fs="13" fw="300">
-									#미라클모닝 #뿌듯 #오늘도성공
-								</Flex>
-							</FirstHeading>
-						</Flex>
+						{profile.feedResponseDtoList?.map(data => (
+							<Flex
+								wd="333px"
+								ht="72px"
+								bc="#F8F8F8"
+								radius="10px"
+								jc="flex-start"
+								pd="20px"
+								mg="0 0 10px 0"
+							>
+								<FirstHeading fs="13px" fw="600">
+									{data.feedTitle}
+									<Flex mg="5px 0 0 0" fs="13" fw="300">
+										{data.feedContent}
+									</Flex>
+								</FirstHeading>
+							</Flex>
+						))}
 					</Box>
 				)}
 			</Flex>
