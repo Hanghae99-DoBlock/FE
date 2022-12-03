@@ -186,7 +186,6 @@ export const __getBadgeList = createAsyncThunk(
 export const __getBadgeType = createAsyncThunk(
 	"user/getBadgeType",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			const badges = await axios.get(
 				`${serverUrl}/api/members/profile/${payload.id}/badges?badgetype=${payload.badgeItem}`,
@@ -208,7 +207,6 @@ export const __getBadgeType = createAsyncThunk(
 export const __editBadges = createAsyncThunk(
 	"user/editBadges",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.patch(
 				`${serverUrl}/api/members/profile/edit/badges`,
