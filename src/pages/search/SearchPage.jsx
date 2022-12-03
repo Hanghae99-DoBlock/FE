@@ -36,6 +36,7 @@ const FeedPage = () => {
 		isNextMemberSearchExist,
 		searchTagValue,
 		addedSearchTag,
+		addedSearchMember,
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
@@ -44,6 +45,8 @@ const FeedPage = () => {
 		setFollow(isFollow);
 	}, [isFollow]);
 	useEffect(() => {
+		console.log("Tag", addedSearchTag);
+		console.log("nextTag", isNextTagSearchExist);
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
@@ -60,8 +63,10 @@ const FeedPage = () => {
 				observer.disconnect(observer);
 			};
 		}
-	}, [isNextTagSearchExist, keyword]);
+	}, [isNextTagSearchExist, addedSearchTag, keyword]);
 	useEffect(() => {
+		console.log("nextMember", isNextMemberSearchExist);
+		console.log("member", addedSearchMember);
 		if (isNextMemberSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
@@ -78,7 +83,7 @@ const FeedPage = () => {
 				observer.disconnect(observer);
 			};
 		}
-	}, [isNextMemberSearchExist, keyword]);
+	}, [isNextMemberSearchExist, addedSearchMember, keyword]);
 
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
