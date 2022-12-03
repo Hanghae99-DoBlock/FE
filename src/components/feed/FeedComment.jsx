@@ -66,7 +66,7 @@ const FeedComment = props => {
 	};
 
 	const reaction = useSelector(
-		state => state.feed.feedItem.reactionResponseDtoList,
+		state => state.feed.feedItem.currentReactionType,
 	);
 	console.log(reaction);
 

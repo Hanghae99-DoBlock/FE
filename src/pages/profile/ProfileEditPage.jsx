@@ -75,6 +75,10 @@ const ProfileEdit = () => {
 
 	const user = useSelector(state => state.profileSlice.profile);
 
+	const onClickPasswordEdit = () => {
+		navigate("/profile/edit/password/");
+	};
+
 	return (
 		<>
 			<Flex
@@ -239,50 +243,39 @@ const ProfileEdit = () => {
 						jc="flex-start"
 						mg="0 0 5px 0"
 					>
-						비밀번호
+						관심사
 					</Flex>
-					<Flex>
-						<Box variant="passworadChange" style={{ marginBottom: "26px" }}>
-							<Input
-								type="password"
-								defaultValue="12341234!"
-								variant="passwordInput"
-								disabled
-								style={{ fontSize: "35px", fontWeight: 400, color: "#C8C8C8" }}
-							/>
-						</Box>
+					<Flex wd="335px" jc="flex-start">
+						<Flex fw="300" fs="12" color="#A2A2A2" mg="0 10px 0 0">
+							관심사가 없습니다.
+						</Flex>
 						<Flex
-							pd="12px"
-							wd="69px"
-							ht="50px"
-							bc="#DDDDDD"
-							radius="10px"
-							mg="0 0 26px 10px"
-							onClick={() => {
-								navigate(`/profile/edit/password`);
-							}}
+							fw="600"
+							fs="11"
+							wd="103px"
+							ht="30px"
+							border="1px solid #E5E5E5"
+							radius="5px"
 						>
-							변경
+							관심사 선택하기
+							<Svg variant="rightArrow_two"></Svg>
 						</Flex>
 					</Flex>
-					<Flex
-						wd="335px"
-						ht="26px"
-						fw="600"
-						fs="14"
-						lh="26"
-						jc="flex-start"
-						mg="0 0 5px 0"
-					>
-						대표 뱃지 (최대 3개)
+					<Flex wd="335px" jc="flex-end" mg="40px 0 120px 0">
+						<Flex
+							wd="100px"
+							ht="34px"
+							bg="#131313"
+							radius="5px"
+							color="#fff"
+							fw="600"
+							fs="11"
+							onClick={onClickPasswordEdit}
+							cursor="pointer"
+						>
+							비밀번호 변경 <Svg variant="rightArrow_three"></Svg>
+						</Flex>
 					</Flex>
-					<Box variant="stTextArea" style={{ marginBottom: "26px" }}>
-						<Box
-							variant="textArea"
-							type="text"
-							style={{ fontSize: "16px", fontWeight: 400, color: "#C8C8C8" }}
-						/>
-					</Box>
 				</Flex>
 			</Flex>
 			<NavBelow />

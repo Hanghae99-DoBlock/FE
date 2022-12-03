@@ -31,7 +31,10 @@ const Router = () => {
 					<Route path="/profile/:id/following" element={<FollowingPage />} />
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
-					<Route path="/badgeSetting" element={<BadgeSetiingPage />} />
+					<Route
+						path="/profile/:id/badgeSetting"
+						element={<BadgeSetiingPage />}
+					/>
 					<Route path="/todolist" element={<TodoListPage />} />
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/addFeed" element={<AddFeedPage />} />

@@ -80,6 +80,14 @@ const StBox = styled.div`
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
 				`;
+			case "badgeModalBox":
+				return css`
+					background-color: white;
+					width: 281px;
+					height: 290px;
+					border-radius: 10px;
+					box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+				`;
 
 			// 투두 박스
 			case "todoContent":

@@ -13,7 +13,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { __followThunk, __getUser } from "../../redux/modules/profileSlice";
+import {
+	__followThunk,
+	__getBadgeList,
+	__getUser,
+} from "../../redux/modules/profileSlice";
 import NavBelow from "../nav/NavBelow";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -31,6 +35,15 @@ const Profile = () => {
 	const decodeToken = jwtDecode(token);
 
 	const profile = useSelector(state => state.profileSlice.profile);
+
+	const badgeList = useSelector(
+		state => state.profileSlice.profile.badgeResponseDtoList,
+	);
+	console.log(badgeList);
+
+	useEffect(() => {
+		dispatch(__getBadgeList(id));
+	}, []);
 
 	useEffect(() => {
 		dispatch(__getUser(id));
@@ -160,7 +173,7 @@ const Profile = () => {
 							}}
 						>
 							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
-								획득한 뱃지 {}
+								획득한 뱃지 {profile.countBadge}
 							</SecondHeading>
 						</Flex>
 						<Svg
@@ -181,12 +194,20 @@ const Profile = () => {
 					modules={[Pagination]}
 					className="mySwiper"
 				>
+					{/* <SwiperSlide className="badge-slide"></SwiperSlide>
 					<SwiperSlide className="badge-slide"></SwiperSlide>
 					<SwiperSlide className="badge-slide"></SwiperSlide>
 					<SwiperSlide className="badge-slide"></SwiperSlide>
 					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
-					<SwiperSlide className="badge-slide"></SwiperSlide>
+					<SwiperSlide className="badge-slide"></SwiperSlide> */}
+					<Flex>
+						{badgeList &&
+							badgeList.map(data => (
+								<SwiperSlide className="badge-slide" key={data.id}>
+									{data.badgeImage}
+								</SwiperSlide>
+							))}
+					</Flex>
 				</Swiper>
 				<Flex wd="375px" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
