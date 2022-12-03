@@ -48,7 +48,6 @@ export const removeCommentsApi = async payload => {
 	return response.data;
 };
 export const editCommentsApi = async payload => {
-	console.log(payload);
 	const response = await instance.put(
 		`/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
 		{

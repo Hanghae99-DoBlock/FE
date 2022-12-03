@@ -7,7 +7,6 @@ const FeedCommentDetail = props => {
 	const token = localStorage.getItem("accessToken");
 	const decodeToken = jwtDecode(token);
 
-	// console.log(props);
 	const [isEdit, setIsEdit] = useState(false);
 	const toggleIsEdit = () => setIsEdit(!isEdit);
 	const [localContent, setLocalContent] = useState(
@@ -22,7 +21,6 @@ const FeedCommentDetail = props => {
 		toggleIsEdit();
 	};
 	const handleClickRemove = () => {
-		// console.log(props.content.commentId);
 		props.onRemoveComment(props.content.commentId);
 	};
 

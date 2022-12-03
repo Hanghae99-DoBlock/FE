@@ -94,7 +94,6 @@ export const __uploadFeed = createAsyncThunk(
 export const __updateReactions = createAsyncThunk(
 	"feed/reaction",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
@@ -141,7 +140,6 @@ export const __SearchTagAndMember = createAsyncThunk(
 export const __addComment = createAsyncThunk(
 	"comment/addComment",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,

@@ -23,7 +23,6 @@ const BadgeSetiingPage = () => {
 	const [badgeItem, setBadgeItem] = useState();
 
 	const [badgeSelected, setBadgeSelected] = useState();
-	console.log(badgeSelected);
 
 	// 투두 추가 모달 오픈 핸들러
 	const openAddTodoModalHandler = badgeType => {

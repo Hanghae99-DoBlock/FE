@@ -37,7 +37,6 @@ const FeedComment = props => {
 		e.preventDefault();
 		const response = await addCommentsApi({ content, id });
 		setCommentList([...commentList, response]);
-		console.log(response);
 		setContent("");
 	};
 
@@ -68,7 +67,6 @@ const FeedComment = props => {
 	const reaction = useSelector(
 		state => state.feed.feedItem.currentReactionType,
 	);
-	console.log(reaction);
 
 	return (
 		<>

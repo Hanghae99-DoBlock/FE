@@ -21,7 +21,6 @@ const MyBadgesPage = () => {
 	);
 
 	const representativeBadge = useSelector(state => state.profileSlice.profile);
-	console.log(representativeBadge);
 
 	return (
 		<>

@@ -40,8 +40,6 @@ const Profile = () => {
 		state => state.profileSlice.profile.badgeImageList,
 	);
 
-	console.log(profile);
-
 	useEffect(() => {
 		dispatch(__getUser(id));
 	}, []);

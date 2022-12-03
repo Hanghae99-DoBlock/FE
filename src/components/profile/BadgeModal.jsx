@@ -20,7 +20,6 @@ const BadgeModal = ({ badgeItem, setIsAddTodoModalOpen, setBadgeSelected }) => {
 		state => state.profileSlice.profile.badgeResponseDtoList,
 	);
 	const [badgeList, setBadgeList] = useState([]);
-	console.log(badgeList);
 	useEffect(() => {
 		__getBadgeType();
 	}, []);
