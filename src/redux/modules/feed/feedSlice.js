@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -90,38 +90,56 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
-// 리액션 추가 / 삭제
-export const __updateReactions = createAsyncThunk(
-	"feed/reaction",
-	async (payload, thunkAPI) => {
-		try {
-			await axios.post(
-				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
-				{
-					reactionType: payload.reactionType,
-				},
-				{
-					headers: {
-						Authorization: accessToken,
-					},
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			return thunkAPI.fulfillWithValue(payload);
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-export const __SearchTagAndMember = createAsyncThunk(
+export const __searchTagAndMember = createAsyncThunk(
 	"SEARCH",
 	async (payload, thunkAPI) => {
 		try {
 			const { keyword, category } = payload;
+			const { tagSearchPageNum, memberSearchPageNum } =
+				thunkAPI.getState().feed;
+
+			let page;
+
+			if (category === "feed") {
+				page = tagSearchPageNum;
+			} else {
+				page = memberSearchPageNum;
+			}
+
 			const { data } = await axios.get(
-				`${serverUrl}/api/search?keyword=${keyword}&category=${category}`,
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({
+				keyword: keyword,
+				data: data,
+				category: category,
+			});
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
+export const __infinitySearchTag = createAsyncThunk(
+	"INFINITE_SCROLL_SEARCH_TAG",
+	async (payload, thunkAPI) => {
+		try {
+			const { keyword, category } = payload;
+			const { infiniteTagNumber } = thunkAPI.getState().feed;
+
+			let page;
+
+			page = infiniteTagNumber;
+
+			const { data } = await axios.get(
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -136,9 +154,38 @@ export const __SearchTagAndMember = createAsyncThunk(
 		}
 	},
 );
-// 코멘트 추가
-export const __addComment = createAsyncThunk(
-	"comment/addComment",
+export const __infinitySearchMember = createAsyncThunk(
+	"INFINITE_SCROLL_SEARCH__MEMBER",
+	async (payload, thunkAPI) => {
+		try {
+			const { keyword, category } = payload;
+			const { infiniteTagNumber, infiniteMemberNumber } =
+				thunkAPI.getState().feed;
+
+			let page;
+
+			page = infiniteMemberNumber;
+
+			const { data } = await axios.get(
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({ data: data, category: category });
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
+// 리액션 추가 / 삭제
+export const __updateReactions = createAsyncThunk(
+	"feed/reaction",
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
@@ -172,13 +219,23 @@ const initialState = {
 	successTodo: [],
 	feedItem: {},
 	isLoading: "",
-	searchTag: "",
-	searchMember: "",
+	searchTag: [],
+	searchMember: [],
 	commentList: [],
 	followingFeedPageNum: 0,
 	recommendedFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	tagSearchPageNum: 0,
+	memberSearchPageNum: 0,
+	infiniteTagNumber: 0,
+	infiniteMemberNumber: 1,
+	isNextTagSearchExist: true,
+	isNextMemberSearchExist: true,
+	addedSearchTag: [],
+	addedSearchMember: [],
+	searchTagValue: "",
+	searchMemberValue: "",
 };
 
 export const feedSlice = createSlice({
@@ -210,6 +267,11 @@ export const feedSlice = createSlice({
 					return action.payload.value !== tag;
 				});
 			}
+		},
+		resetFeed: (state, action) => {
+			state.checkedList = [];
+			state.tagList = [];
+			state.photoList = [];
 		},
 		deleteTag: (state, action) => {
 			state.tagList = state.tagList.filter((tag, index) => {
@@ -270,14 +332,46 @@ export const feedSlice = createSlice({
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
 				state.feedItem = action.payload;
 			})
-			.addCase(__updateReactions.fulfilled, (state, action) => {
-				state.feedItem.reactionResponseDtoList = action.payload;
+
+			.addCase(__searchTagAndMember.fulfilled, (state, action) => {
+				if (action.payload.category === "feed") {
+					state.searchTag = action.payload.data;
+					state.isNextTagSearchExist = true;
+					state.isNextMemberSearchExist = false;
+					state.searchTagValue = action.payload.keyword;
+					state.infiniteTagNumber = 1;
+					state.infiniteMemberNumber = 1;
+				} else {
+					state.searchMember = action.payload.data;
+					state.searchTagValue = action.payload.keyword;
+					state.isNextMemberSearchExist = true;
+					state.isNextTagSearchExist = false;
+					state.infiniteTagNumber = 0;
+					state.infiniteMemberNumber = 1;
+				}
 			})
-			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
-				{
-					action.payload.category === "feed"
-						? (state.searchTag = action.payload.data)
-						: (state.searchMember = action.payload.data);
+			.addCase(__infinitySearchTag.fulfilled, (state, action) => {
+				if (action.payload.category === "feed") {
+					state.isNextMemberSearchExist = false;
+					state.isNextTagSearchExist = true;
+					state.addedSearchTag = action.payload.data;
+					state.searchTag.push(...action.payload.data);
+					state.infiniteTagNumber += 1;
+				}
+				if (state.addedSearchTag.length < 5) {
+					state.isNextTagSearchExist = false;
+				}
+			})
+			.addCase(__infinitySearchMember.fulfilled, (state, action) => {
+				if (action.payload.category === "member") {
+					state.isNextMemberSearchExist = true;
+					state.isNextTagSearchExist = false;
+					state.addedSearchMember = action.payload.data;
+					state.searchMember.push(...action.payload.data);
+					state.infiniteMemberNumber += 1;
+				}
+				if (state.addedSearchMember.length < 10) {
+					state.isNextMemberSearchExist = false;
 				}
 			});
 	},
@@ -292,5 +386,6 @@ export const {
 	deletePhoto,
 	addFormPhoto,
 	updateFeedItem,
+	resetFeed,
 } = feedSlice.actions;
 export default feedSlice.reducer;
