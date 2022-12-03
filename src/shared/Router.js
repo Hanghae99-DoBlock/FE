@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Toast from "../common/toast/Toast";
 import {
 	ProfilePage,
 	SignInPage,
@@ -16,7 +15,6 @@ import {
 	FeedPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
-import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 
@@ -76,7 +74,14 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>}>
+					<Route
+						path="/feed"
+						element={
+							<PrivateRoute>
+								<FeedPage />
+							</PrivateRoute>
+						}
+					>
 						<Route path="following" element={<FollowingFeedListPage />} />
 						<Route path="recommended" element={<RecommendedFeedListPage />} />
 					</Route>
@@ -104,7 +109,6 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-
 				</Routes>
 			</BrowserRouter>
 		</>
