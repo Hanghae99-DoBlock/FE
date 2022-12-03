@@ -19,7 +19,7 @@ const Toast = () => {
 	return (
 		<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
 			<Flex wd="100%" ht="100vh" position="relative">
-				<Flex wd="100%" ht="100%" zIndex="2" ai="flex-end">
+				<Flex wd="100%" ht="100%" zIndex="2" ai="flex-start">
 					<Flex
 						color="white"
 						wd="335px"
@@ -28,7 +28,7 @@ const Toast = () => {
 						oc="0.9"
 						radius="30px"
 						gap="6px"
-						mg="0 0 79px 0"
+						mg="83px 0 0 0"
 					>
 						<Flex>
 							<Svg variant="toast" />
