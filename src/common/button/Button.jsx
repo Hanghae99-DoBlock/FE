@@ -12,10 +12,10 @@ const StBtn = styled.button`
 				return css`
 					width: 335px;
 					height: 60px;
-					background-color: #7474ff;
+					background-color: #ff8737;
 					color: white;
 					border-radius: 10px;
-					border: 1px solid #7474ff;
+					border: 1px solid #ff8737;
 					font-size: 16px;
 					font-weight: 600;
 					line-height: 19px;
@@ -85,6 +85,20 @@ const StBtn = styled.button`
 					font-size: 18px;
 					margin: 0 5px;
 					cursor: pointer;
+
+			case "delTodo":
+				return css`
+					cursor: pointer;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 45px;
+					height: 27px;
+					background-color: #ffeff1;
+					border-radius: 5px;
+					color: #fd3049;
+					font-weight: 700;
+					font-size: 11px;
 				`;
 			default:
 				break;

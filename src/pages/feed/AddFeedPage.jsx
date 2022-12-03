@@ -17,7 +17,6 @@ import {
 } from "../../redux/modules/feed/feedSlice";
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
-import { __getTodoList } from "../../redux/modules/todoList/todoListSlice";
 import { useNavigate } from "react-router-dom";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
@@ -35,6 +34,8 @@ const AddFeedPage = () => {
 	const [isInputHidden, setIsInputHidden] = useState(true);
 	const [detail, setDetail] = useState("");
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
+	const [isPostPossible, setIsPostPossible] = useState(false);
+	const loading = useSelector(state => state.feed.isLoading);
 	const todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});
@@ -74,7 +75,7 @@ const AddFeedPage = () => {
 		/*전달할 색상 값 변경 */
 	}
 	const yeollowHandler = () => {
-		setColor("#FFAC33");
+		setColor("#FFD645");
 		setIsYellowChecked(true);
 		setIsBlueChecked(false);
 		setIsGreenChecked(false);
@@ -82,7 +83,7 @@ const AddFeedPage = () => {
 	};
 
 	const orangeHandler = () => {
-		setColor("#FE8358");
+		setColor("##FFB443");
 		setIsYellowChecked(false);
 		setIsBlueChecked(false);
 		setIsGreenChecked(false);
@@ -90,7 +91,7 @@ const AddFeedPage = () => {
 	};
 
 	const blueHandler = () => {
-		setColor("#49AFFA");
+		setColor("#6ED6F8");
 		setIsYellowChecked(false);
 		setIsBlueChecked(true);
 		setIsGreenChecked(false);
@@ -98,7 +99,7 @@ const AddFeedPage = () => {
 	};
 
 	const greenHandler = () => {
-		setColor("#4CCCB5");
+		setColor("#5DE5B4");
 		setIsYellowChecked(false);
 		setIsBlueChecked(false);
 		setIsGreenChecked(true);
@@ -152,9 +153,7 @@ const AddFeedPage = () => {
 	};
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
-		if (todoIdArray.length < 1 || photoUrlArray.length < 1) {
-			alert("사진과 자랑하고싶은 투두는 필수항목입니다");
-		} else {
+		if (boastFeed.length >= 1 && photoUrlArray.length >= 1) {
 			dispatch(
 				__uploadFeed({
 					todoIdList: todoIdArray,
@@ -173,6 +172,21 @@ const AddFeedPage = () => {
 		dispatch(resetTodo());
 	};
 
+	useEffect(() => {
+		if (
+			todoIdArray.length >= 1 &&
+			photoUrlArray.length >= 1 &&
+			color.length >= 1
+		) {
+			setIsPostPossible(true);
+		} else {
+			setIsPostPossible(false);
+		}
+		if (loading === false) {
+			navigate("/feed");
+		}
+	}, [boastFeed, formPhotoList, color, loading]);
+
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
@@ -180,7 +194,7 @@ const AddFeedPage = () => {
 				dir="column"
 				mw="375px"
 				mxw="375px"
-				mh="667px"
+				mh="834px"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
@@ -195,56 +209,44 @@ const AddFeedPage = () => {
 					ai="center"
 					mg="0 0 5px 0"
 				>
-					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
+					<Flex
+						wd="125px"
+						ht="42px"
+						jc="flex-start"
+						mg="0 0 0 17px"
+						onClick={() => navigate("/feed")}
+					>
 						<Svg variant="chevron" />
 					</Flex>
 					<Flex fs="18" wd="125px">
 						피드 남기기
 					</Flex>
-					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
-				</Flex>
-				<Flex
-					dir="column"
-					wd="375px"
-					ht="72px"
-					jc="flex-start"
-					pd="0 20px"
-					ai="normal"
-				>
-					<Flex
-						dir="row"
-						ai="center"
-						gap="6px"
-						wd="70px"
-						ht="26px"
-						fs="14"
-						fw="600"
-						jc="flex-start"
-					>
-						피드 컬러
-					</Flex>
-					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
-						{!isYellowChecked ? (
-							<StYellowBox onClick={yeollowHandler}></StYellowBox>
-						) : (
-							<StCheckedYellowBox></StCheckedYellowBox>
-						)}
-						{!isOrangeChecked ? (
-							<StOrangeBox onClick={orangeHandler}></StOrangeBox>
-						) : (
-							<StCheckedOrangeBox></StCheckedOrangeBox>
-						)}
-						{!isBlueChecked ? (
-							<StBlueBox onClick={blueHandler}></StBlueBox>
-						) : (
-							<StCheckedBlueBox></StCheckedBlueBox>
-						)}
-						{!isGreenChecked ? (
-							<StGreenBox onClick={greenHandler}></StGreenBox>
-						) : (
-							<StCheckedGreenBox></StCheckedGreenBox>
-						)}
-					</Flex>
+					{!isPostPossible ? (
+						<Flex
+							wd="125px"
+							ht="42px"
+							jc="flex-end"
+							mg="0 17px 0 0"
+							fs="16"
+							color="#D9D9D9"
+							cursor="pointer"
+						>
+							게시
+						</Flex>
+					) : (
+						<Flex
+							wd="125px"
+							ht="42px"
+							jc="flex-end"
+							mg="0 17px 0 0"
+							fs="16"
+							color="#FF8737"
+							cursor="pointer"
+							onClick={uploadFeedHandler}
+						>
+							게시
+						</Flex>
+					)}
 				</Flex>
 				<Flex
 					dir="column"
@@ -327,14 +329,19 @@ const AddFeedPage = () => {
 								최대 3개 선택 가능합니다
 							</Flex>
 						</Flex>
-						<Flex onClick={openModalHandler}>
-							<Svg variant="addBoastTodo" />
-						</Flex>
+						{boastFeed.length !== 0 ? (
+							<Flex onClick={openModalHandler}>
+								<Svg variant="addBoastTodo" />
+							</Flex>
+						) : null}
 					</Flex>
 					<Box variant="feedTodo">
 						<Flex jc="space-between" wd="335px">
 							<Flex fs="14" color="#808080">
 								투두 추가
+							</Flex>
+							<Flex onClick={openModalHandler}>
+								<Svg variant="plusBoastFeed" />
 							</Flex>
 						</Flex>
 					</Box>
@@ -468,15 +475,7 @@ const AddFeedPage = () => {
 						<Button variant="addTag" onClick={addTagInput}>
 							<Svg variant="bluePlus" />
 						</Button>
-						<Flex gap="5px">
-							<Flex>
-								<Svg variant="alert" />
-							</Flex>
-							<Flex fs="12" color="#131313" oc="0.4">
-								태그 입력후 엔터키 입력시 등록되며, 등록된 태그를 누르면
-								삭제됩니다.
-							</Flex>
-						</Flex>
+						<Flex gap="5px"></Flex>
 					</Flex>
 				</Flex>
 				<Flex
@@ -539,21 +538,40 @@ const AddFeedPage = () => {
 							);
 						})}
 					</Flex>
-				</Flex>
-				<Flex
-					wd="100vw"
-					ht="94px"
-					pd="17px 20px"
-					position="sticky"
-					left="-8px"
-					bottom="0"
-					bg="white"
-					jc="center"
-					ai="center"
-				>
-					<Button variant="join" onClick={uploadFeedHandler}>
-						업로드 하기
-					</Button>
+					<Flex
+						dir="row"
+						ai="center"
+						gap="6px"
+						wd="70px"
+						ht="26px"
+						fs="14"
+						fw="600"
+						jc="flex-start"
+					>
+						피드 컬러
+					</Flex>
+					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
+						{!isYellowChecked ? (
+							<StYellowBox onClick={yeollowHandler}></StYellowBox>
+						) : (
+							<StCheckedYellowBox></StCheckedYellowBox>
+						)}
+						{!isOrangeChecked ? (
+							<StOrangeBox onClick={orangeHandler}></StOrangeBox>
+						) : (
+							<StCheckedOrangeBox></StCheckedOrangeBox>
+						)}
+						{!isBlueChecked ? (
+							<StBlueBox onClick={blueHandler}></StBlueBox>
+						) : (
+							<StCheckedBlueBox></StCheckedBlueBox>
+						)}
+						{!isGreenChecked ? (
+							<StGreenBox onClick={greenHandler}></StGreenBox>
+						) : (
+							<StCheckedGreenBox></StCheckedGreenBox>
+						)}
+					</Flex>
 				</Flex>
 			</Flex>
 		</>
@@ -600,7 +618,7 @@ export const StInputTag = styled.input`
 export const StYellowBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #ffac33;
+	background-color: #ffd645;
 	border-radius: 10px;
 	:hover {
 		cursor: pointer;
@@ -610,7 +628,7 @@ export const StYellowBox = styled.button`
 export const StCheckedYellowBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #ffac33;
+	background-color: #ffd645;
 	border-radius: 10px;
 	outline: 2px solid #7474ff;
 	:hover {
@@ -620,7 +638,7 @@ export const StCheckedYellowBox = styled.button`
 export const StOrangeBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #fe8358;
+	background-color: #ffb443;
 	border-radius: 10px;
 	:hover {
 		cursor: pointer;
@@ -630,7 +648,7 @@ export const StOrangeBox = styled.button`
 export const StCheckedOrangeBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #fe8358;
+	background-color: #ffb443;
 	border-radius: 10px;
 	:hover {
 		cursor: pointer;
@@ -641,7 +659,7 @@ export const StCheckedOrangeBox = styled.button`
 export const StBlueBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #49affa;
+	background-color: #6ed6f8;
 	border-radius: 10px;
 
 	:hover {
@@ -652,7 +670,7 @@ export const StBlueBox = styled.button`
 export const StCheckedBlueBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #49affa;
+	background-color: #6ed6f8;
 	border-radius: 10px;
 	outline: 2px solid #7474ff;
 
@@ -664,7 +682,7 @@ export const StCheckedBlueBox = styled.button`
 export const StGreenBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #4cccb5;
+	background-color: #5de5b4;
 	border-radius: 10px;
 	:hover {
 		cursor: pointer;
@@ -677,7 +695,7 @@ export const StGreenBox = styled.button`
 export const StCheckedGreenBox = styled.button`
 	width: 40px;
 	height: 40px;
-	background-color: #4cccb5;
+	background-color: #5de5b4;
 	border-radius: 10px;
 	outline: 2px solid #7474ff;
 	:hover {

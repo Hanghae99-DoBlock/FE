@@ -13,13 +13,13 @@ export const StInput = styled.input`
 			case "join":
 				return css`
 					width: 335px;
-					height: 50px;
-					background-color: #f4f4f4;
+					height: 56px;
+					background-color: #ffffff;
 					border-radius: 10px;
 					padding: 12px 0 12px 16px;
-					outline-color: #7474ff;
+					outline-color: #e5e5e5;
 					::placeholder {
-						color: #c8c8c8;
+						color: #a2a2a2;
 						margin-left: 16px;
 						font-weight: 500;
 						padding: 12px 0 16px;

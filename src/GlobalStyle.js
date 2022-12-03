@@ -8,8 +8,11 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
+    ::-webkit-scrollbar {
+  display: none;
+}
   }
-  
+
   body, div, span, h1, h2, h3, h4, h5, h6,
   p, i, ol, ul, li, form, label, header, nav, 
   input, textarea, button {
@@ -18,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
     border: 0;
     font-weight: normal;
     font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
+
   }
 
   a {
@@ -25,7 +29,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  button,svg {
+  button {
     cursor: pointer;
     background-color: transparent;
   }
