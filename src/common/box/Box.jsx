@@ -95,6 +95,14 @@ const StBox = styled.div`
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
 				`;
+			case "badgeModalBox":
+				return css`
+					background-color: white;
+					width: 281px;
+					height: 290px;
+					border-radius: 10px;
+					box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+				`;
 
 			// 투두 박스
 			case "todoContent":
@@ -153,12 +161,10 @@ const StBox = styled.div`
 				return css`
 					position: relative;
 					border-radius: 100%;
-					height: 100px;
-					width: 100px;
+					height: 80px;
+					width: 80px;
 					overflow: hidden;
 					resize: none;
-					margin: 20px 0 40px 0;
-					border: 3px solid #c8c8c8;
 				`;
 			case "stSvg":
 				return css`
@@ -370,6 +376,16 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 17px;
 					height: 16px;
+				`;
+			case "profileBox":
+				return css`
+					position: relative;
+					padding-bottom: 100px;
+				`;
+			case "profileEditBox":
+				return css`
+					position: relative;
+					margin: 20px 0 40px 0;
 				`;
 			case "recommendSearchBox":
 				return css`

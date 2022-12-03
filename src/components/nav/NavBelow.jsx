@@ -4,11 +4,10 @@ import jwtDecode from "jwt-decode";
 
 const NavBelow = () => {
 	const navigate = useNavigate();
-	const token = localStorage.getItem("accessToken");
 	if (!localStorage.getItem("accessToken")) {
 		navigate("/toodlist");
 	}
-
+	const token = localStorage.getItem("accessToken");
 	const memberId = jwtDecode(token).memberId;
 
 	return (
@@ -47,16 +46,23 @@ const NavBelow = () => {
 					<Box variant="navIconBox" type="magnifyingGlass" />
 					<Text variant="navText">검색</Text>
 				</Flex>
-				<Flex
-					wd="70px"
-					ht="100%"
-					gap="8px"
-					dir="column"
-					cursor="pointer"
-					onClick={() => navigate(`/profile/${memberId}`)}
-				>
-					<Box variant="navIconBox" type="myProfile" />
-					<Text variant="navText">프로필</Text>
+				<Flex wd="70px" ht="100%" gap="8px" dir="column" cursor="pointer">
+					<Flex
+						wd="70px"
+						ht="100%"
+						gap="8px"
+						dir="column"
+						cursor="pointer"
+						onClick={() => navigate(`/profile/${memberId}`)}
+					>
+						<Box variant="navIconBox" type="myProfile" />
+						<Text
+							variant="navText"
+							onClick={() => navigate(`/profile/${memberId}`)}
+						>
+							프로필
+						</Text>
+					</Flex>
 				</Flex>
 			</Flex>
 		</Nav>

@@ -1,11 +1,9 @@
 .mySwiper {
-	margin-top: 20px;
-	width: 331px;
+	width: 335px;
 }
 .swiper-slide {
 	width: 138px;
 	height: 138px;
-	background: #f3f3f3;
 }
 .swiper-slide img {
 	display: block;
@@ -16,7 +14,8 @@
 .badge-slide {
 	width: 100px;
 	height: 100px;
-	background: #f3f3f3;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 .h2 {
 	margin-top: 90px;

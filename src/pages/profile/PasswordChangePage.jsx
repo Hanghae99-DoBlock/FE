@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Flex, Svg, Box } from "../../common";
 import useInput from "../../common/hooks/useInput";
 import { StInput } from "../../common/input/Input";
+import NavBelow from "../../components/nav/NavBelow";
 import { __editPassword } from "../../redux/modules/profileSlice";
 
 const PasswordChange = () => {
@@ -365,6 +366,7 @@ const PasswordChange = () => {
 			>
 				변경 완료
 			</Flex>
+			<NavBelow />
 		</Flex>
 	);
 };
