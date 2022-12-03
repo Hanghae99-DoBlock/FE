@@ -182,7 +182,7 @@ const Profile = () => {
 				<Swiper
 					slidesPerView="auto"
 					loop={false}
-					spaceBetween={30}
+					spaceBetween={20}
 					pagination={{
 						clickable: true,
 					}}
