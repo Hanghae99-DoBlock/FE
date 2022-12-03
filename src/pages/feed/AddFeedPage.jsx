@@ -11,6 +11,7 @@ import {
 	addFormPhoto,
 	addPhoto,
 	addTag,
+	resetFeed,
 	resetTodo,
 	__getSuccessTodo,
 	__uploadFeed,
@@ -28,7 +29,6 @@ const AddFeedPage = () => {
 	const boastFeed = useSelector(state => state.feed.checkedList);
 	const tagList = useSelector(state => state.feed.tagList);
 	const photoList = useSelector(state => state.feed.photoList);
-	const successTodoList = useSelector(state => state?.feed.successTodo);
 	const formPhotoList = useSelector(state => state.feed.formPhotoList);
 	const [id, setId] = useState(tagList.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
@@ -36,7 +36,7 @@ const AddFeedPage = () => {
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
 	const [isPostPossible, setIsPostPossible] = useState(false);
 	const loading = useSelector(state => state.feed.isLoading);
-	const todoIdArray = boastFeed.map(todo => {
+	let todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});
 	const photoUrlArray = photoList.map(photo => {
@@ -54,6 +54,15 @@ const AddFeedPage = () => {
 	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
 	const [isBlueChecked, setIsBlueChecked] = useState(false);
 	const [isGreenChecked, setIsGreenChecked] = useState(false);
+	const [color, setColor] = useState("");
+
+	useEffect(() => {
+		dispatch(resetFeed());
+
+		setColor("");
+		title.value = "";
+		setDetail("");
+	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
 		if (photoList.length >= 4) {
@@ -63,13 +72,10 @@ const AddFeedPage = () => {
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 	}, [photoList]);
+
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
 	}
-	const boastFeedNonDuple = boastFeed?.filter((val, i) => {
-		return boastFeed.indexOf(val) === i;
-	});
-	const [color, setColor] = useState("");
 
 	{
 		/*전달할 색상 값 변경 */
@@ -164,7 +170,7 @@ const AddFeedPage = () => {
 					tagList: tagArray,
 				}),
 			);
-			navigate(`/feed`);
+			navigate(`/feed/following`);
 		}
 	};
 	const openModalHandler = () => {
@@ -182,9 +188,9 @@ const AddFeedPage = () => {
 		} else {
 			setIsPostPossible(false);
 		}
-		if (loading === false) {
-			navigate("/feed");
-		}
+		//if (loading === false) {
+		//	navigate("/feed");
+		//}
 	}, [boastFeed, formPhotoList, color, loading]);
 
 	return (
