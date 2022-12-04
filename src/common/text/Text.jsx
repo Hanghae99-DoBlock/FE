@@ -126,18 +126,17 @@ const StText = styled.span`
 					font-size: 10px;
 					color: #ff8737;
 				`;
-			case "title":
+			case "title1":
 				return css`
 					font-weight: 700;
 					font-size: 22px;
 					line-height: 33px;
-					color: #131313;
+					color: ${color || black};
 				`;
-			case "body2Medium":
+			case "title3":
 				return css`
-					font-weight: 500;
-					font-size: 14px;
-					line-height: 24px;
+					font-weight: 600;
+					font-size: 18px;
 					color: ${color || black};
 				`;
 			case "body1":
@@ -147,17 +146,12 @@ const StText = styled.span`
 					line-height: 22px;
 					color: ${color || black};
 				`;
-			case "title3":
-				return css`
-					font-weight: 600;
-					font-size: 18px;
-					color: ${color || black};
-				`;
-			case "body2":
+			case "body2Medium":
 				return css`
 					font-weight: 500;
 					font-size: 14px;
-					color: #666666;
+					line-height: 24px;
+					color: ${color || black};
 				`;
 			case "feedComment":
 				return css`
