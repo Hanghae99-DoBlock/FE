@@ -10,8 +10,46 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl, feedColor, type, feedImgUrl }) => {
+	${({ variant, profileImageUrl, feedColor, type, feedImgUrl, bg }) => {
 		switch (variant) {
+			case "tagChip":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					cursor: pointer;
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
+			case "customTagChip":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					cursor: pointer;
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 5px 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
+			case "tagChipInput":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 5px 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
 			case "searchScrollArea":
 				return css`
 					display: flex;

@@ -65,7 +65,6 @@ const DetailFeedPage = () => {
 		followBtnStatus = "notFollowing";
 	}
 
-
 	const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
 		useState(false);
 
@@ -76,8 +75,8 @@ const DetailFeedPage = () => {
 	const tagSearchHandler = tagItem => {
 		dispatch(updateSearchKeyword(tagItem));
 		navigate(`/search`);
-  };
-  
+	};
+
 	const [imgPage, setImgPage] = useState(0);
 
 	const showNextImgHandler = () => {
@@ -184,7 +183,7 @@ const DetailFeedPage = () => {
 
 					{/* 제목 */}
 					<Flex wd="100%" pd="8px 29px 16px" jc="flex-start">
-						<Text variant="title">{feedTitle}</Text>
+						<Text variant="title1">{feedTitle}</Text>
 					</Flex>
 
 					{/* 투두리스트 영역 */}

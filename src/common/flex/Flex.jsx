@@ -9,6 +9,9 @@ export default Flex;
 export const StFlex = styled.div`
 	/* 공통 */
 	display: flex;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
 
 	/* flex 속성 */
 	flex-direction: ${({ dir }) => (dir ? dir : "row")};

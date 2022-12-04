@@ -12,6 +12,16 @@ import Hr from "./hr/Hr";
 import TextArea from "./textArea/TextArea";
 import Nav from "./nav/Nav";
 import Toast from "./toast/Toast";
+import {
+	grey100,
+	grey200,
+	grey300,
+	grey400,
+	grey500,
+	grey600,
+	black,
+	white,
+} from "./color";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
 
 export {
@@ -32,4 +42,12 @@ export {
 	TextArea,
 	Nav,
 	Toast,
+	grey100,
+	grey200,
+	grey300,
+	grey400,
+	grey500,
+	grey600,
+	black,
+	white,
 };

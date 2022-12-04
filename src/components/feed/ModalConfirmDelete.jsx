@@ -5,6 +5,7 @@ import { Button, Flex, Svg, Text } from "../../common";
 import { updateIsLoading } from "../../redux/modules/feed/feedSlice";
 import { __deleteFeed } from "../../redux/modules/middleware/feedListThunk";
 import { updateIsToastExist } from "../../redux/modules/toastSlice";
+import { grey600 } from "../../common";
 
 const ModalConfirmDelete = ({ setIsConfirmDeleteModalOpen, feedId }) => {
 	const dispatch = useDispatch();
@@ -50,7 +51,9 @@ const ModalConfirmDelete = ({ setIsConfirmDeleteModalOpen, feedId }) => {
 					/>
 					<Flex dir="column" gap="10px" mg="0 0 20px 0">
 						<Text variant="title3">정말 삭제하시겠습니까?</Text>
-						<Text variant="body2">삭제한 게시글은 복구되지 않습니다.</Text>
+						<Text variant="body2Medium" color={grey600}>
+							삭제한 게시글은 복구되지 않습니다.
+						</Text>
 					</Flex>
 				</Flex>
 				<Flex wd="100%" gap="9px">
