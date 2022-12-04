@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const FirstHeading = styled.h1`
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 33px;
 	color: ${({ color }) => (color ? color : "")};
 	font-size: ${({ fs }) => (fs ? fs : "")};
 	text-align: ${({ ta }) => (ta ? ta : "")};

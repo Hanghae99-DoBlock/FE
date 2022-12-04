@@ -9,6 +9,9 @@ export default Flex;
 export const StFlex = styled.div`
 	/* 공통 */
 	display: flex;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
 
 	/* flex 속성 */
 	flex-direction: ${({ dir }) => (dir ? dir : "row")};
@@ -27,6 +30,7 @@ export const StFlex = styled.div`
 	/* 스타일 */
 	background: ${({ bc }) => bc};
 	background-color: ${({ bg }) => bg};
+	background-image: ${({ bi }) => bi};
 	border: ${({ border }) => border};
 	border-top: ${({ bt }) => bt};
 	border-left: ${({ bl }) => bl};

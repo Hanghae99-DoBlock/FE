@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { black } from "../../common";
 
 const Text = ({ children, ...props }) => {
 	return <StText {...props}>{children}</StText>;
@@ -6,7 +7,7 @@ const Text = ({ children, ...props }) => {
 export default Text;
 
 const StText = styled.span`
-	${({ variant }) => {
+	${({ variant, color }) => {
 		switch (variant) {
 			case "big":
 				return css`
@@ -129,6 +130,20 @@ const StText = styled.span`
 					font-size: 22px;
 					line-height: 33px;
 					color: #131313;
+				`;
+			case "body2Medium":
+				return css`
+					font-weight: 500;
+					font-size: 14px;
+					line-height: 24px;
+					color: ${color || black};
+				`;
+			case "body1":
+				return css`
+					font-weight: 400;
+					font-size: 16px;
+					line-height: 22px;
+					color: ${color || black};
 				`;
 			default:
 				break;
