@@ -1,42 +1,42 @@
 import { useEffect } from "react";
-import styled from "styled-components";
-import Flex from "../flex/Flex";
-import Svg from "../svg/Svg";
+import { useDispatch, useSelector } from "react-redux";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
+import { Flex, Svg } from "../../common";
 
-const Toast = ({ setToast, text }) => {
+const Toast = () => {
+	const dispatch = useDispatch();
+	const { toastContent } = useSelector(state => state.toastSlice);
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			setToast(false);
+			dispatch(updateIsToastExist(""));
 		}, 1500);
 		return () => {
 			clearTimeout(timer);
 		};
+	}, []);
 
-		setToast(true);
-	}, [setToast]);
 	return (
-		<Flex
-			dir="row"
-			ai="center"
-			wd="335px"
-			ht="40px"
-			bg="#131313"
-			oc="0.9"
-			radius="30px"
-			color="white"
-			fs="14"
-			gap="6px"
-			mg="84px 0 0 0"
-			position="absolute"
-			left="50%"
-			right="50%"
-			bottom="535px"
-			transform="translate(-50%,-10%)"
-		>
-			<Flex>
-				<Svg variant="toast" />
+		<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+			<Flex wd="100%" ht="100vh" position="relative">
+				<Flex wd="100%" ht="100%" zIndex="2" ai="flex-start">
+					<Flex
+						color="white"
+						wd="335px"
+						ht="40px"
+						bg="#131313"
+						oc="0.9"
+						radius="30px"
+						gap="6px"
+						mg="83px 0 0 0"
+					>
+						<Flex>
+							<Svg variant="toast" />
+						</Flex>
+						<Flex>{toastContent}</Flex>
+					</Flex>
+				</Flex>
 			</Flex>
-			<Flex>{text}</Flex>
 		</Flex>
 	);
 };

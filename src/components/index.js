@@ -15,6 +15,7 @@ import {
 	ChoiceTodoModal,
 	PhotoList,
 	TagList,
+	ModalConfirmDelete,
 } from "./feed";
 import NavBelow from "./nav/NavBelow";
 
@@ -33,4 +34,5 @@ export {
 	BoastFeed,
 	ChoiceTodo,
 	ChoiceTodoModal,
+	ModalConfirmDelete,
 };
