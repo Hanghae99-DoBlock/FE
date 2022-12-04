@@ -83,13 +83,12 @@ const ProfileEdit = () => {
 		<>
 			<Flex
 				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
-				mg="0 auto"
+				jc="flex-start"
+				wd="100%"
+				ht="100vh"
 				style={{ overflow: "auto" }}
 			>
-				<Flex wd="375px" mg="auto" dir="column">
+				<Flex wd="375px" dir="column">
 					<Flex wd="335px" jc="space-between" mg="20px 0 0 0">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
 						<Flex fs="18" fw="600">

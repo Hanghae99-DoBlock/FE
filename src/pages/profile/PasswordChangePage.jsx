@@ -92,7 +92,7 @@ const PasswordChange = () => {
 	};
 
 	return (
-		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+		<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
 			<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
 				<Flex wd="113px" ht="42px" jc="flex-start" mg="0 0 0 17px">
 					<Svg variant="chevron" onClick={() => navigate(-1)} />

@@ -32,63 +32,63 @@ const SignInPage = () => {
 			{isSplash === true ? (
 				<Splash />
 			) : (
-				<Flex
-					dir="column"
-					mw="100%"
-					mxw="100%"
-					mh="100vh"
-					mxh="100%"
-					mg="0 auto"
-					bg="#FFFAF8"
-					gap="37px"
-					jc="flex-start"
-				>
-					<Flex dir="column" wd="100%" ht="100%" fs="22" jc="center" lh="33">
-						<Flex dir="row" ht="186px" mwd="375px" mg="118px 0 0 0">
-							<Lottie animationData={Block} />
-						</Flex>
-						<Flex fw="bold">투두를 달성하고</Flex>
-
-						<Flex fw="bold">블록을 쌓아보세요!</Flex>
-					</Flex>
-					<Flex dir="column" gap="10px">
-						<Flex>
-							<Svg variant="kakao" />
-						</Flex>
-						<Flex>
-							<Svg variant="naver" />
-						</Flex>
-						<Flex>
-							<Svg variant="google" />
-						</Flex>
-					</Flex>
+				<Flex wd="100%">
 					<Flex
-						dir="row"
-						wd="239px"
-						ht="19px"
-						jc="space-between"
-						mg="0 0 82px 0"
+						dir="column"
+						wd="100%"
+						ht="100vh"
+						mg="0 auto"
+						bg="#FFFAF8"
+						gap="37px"
+						jc="flex-start"
 					>
-						<Flex
-							fs="14"
-							fw="600"
-							color="#A2A2A2"
-							br="1px solid #E5E5E5"
-							wd="113px"
-							jc="flex-start"
-							cursor="pointer"
-							onClick={() => navigate("/emailSignIn")}
-						>
-							이메일로 로그인
+						<Flex dir="column" wd="100%" ht="100%" fs="22" jc="center" lh="33">
+							<Flex dir="row" ht="186px" mwd="375px" mg="118px 0 0 0">
+								<Lottie animationData={Block} />
+							</Flex>
+							<Flex fw="bold">투두를 달성하고</Flex>
+
+							<Flex fw="bold">블록을 쌓아보세요!</Flex>
+						</Flex>
+						<Flex dir="column" gap="10px">
+							<Flex>
+								<Svg variant="kakao" />
+							</Flex>
+							<Flex>
+								<Svg variant="naver" />
+							</Flex>
+							<Flex>
+								<Svg variant="google" />
+							</Flex>
 						</Flex>
 						<Flex
-							fs="14"
-							fw="600"
-							color="#A2A2A2"
-							onClick={() => navigate("/signup")}
-							cursor="pointer"
+							dir="row"
+							wd="239px"
+							ht="19px"
+							jc="space-between"
+							mg="0 0 82px 0"
 						>
-							이메일로 회원가입
+							<Flex
+								fs="14"
+								fw="600"
+								color="#A2A2A2"
+								br="1px solid #E5E5E5"
+								wd="113px"
+								jc="flex-start"
+								cursor="pointer"
+								onClick={() => navigate("/emailSignIn")}
+							>
+								이메일로 로그인
+							</Flex>
+							<Flex
+								fs="14"
+								fw="600"
+								color="#A2A2A2"
+								onClick={() => navigate("/signup")}
+								cursor="pointer"
+							>
+								이메일로 회원가입
+							</Flex>
 						</Flex>
 					</Flex>
 				</Flex>
