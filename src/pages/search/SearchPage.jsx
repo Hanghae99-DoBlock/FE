@@ -19,6 +19,7 @@ import {
 const FeedPage = () => {
 	const dispatch = useDispatch();
 	const feedList = useSelector(state => state.feed.feedList);
+	const searchKeyword = useSelector(state => state.feed.searchKeyword);
 	const navigate = useNavigate();
 
 	// 상단 탭 메뉴 ui 상태 관리
@@ -40,6 +41,17 @@ const FeedPage = () => {
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
+
+	useEffect(() => {
+		if (searchKeyword) {
+			dispatch(
+				__SearchTagAndMember({
+					keyword: searchKeyword,
+					category: "feed",
+				}),
+			);
+		}
+	}, [searchKeyword]);
 
 	useEffect(() => {
 		setFollow(isFollow);
