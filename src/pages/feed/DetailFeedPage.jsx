@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import jwtDecode from "jwt-decode";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Box, Text, Svg } from "../../common";
@@ -63,6 +63,16 @@ const DetailFeedPage = () => {
 	} else {
 		followBtnStatus = "notFollowing";
 	}
+
+	const [imgPage, setImgPage] = useState(0);
+
+	const showNextImgHandler = () => {
+		setImgPage(prev => prev + 1);
+	};
+
+	const showPrevImgHandler = () => {
+		setImgPage(prev => prev - 1);
+	};
 
 	return (
 		<>
@@ -163,11 +173,37 @@ const DetailFeedPage = () => {
 					</Flex>
 
 					{/* 사진 영역*/}
-					<Flex wd="100%" bg="#f8f8f8" dir="column">
-						{feedImagesUrlList?.map((feedImg, index) => (
-							<Box key={index} variant="feedImg" feedImgUrl={feedImg} />
-						))}
-					</Flex>
+					{feedImagesUrlList ? (
+						<Box variant="feedImg" feedImgUrl={feedImagesUrlList[imgPage]}>
+							<Flex wd="100%" ht="100%" jc="space-between">
+								{imgPage === 0 ? (
+									<div />
+								) : (
+									<Flex
+										onClick={showPrevImgHandler}
+										cursor="pointer"
+										jc="flex-start"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Prev" />
+									</Flex>
+								)}
+								{imgPage === feedImagesUrlList.length - 1 ||
+								feedImagesUrlList.length === 1 ? null : (
+									<Flex
+										onClick={showNextImgHandler}
+										cursor="pointer"
+										jc="flex-end"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Nxt" />
+									</Flex>
+								)}
+							</Flex>
+						</Box>
+					) : null}
 
 					{/* 태그 영역 */}
 					<Flex wrap="wrap" gap="8px" wd="100%" jc="flex-start" pd="24px 18px">
