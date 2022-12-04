@@ -99,7 +99,12 @@ const StBtn = styled.button`
 					background-color: #ededff;
 					border-radius: 10px;
 				`;
-
+			case "feedReaction":
+				return css`
+					font-size: 18px;
+					margin: 0 5px;
+					cursor: pointer;
+				`;
 			case "delTodo":
 				return css`
 					cursor: pointer;

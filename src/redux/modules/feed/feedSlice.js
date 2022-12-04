@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -91,13 +91,56 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
-export const __SearchTagAndMember = createAsyncThunk(
+export const __searchTagAndMember = createAsyncThunk(
 	"SEARCH",
 	async (payload, thunkAPI) => {
 		try {
 			const { keyword, category } = payload;
+			const { tagSearchPageNum, memberSearchPageNum } =
+				thunkAPI.getState().feed;
+
+			let page;
+
+			if (category === "feed") {
+				page = tagSearchPageNum;
+			} else {
+				page = memberSearchPageNum;
+			}
+
 			const { data } = await axios.get(
-				`${serverUrl}/api/search?keyword=${keyword}&category=${category}`,
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({
+				keyword: keyword,
+				data: data,
+				category: category,
+			});
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
+export const __infinitySearchTag = createAsyncThunk(
+	"INFINITE_SCROLL_SEARCH_TAG",
+	async (payload, thunkAPI) => {
+		try {
+			const { keyword, category } = payload;
+			const { infiniteTagNumber } = thunkAPI.getState().feed;
+
+			let page;
+
+			page = infiniteTagNumber;
+
+			const { data } = await axios.get(
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -112,15 +155,44 @@ export const __SearchTagAndMember = createAsyncThunk(
 		}
 	},
 );
-// 코멘트 추가
-export const __addComment = createAsyncThunk(
-	"comment/addComment",
+export const __infinitySearchMember = createAsyncThunk(
+	"INFINITE_SCROLL_SEARCH__MEMBER",
+	async (payload, thunkAPI) => {
+		try {
+			const { keyword, category } = payload;
+			const { infiniteTagNumber, infiniteMemberNumber } =
+				thunkAPI.getState().feed;
+
+			let page;
+
+			page = infiniteMemberNumber;
+
+			const { data } = await axios.get(
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+				payload,
+			);
+			return thunkAPI.fulfillWithValue({ data: data, category: category });
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
+// 리액션 추가 / 삭제
+export const __updateReactions = createAsyncThunk(
+	"feed/reaction",
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
-				`${serverUrl}/api/feed/${payload.id}/comment`,
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
 				{
-					commentContent: payload.content,
+					reactionType: payload.reactionType,
 				},
 				{
 					headers: {
@@ -131,61 +203,8 @@ export const __addComment = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
-			window.location.replace(`/feed/${payload.feedId}`);
 			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-
-// 코멘트 수정
-export const __editComment = createAsyncThunk(
-	"comment/editComment",
-	async (payload, thunkAPI) => {
-		try {
-			const response = await axios.put(
-				`${serverUrl}/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
-				{
-					headers: {
-						Authorization: accessToken,
-					},
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			alert("수정 완료");
-			window.history.back();
-			return thunkAPI.fulfillWithValue(response);
-		} catch (error) {
-			alert("수정 실패");
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-
-// 코멘트 삭제
-export const __deleteComment = createAsyncThunk(
-	"comment/deleteComment",
-	async (payload, thunkAPI) => {
-		try {
-			await axios.delete(
-				`${serverUrl}/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
-				{
-					headers: {
-						Authorization: accessToken,
-					},
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			alert("삭제 완료");
-			window.location.replace(`/feed/${payload.feedId}`);
-			return thunkAPI.fulfillWithValue(payload);
-		} catch (error) {
-			alert("삭제 실패");
 			return thunkAPI.rejectWithValue(error);
 		}
 	},
@@ -201,13 +220,24 @@ const initialState = {
 	successTodo: [],
 	feedItem: {},
 	isLoading: "",
-	searchTag: "",
-	searchMember: "",
+	searchTag: [],
+	searchMember: [],
 	commentList: [],
 	followingFeedPageNum: 0,
 	recommendedFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	searchKeyword: null,
+	tagSearchPageNum: 0,
+	memberSearchPageNum: 0,
+	infiniteTagNumber: 0,
+	infiniteMemberNumber: 1,
+	isNextTagSearchExist: true,
+	isNextMemberSearchExist: true,
+	addedSearchTag: [],
+	addedSearchMember: [],
+	searchTagValue: "",
+	searchMemberValue: "",
 };
 
 export const feedSlice = createSlice({
@@ -240,6 +270,11 @@ export const feedSlice = createSlice({
 				});
 			}
 		},
+		resetFeed: (state, action) => {
+			state.checkedList = [];
+			state.tagList = [];
+			state.photoList = [];
+		},
 		deleteTag: (state, action) => {
 			state.tagList = state.tagList.filter((tag, index) => {
 				return action.payload.id !== tag.id;
@@ -264,6 +299,9 @@ export const feedSlice = createSlice({
 		},
 		updateIsLoading: (state, action) => {
 			state.isLoading = action.payload;
+		},
+		updateSearchKeyword: (state, action) => {
+			state.searchKeyword = action.payload;
 		},
 	},
 	extraReducers: builder => {
@@ -309,22 +347,47 @@ export const feedSlice = createSlice({
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
 				state.feedItem = action.payload;
 			})
-			.addCase(__SearchTagAndMember.fulfilled, (state, action) => {
-				{
-					action.payload.category === "feed"
-						? (state.searchTag = action.payload.data)
-						: (state.searchMember = action.payload.data);
+
+			.addCase(__searchTagAndMember.fulfilled, (state, action) => {
+				if (action.payload.category === "feed") {
+					state.searchTag = action.payload.data;
+					state.isNextTagSearchExist = true;
+					state.isNextMemberSearchExist = false;
+					state.searchTagValue = action.payload.keyword;
+					state.infiniteTagNumber = 1;
+					state.infiniteMemberNumber = 1;
+				} else {
+					state.searchMember = action.payload.data;
+					state.searchTagValue = action.payload.keyword;
+					state.isNextMemberSearchExist = true;
+					state.isNextTagSearchExist = false;
+					state.infiniteTagNumber = 0;
+					state.infiniteMemberNumber = 1;
 				}
 			})
-			.addCase(__addComment.fulfilled, (state, action) => {
-				state.feedItem.commentResponseDtoList = action.payload;
-				state.feedItem.countComment = action.payload;
-				state.commentList?.push(action.payload);
+			.addCase(__infinitySearchTag.fulfilled, (state, action) => {
+				if (action.payload.category === "feed") {
+					state.isNextMemberSearchExist = false;
+					state.isNextTagSearchExist = true;
+					state.addedSearchTag = action.payload.data;
+					state.searchTag.push(...action.payload.data);
+					state.infiniteTagNumber += 1;
+				}
+				if (state.addedSearchTag.length < 5) {
+					state.isNextTagSearchExist = false;
+				}
 			})
-			.addCase(__deleteComment.fulfilled, (state, action) => {
-				state.commentList = state.commentList?.filter(item => {
-					return item !== action.payload;
-				});
+			.addCase(__infinitySearchMember.fulfilled, (state, action) => {
+				if (action.payload.category === "member") {
+					state.isNextMemberSearchExist = true;
+					state.isNextTagSearchExist = false;
+					state.addedSearchMember = action.payload.data;
+					state.searchMember.push(...action.payload.data);
+					state.infiniteMemberNumber += 1;
+				}
+				if (state.addedSearchMember.length < 10) {
+					state.isNextMemberSearchExist = false;
+				}
 			});
 	},
 });
@@ -339,5 +402,7 @@ export const {
 	addFormPhoto,
 	updateFeedItem,
 	updateIsLoading,
+	updateSearchKeyword,
+	resetFeed,
 } = feedSlice.actions;
 export default feedSlice.reducer;

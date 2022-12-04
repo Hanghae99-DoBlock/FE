@@ -16,7 +16,7 @@ const StImage = styled.img`
 					width: 60px;
 					height: 60px;
 					border-radius: 50%;
-					margin-top: 27px;
+					margin-top: 18px;
 					margin-right: 10px;
 					outline: 2px solid white;
 					outline-offset: -1px;
@@ -53,6 +53,10 @@ const StImage = styled.img`
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+				`;
+			case "badgeImage":
+				return css`
+					margin: 8px;
 				`;
 			default:
 				break;

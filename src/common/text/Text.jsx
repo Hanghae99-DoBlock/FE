@@ -96,6 +96,7 @@ const StText = styled.span`
 				return css`
 					font-weight: 400;
 					font-size: 14px;
+					cursor: pointer;
 				`;
 			case "commentHeart":
 				return css`
@@ -109,6 +110,7 @@ const StText = styled.span`
 					font-size: 14px;
 					color: red;
 					margin-left: 5px;
+					cursor: pointer;
 				`;
 			// 피드 상세
 			case "red":
@@ -141,6 +143,17 @@ const StText = styled.span`
 					font-weight: 500;
 					font-size: 14px;
 					color: #666666;
+				`;
+			case "feedComment":
+				return css`
+					font-weight: 500;
+					font-size: 14px;
+					color: #ff8737;
+				`;
+			case "feedReaction":
+				return css`
+					margin: 0 5px;
+					cursor: pointer;
 				`;
 			default:
 				break;
