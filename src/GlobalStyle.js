@@ -30,7 +30,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   button {
-    cursor: pointer;
     background-color: transparent;
   }
 

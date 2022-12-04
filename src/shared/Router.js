@@ -13,6 +13,7 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	InterestTagsPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
 } from "../pages";
@@ -72,6 +73,14 @@ const Router = () => {
 						element={
 							<PrivateRoute>
 								<FollowerPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/edit/interest"
+						element={
+							<PrivateRoute>
+								<InterestTagsPage />
 							</PrivateRoute>
 						}
 					/>

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { black, white } from "../color";
 
 const Button = ({ children, ...props }) => {
 	return <StBtn {...props}>{children}</StBtn>;
@@ -118,6 +119,29 @@ const StBtn = styled.button`
 					color: #fd3049;
 					font-weight: 700;
 					font-size: 11px;
+				`;
+			case "disactivatedXL":
+				return css`
+					width: 100%;
+					height: 62px;
+					background-color: ${white};
+					border-radius: 10px;
+					color: #cacaca;
+					font-weight: 700;
+					font-weight: 400;
+					font-size: 16px;
+				`;
+			case "activatedXL":
+				return css`
+					cursor: pointer;
+					width: 100%;
+					height: 62px;
+					background-color: ${black};
+					border-radius: 10px;
+					color: ${white}
+					font-weight: 700;
+					font-weight: 400;
+					font-size: 16px;
 				`;
 			default:
 				break;
