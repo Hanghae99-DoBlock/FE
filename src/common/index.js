@@ -19,11 +19,14 @@ import {
 	grey400,
 	grey500,
 	grey600,
+	orange100,
+	orange200,
+	orange300,
 	black,
 	white,
 } from "./color";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
-
+import { PcVerIllustration } from "./box";
 export {
 	Layout,
 	Box,
@@ -42,12 +45,16 @@ export {
 	TextArea,
 	Nav,
 	Toast,
+	PcVerIllustration,
 	grey100,
 	grey200,
 	grey300,
 	grey400,
 	grey500,
 	grey600,
+	orange100,
+	orange200,
+	orange300,
 	black,
 	white,
 };
