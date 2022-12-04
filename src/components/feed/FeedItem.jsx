@@ -13,15 +13,16 @@ const FeedItem = ({ feedItem }) => {
 		countReaction,
 		countComment,
 	} = feedItem;
+
 	return (
 		<FeedItemUi feedId={feedId} feedColor={feedColor}>
 			<Flex ht="100%" dir="column" jc="space-between">
 				{/* 상단 */}
 				<Flex dir="column" ai="center" gap="15px">
-					<Text variant="whiteTiny">{todoList[0]}</Text>
+					{todoList && <Text variant="whiteTiny">{todoList[0]}</Text>}
 					<Text variant="whiteBig">{feedTitle}</Text>
 					<Flex dir="row" jc="center" wd="100%" gap="6px">
-						{tagList.map(tagItem => (
+						{tagList?.map(tagItem => (
 							<Text key={tagList.indexOf(tagItem)} variant="whiteMedium">
 								# {tagItem}
 							</Text>

@@ -23,6 +23,12 @@ const StHr = styled.hr`
 					height: 2px;
 					background-color: #efefef;
 				`;
+			case "profileHr":
+				return css`
+					width: 375px;
+					height: 2px;
+					background-color: #efefef;
+				`;
 			default:
 				break;
 		}
