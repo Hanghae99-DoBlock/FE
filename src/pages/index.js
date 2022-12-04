@@ -8,6 +8,8 @@ import ProfileEditPage from "./profile/ProfileEditPage";
 import PasswordChangePage from "./profile/PasswordChangePage";
 import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
+import MyBadgesPage from "./profile/MyBadgesPage";
+import BadgeSetiingPage from "./profile/BadgeSetiingPage";
 import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
@@ -29,4 +31,6 @@ export {
 	RecommendedFeedListPage,
 	FeedPage,
 	InterestTagsPage,
+	MyBadgesPage,
+	BadgeSetiingPage,
 };

@@ -21,7 +21,26 @@ const StBtn = styled.button`
 					font-weight: 600;
 					line-height: 19px;
 				`;
-
+			case "halfPrimary":
+				return css`
+					width: 100%;
+					height: 50px;
+					background-color: #ffeff1;
+					color: #fd3049;
+					border-radius: 5px;
+					font-size: 14px;
+					font-weight: 600;
+				`;
+			case "halfTertiary":
+				return css`
+					width: 100%;
+					height: 50px;
+					background-color: #f8f8f8;
+					color: #666666;
+					border-radius: 5px;
+					font-size: 14px;
+					font-weight: 600;
+				`;
 			// 투두 추가 버튼
 			case "addTodo":
 				return css`
@@ -81,7 +100,12 @@ const StBtn = styled.button`
 					background-color: #ededff;
 					border-radius: 10px;
 				`;
-
+			case "feedReaction":
+				return css`
+					font-size: 18px;
+					margin: 0 5px;
+					cursor: pointer;
+				`;
 			case "delTodo":
 				return css`
 					cursor: pointer;
