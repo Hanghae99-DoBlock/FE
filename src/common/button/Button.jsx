@@ -138,7 +138,7 @@ const StBtn = styled.button`
 					height: 62px;
 					background-color: ${black};
 					border-radius: 10px;
-					color: ${white}
+					color: ${white};
 					font-weight: 700;
 					font-weight: 400;
 					font-size: 16px;

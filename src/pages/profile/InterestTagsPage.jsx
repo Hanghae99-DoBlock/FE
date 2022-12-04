@@ -95,7 +95,14 @@ const InterestTagsPage = () => {
 
 			// selectedTags 변경
 			if (recommendedTags[targetTagId].isSelected === false) {
-				setSelectedTags([...selectedTags, recommendedTags[targetTagId]]);
+				const slicedTagContent = recommendedTags[targetTagId].tagContent
+					.slice(2)
+					.replace(/ /g, "");
+				const changedObj = {
+					...recommendedTags[targetTagId],
+					tagContent: slicedTagContent,
+				};
+				setSelectedTags([...selectedTags, changedObj]);
 			} else {
 				const changedList = selectedTags.filter(
 					currentTag => currentTag.id !== targetTagId,
@@ -133,10 +140,7 @@ const InterestTagsPage = () => {
 
 	// 제출 핸들러
 	const submitHandler = () => {
-		const coppiedSelectedTags = Array.from(selectedTags);
-		const request = coppiedSelectedTags.map(tag =>
-			tag.tagContent.slice(2).replace(/ /g, ""),
-		);
+		const request = selectedTags.map(tag => tag.tagContent);
 		updateProfileTagsApi(request);
 		navigate(`/profile/edit`);
 	};
