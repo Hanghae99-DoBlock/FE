@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Toast from "../common/toast/Toast";
 import {
 	ProfilePage,
 	SignInPage,
@@ -18,7 +17,6 @@ import {
 	BadgeSetiingPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
-import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 

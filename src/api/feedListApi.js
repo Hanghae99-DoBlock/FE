@@ -11,3 +11,8 @@ export const getRecommendedFeedsApi = async payload => {
 	const response = await instance.get(`/api/feed/recommended?page=${payload}`);
 	return response.data;
 };
+
+// 피드 삭제
+export const deleteFeedApi = payload => {
+	instance.delete(`/api/feed/${payload}`);
+};

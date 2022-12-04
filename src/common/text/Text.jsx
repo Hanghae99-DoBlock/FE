@@ -132,6 +132,18 @@ const StText = styled.span`
 					line-height: 33px;
 					color: #131313;
 				`;
+			case "title3":
+				return css`
+					font-weight: 600;
+					font-size: 18px;
+					color: #131313;
+				`;
+			case "body2":
+				return css`
+					font-weight: 500;
+					font-size: 14px;
+					color: #666666;
+				`;
 			case "feedComment":
 				return css`
 					font-weight: 500;

@@ -13,7 +13,7 @@ import {
 } from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
-import { Toast } from "../../common";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const SignUpPage = () => {
 	const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const SignUpPage = () => {
 		type: "password",
 		visible: false,
 	});
-	const [toast, setToast] = useState(false);
 
 	const email = useInput("");
 	const password = useInput("");
@@ -41,7 +40,9 @@ const SignUpPage = () => {
 		if (loginResult.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
-			return setToast(true);
+			return dispatch(
+				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
+			);
 		}
 	}, [loginResult]);
 
@@ -60,21 +61,18 @@ const SignUpPage = () => {
 		if (loginResult.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
-			return setToast(true);
+			return dispatch(
+				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
+			);
 		} else {
-			return setToast(true);
+			return dispatch(
+				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
+			);
 		}
 	};
 
 	return (
 		<>
-			{toast && (
-				<Toast
-					setToast={setToast}
-					text="아이디, 비밀번호를 다시 입력해주세요"
-				/>
-			)}
-
 			<Flex
 				dir="column"
 				mw="375px"

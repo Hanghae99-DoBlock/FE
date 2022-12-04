@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Box, Text, Svg } from "../../common";
-import { FeedComment, NavBelow } from "../../components";
+import { FeedComment, ModalConfirmDelete, NavBelow } from "../../components";
 import {
 	updateFeedItem,
 	updateSearchKeyword,
@@ -65,6 +65,14 @@ const DetailFeedPage = () => {
 		followBtnStatus = "notFollowing";
 	}
 
+
+	const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
+		useState(false);
+
+	const openConfirmDeleteModalHandler = () => {
+		setIsConfirmDeleteModalOpen(true);
+	};
+
 	const tagSearchHandler = tagItem => {
 		dispatch(updateSearchKeyword(tagItem));
 		navigate(`/search`);
@@ -82,15 +90,39 @@ const DetailFeedPage = () => {
 
 	return (
 		<>
+			{isConfirmDeleteModalOpen ? (
+				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+					<Flex wd="100%" ht="100vh" position="relative">
+						<Flex wd="100%" ht="100%" zIndex="2">
+							<ModalConfirmDelete
+								feedId={feedId}
+								setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
+							/>
+						</Flex>
+					</Flex>
+				</Flex>
+			) : null}
 			<Flex dir="column" wd="100%">
 				<Flex wd="100%" dir="column">
 					{/* 헤더 */}
 					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
-						<Flex gap="14px">
-							<Text variant="grey">수정</Text>
-							<Text variant="red">삭제</Text>
-						</Flex>
+
+						{decodedToken.memberId === memberId ? (
+							<Flex ht="100%" gap="7px">
+								<Flex cursor="pointer" ht="100%" wd="35px">
+									<Text variant="grey">수정</Text>
+								</Flex>
+								<Flex
+									onClick={openConfirmDeleteModalHandler}
+									cursor="pointer"
+									ht="100%"
+									wd="35px"
+								>
+									<Text variant="red">삭제</Text>
+								</Flex>
+							</Flex>
+						) : null}
 					</Flex>
 
 					{/* 프로필 영역 */}
