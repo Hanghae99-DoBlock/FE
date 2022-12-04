@@ -226,6 +226,7 @@ const initialState = {
 	recommendedFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	searchKeyword: null,
 	tagSearchPageNum: 0,
 	memberSearchPageNum: 0,
 	infiniteTagNumber: 0,
@@ -294,6 +295,9 @@ export const feedSlice = createSlice({
 				...state.feedItem,
 				followOrNot: !state.feedItem.followOrNot,
 			};
+		},
+		updateSearchKeyword: (state, action) => {
+			state.searchKeyword = action.payload;
 		},
 	},
 	extraReducers: builder => {
@@ -386,6 +390,7 @@ export const {
 	deletePhoto,
 	addFormPhoto,
 	updateFeedItem,
+	updateSearchKeyword,
 	resetFeed,
 } = feedSlice.actions;
 export default feedSlice.reducer;
