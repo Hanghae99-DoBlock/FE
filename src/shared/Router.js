@@ -14,6 +14,7 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	InterestTagsPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import Splash from "../pages/join/Splash";
@@ -69,6 +70,14 @@ const Router = () => {
 						}
 					/>
 					<Route
+						path="/profile/edit/interest"
+						element={
+							<PrivateRoute>
+								<InterestTagsPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
 						path="/todolist"
 						element={
 							<PrivateRoute>
@@ -76,7 +85,14 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="/feed" element={<PrivateRoute><FeedPage /></PrivateRoute>}>
+					<Route
+						path="/feed"
+						element={
+							<PrivateRoute>
+								<FeedPage />
+							</PrivateRoute>
+						}
+					>
 						<Route path="following" element={<FollowingFeedListPage />} />
 						<Route path="recommended" element={<RecommendedFeedListPage />} />
 					</Route>
@@ -104,7 +120,6 @@ const Router = () => {
 							</PrivateRoute>
 						}
 					/>
-
 				</Routes>
 			</BrowserRouter>
 		</>
