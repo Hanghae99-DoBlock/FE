@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { black, white } from "../color";
+import { black, white, grey100, grey500 } from "../color";
 
 const Button = ({ children, ...props }) => {
 	return <StBtn {...props}>{children}</StBtn>;
@@ -124,9 +124,9 @@ const StBtn = styled.button`
 				return css`
 					width: 100%;
 					height: 62px;
-					background-color: ${white};
+					background-color: ${grey100};
 					border-radius: 10px;
-					color: #cacaca;
+					color: ${grey500};
 					font-weight: 700;
 					font-weight: 400;
 					font-size: 16px;
