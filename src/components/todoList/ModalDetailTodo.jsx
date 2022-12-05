@@ -151,14 +151,11 @@ const ModalDetailTodo = ({
 
 					{/* 버튼 */}
 					<Flex dir="row" gap="9px">
-						<Button onClick={onClickHandlerStatus} variant="modTodo">
+						<Button onClick={onClickHandlerStatus} variant="activatedCta">
 							<Flex wd="100%" dir="row" gap="5px">
 								<Svg variant="write" />
 								{isEdit ? "수정완료" : "수정하기"}
 							</Flex>
-						</Button>
-						<Button variant="shareTodo">
-							<Svg variant="share" />
 						</Button>
 					</Flex>
 				</Form>

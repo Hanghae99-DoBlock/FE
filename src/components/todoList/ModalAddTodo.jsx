@@ -87,7 +87,13 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 					</Flex>
 
 					{/* 추가 버튼 */}
-					<Button variant="addTodo">추가하기</Button>
+					{todo.todoContent ? (
+						<Button onClick={uploadHandler} variant="activatedCta">
+							추가하기
+						</Button>
+					) : (
+						<Button variant="disactivatedCta">추가하기</Button>
+					)}
 				</Form>
 			</Box>
 		</Flex>

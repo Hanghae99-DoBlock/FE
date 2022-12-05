@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { black, white, grey100, grey500 } from "../color";
+import { black, white, grey100, grey500, orange300 } from "../color";
 
 const Button = ({ children, ...props }) => {
 	return <StBtn {...props}>{children}</StBtn>;
@@ -119,6 +119,27 @@ const StBtn = styled.button`
 					color: #fd3049;
 					font-weight: 700;
 					font-size: 11px;
+				`;
+			case "disactivatedCta":
+				return css`
+					width: 100%;
+					height: 50px;
+					background-color: ${grey100};
+					border-radius: 5px;
+					color: ${grey500};
+					font-weight: 600;
+					font-size: 14px;
+				`;
+			case "activatedCta":
+				return css`
+					cursor: pointer;
+					width: 100%;
+					height: 50px;
+					background-color: ${orange300};
+					border-radius: 5px;
+					color: ${white};
+					font-weight: 600;
+					font-size: 14px;
 				`;
 			case "disactivatedXL":
 				return css`
