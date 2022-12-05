@@ -9,6 +9,10 @@ const orange200 = "#FFB889";
 const orange300 = "#FF8737";
 const black = "#131313";
 const white = "#FFFFFF";
+const blockOrange = "#FFB443";
+const blockYellow = "#FFD645";
+const blockBlue = "#6ED6F8";
+const blockGreen = "#5DE5B4";
 
 export {
 	grey100,
@@ -22,4 +26,8 @@ export {
 	orange300,
 	black,
 	white,
+	blockOrange,
+	blockYellow,
+	blockBlue,
+	blockGreen,
 };

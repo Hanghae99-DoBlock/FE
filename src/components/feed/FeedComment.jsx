@@ -70,13 +70,15 @@ const FeedComment = props => {
 
 	return (
 		<>
-			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
-				<Flex>{reaction?.reactionType}</Flex>
-				리액션
+			<Flex wd="100%" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
+				<Flex mg="0 18px 0 0">
+					<Flex>{reaction?.reactionType}</Flex>
+					리액션
+				</Flex>
 			</Flex>
 			<Hr variant="feedHr" />
-			<Flex dir="column" jc="center">
-				<Flex wd="335px" jc="space-between">
+			<Flex wd="100%" dir="column" jc="center">
+				<Flex wd="100%" jc="space-between" pd="0 18px">
 					{modal === true ? <ReactionModal /> : null}
 					<Flex
 						fw="600"
@@ -104,7 +106,7 @@ const FeedComment = props => {
 						/>
 					))}
 			</Flex>
-			<Flex wd="335px" mg="10px">
+			<Flex wd="100%" pd="10px 18px">
 				<form onSubmit={onCreateComment}>
 					<Flex>
 						<Input

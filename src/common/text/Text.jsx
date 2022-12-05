@@ -153,6 +153,20 @@ const StText = styled.span`
 					line-height: 24px;
 					color: ${color || black};
 				`;
+			case "body3":
+				return css`
+					font-weight: 400;
+					font-size: 12px;
+					line-height: 16px;
+					color: ${color || black};
+				`;
+			case "body4":
+				return css`
+					font-weight: 400;
+					font-size: 11px;
+					line-height: 14px;
+					color: ${color || black};
+				`;
 			case "feedComment":
 				return css`
 					font-weight: 500;

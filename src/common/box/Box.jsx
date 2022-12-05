@@ -101,8 +101,7 @@ const StBox = styled.div`
 					justify-content: flex-start;
 					width: 100%;
 					height: 100vh;
-					padding: 85px 20px;
-					gap: 11px;
+					padding: 41px 0 0 0;
 					overflow-x: hidden;
 					overflow-y: auto;
 					::-webkit-scrollbar {
@@ -351,25 +350,6 @@ const StBox = styled.div`
 					background: white;
 					border-bottom: 2px solid #333333;
 					cursor: pointer;
-				`;
-
-			// 피드 아이템 레고 바디
-			case "feedItemBody":
-				return css`
-					width: 100%;
-					height: 178px;
-					background-color: ${feedColor};
-					padding: 35px 20px 20px;
-					border-radius: 20px;
-				`;
-
-			// 피드 아이템 레고 머리
-			case "feedItemHead":
-				return css`
-					width: 89.95px;
-					height: 15px;
-					background-color: ${feedColor};
-					border-radius: 10px 10px 0 0;
 				`;
 
 			// 프로필 이미지 스몰

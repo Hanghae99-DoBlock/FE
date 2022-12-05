@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button, Flex, Svg, Text } from "../../common";
+import { Button, Flex, grey200, orange300, Svg, Text } from "../../common";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
 import { checkTodoApi, deleteTodoApi } from "../../api/todoListApi";
@@ -54,9 +54,25 @@ const TodoItem = ({
 						<Flex onClick={e => e.stopPropagation()} ht="100%" pd="0 15px">
 							{/* 체크박스 */}
 							{completed ? (
-								<Svg onClick={checkTodoHandler} variant="todoCompleted" />
+								<Flex
+									onClick={checkTodoHandler}
+									cursor="pointer"
+									wd="22px"
+									ht="22px"
+									radius="4px"
+									bg={orange300}
+								>
+									<Flex wd="12px" ht="15px" bi="url(/images/checkWhite.svg)" />
+								</Flex>
 							) : (
-								<Svg onClick={checkTodoHandler} variant="checkBox" />
+								<Flex
+									onClick={checkTodoHandler}
+									cursor="pointer"
+									wd="22px"
+									ht="22px"
+									radius="4px"
+									bg={grey200}
+								/>
 							)}
 						</Flex>
 
@@ -71,13 +87,21 @@ const TodoItem = ({
 						>
 							<Text variant="normal">{todoContent}</Text>
 						</Flex>
-						<Flex mg="0 10px">
+						<Flex ht="100%">
 							{isDelBtnExist ? (
-								<Button onClick={deleteTodoHandler} variant="delTodo">
-									삭제
-								</Button>
+								<Flex mg="0 10px">
+									<Button onClick={deleteTodoHandler} variant="delTodo">
+										삭제
+									</Button>
+								</Flex>
 							) : (
-								<Svg variant="hamburger" />
+								<Flex cursor="grab" wd="40px" ht="100%">
+									<Flex
+										wd="15px"
+										ht="12px"
+										bi="url(/images/hamburgerGrey.svg)"
+									/>
+								</Flex>
 							)}
 						</Flex>
 					</Flex>

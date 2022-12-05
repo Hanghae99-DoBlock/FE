@@ -6,6 +6,7 @@ import Form from "./form/Form";
 import Label from "./lable/Label";
 import Input from "./input/Input";
 import Button from "./button/Button";
+import { FloatingAddBtn } from "./button";
 import Flex from "./flex/Flex";
 import Image from "./image/Image";
 import Hr from "./hr/Hr";
@@ -24,6 +25,10 @@ import {
 	orange300,
 	black,
 	white,
+	blockOrange,
+	blockYellow,
+	blockBlue,
+	blockGreen,
 } from "./color";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
 import { PcVerIllustration } from "./box";
@@ -36,6 +41,7 @@ export {
 	Label,
 	Input,
 	Button,
+	FloatingAddBtn,
 	Flex,
 	FirstHeading,
 	SecondHeading,
@@ -57,4 +63,8 @@ export {
 	orange300,
 	black,
 	white,
+	blockOrange,
+	blockYellow,
+	blockBlue,
+	blockGreen,
 };
