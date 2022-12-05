@@ -14,7 +14,7 @@ const FloatingAddBtn = ({ onClick }) => {
 							bs="2px 2px 10px rgba(0, 0, 0, 0.1)"
 							bg={orange300}
 						>
-							<Flex wd="20px" ht="20px" bi="url(images/plusWhite.svg)" />
+							<Flex wd="20px" ht="20px" bi="url(/images/plusWhite.svg)" />
 						</Flex>
 					</button>
 				</Flex>

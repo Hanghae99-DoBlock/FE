@@ -152,15 +152,17 @@ const DetailFeedPage = () => {
 									>
 										<Text variant="selectedTabMenu">{nickname}</Text>
 									</Flex>
-									<Flex
-										wd="60px"
-										ht="20px"
-										bg="#FFF4ED"
-										jc="center"
-										radius="5px"
-									>
-										<Text variant="orange">뱃지</Text>
-									</Flex>
+									{feedItem.badgeName ? (
+										<Flex
+											ht="20px"
+											bg="#FFF4ED"
+											pd="4px 8px"
+											jc="center"
+											radius="5px"
+										>
+											<Text variant="orange">{feedItem.badgeName}</Text>
+										</Flex>
+									) : null}
 								</Flex>
 
 								{/* 게시글 생성 날짜 */}
