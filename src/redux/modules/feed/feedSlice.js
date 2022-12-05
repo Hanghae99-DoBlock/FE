@@ -107,7 +107,7 @@ export const __searchTagAndMember = createAsyncThunk(
 				page = memberSearchPageNum;
 			}
 
-			const { data } = await axios.get(
+			const data = await axios.get(
 				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
 				{
 					headers: { Authorization: accessToken },
@@ -117,13 +117,16 @@ export const __searchTagAndMember = createAsyncThunk(
 				},
 				payload,
 			);
+			console.log(data);
 			return thunkAPI.fulfillWithValue({
 				keyword: keyword,
-				data: data,
+				data: data.data,
 				category: category,
+				status: data.status,
 			});
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			console.log(e.response.status);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -177,7 +180,10 @@ export const __infinitySearchMember = createAsyncThunk(
 				},
 				payload,
 			);
-			return thunkAPI.fulfillWithValue({ data: data, category: category });
+			return thunkAPI.fulfillWithValue({
+				data: data,
+				category: category,
+			});
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -290,6 +296,7 @@ const initialState = {
 	searchTagValue: "",
 	searchMemberValue: "",
 	isCompleted: "",
+	searchResult: "",
 };
 
 export const feedSlice = createSlice({
@@ -404,6 +411,7 @@ export const feedSlice = createSlice({
 					state.searchTagValue = action.payload.keyword;
 					state.infiniteTagNumber = 1;
 					state.infiniteMemberNumber = 1;
+					state.searchResult = action.payload.status;
 				} else {
 					state.searchMember = action.payload.data;
 					state.searchTagValue = action.payload.keyword;
@@ -411,7 +419,11 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = false;
 					state.infiniteTagNumber = 0;
 					state.infiniteMemberNumber = 1;
+					state.searchResult = action.payload.status;
 				}
+			})
+			.addCase(__searchTagAndMember.rejected, (state, action) => {
+				state.searchResult = action.payload;
 			})
 			.addCase(__infinitySearchTag.fulfilled, (state, action) => {
 				if (action.payload.category === "feed") {
@@ -422,6 +434,11 @@ export const feedSlice = createSlice({
 					state.infiniteTagNumber += 1;
 				}
 				if (state.addedSearchTag.length < 5) {
+					state.isNextTagSearchExist = false;
+				} else if (
+					state.addedSearchTag === 5 &&
+					action.payload.status !== 200
+				) {
 					state.isNextTagSearchExist = false;
 				}
 			})
@@ -434,6 +451,11 @@ export const feedSlice = createSlice({
 					state.infiniteMemberNumber += 1;
 				}
 				if (state.addedSearchMember.length < 10) {
+					state.isNextMemberSearchExist = false;
+				} else if (
+					state.addedSearchMember === 5 &&
+					action.payload.status == 404
+				) {
 					state.isNextMemberSearchExist = false;
 				}
 			})

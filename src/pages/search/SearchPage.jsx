@@ -29,6 +29,7 @@ const FeedPage = () => {
 	const searchTagItem = useSelector(state => state.feed.searchTag);
 	const searchMemberItem = useSelector(state => state.feed.searchMember);
 	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
+	const searchResult = useSelector(state => state.feed.searchResult);
 	const [follow, setFollow] = useState(isFollow);
 	const target = useRef(null);
 	const {
@@ -40,7 +41,7 @@ const FeedPage = () => {
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
-
+	console.log(searchResult);
 	useEffect(() => {
 		setFollow(isFollow);
 	}, [isFollow]);
@@ -184,67 +185,78 @@ const FeedPage = () => {
 						<Text variant={userSearchMenuType}>유저 찾기</Text>
 					</Box>
 				</Flex>
-
 				{/* 검색 리스트 */}
 				{category === "feed" ? (
 					<Box variant="searchScrollArea">
-						{searchTagItem.length >= 1
-							? searchTagItem?.map(feedItem => {
-									return <FeedItem key={feedItem.feedId} feedItem={feedItem} />;
-							  })
-							: null}
+						{searchResult === "" ? (
+							<Flex></Flex>
+						) : searchResult === 200 ? (
+							searchTagItem?.map(feedItem => {
+								return <FeedItem key={feedItem.feedId} feedItem={feedItem} />;
+							})
+						) : (
+							<Flex>
+								<Svg variant="searchResultNone" />
+							</Flex>
+						)}
 						<div style={{ width: "335px", height: "90px" }} ref={target} />
 					</Box>
 				) : (
 					<Box variant="searchScrollArea">
-						{searchMemberItem.length >= 1
-							? searchMemberItem.map(data => (
-									<Flex
-										jc="space-between"
-										mg="0 0 20px 0 "
-										wd="100%"
-										key={data.memberId}
-									>
-										<Flex>
-											<Image
-												variant="followImage"
-												src={data.profileImage}
-												alt=""
-												style={{ marginTop: "4px" }}
-												onClick={() => {
-													anotherMemberPage(data.memberId);
-												}}
-											/>
-											<FirstHeading
-												fw="600"
-												fs="13px"
-												onClick={() => {
-													anotherMemberPage(data.memberId);
-												}}
-											>
-												{data.nickname}
-											</FirstHeading>
-										</Flex>
-										<Flex>
-											{follow === false ? (
-												<Svg
-													variant="follow"
-													onClick={() => {
-														followingHandler(data.memberId);
-													}}
-												></Svg>
-											) : (
-												<Svg
-													variant="followCancel"
-													onClick={() => {
-														unfollowHandler(data.memberId);
-													}}
-												></Svg>
-											)}
-										</Flex>
+						{searchResult === "" ? (
+							<Flex></Flex>
+						) : searchResult === 200 ? (
+							searchMemberItem.map(data => (
+								<Flex
+									jc="space-between"
+									mg="0 0 20px 0 "
+									wd="100%"
+									key={data.memberId}
+								>
+									<Flex>
+										<Image
+											variant="followImage"
+											src={data.profileImage}
+											alt=""
+											style={{ marginTop: "4px" }}
+											onClick={() => {
+												anotherMemberPage(data.memberId);
+											}}
+										/>
+										<FirstHeading
+											fw="600"
+											fs="13px"
+											onClick={() => {
+												anotherMemberPage(data.memberId);
+											}}
+										>
+											{data.nickname}
+										</FirstHeading>
 									</Flex>
-							  ))
-							: null}
+									<Flex>
+										{follow === false ? (
+											<Svg
+												variant="follow"
+												onClick={() => {
+													followingHandler(data.memberId);
+												}}
+											></Svg>
+										) : (
+											<Svg
+												variant="followCancel"
+												onClick={() => {
+													unfollowHandler(data.memberId);
+												}}
+											></Svg>
+										)}
+									</Flex>
+								</Flex>
+							))
+						) : (
+							<Flex>
+								<Svg variant="searchResultNone" />
+							</Flex>
+						)}
 						<div style={{ width: "335px", height: "150px" }} ref={target} />
 					</Box>
 				)}
