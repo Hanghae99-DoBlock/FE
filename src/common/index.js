@@ -31,7 +31,7 @@ import {
 	blockGreen,
 } from "./color";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
-
+import { PcVerIllustration } from "./box";
 export {
 	Layout,
 	Box,
@@ -51,6 +51,7 @@ export {
 	TextArea,
 	Nav,
 	Toast,
+	PcVerIllustration,
 	grey100,
 	grey200,
 	grey300,
