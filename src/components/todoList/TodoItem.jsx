@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button, Flex, Svg, Text } from "../../common";
+import { Button, Flex, grey200, orange300, Svg, Text } from "../../common";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
 import { checkTodoApi, deleteTodoApi } from "../../api/todoListApi";
@@ -54,9 +54,23 @@ const TodoItem = ({
 						<Flex onClick={e => e.stopPropagation()} ht="100%" pd="0 15px">
 							{/* 체크박스 */}
 							{completed ? (
-								<Svg onClick={checkTodoHandler} variant="todoCompleted" />
+								<Flex
+									onClick={checkTodoHandler}
+									wd="22px"
+									ht="22px"
+									radius="4px"
+									bg={orange300}
+								>
+									<Flex wd="12px" ht="15px" bi="url(/images/checkWhite.svg)" />
+								</Flex>
 							) : (
-								<Svg onClick={checkTodoHandler} variant="checkBox" />
+								<Flex
+									onClick={checkTodoHandler}
+									wd="22px"
+									ht="22px"
+									radius="4px"
+									bg={grey200}
+								/>
 							)}
 						</Flex>
 

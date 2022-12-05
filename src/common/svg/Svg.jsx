@@ -33,35 +33,6 @@ const Svg = ({ variant, onClick }) => {
 					<rect x="5" y="16.5" width="15" height="2" rx="1" fill="#C8C8C8" />
 				</svg>
 			);
-
-		// 체크박스 아이콘
-		case "checkBox":
-			return (
-				<svg
-					onClick={onClick}
-					width="24"
-					height="25"
-					viewBox="0 0 24 25"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<rect
-						width="24"
-						height="24"
-						transform="translate(0 0.5)"
-						fill="white"
-					/>
-					<rect
-						x="2"
-						y="3"
-						width="20"
-						height="20"
-						rx="4"
-						stroke="#C8C8C8"
-						strokeWidth="2"
-					/>
-				</svg>
-			);
 		// 닫기 아이콘
 		case "close":
 			return (
@@ -423,42 +394,6 @@ const Svg = ({ variant, onClick }) => {
 				>
 					<circle cx="12" cy="12" r="11" fill="#7474FF" />
 					<circle cx="12.0002" cy="12" r="6.41667" fill="white" />
-				</svg>
-			);
-
-		// 완료한 투두 아이콘
-		case "todoCompleted":
-			return (
-				<svg
-					onClick={onClick}
-					width="24"
-					height="25"
-					viewBox="0 0 24 25"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<rect
-						width="24"
-						height="24"
-						transform="translate(0 0.5)"
-						fill="white"
-					/>
-					<rect
-						x="2"
-						y="3"
-						width="20"
-						height="20"
-						rx="4"
-						stroke="#7474FF"
-						strokeWidth="2"
-					/>
-					<path
-						d="M6.23472 13.4624L10.7567 18.6762L17.9891 8.59502"
-						stroke="#7474FF"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					/>
 				</svg>
 			);
 		case "profileFollow":
