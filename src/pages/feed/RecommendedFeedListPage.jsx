@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Flex, grey300, grey600, Text } from "../../common";
-import { FeedItem, NavBelow } from "../../components";
+import { FeedItem } from "../../components";
 import { __getRecommendedFeeds } from "../../redux/modules/middleware/feedListThunk";
 
 const RecommendedFeedListPage = () => {
@@ -31,9 +31,14 @@ const RecommendedFeedListPage = () => {
 		<>
 			<Box variant="feedScrollArea">
 				{recommendedFeedList[0] ? (
-					recommendedFeedList.map(feedItem => (
-						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
-					))
+					<>
+						{recommendedFeedList.map(feedItem => (
+							<FeedItem key={feedItem.feedId} feedItem={feedItem} />
+						))}
+						{isNextRecommendedFeedPageExist ? null : (
+							<Flex border="50px solid transparent" />
+						)}
+					</>
 				) : (
 					<Flex dir="column" ht="100%" pd="0 0 40px 0" gap="15px">
 						<Flex wd="107px" ht="64px" bi="url(/images/blockStacksGrey.svg)" />
@@ -63,11 +68,10 @@ const RecommendedFeedListPage = () => {
 					</Flex>
 				)}
 				{isNextRecommendedFeedPageExist ? null : (
-					<Flex border="40px solid transparent" />
+					<Flex border="50px solid transparent" />
 				)}
 				<div ref={target} />
 			</Box>
-			<NavBelow />
 		</>
 	);
 };

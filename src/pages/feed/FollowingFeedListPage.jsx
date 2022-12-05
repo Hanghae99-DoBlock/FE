@@ -28,9 +28,14 @@ const FollowingFeedListPage = () => {
 	return (
 		<Box variant="feedScrollArea">
 			{followingFeedList[0] ? (
-				followingFeedList.map(feedItem => (
-					<FeedItem key={feedItem.feedId} feedItem={feedItem} />
-				))
+				<>
+					{followingFeedList.map(feedItem => (
+						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
+					))}
+					{isNextFollowingFeedPageExist ? null : (
+						<Flex border="50px solid transparent" />
+					)}
+				</>
 			) : (
 				<Flex dir="column" ht="100%" pd="0 0 40px 0" gap="15px">
 					<Flex wd="107px" ht="64px" bi="url(/images/blockStacksGrey.svg)" />
@@ -38,7 +43,7 @@ const FollowingFeedListPage = () => {
 				</Flex>
 			)}
 			{isNextFollowingFeedPageExist ? null : (
-				<Flex border="40px solid transparent" />
+				<Flex border="50px solid transparent" />
 			)}
 			<div ref={target} />
 		</Box>

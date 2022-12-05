@@ -20,8 +20,15 @@ import {
 	grey400,
 	grey500,
 	grey600,
+	orange100,
+	orange200,
+	orange300,
 	black,
 	white,
+	blockOrange,
+	blockYellow,
+	blockBlue,
+	blockGreen,
 } from "./color";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading/Heading";
 
@@ -50,6 +57,13 @@ export {
 	grey400,
 	grey500,
 	grey600,
+	orange100,
+	orange200,
+	orange300,
 	black,
 	white,
+	blockOrange,
+	blockYellow,
+	blockBlue,
+	blockGreen,
 };

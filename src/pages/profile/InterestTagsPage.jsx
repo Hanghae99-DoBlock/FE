@@ -142,7 +142,7 @@ const InterestTagsPage = () => {
 	const submitHandler = () => {
 		const request = selectedTags.map(tag => tag.tagContent);
 		updateProfileTagsApi(request);
-		navigate(`/profile/edit`);
+		navigate(-1);
 	};
 
 	// 선택된 태그 배경 색
