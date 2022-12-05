@@ -142,7 +142,7 @@ const InterestTagsPage = () => {
 	const submitHandler = () => {
 		const request = selectedTags.map(tag => tag.tagContent);
 		updateProfileTagsApi(request);
-		navigate(`/profile/edit`);
+		navigate(-1);
 	};
 
 	// 선택된 태그 배경 색
@@ -267,7 +267,7 @@ const InterestTagsPage = () => {
 								mg="0 0 0 5px"
 								wd="14px"
 								ht="14px"
-								bi="url(/images/plus.svg)"
+								bi="url(/images/plusBlack.svg)"
 							/>
 						</Flex>
 					</Box>

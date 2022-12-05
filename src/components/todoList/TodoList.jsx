@@ -31,7 +31,23 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 					<Text variant="grey">할 일 {todoList?.length || 0}개</Text>
 				</Flex>
 				{/* 휴지통 */}
-				<Svg onClick={showDelBtnHandler} variant="trashCan" />
+				{isDelBtnExist ? (
+					<Flex
+						onClick={showDelBtnHandler}
+						cursor="pointer"
+						wd="15px"
+						ht="17px"
+						bi="url(/images/trashCanRed.svg)"
+					/>
+				) : (
+					<Flex
+						onClick={showDelBtnHandler}
+						cursor="pointer"
+						wd="15px"
+						ht="17px"
+						bi="url(/images/trashCanGrey.svg)"
+					/>
+				)}
 			</Flex>
 
 			{/* 리스트 */}

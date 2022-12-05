@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Flex, Svg } from "../../common";
+import { Flex, FloatingAddBtn } from "../../common";
 import {
 	TodoListCalendar,
 	NavBelow,
@@ -12,9 +12,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { getTodoListApi, swithTodoApi } from "../../api/todoListApi";
 
 const TodoListPage = () => {
-
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
-
 
 	const [todoList, setTodoList] = useState([]);
 
@@ -93,13 +91,7 @@ const TodoListPage = () => {
 			) : null}
 
 			{/* 투두 추가 모달 오픈 버튼 */}
-			<Flex wd="100%" position="relative">
-				<Flex wd="100%" position="absolute" jc="flex-end">
-					<Flex position="fixed" bottom="80px" zIndex="1" mg="0 5px 0 0">
-						<Svg onClick={openAddTodoModalHandler} variant="addTodo" />
-					</Flex>
-				</Flex>
-			</Flex>
+			<FloatingAddBtn onClick={openAddTodoModalHandler} />
 
 			<Flex dir="column" jc="flex-start" ht="100vh">
 				{/* 캘린더 */}
