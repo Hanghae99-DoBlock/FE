@@ -61,7 +61,7 @@ export const __uploadFeed = createAsyncThunk(
 				tagList,
 				feedColor,
 			} = payload;
-
+			console.log("피드컬러", feedColor);
 			const frm = new FormData();
 			frm.append("todoIdList", todoIdList);
 			frm.append("feedTitle", feedTitle);
@@ -72,7 +72,7 @@ export const __uploadFeed = createAsyncThunk(
 
 			frm.append("feedColor", feedColor);
 			frm.append("tagList", tagList);
-			const { data } = await axios.post(
+			const data = await axios.post(
 				`${serverUrl}/api/feed`,
 				frm,
 
@@ -84,6 +84,7 @@ export const __uploadFeed = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
+			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -288,6 +289,7 @@ const initialState = {
 	addedSearchMember: [],
 	searchTagValue: "",
 	searchMemberValue: "",
+	isCompleted: "",
 };
 
 export const feedSlice = createSlice({
@@ -347,7 +349,15 @@ export const feedSlice = createSlice({
 				followOrNot: !state.feedItem.followOrNot,
 			};
 		},
+		resetFollowingList: (state, action) => {
+			state.followingFeedList = [];
+			state.followingFeedPageNum = 0;
+		},
+		changeStatus: (state, action) => {
+			state.isCompleted = "";
+		},
 	},
+
 	extraReducers: builder => {
 		builder
 			//피드 업로드
@@ -357,6 +367,7 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__uploadFeed.fulfilled, (state, action) => {
 				state.isLoading = false;
+				state.isCompleted = action.payload.status;
 			})
 			//피드 업로드 실패
 			.addCase(__uploadFeed.rejected, (state, action) => {})
@@ -449,5 +460,7 @@ export const {
 	addFormPhoto,
 	updateFeedItem,
 	resetFeed,
+	resetFollowingList,
+	changeStatus,
 } = feedSlice.actions;
 export default feedSlice.reducer;

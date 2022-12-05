@@ -11,7 +11,10 @@ import {
 	addFormPhoto,
 	addPhoto,
 	addTag,
+	changeLoading,
+	changeStatus,
 	resetFeed,
+	resetFollowingList,
 	resetTodo,
 	__getSuccessTodo,
 	__uploadFeed,
@@ -36,6 +39,7 @@ const AddFeedPage = () => {
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
 	const [isPostPossible, setIsPostPossible] = useState(false);
 	const loading = useSelector(state => state.feed.isLoading);
+	const isCompleted = useSelector(state => state.feed.isCompleted);
 	let todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});
@@ -71,7 +75,11 @@ const AddFeedPage = () => {
 			setIsPhotoFull(false);
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
-	}, [photoList]);
+		if (isCompleted === 200) {
+			navigate("/feed/following");
+			dispatch(changeStatus());
+		}
+	}, [photoList, isCompleted]);
 
 	{
 		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
@@ -89,7 +97,7 @@ const AddFeedPage = () => {
 	};
 
 	const orangeHandler = () => {
-		setColor("##FFB443");
+		setColor("#FFB443");
 		setIsYellowChecked(false);
 		setIsBlueChecked(false);
 		setIsGreenChecked(false);
@@ -159,7 +167,7 @@ const AddFeedPage = () => {
 	};
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
-		if (boastFeed.length >= 1 && photoUrlArray.length >= 1) {
+		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {
 			dispatch(
 				__uploadFeed({
 					todoIdList: todoIdArray,
@@ -170,7 +178,7 @@ const AddFeedPage = () => {
 					tagList: tagArray,
 				}),
 			);
-			navigate(`/feed/following`);
+			dispatch(resetFollowingList());
 		}
 	};
 	const openModalHandler = () => {
@@ -179,19 +187,13 @@ const AddFeedPage = () => {
 	};
 
 	useEffect(() => {
-		if (
-			todoIdArray.length >= 1 &&
-			photoUrlArray.length >= 1 &&
-			color.length >= 1
-		) {
+		console.log(color);
+		if (todoIdArray.length >= 1 && photoList.length >= 1 && color.length >= 1) {
 			setIsPostPossible(true);
 		} else {
 			setIsPostPossible(false);
 		}
-		//if (loading === false) {
-		//	navigate("/feed");
-		//}
-	}, [boastFeed, formPhotoList, color, loading]);
+	}, [boastFeed, formPhotoList, color, isCompleted]);
 
 	return (
 		<>
@@ -220,7 +222,7 @@ const AddFeedPage = () => {
 						ht="42px"
 						jc="flex-start"
 						mg="0 0 0 17px"
-						onClick={() => navigate("/feed")}
+						onClick={() => navigate("/feed/following")}
 					>
 						<Svg variant="chevron" />
 					</Flex>
