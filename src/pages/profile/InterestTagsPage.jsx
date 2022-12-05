@@ -267,7 +267,7 @@ const InterestTagsPage = () => {
 								mg="0 0 0 5px"
 								wd="14px"
 								ht="14px"
-								bi="url(/images/plus.svg)"
+								bi="url(/images/plusBlack.svg)"
 							/>
 						</Flex>
 					</Box>

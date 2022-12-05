@@ -6,6 +6,7 @@ import Form from "./form/Form";
 import Label from "./lable/Label";
 import Input from "./input/Input";
 import Button from "./button/Button";
+import { FloatingAddBtn } from "./button";
 import Flex from "./flex/Flex";
 import Image from "./image/Image";
 import Hr from "./hr/Hr";
@@ -33,6 +34,7 @@ export {
 	Label,
 	Input,
 	Button,
+	FloatingAddBtn,
 	Flex,
 	FirstHeading,
 	SecondHeading,

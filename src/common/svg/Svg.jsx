@@ -62,66 +62,6 @@ const Svg = ({ variant, onClick }) => {
 					/>
 				</svg>
 			);
-
-		// addTodo 모달 오픈 아이콘
-		case "addTodo":
-			return (
-				<svg
-					onClick={onClick}
-					cursor="pointer"
-					width="70"
-					height="70"
-					viewBox="0 0 70 70"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<g filter="url(#filter0_d_297_832)">
-						<circle cx="33" cy="33" r="25" fill="#7474FF" />
-					</g>
-					<path
-						d="M23 33C23 33.3744 23.1314 33.693 23.3943 33.9558C23.6571 34.2107 23.9717 34.3381 24.3381 34.3381H31.6619V41.6738C31.6619 42.0323 31.7933 42.3429 32.0562 42.6057C32.319 42.8686 32.6336 43 33 43C33.3744 43 33.693 42.8686 33.9558 42.6057C34.2186 42.3429 34.3501 42.0323 34.3501 41.6738V34.3381H41.6619C42.0283 34.3381 42.3429 34.2107 42.6057 33.9558C42.8686 33.693 43 33.3744 43 33C43 32.6336 42.8686 32.319 42.6057 32.0562C42.3429 31.7853 42.0283 31.6499 41.6619 31.6499H34.3501V24.3381C34.3501 23.9717 34.2186 23.6571 33.9558 23.3943C33.693 23.1314 33.3744 23 33 23C32.6336 23 32.319 23.1314 32.0562 23.3943C31.7933 23.6571 31.6619 23.9717 31.6619 24.3381V31.6499H24.3381C23.9717 31.6499 23.6571 31.7853 23.3943 32.0562C23.1314 32.319 23 32.6336 23 33Z"
-						fill="white"
-					/>
-					<defs>
-						<filter
-							id="filter0_d_297_832"
-							x="0"
-							y="0"
-							width="70"
-							height="70"
-							filterUnits="userSpaceOnUse"
-							colorInterpolationFilters="sRGB"
-						>
-							<feFlood floodOpacity="0" result="BackgroundImageFix" />
-							<feColorMatrix
-								in="SourceAlpha"
-								type="matrix"
-								values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-								result="hardAlpha"
-							/>
-							<feOffset dx="2" dy="2" />
-							<feGaussianBlur stdDeviation="5" />
-							<feComposite in2="hardAlpha" operator="out" />
-							<feColorMatrix
-								type="matrix"
-								values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-							/>
-							<feBlend
-								mode="normal"
-								in2="BackgroundImageFix"
-								result="effect1_dropShadow_297_832"
-							/>
-							<feBlend
-								mode="normal"
-								in="SourceGraphic"
-								in2="effect1_dropShadow_297_832"
-								result="shape"
-							/>
-						</filter>
-					</defs>
-				</svg>
-			);
-
 		// 닫기 아이콘
 		case "close":
 			return (
