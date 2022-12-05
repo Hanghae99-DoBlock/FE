@@ -7,6 +7,7 @@ import {
 	__searchTagAndMember,
 	__infinitySearchTag,
 	__infinitySearchMember,
+	changeFollwing,
 } from "../../redux/modules/feed/feedSlice";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +31,6 @@ const FeedPage = () => {
 	const searchMemberItem = useSelector(state => state.feed.searchMember);
 	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
 	const searchResult = useSelector(state => state.feed.searchResult);
-	const [follow, setFollow] = useState(isFollow);
 	const target = useRef(null);
 	const {
 		isNextTagSearchExist,
@@ -41,10 +41,7 @@ const FeedPage = () => {
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
-	console.log(searchResult);
-	useEffect(() => {
-		setFollow(isFollow);
-	}, [isFollow]);
+
 	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
@@ -87,13 +84,11 @@ const FeedPage = () => {
 	};
 	const unfollowHandler = memberId => {
 		dispatch(__followThunk(memberId));
-		//searchHandler();
-		setFollow(false);
+		dispatch(changeFollwing(memberId));
 	};
 	const followingHandler = memberId => {
 		dispatch(__followThunk(memberId));
-		//searchHandler();
-		setFollow(true);
+		dispatch(changeFollwing(memberId));
 	};
 	// 검색 종류 변경 핸들러
 	const changeSearchTypeHandler = searchType => {
@@ -127,11 +122,10 @@ const FeedPage = () => {
 			);
 		}
 	};
-
+	console.log(searchMemberItem);
 	const searchInputChangeHandler = e => {
 		setTagValue(e.target.value);
 	};
-
 	return (
 		<>
 			<Flex dir="column" wd="100%" ht="100vh">
@@ -234,7 +228,7 @@ const FeedPage = () => {
 										</FirstHeading>
 									</Flex>
 									<Flex>
-										{follow === false ? (
+										{data.followOrNot === false ? (
 											<Svg
 												variant="follow"
 												onClick={() => {

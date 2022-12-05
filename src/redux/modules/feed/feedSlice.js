@@ -117,7 +117,6 @@ export const __searchTagAndMember = createAsyncThunk(
 				},
 				payload,
 			);
-			console.log(data);
 			return thunkAPI.fulfillWithValue({
 				keyword: keyword,
 				data: data.data,
@@ -154,7 +153,7 @@ export const __infinitySearchTag = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue({ data: data, category: category });
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -185,7 +184,7 @@ export const __infinitySearchMember = createAsyncThunk(
 				category: category,
 			});
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -363,6 +362,13 @@ export const feedSlice = createSlice({
 		changeStatus: (state, action) => {
 			state.isCompleted = "";
 		},
+		changeFollwing: (state, action) => {
+			state.searchMember.map(member => {
+				return action.payload === member.memberId
+					? (member.followOrNot = !member.followOrNot)
+					: null;
+			});
+		},
 	},
 
 	extraReducers: builder => {
@@ -435,10 +441,10 @@ export const feedSlice = createSlice({
 				}
 				if (state.addedSearchTag.length < 5) {
 					state.isNextTagSearchExist = false;
-				} else if (
-					state.addedSearchTag === 5 &&
-					action.payload.status !== 200
-				) {
+				}
+			})
+			.addCase(__infinitySearchTag.rejected, (state, action) => {
+				if (action.payload === 404) {
 					state.isNextTagSearchExist = false;
 				}
 			})
@@ -452,10 +458,10 @@ export const feedSlice = createSlice({
 				}
 				if (state.addedSearchMember.length < 10) {
 					state.isNextMemberSearchExist = false;
-				} else if (
-					state.addedSearchMember === 5 &&
-					action.payload.status == 404
-				) {
+				}
+			})
+			.addCase(__infinitySearchMember.rejected, (state, action) => {
+				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
 			})
@@ -484,5 +490,6 @@ export const {
 	resetFeed,
 	resetFollowingList,
 	changeStatus,
+	changeFollwing,
 } = feedSlice.actions;
 export default feedSlice.reducer;
