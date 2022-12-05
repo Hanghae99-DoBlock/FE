@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import { orange100 } from "./common";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -22,6 +23,10 @@ const GlobalStyles = createGlobalStyle`
     font-weight: normal;
     font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
 
+  }
+
+  body {
+    background-color: ${orange100}
   }
 
   a {

@@ -32,7 +32,7 @@ const Follower = () => {
 
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -50,12 +50,7 @@ const Follower = () => {
 					<Flex wd="113px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
 				{Array.from(followerList).map(data => (
-					<Flex
-						jc="space-between"
-						mg="0 0 20px 0 "
-						wd="100%"
-						key={data.memberId}
-					>
+					<Flex jc="space-between" pd="13px 20px" wd="100%" key={data.memberId}>
 						<Flex>
 							<Image
 								variant="followImage"

@@ -75,9 +75,8 @@ const SignUpPage = () => {
 		<>
 			<Flex
 				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
+				wd="100%"
+				ht="100vh"
 				mg="0 auto"
 				jc="flex-start"
 				position="relative"
