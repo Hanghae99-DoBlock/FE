@@ -1,20 +1,5 @@
 const Svg = ({ variant, onClick }) => {
 	switch (variant) {
-		// 햄버거 아이콘
-		case "hamburger":
-			return (
-				<svg
-					width="24"
-					height="25"
-					viewBox="0 0 24 25"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<rect x="5" y="6.5" width="15" height="2" rx="1" fill="#C8C8C8" />
-					<rect x="5" y="11.5" width="15" height="2" rx="1" fill="#C8C8C8" />
-					<rect x="5" y="16.5" width="15" height="2" rx="1" fill="#C8C8C8" />
-				</svg>
-			);
 		// 닫기 아이콘
 		case "close":
 			return (

@@ -44,6 +44,7 @@ button > abbr {
 	padding: 0 0 30px 0;
 	border-radius: 50%;
 	color: #131313;
+	cursor: pointer;
 }
 /* 달력 전체 배경 */
 .react-calendar {
@@ -52,7 +53,7 @@ button > abbr {
 	height: 430px;
 	color: #222;
 }
-/* 달 바꾸는 버튼 */
+/* 헤더 */
 .react-calendar__navigation button {
 	color: #979797;
 	min-width: 30px;
@@ -63,6 +64,13 @@ button > abbr {
 .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
 .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
 	padding: 0 20px;
+	cursor: pointer;
+}
+
+/* 달 바꾸는 버튼 */
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+	cursor: pointer;
 }
 /* 달 바꾸는 버튼 눌렀을 때 */
 .react-calendar__navigation button:enabled:hover,

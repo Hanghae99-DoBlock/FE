@@ -56,6 +56,7 @@ const TodoItem = ({
 							{completed ? (
 								<Flex
 									onClick={checkTodoHandler}
+									cursor="pointer"
 									wd="22px"
 									ht="22px"
 									radius="4px"
@@ -66,6 +67,7 @@ const TodoItem = ({
 							) : (
 								<Flex
 									onClick={checkTodoHandler}
+									cursor="pointer"
 									wd="22px"
 									ht="22px"
 									radius="4px"
@@ -85,13 +87,21 @@ const TodoItem = ({
 						>
 							<Text variant="normal">{todoContent}</Text>
 						</Flex>
-						<Flex mg="0 10px">
+						<Flex ht="100%">
 							{isDelBtnExist ? (
-								<Button onClick={deleteTodoHandler} variant="delTodo">
-									삭제
-								</Button>
+								<Flex mg="0 10px">
+									<Button onClick={deleteTodoHandler} variant="delTodo">
+										삭제
+									</Button>
+								</Flex>
 							) : (
-								<Svg variant="hamburger" />
+								<Flex cursor="grab" wd="40px" ht="100%">
+									<Flex
+										wd="15px"
+										ht="12px"
+										bi="url(/images/hamburgerGrey.svg)"
+									/>
+								</Flex>
 							)}
 						</Flex>
 					</Flex>
