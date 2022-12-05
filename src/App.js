@@ -1,6 +1,6 @@
 import Router from "./shared/Router";
 import GlobalStyles from "./GlobalStyle";
-import { Layout, Toast } from "./common";
+import { Layout, PcVerIllustration, Toast } from "./common";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
 	return (
 		<>
 			<GlobalStyles />
+			<PcVerIllustration />
 			<Layout variant="commonLayout">
 				{isToastExist ? <Toast /> : null}
 				<Router />

@@ -201,6 +201,7 @@ const AddFeedPage = () => {
 				mw="375px"
 				mxw="375px"
 				mh="834px"
+				ht="100vh"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
@@ -220,7 +221,7 @@ const AddFeedPage = () => {
 						ht="42px"
 						jc="flex-start"
 						mg="0 0 0 17px"
-						onClick={() => navigate("/feed")}
+						onClick={() => navigate(-1)}
 					>
 						<Svg variant="chevron" />
 					</Flex>
@@ -360,11 +361,12 @@ const AddFeedPage = () => {
 				<Flex
 					dir="column"
 					wd="375px"
-					ht="100%"
+					ht="160px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
+					mg="0 0 35px 0"
 				>
 					<Flex jc="flex-start" gap="6px">
 						<Flex
