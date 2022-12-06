@@ -48,6 +48,12 @@ const Profile = () => {
 		navigate(`/profile/edit`);
 	};
 
+	const logOutHandler = () => {
+		localStorage.removeItem("accessToken");
+		localStorage.removeItem("refreshToken");
+		navigate(`/`);
+	};
+
 	return (
 		<>
 			<Flex
@@ -84,7 +90,7 @@ const Profile = () => {
 						</Flex>
 						{decodeToken.memberId === profile.memberId ? (
 							<Flex>
-								<Svg variant="logOut" />
+								<Svg onClick={logOutHandler} variant="logOut" />
 								<Svg variant="setting" onClick={profileEditHandler} />
 							</Flex>
 						) : profile.followOrNot === false ? (
