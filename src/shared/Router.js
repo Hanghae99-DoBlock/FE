@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Toast from "../common/toast/Toast";
 import {
 	ProfilePage,
 	SignInPage,
@@ -14,10 +13,12 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	InterestTagsPage,
+	MyBadgesPage,
+	BadgeSetiingPage,
 } from "../pages";
 import EditFeedPage from "../pages/feed/EditFeedPage";
 import EmailSignIn from "../pages/join/EmailSignIn";
-import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 
@@ -47,12 +48,19 @@ const Router = () => {
 					/>
 					<Route
 						path="/profile/edit/password"
-						element={
-							<PrivateRoute>
-								<PasswordChangePage />
-							</PrivateRoute>
-						}
+						element={<PasswordChangePage />}
 					/>
+					<Route path="/profile/:id/following" element={<FollowingPage />} />
+					<Route path="/profile/:id/follower" element={<FollowerPage />} />
+					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
+					<Route
+						path="/profile/:id/badgeSetting"
+						element={<BadgeSetiingPage />}
+					/>
+					<Route path="/todolist" element={<TodoListPage />} />
+					<Route path="/feed" element={<FeedPage />} />
+					<Route path="/addFeed" element={<AddFeedPage />} />
+					<Route path="/feed/:id" element={<DetailFeedPage />} />
 					<Route
 						path="/profile/:id/following"
 						element={
@@ -66,6 +74,14 @@ const Router = () => {
 						element={
 							<PrivateRoute>
 								<FollowerPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/edit/interest"
+						element={
+							<PrivateRoute>
+								<InterestTagsPage />
 							</PrivateRoute>
 						}
 					/>

@@ -5,12 +5,27 @@ import {
 	SecondHeading,
 	Image,
 	Hr,
+	Text,
+	ThirdHeading,
+	Box,
 } from "../../common";
 import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { __followThunk, __getUser } from "../../redux/modules/profileSlice";
+import {
+	__followThunk,
+	__getBadgeList,
+	__getUser,
+} from "../../redux/modules/profileSlice";
+import NavBelow from "../nav/NavBelow";
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/scrollbar";
+import "../profile/style/slide.css";
+import { Pagination } from "swiper";
+import styled from "styled-components";
 const Profile = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -20,6 +35,10 @@ const Profile = () => {
 	const decodeToken = jwtDecode(token);
 
 	const profile = useSelector(state => state.profileSlice.profile);
+
+	const acquisitionBadge = useSelector(
+		state => state.profileSlice.profile.badgeImageList,
+	);
 
 	useEffect(() => {
 		dispatch(__getUser(id));
@@ -34,14 +53,12 @@ const Profile = () => {
 			<Flex
 				wd="100%"
 				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
-				mg="0 auto"
+				ht="100vh"
+				jc="flex-start"
 				style={{ overflow: "auto" }}
 			>
 				{decodeToken.memberId === profile.memberId ? (
-					<Flex wd="375px" ht="62px" bb="2px solid #EFEFEF">
+					<Flex wd="100%" ht="62px" bb="2px solid #EFEFEF">
 						<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
 							내 프로필
 						</Flex>
@@ -58,7 +75,7 @@ const Profile = () => {
 										: profile.profileImage
 								}
 							/>
-							<FirstHeading fw="600" fs="18px" color="#131313" mg="30px 0 0 0">
+							<FirstHeading fw="600" fs="18px" color="#131313" mg="18px 0 0 0">
 								{profile.nickname}
 								<Flex fw="400" fs="12" color="#979797" mg="5px 0 0 0">
 									{profile.email}
@@ -66,7 +83,10 @@ const Profile = () => {
 							</FirstHeading>
 						</Flex>
 						{decodeToken.memberId === profile.memberId ? (
-							<Svg variant="setting" onClick={profileEditHandler} />
+							<Flex>
+								<Svg variant="logOut" />
+								<Svg variant="setting" onClick={profileEditHandler} />
+							</Flex>
 						) : profile.followOrNot === false ? (
 							<Svg
 								variant="profileFollow"
@@ -88,26 +108,30 @@ const Profile = () => {
 					mg="0 auto"
 					wd="335px"
 					ht="85px"
-					bs="0px 2px 10px rgba(0, 0, 0, 0.1)"
 					radius="10px"
 					dir="row"
 					jc="space-between"
 					ai="center"
 					pd="40px"
+					bg="#F8F8F8"
 				>
-					<SecondHeading fw="300" fs="12px" color="#979797">
-						게시글
-						<Flex fw="600" fs="19" color="#7474ff" ta="center" mg="10px 0 0 0">
+					<SecondHeading
+						fw="300"
+						fs="12px"
+						color="#666666"
+						onClick={() => navigate("/feed")}
+					>
+						내 블럭
+						<Flex fw="600" fs="19" color="#131313" ta="center" mg="10px 0 0 0">
 							{profile.countFeed}
 						</Flex>
 					</SecondHeading>
-					<Hr variant="hr" />
-					<SecondHeading fw="300" fs="12px" color="#979797">
+					<SecondHeading fw="300" fs="12px" color="#666666">
 						팔로잉
 						<Flex
 							fw="600"
 							fs="19"
-							color="#7474ff"
+							color="#131313"
 							ta="center"
 							mg="10px 0 0 0"
 							onClick={() => {
@@ -117,13 +141,12 @@ const Profile = () => {
 							{profile.countFollowing}
 						</Flex>
 					</SecondHeading>
-					<Hr variant="hr" />
-					<SecondHeading fw="300" fs="12px" color="#979797">
+					<SecondHeading fw="300" fs="12px" color="#666666">
 						팔로워
 						<Flex
 							fw="600"
 							fs="19"
-							color="#7474ff"
+							color="#131313"
 							ta="center"
 							mg="10px 0 0 0"
 							onClick={() => {
@@ -134,78 +157,102 @@ const Profile = () => {
 						</Flex>
 					</SecondHeading>
 				</Flex>
+				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
-					<Flex wd="100%" jc="space-between">
-						<Flex jc="space-between">
-							<SecondHeading fw="600" fs="15px">
-								내가 작성한 피드 게시글
+					<Flex wd="100%" jc="flex-start">
+						<Flex
+							onClick={() => {
+								navigate(`/profile/${id}/badges`);
+							}}
+						>
+							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+								획득한 뱃지 {profile.countBadge}
 							</SecondHeading>
 						</Flex>
-						<Svg variant="rightArrow"></Svg>
+						<Svg
+							variant="rightArrow"
+							onClick={() => {
+								navigate(`/profile/${id}/badges`);
+							}}
+						></Svg>
 					</Flex>
 				</Flex>
-				<Flex
-					wd="333px"
-					ht="72px"
-					bc="#fff"
-					radius="10px"
-					jc="flex-start"
-					pd="20px"
-					mg="0 0 10px 0"
+				<Swiper
+					slidesPerView="auto"
+					loop={false}
+					spaceBetween={20}
+					pagination={{
+						clickable: true,
+					}}
+					modules={[Pagination]}
+					className="mySwiper"
 				>
-					<FirstHeading fs="13px" fw="600">
-						미라클모닝 3개월째 성공😊
-						<Flex mg="5px 0 0 0" fs="13" fw="300">
-							#미라클모닝 #뿌듯 #오늘도성공
-						</Flex>
-					</FirstHeading>
-				</Flex>
-				<Flex
-					wd="333px"
-					ht="72px"
-					bc="#fff"
-					radius="10px"
-					jc="flex-start"
-					pd="20px"
-					mg="0 0 10px 0"
-				>
-					<FirstHeading fs="13px" fw="600">
-						미라클모닝 3개월째 성공😊
-						<Flex mg="5px 0 0 0" fs="13" fw="300">
-							#미라클모닝 #뿌듯 #오늘도성공
-						</Flex>
-					</FirstHeading>
-				</Flex>
-				<Flex
-					wd="333px"
-					ht="72px"
-					bc="#fff"
-					radius="10px"
-					jc="flex-start"
-					pd="20px"
-				>
-					<FirstHeading fs="13px" fw="600">
-						미라클모닝 3개월째 성공😊
-						<Flex mg="5px 0 0 0" fs="13" fw="300">
-							#미라클모닝 #뿌듯 #오늘도성공
-						</Flex>
-					</FirstHeading>
-				</Flex>
+					{acquisitionBadge?.map(data => (
+						<SwiperSlide className="badge-slide" key={data.id}>
+							<Image
+								src={data}
+								onClick={() => {
+									navigate(`/profile/${id}/badges`);
+								}}
+							/>
+						</SwiperSlide>
+					))}
+				</Swiper>
+				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
-					<Flex wd="100%" jc="space-between">
-						<Flex jc="space-between">
-							<SecondHeading fw="600" fs="15px">
-								{decodeToken.memberId === profile.memberId
-									? "내 뱃지 12개"
-									: "획득한 뱃지 12개"}
+					<Flex wd="100%" jc="flex-start">
+						<Flex>
+							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+								내가 쌓은 블럭
 							</SecondHeading>
 						</Flex>
-						<Svg variant="rightArrow"></Svg>
+						<Svg variant="rightArrow" onClick={() => navigate("/feed")}></Svg>
 					</Flex>
 				</Flex>
+				{profile.countFeed === 0 ? (
+					<>
+						<Svg variant="profileBlock"></Svg>
+						<Flex fw="600" fs="14px" color="#3F3F3F" mg="20px 0 0 0">
+							쌓은 블럭이 없어요
+						</Flex>
+						<Flex fw="300" fs="12px" color="#A2A2A2" mg="15px 0 140px 0">
+							피드를 작성해서 블럭을 쌓아보세요!
+						</Flex>
+					</>
+				) : (
+					<Box variant="profileBox">
+						<Flex jc="flex-end" position="absolute" right="10px" top="-38px">
+							<Svg variant="block" />
+						</Flex>
+						{profile.feedResponseDtoList?.map(data => (
+							<Flex
+								wd="333px"
+								ht="72px"
+								bc="#F8F8F8"
+								radius="10px"
+								jc="flex-start"
+								pd="20px"
+								mg="0 0 10px 0"
+							>
+								<FirstHeading fs="13px" fw="600">
+									{data.feedTitle}
+									<Flex mg="5px 0 0 0" fs="13" fw="300">
+										{data.feedContent}
+									</Flex>
+								</FirstHeading>
+							</Flex>
+						))}
+					</Box>
+				)}
 			</Flex>
+			<NavBelow />
 		</>
 	);
 };
 
 export default Profile;
+
+const Test = styled.div`
+	position: relative;
+	padding-bottom: 100px;
+`;

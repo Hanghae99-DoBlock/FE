@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
 	getFollowingFeedsApi,
 	getRecommendedFeedsApi,
+	deleteFeedApi,
 } from "../../../api/feedListApi";
 
 // 팔로잉 피드 조회 Thunk
@@ -29,5 +30,14 @@ export const __getRecommendedFeeds = createAsyncThunk(
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);
 		}
+	},
+);
+
+// 피드 삭제 Thunk
+export const __deleteFeed = createAsyncThunk(
+	"feed/deleteFeed",
+	(payload, thunkAPI) => {
+		deleteFeedApi(payload);
+		return thunkAPI.fulfillWithValue(payload);
 	},
 );

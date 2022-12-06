@@ -10,8 +10,46 @@ const StBox = styled.div`
 	width: "100%";
 	height: "100vh";
 
-	${({ variant, profileImageUrl, feedColor, type, feedImgUrl }) => {
+	${({ variant, profileImageUrl, feedColor, type, feedImgUrl, bg }) => {
 		switch (variant) {
+			case "tagChip":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					cursor: pointer;
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
+			case "customTagChip":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					cursor: pointer;
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 5px 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
+			case "tagChipInput":
+				return css`
+					display: ${type} !important;
+					background-color: ${bg};
+					height: 38px;
+					border: 1px solid #e5e5e5;
+					border-radius: 24px;
+					padding: 0 5px 0 14px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				`;
 			case "searchScrollArea":
 				return css`
 					display: flex;
@@ -63,8 +101,7 @@ const StBox = styled.div`
 					justify-content: flex-start;
 					width: 100%;
 					height: 100vh;
-					padding: 85px 20px;
-					gap: 11px;
+					padding: 41px 0 0 0;
 					overflow-x: hidden;
 					overflow-y: auto;
 					::-webkit-scrollbar {
@@ -94,6 +131,14 @@ const StBox = styled.div`
 					height: 258px;
 					border-radius: 10px;
 					padding: 21px 26px 14px 26px;
+				`;
+			case "badgeModalBox":
+				return css`
+					background-color: white;
+					width: 281px;
+					height: 290px;
+					border-radius: 10px;
+					box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 				`;
 
 			// 투두 박스
@@ -153,12 +198,10 @@ const StBox = styled.div`
 				return css`
 					position: relative;
 					border-radius: 100%;
-					height: 100px;
-					width: 100px;
+					height: 80px;
+					width: 80px;
 					overflow: hidden;
 					resize: none;
-					margin: 20px 0 40px 0;
-					border: 3px solid #c8c8c8;
 				`;
 			case "stSvg":
 				return css`
@@ -309,25 +352,6 @@ const StBox = styled.div`
 					cursor: pointer;
 				`;
 
-			// 피드 아이템 레고 바디
-			case "feedItemBody":
-				return css`
-					width: 100%;
-					height: 178px;
-					background-color: ${feedColor};
-					padding: 35px 20px 20px;
-					border-radius: 20px;
-				`;
-
-			// 피드 아이템 레고 머리
-			case "feedItemHead":
-				return css`
-					width: 89.95px;
-					height: 15px;
-					background-color: ${feedColor};
-					border-radius: 10px 10px 0 0;
-				`;
-
 			// 프로필 이미지 스몰
 			case "profilePicSmall":
 				return css`
@@ -358,8 +382,12 @@ const StBox = styled.div`
 					background-repeat: no-repeat;
 					background-size: contain;
 					background-position: center;
+					background-color: #f8f8f8;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
 					width: 100%;
-					height: 200px;
+					height: 243px;
 				`;
 
 			// 네비게이션 바 아이콘
@@ -370,6 +398,16 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 17px;
 					height: 16px;
+				`;
+			case "profileBox":
+				return css`
+					position: relative;
+					padding-bottom: 100px;
+				`;
+			case "profileEditBox":
+				return css`
+					position: relative;
+					margin: 20px 0 40px 0;
 				`;
 			case "recommendSearchBox":
 				return css`
@@ -385,6 +423,16 @@ const StBox = styled.div`
 					background-size: contain;
 					width: 14px;
 					height: 14px;
+				`;
+
+			case "imgPaginationIconBox":
+				return css`
+					background-image: url(/images/show${type}Img.svg);
+					background-repeat: no-repeat;
+					background-size: contain;
+					width: 20px;
+					height: 20px;
+					margin: 12px;
 				`;
 			default:
 				break;

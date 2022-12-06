@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Box, Flex, Svg, Text } from "../../common";
+import { Box, Flex, FloatingAddBtn, Text } from "../../common";
 import { NavBelow } from "../../components";
 
 const FeedPage = () => {
@@ -28,14 +28,7 @@ const FeedPage = () => {
 	return (
 		<>
 			{/* 피드 작성 버튼 */}
-			<Flex wd="100%" position="relative">
-				<Flex wd="100%" position="absolute" jc="flex-end">
-					<Flex position="fixed" bottom="80px" zIndex="1" mg="0 5px 0 0">
-						<Svg onClick={() => navigate(`/addFeed`)} variant="addTodo" />
-					</Flex>
-				</Flex>
-			</Flex>
-
+			<FloatingAddBtn onClick={() => navigate(`/addFeed`)} />
 			<Flex dir="column" wd="100%">
 				{/* 상단 탭 메뉴 */}
 				<Flex wd="100%" mxw="430px" ht="41px" position="fixed" top="0">

@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import { orange100 } from "./common";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -24,13 +25,16 @@ const GlobalStyles = createGlobalStyle`
 
   }
 
+  body {
+    background-color: ${orange100}
+  }
+
   a {
     color: inherit;
     text-decoration: none;
   }
 
   button {
-    cursor: pointer;
     background-color: transparent;
   }
 

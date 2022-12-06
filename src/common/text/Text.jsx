@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { black } from "../../common";
 
 const Text = ({ children, ...props }) => {
 	return <StText {...props}>{children}</StText>;
@@ -6,7 +7,7 @@ const Text = ({ children, ...props }) => {
 export default Text;
 
 const StText = styled.span`
-	${({ variant }) => {
+	${({ variant, color }) => {
 		switch (variant) {
 			case "big":
 				return css`
@@ -96,6 +97,7 @@ const StText = styled.span`
 				return css`
 					font-weight: 400;
 					font-size: 14px;
+					cursor: pointer;
 				`;
 			case "commentHeart":
 				return css`
@@ -109,6 +111,7 @@ const StText = styled.span`
 					font-size: 14px;
 					color: red;
 					margin-left: 5px;
+					cursor: pointer;
 				`;
 			// 피드 상세
 			case "red":
@@ -123,12 +126,57 @@ const StText = styled.span`
 					font-size: 10px;
 					color: #ff8737;
 				`;
-			case "title":
+			case "title1":
 				return css`
 					font-weight: 700;
 					font-size: 22px;
 					line-height: 33px;
-					color: #131313;
+					color: ${color || black};
+				`;
+			case "title3":
+				return css`
+					font-weight: 600;
+					font-size: 18px;
+					color: ${color || black};
+				`;
+			case "body1":
+				return css`
+					font-weight: 400;
+					font-size: 16px;
+					line-height: 22px;
+					color: ${color || black};
+				`;
+			case "body2Medium":
+				return css`
+					font-weight: 500;
+					font-size: 14px;
+					line-height: 24px;
+					color: ${color || black};
+				`;
+			case "body3":
+				return css`
+					font-weight: 400;
+					font-size: 12px;
+					line-height: 16px;
+					color: ${color || black};
+				`;
+			case "body4":
+				return css`
+					font-weight: 400;
+					font-size: 11px;
+					line-height: 14px;
+					color: ${color || black};
+				`;
+			case "feedComment":
+				return css`
+					font-weight: 500;
+					font-size: 14px;
+					color: #ff8737;
+				`;
+			case "feedReaction":
+				return css`
+					margin: 0 5px;
+					cursor: pointer;
 				`;
 			default:
 				break;

@@ -6,6 +6,7 @@ import ChoiceTodo from "./ChoiceTodo";
 import ChoiceTodoModal from "./ChoiceTodoModal";
 import PhotoList from "./PhotoList";
 import TagList from "./TagList";
+import ModalConfirmDelete from "./ModalConfirmDelete";
 export {
 	PhotoList,
 	TagList,
@@ -15,4 +16,5 @@ export {
 	BoastFeed,
 	ChoiceTodo,
 	ChoiceTodoModal,
+	ModalConfirmDelete,
 };

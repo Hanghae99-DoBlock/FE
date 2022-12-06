@@ -8,12 +8,14 @@ import ProfileEditPage from "./profile/ProfileEditPage";
 import PasswordChangePage from "./profile/PasswordChangePage";
 import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
+import MyBadgesPage from "./profile/MyBadgesPage";
+import BadgeSetiingPage from "./profile/BadgeSetiingPage";
 import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
 } from "./feed";
-
+import { InterestTagsPage } from "./profile";
 export {
 	SignInPage,
 	SignUpPage,
@@ -28,4 +30,7 @@ export {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	InterestTagsPage,
+	MyBadgesPage,
+	BadgeSetiingPage,
 };

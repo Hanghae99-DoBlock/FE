@@ -5,6 +5,7 @@ import axios from "axios";
 import {
 	__getFollowingFeeds,
 	__getRecommendedFeeds,
+	__deleteFeed,
 } from "../middleware/feedListThunk";
 
 const accessToken = localStorage.getItem("accessToken");
@@ -208,15 +209,16 @@ export const __infinitySearchMember = createAsyncThunk(
 		}
 	},
 );
-// 코멘트 추가
-export const __addComment = createAsyncThunk(
-	"comment/addComment",
+
+// 리액션 추가 / 삭제
+export const __updateReactions = createAsyncThunk(
+	"feed/reaction",
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
-				`${serverUrl}/api/feed/${payload.id}/comment`,
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
 				{
-					commentContent: payload.content,
+					reactionType: payload.reactionType,
 				},
 				{
 					headers: {
@@ -227,61 +229,8 @@ export const __addComment = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
-			window.location.replace(`/feed/${payload.feedId}`);
 			return thunkAPI.fulfillWithValue(payload);
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-
-// 코멘트 수정
-export const __editComment = createAsyncThunk(
-	"comment/editComment",
-	async (payload, thunkAPI) => {
-		try {
-			const response = await axios.put(
-				`${serverUrl}/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
-				{
-					headers: {
-						Authorization: accessToken,
-					},
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			alert("수정 완료");
-			window.history.back();
-			return thunkAPI.fulfillWithValue(response);
-		} catch (error) {
-			alert("수정 실패");
-			return thunkAPI.rejectWithValue(error);
-		}
-	},
-);
-
-// 코멘트 삭제
-export const __deleteComment = createAsyncThunk(
-	"comment/deleteComment",
-	async (payload, thunkAPI) => {
-		try {
-			await axios.delete(
-				`${serverUrl}/api/feed/${payload.feedId}/comment?comment-id=${payload.commentId}`,
-				{
-					headers: {
-						Authorization: accessToken,
-					},
-				},
-				{
-					withCredentials: true,
-				},
-			);
-			alert("삭제 완료");
-			window.location.replace(`/feed/${payload.feedId}`);
-			return thunkAPI.fulfillWithValue(payload);
-		} catch (error) {
-			alert("삭제 실패");
 			return thunkAPI.rejectWithValue(error);
 		}
 	},
@@ -304,6 +253,7 @@ const initialState = {
 	recommendedFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	searchKeyword: null,
 	tagSearchPageNum: 0,
 	memberSearchPageNum: 0,
 	infiniteTagNumber: 0,
@@ -398,6 +348,13 @@ export const feedSlice = createSlice({
 			state.tagList = action.payload.tagList;
 			state.checkedList = action.payload.todoList;
 			state.photoList = action.payload.formPhotoList;
+    },
+		updateIsLoading: (state, action) => {
+			state.isLoading = action.payload;
+		},
+		updateSearchKeyword: (state, action) => {
+			state.searchKeyword = action.payload;
+
 		},
 	},
 
@@ -421,6 +378,13 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
+			})
+			// 피드 삭제
+			.addCase(__deleteFeed.fulfilled, (state, action) => {
+				state.followingFeedList = state.followingFeedList.filter(
+					feedItem => feedItem.feedId !== action.payload,
+				);
+				state.isLoading = false;
 			})
 			// 팔로잉 피드 조회 성공
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
@@ -493,6 +457,7 @@ export const feedSlice = createSlice({
 				if (state.addedSearchMember.length < 10) {
 					state.isNextMemberSearchExist = false;
 				}
+
 			})
 			.addCase(__infinitySearchMember.rejected, (state, action) => {
 				if (action.payload === 404) {
@@ -508,6 +473,7 @@ export const feedSlice = createSlice({
 				state.commentList = state.commentList?.filter(item => {
 					return item !== action.payload;
 				});
+
 			});
 	},
 });
@@ -521,6 +487,8 @@ export const {
 	deletePhoto,
 	addFormPhoto,
 	updateFeedItem,
+	updateIsLoading,
+	updateSearchKeyword,
 	resetFeed,
 	resetFollowingList,
 	changeStatus,

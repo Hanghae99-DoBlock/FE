@@ -19,7 +19,13 @@ const StHr = styled.hr`
 				`;
 			case "feedHr":
 				return css`
-					width: 430px;
+					width: 100%;
+					height: 2px;
+					background-color: #efefef;
+				`;
+			case "profileHr":
+				return css`
+					width: 375px;
 					height: 2px;
 					background-color: #efefef;
 				`;

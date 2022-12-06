@@ -11,7 +11,6 @@ export const __editPassword = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.patch(
-				// `${serverUrl}/api/members/profile/edit/password`,
 				`${serverUrl}/api/members/profile/edit/password`,
 				{
 					currentPassword: payload.currentPassword,
@@ -162,12 +161,85 @@ export const __getFollower = createAsyncThunk(
 	},
 );
 
+// 뱃지 리스트 조회
+export const __getBadgeList = createAsyncThunk(
+	"user/getBadgeList",
+	async (payload, thunkAPI) => {
+		try {
+			const badgeList = await axios.get(
+				`${serverUrl}/api/members/profile/${payload}/badgelist`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(badgeList.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
+// 뱃지 상세
+export const __getBadgeType = createAsyncThunk(
+	"user/getBadgeType",
+	async (payload, thunkAPI) => {
+		try {
+			const badges = await axios.get(
+				`${serverUrl}/api/members/profile/${payload.id}/badges?badgetype=${payload.badgeItem}`,
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(badges.data);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
+// 대표 뱃지 설정
+export const __editBadges = createAsyncThunk(
+	"user/editBadges",
+	async (payload, thunkAPI) => {
+		try {
+			await axios.patch(
+				`${serverUrl}/api/members/profile/edit/badges`,
+				{
+					badgeType: payload,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			alert("수정 완료");
+			window.history.back();
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			alert("수정 실패");
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
 const initialState = {
 	following: false,
 	follower: false,
 	followerList: [],
 	followingList: [],
 	profile: {},
+	badgeList: [],
+	representativeBadge: {},
 	isLoading: false,
 	error: "",
 };
@@ -239,8 +311,30 @@ const profileSlice = createSlice({
 			state.isLoading = false;
 			state.isError = true;
 		},
+		[__getBadgeList.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__getBadgeList.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.profile = action.payload;
+		},
+		[__getBadgeList.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+		},
+		[__editBadges.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[__editBadges.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.representativeBadge = action.payload;
+		},
+		[__editBadges.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+		},
 	},
 });
 
-export const { updatePro, editPassword } = profileSlice.actions;
+export const { updatePro } = profileSlice.actions;
 export default profileSlice.reducer;

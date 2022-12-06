@@ -17,9 +17,8 @@ import {
 	__getFollowing,
 } from "../../redux/modules/profileSlice";
 
-const FeedPage = () => {
+const SearchPage = () => {
 	const dispatch = useDispatch();
-	const feedList = useSelector(state => state.feed.feedList);
 	const navigate = useNavigate();
 
 	// 상단 탭 메뉴 ui 상태 관리
@@ -38,11 +37,23 @@ const FeedPage = () => {
 		searchTagValue,
 		addedSearchTag,
 		addedSearchMember,
+		searchKeyword,
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
 
 	useEffect(() => {
+		if (searchKeyword) {
+			dispatch(
+				__searchTagAndMember({
+					keyword: searchKeyword,
+					category: "feed",
+				}),
+			);
+		}
+	}, [searchKeyword]);
+
+useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
@@ -261,7 +272,7 @@ const FeedPage = () => {
 	);
 };
 
-export default FeedPage;
+export default SearchPage;
 
 export const StSearchInput = styled.input`
 	border: none;
