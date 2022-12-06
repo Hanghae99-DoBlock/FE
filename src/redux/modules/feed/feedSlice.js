@@ -328,14 +328,23 @@ export const feedSlice = createSlice({
 				});
 			}
 		},
+		addEditTag: (state, action) => {
+			if (state.tagList.length < 3) {
+				state.tagList.push(action.payload);
+			}
+		},
 		resetFeed: (state, action) => {
 			state.checkedList = [];
 			state.tagList = [];
 			state.photoList = [];
 		},
 		deleteTag: (state, action) => {
-			state.tagList = state.tagList.filter((tag, index) => {
-				return action.payload.id !== tag.id;
+			state.tagList = state.tagList.filter(tag => {
+				console.log(action.payload);
+				console.log(tag.id);
+				console.log(current(state.tagList));
+
+				return action.payload !== tag.id;
 			});
 		},
 		addPhoto: (state, action) => {
@@ -368,6 +377,11 @@ export const feedSlice = createSlice({
 					? (member.followOrNot = !member.followOrNot)
 					: null;
 			});
+		},
+		defaultEditFeed: (state, action) => {
+			state.tagList = action.payload.tagList;
+			state.checkedList = action.payload.todoList;
+			state.photoList = action.payload.formPhotoList;
 		},
 	},
 
@@ -491,5 +505,7 @@ export const {
 	resetFollowingList,
 	changeStatus,
 	changeFollwing,
+	defaultEditFeed,
+	addEditTag,
 } = feedSlice.actions;
 export default feedSlice.reducer;

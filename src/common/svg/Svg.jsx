@@ -416,11 +416,11 @@ const Svg = ({ variant, onClick }) => {
 				<svg
 					width="24"
 					height="24"
-					viewBox="0 0 22 22"
+					viewBox="0 0 24 24"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<circle cx="11" cy="11" r="10.5" fill="#F2F2F5" stroke="#C7C9D9" />
+					<rect x="1" y="1" width="22" height="22" rx="4" fill="#EFEFEF" />
 				</svg>
 			);
 		case "check":
@@ -432,8 +432,14 @@ const Svg = ({ variant, onClick }) => {
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<circle cx="12" cy="12" r="11" fill="#7474FF" />
-					<circle cx="12.0002" cy="12" r="6.41667" fill="white" />
+					<rect x="1" y="1" width="22" height="22" rx="4" fill="#FF8737" />
+					<path
+						d="M7.5 12.7502L10.2856 15.75L17.25 8.25"
+						stroke="white"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
 				</svg>
 			);
 
