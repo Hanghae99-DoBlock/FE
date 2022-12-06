@@ -45,6 +45,7 @@ const FollowingFeedListPage = () => {
 			{isNextFollowingFeedPageExist ? null : (
 				<Flex border="50px solid transparent" />
 			)}
+
 			<div ref={target} />
 		</Box>
 	);

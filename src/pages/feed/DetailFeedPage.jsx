@@ -107,9 +107,10 @@ const DetailFeedPage = () => {
 					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
 
+
 						{decodedToken.memberId === memberId ? (
 							<Flex ht="100%" gap="7px">
-								<Flex cursor="pointer" ht="100%" wd="35px">
+								<Flex cursor="pointer" ht="100%" wd="35px" onClick={() => navigate(`/feedEdit/${id}`)}>
 									<Text variant="grey">수정</Text>
 								</Flex>
 								<Flex

@@ -8,25 +8,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { BoastFeed } from "../../components";
 import "./style/AddFeedStyle.css";
 import {
+	addEditTag,
 	addFormPhoto,
 	addPhoto,
 	addTag,
 	changeLoading,
 	changeStatus,
+	defaultEditFeed,
 	resetFeed,
 	resetFollowingList,
-	resetFormPhotoList,
 	resetTodo,
+	__getFeedItem,
 	__getSuccessTodo,
 	__uploadFeed,
+	__updateFeed,
 } from "../../redux/modules/feed/feedSlice";
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
-import { useNavigate } from "react-router-dom";
-const AddFeedPage = () => {
+import { useNavigate, useParams } from "react-router-dom";
+import EditPhotoList from "../../components/feed/EditPhotoList";
+const EditFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const title = useInput();
+	const feedItem = useSelector(state => state.feed.feedItem);
+	const title = useInput(feedItem.feedTitle);
 	const [openModal, setOpenModal] = useState(false);
 	const [tagInput, setTagInput] = useState([]);
 	const [tagValue, setTagValue] = useState("");
@@ -34,20 +39,20 @@ const AddFeedPage = () => {
 	const tagList = useSelector(state => state.feed.tagList);
 	const photoList = useSelector(state => state.feed.photoList);
 	const formPhotoList = useSelector(state => state.feed.formPhotoList);
-	const [id, setId] = useState(tagList.length);
+	const [tagId, setTagId] = useState(tagList?.length);
 	const [isInputHidden, setIsInputHidden] = useState(true);
-	const [detail, setDetail] = useState("");
+	const [detail, setDetail] = useState(feedItem.feedContent);
 	const [isPhotoFull, setIsPhotoFull] = useState(false);
 	const [isPostPossible, setIsPostPossible] = useState(false);
-	const loading = useSelector(state => state.feed.isLoading);
 	const isCompleted = useSelector(state => state.feed.isCompleted);
-	let todoIdArray = boastFeed.map(todo => {
+
+	let todoIdArray = boastFeed?.map(todo => {
 		return todo.id;
 	});
-	const photoUrlArray = photoList.map(photo => {
+	const photoUrlArray = photoList?.map(photo => {
 		return photo.url;
 	});
-	const tagArray = tagList.map(tag => {
+	const tagArray = tagList?.map(tag => {
 		return tag.value;
 	});
 	const today = new Date();
@@ -59,33 +64,52 @@ const AddFeedPage = () => {
 	const [isOrangeChecked, setIsOrangeChecked] = useState(false);
 	const [isBlueChecked, setIsBlueChecked] = useState(false);
 	const [isGreenChecked, setIsGreenChecked] = useState(false);
-	const [color, setColor] = useState("");
+	const [color, setColor] = useState(feedItem.feedColor);
+	const { id } = useParams();
 
+	const boastFeedEdit = boastFeed?.map(feed => {
+		return { todoContent: feed };
+	});
+	const photoListEdit = photoList?.map(photo => {
+		return { url: photo };
+	});
+	const tagEdit = feedItem.tagList?.map(tag => {
+		return { id: uuid(), value: tag };
+	});
+	const [editTagList, setEditTagList] = useState(tagEdit);
 	useEffect(() => {
-		dispatch(resetFeed());
-
-		setColor("");
-		title.value = "";
-		setDetail("");
-		dispatch(resetFormPhotoList());
+		dispatch(__getFeedItem(id));
+		dispatch(
+			defaultEditFeed({
+				tagList: editTagList,
+				todoList: feedItem.todoList,
+				formPhotoList: feedItem.feedImagesUrlList,
+			}),
+		);
+		if (color === "#FFD645") {
+			yeollowHandler();
+		} else if (color === "#FFB443") {
+			orangeHandler();
+		} else if (color === "#6ED6F8") {
+			blueHandler();
+		} else {
+			greenHandler();
+		}
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
-		if (photoList.length >= 4) {
+		if (photoList?.length >= 4) {
 			setIsPhotoFull(true);
 		} else {
 			setIsPhotoFull(false);
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 		if (isCompleted === 200) {
-			navigate(-1);
+			navigate("/feed/following");
 			dispatch(changeStatus());
 		}
-	}, [photoList, isCompleted]);
-
-	{
-		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
-	}
+		setEditTagList(tagList);
+	}, [photoList, isCompleted, tagList]);
 
 	{
 		/*전달할 색상 값 변경 */
@@ -97,7 +121,6 @@ const AddFeedPage = () => {
 		setIsGreenChecked(false);
 		setIsOrangeChecked(false);
 	};
-
 	const orangeHandler = () => {
 		setColor("#FFB443");
 		setIsYellowChecked(false);
@@ -133,10 +156,11 @@ const AddFeedPage = () => {
 	const addTagHandler = e => {
 		if (e.keyCode === 13 && tagValue.trim() === "") {
 			return alert("태그를 입력해주세요");
-		} else if (e.keyCode === 13 && tagList.length <= 3) {
-			setId(prev => prev + 1);
+		} else if (e.keyCode === 13 && editTagList.length <= 3) {
+			const tagUuId = uuid();
 
-			dispatch(addTag({ id: id, value: tagValue }));
+			setEditTagList([...editTagList, { id: tagUuId, value: tagValue }]);
+			dispatch(addEditTag({ id: tagUuId, value: tagValue }));
 			setIsInputHidden(true);
 			setTagValue("");
 		}
@@ -146,48 +170,21 @@ const AddFeedPage = () => {
 		setDetail(e.target.value);
 	};
 
-	// 사진 추가 핸들러
-	const photoChangeHandler = e => {
-		e.preventDefault();
-		for (let i = 0; i < 4; i++) {
-			let photoId = uuid();
-			let reader = new FileReader();
-			let file = e.target.files[i];
-			if (file !== undefined) {
-				dispatch(addFormPhoto(file));
-			}
-			reader.onloadend = () => {
-				const previewImg = reader.result;
-
-				dispatch(addPhoto({ id: photoId, url: previewImg }));
-			};
-
-			if (e.target.files[i]) {
-				reader.readAsDataURL(e.target.files[i]);
-			}
-		}
-	};
-	const uploadFeedHandler = () => {
+	const updateFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {
 			dispatch(
-				__uploadFeed({
-					todoIdList: todoIdArray,
+				__updateFeed({
 					feedTitle: title.value,
 					feedContent: detail,
-					feedImageList: formPhotoList,
 					feedColor: color,
 					tagList: tagArray,
+					id: id,
 				}),
 			);
 			dispatch(resetFollowingList());
 		}
 	};
-	const openModalHandler = () => {
-		setOpenModal(true);
-		dispatch(resetTodo());
-	};
-
 	const tagInputEmptyHandler = () => {
 		if (tagValue.trim() === "") {
 			setIsInputHidden(true);
@@ -195,14 +192,17 @@ const AddFeedPage = () => {
 	};
 
 	useEffect(() => {
-		if (todoIdArray.length >= 1 && photoList.length >= 1 && color) {
+		if (
+			todoIdArray?.length >= 1 &&
+			photoList?.length >= 1 &&
+			color?.length >= 1
+		) {
 			setIsPostPossible(true);
 		} else {
 			setIsPostPossible(false);
 		}
-	}, [boastFeed, photoList, formPhotoList, color]);
-	console.log(photoList);
-	console.log(formPhotoList);
+	}, [boastFeed, formPhotoList, color, isCompleted]);
+
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
@@ -210,12 +210,11 @@ const AddFeedPage = () => {
 				dir="column"
 				mw="375px"
 				mxw="375px"
-				ht="100%"
+				mh="834px"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
 				ai="center"
-				wrap="wrap"
 			>
 				<Flex
 					dir="row"
@@ -236,7 +235,7 @@ const AddFeedPage = () => {
 						<Svg variant="chevron" />
 					</Flex>
 					<Flex fs="18" wd="125px">
-						피드 남기기
+						게시글 수정
 					</Flex>
 					{!isPostPossible ? (
 						<Flex
@@ -248,7 +247,7 @@ const AddFeedPage = () => {
 							color="#D9D9D9"
 							cursor="pointer"
 						>
-							게시
+							적용
 						</Flex>
 					) : (
 						<Flex
@@ -259,9 +258,9 @@ const AddFeedPage = () => {
 							fs="16"
 							color="#FF8737"
 							cursor="pointer"
-							onClick={uploadFeedHandler}
+							onClick={updateFeedHandler}
 						>
-							게시
+							적용
 						</Flex>
 					)}
 				</Flex>
@@ -346,24 +345,10 @@ const AddFeedPage = () => {
 								최대 3개 선택 가능합니다
 							</Flex>
 						</Flex>
-						{boastFeed.length !== 0 ? (
-							<Flex onClick={openModalHandler}>
-								<Svg variant="addBoastTodo" />
-							</Flex>
-						) : null}
 					</Flex>
-					<Box variant="feedTodo">
-						<Flex jc="space-between" wd="335px">
-							<Flex fs="14" color="#808080">
-								투두 추가
-							</Flex>
-							<Flex onClick={openModalHandler}>
-								<Svg variant="plusBoastFeed" />
-							</Flex>
-						</Flex>
-					</Box>
+
 					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
-						{boastFeed?.map(todo => {
+						{boastFeedEdit?.map(todo => {
 							return <BoastFeed todo={todo} key={todo.id} />;
 						})}
 					</Flex>
@@ -371,6 +356,7 @@ const AddFeedPage = () => {
 				<Flex
 					dir="column"
 					wd="375px"
+					ht="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
@@ -416,21 +402,21 @@ const AddFeedPage = () => {
 							onChange={changeDetail}
 							maxLength={100}
 						/>
-						{!detail.length > 0 ? (
-							<StTextCount>{detail.length}/100</StTextCount>
+						{!detail?.length > 0 ? (
+							<StTextCount>{detail?.length}/100</StTextCount>
 						) : (
-							<StTextCountBlack>{detail.length}/100</StTextCountBlack>
+							<StTextCountBlack>{detail?.length}/100</StTextCountBlack>
 						)}
 					</Flex>
 				</Flex>
 				<Flex
 					dir="column"
 					wd="375px"
+					ht="120px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
-					wrap="wrap"
 				>
 					<Flex dir="row" jc="flex-start">
 						<Flex
@@ -442,7 +428,6 @@ const AddFeedPage = () => {
 							fs="14"
 							fw="600"
 							jc="flex-start"
-							wrap="wrap"
 						>
 							해시 태그
 						</Flex>
@@ -462,7 +447,14 @@ const AddFeedPage = () => {
 						</Flex>
 					</Flex>
 
-					<Flex dir="row" ai="center" jc="flex-start" gap="7px" wrap="wrap">
+					<Flex
+						dir="row"
+						ai="center"
+						jc="flex-start"
+						gap="7px"
+						wrap="wrap"
+						ht="70px"
+					>
 						{tagList?.map((tag, idx) => {
 							return (
 								<TagList
@@ -471,11 +463,9 @@ const AddFeedPage = () => {
 									setTagInput={setTagInput}
 									key={idx}
 									id={id}
-									setIsInputHidden={setIsInputHidden}
 								/>
 							);
 						})}
-
 						{isInputHidden === false ? (
 							<StInputTag
 								onBlur={tagInputEmptyHandler}
@@ -493,12 +483,12 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
-					ht="120px"
+					wd="335px"
+					ht="102px"
 					jc="center"
 					ai="flex-start"
+					mg="25px 0 80px 0"
 					gap="10px"
-					pd="0 20px"
 				>
 					<Flex jc="flex-start" gap="6px">
 						<Flex
@@ -529,20 +519,9 @@ const AddFeedPage = () => {
 						</Flex>
 					</Flex>
 					<Flex dir="row" gap="10px">
-						{isPhotoFull === false ? (
-							<StPhotoUploadLabel
-								htmlFor="upLoadPhoto"
-								onChange={photoChangeHandler}
-							>
-								<Flex jc="center" ai="center" wd="72px" ht="72px">
-									<Svg variant="plusPhoto" />
-								</Flex>
-								<input type="file" id="upLoadPhoto" multiple />
-							</StPhotoUploadLabel>
-						) : null}
-						{photoList?.map(photo => {
+						{photoListEdit?.map(photo => {
 							return (
-								<PhotoList
+								<EditPhotoList
 									setIsPhotoFull={setIsPhotoFull}
 									isPhotoFull={isPhotoFull}
 									photo={photo}
@@ -551,15 +530,6 @@ const AddFeedPage = () => {
 							);
 						})}
 					</Flex>
-				</Flex>
-				<Flex
-					dir="column"
-					wd="375px"
-					jc="center"
-					ai="flex-start"
-					gap="10px"
-					pd="0 20px"
-				>
 					<Flex
 						dir="row"
 						ai="center"
@@ -572,13 +542,7 @@ const AddFeedPage = () => {
 					>
 						피드 컬러
 					</Flex>
-					<Flex
-						wd="199px"
-						ht="40px"
-						ai="flex-start"
-						gap="13px"
-						mg="0 0 120px 0"
-					>
+					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
 						{!isYellowChecked ? (
 							<StYellowBox onClick={yeollowHandler}></StYellowBox>
 						) : (
@@ -600,13 +564,14 @@ const AddFeedPage = () => {
 							<StCheckedGreenBox></StCheckedGreenBox>
 						)}
 					</Flex>
+					<Flex wd="375px" ht="150px"></Flex>
 				</Flex>
 			</Flex>
 		</>
 	);
 };
 
-export default AddFeedPage;
+export default EditFeedPage;
 
 export const StPhotoUploadLabel = styled.label`
 	width: 72px;
@@ -638,10 +603,9 @@ export const StTextCount = styled.span`
 export const StInputTag = styled.input`
 	display: flex;
 	height: 38px;
-	width: 100px;
+	min-width: 38px;
 	background-color: #f8f8f8;
 	border-radius: 10px;
-	flex-wrap: wrap;
 `;
 
 export const StYellowBox = styled.button`
