@@ -91,6 +91,28 @@ export const __uploadFeed = createAsyncThunk(
 	},
 );
 
+export const __updateFeed = createAsyncThunk(
+	"UPDATE_FEED",
+	async (payload, thunkAPI) => {
+		try {
+			const { feedTitle, feedContent, tagList, feedColor, id } = payload;
+			const data = await axios.patch(
+				`${serverUrl}/api/feed/${id}`,
+				{ feedTitle, feedContent, feedColor, tagList },
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
 export const __searchTagAndMember = createAsyncThunk(
 	"SEARCH",
 	async (payload, thunkAPI) => {
@@ -399,6 +421,10 @@ export const feedSlice = createSlice({
 			//피드 업로드 실패
 			.addCase(__uploadFeed.rejected, (state, action) => {})
 			//완료된 피드 목록 불러오기
+			.addCase(__updateFeed.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isCompleted = action.payload.status;
+			})
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
 			})

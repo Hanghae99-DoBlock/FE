@@ -21,6 +21,7 @@ import {
 	__getFeedItem,
 	__getSuccessTodo,
 	__uploadFeed,
+	__updateFeed,
 } from "../../redux/modules/feed/feedSlice";
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
@@ -96,6 +97,7 @@ const EditFeedPage = () => {
 		} else {
 			greenHandler();
 		}
+		console.log(id);
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
@@ -169,21 +171,21 @@ const EditFeedPage = () => {
 
 	console.log(tagList);
 	console.log(editTagList);
+
 	const changeDetail = e => {
 		setDetail(e.target.value);
 	};
 
-	const uploadFeedHandler = () => {
+	const updateFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {
 			dispatch(
-				__uploadFeed({
-					todoIdList: todoIdArray,
+				__updateFeed({
 					feedTitle: title.value,
 					feedContent: detail,
-					feedImageList: formPhotoList,
 					feedColor: color,
 					tagList: tagArray,
+					id: id,
 				}),
 			);
 			dispatch(resetFollowingList());
@@ -262,7 +264,7 @@ const EditFeedPage = () => {
 							fs="16"
 							color="#FF8737"
 							cursor="pointer"
-							onClick={uploadFeedHandler}
+							onClick={updateFeedHandler}
 						>
 							적용
 						</Flex>
