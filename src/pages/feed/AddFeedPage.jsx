@@ -193,14 +193,12 @@ const AddFeedPage = () => {
 	};
 
 	useEffect(() => {
-		console.log(color);
 		if (todoIdArray.length >= 1 && photoList.length >= 1 && color.length >= 1) {
 			setIsPostPossible(true);
 		} else {
 			setIsPostPossible(false);
 		}
 	}, [boastFeed, formPhotoList, color, isCompleted]);
-	console.log(isInputHidden);
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
@@ -208,12 +206,12 @@ const AddFeedPage = () => {
 				dir="column"
 				mw="375px"
 				mxw="375px"
-				mh="834px"
-				ht="100vh"
+				ht="100%"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
 				ai="center"
+				wrap="wrap"
 			>
 				<Flex
 					dir="row"
@@ -229,8 +227,7 @@ const AddFeedPage = () => {
 						ht="42px"
 						jc="flex-start"
 						mg="0 0 0 17px"
-
-						onClick={() => navigate(-1)}
+						onClick={() => navigate("/feed/following")}
 					>
 						<Svg variant="chevron" />
 					</Flex>
@@ -370,12 +367,10 @@ const AddFeedPage = () => {
 				<Flex
 					dir="column"
 					wd="375px"
-					ht="160px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
-					mg="0 0 35px 0"
 				>
 					<Flex jc="flex-start" gap="6px">
 						<Flex
@@ -427,11 +422,11 @@ const AddFeedPage = () => {
 				<Flex
 					dir="column"
 					wd="375px"
-					ht="120px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
+					wrap="wrap"
 				>
 					<Flex dir="row" jc="flex-start">
 						<Flex
@@ -443,6 +438,7 @@ const AddFeedPage = () => {
 							fs="14"
 							fw="600"
 							jc="flex-start"
+							wrap="wrap"
 						>
 							해시 태그
 						</Flex>
@@ -462,14 +458,7 @@ const AddFeedPage = () => {
 						</Flex>
 					</Flex>
 
-					<Flex
-						dir="row"
-						ai="center"
-						jc="flex-start"
-						gap="7px"
-						wrap="wrap"
-						ht="70px"
-					>
+					<Flex dir="row" ai="center" jc="flex-start" gap="7px" wrap="wrap">
 						{tagList?.map((tag, idx) => {
 							return (
 								<TagList
@@ -500,12 +489,12 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="335px"
-					ht="102px"
+					wd="375px"
+					ht="120px"
 					jc="center"
 					ai="flex-start"
-					mg="25px 0 0 0"
 					gap="10px"
+					pd="0 20px"
 				>
 					<Flex jc="flex-start" gap="6px">
 						<Flex
@@ -558,6 +547,15 @@ const AddFeedPage = () => {
 							);
 						})}
 					</Flex>
+				</Flex>
+				<Flex
+					dir="column"
+					wd="375px"
+					jc="center"
+					ai="flex-start"
+					gap="10px"
+					pd="0 20px"
+				>
 					<Flex
 						dir="row"
 						ai="center"
@@ -570,7 +568,13 @@ const AddFeedPage = () => {
 					>
 						피드 컬러
 					</Flex>
-					<Flex wd="199px" ht="40px" ai="flex-start" gap="13px">
+					<Flex
+						wd="199px"
+						ht="40px"
+						ai="flex-start"
+						gap="13px"
+						mg="0 0 120px 0"
+					>
 						{!isYellowChecked ? (
 							<StYellowBox onClick={yeollowHandler}></StYellowBox>
 						) : (
@@ -630,9 +634,10 @@ export const StTextCount = styled.span`
 export const StInputTag = styled.input`
 	display: flex;
 	height: 38px;
-	min-width: 38px;
+	width: 100px;
 	background-color: #f8f8f8;
 	border-radius: 10px;
+	flex-wrap: wrap;
 `;
 
 export const StYellowBox = styled.button`

@@ -28,9 +28,11 @@ export default TagList;
 
 export const StTagInput = styled.input`
 	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
 	min-height: 38px;
-	min-width: 38px;
+	min-width: 100px;
+	max-width: 315px;
 	background-color: #f8f8f8;
 	border-radius: 10px;
 	text-align: center;

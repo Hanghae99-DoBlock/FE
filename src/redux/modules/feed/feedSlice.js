@@ -348,13 +348,12 @@ export const feedSlice = createSlice({
 			state.tagList = action.payload.tagList;
 			state.checkedList = action.payload.todoList;
 			state.photoList = action.payload.formPhotoList;
-    },
+		},
 		updateIsLoading: (state, action) => {
 			state.isLoading = action.payload;
 		},
 		updateSearchKeyword: (state, action) => {
 			state.searchKeyword = action.payload;
-
 		},
 	},
 
@@ -457,23 +456,11 @@ export const feedSlice = createSlice({
 				if (state.addedSearchMember.length < 10) {
 					state.isNextMemberSearchExist = false;
 				}
-
 			})
 			.addCase(__infinitySearchMember.rejected, (state, action) => {
 				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
-			})
-			.addCase(__addComment.fulfilled, (state, action) => {
-				state.feedItem.commentResponseDtoList = action.payload;
-				state.feedItem.countComment = action.payload;
-				state.commentList?.push(action.payload);
-			})
-			.addCase(__deleteComment.fulfilled, (state, action) => {
-				state.commentList = state.commentList?.filter(item => {
-					return item !== action.payload;
-				});
-
 			});
 	},
 });
