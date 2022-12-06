@@ -50,17 +50,38 @@ const Router = () => {
 						path="/profile/edit/password"
 						element={<PasswordChangePage />}
 					/>
-					<Route path="/profile/:id/following" element={<FollowingPage />} />
-					<Route path="/profile/:id/follower" element={<FollowerPage />} />
-					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
+					<Route
+						path="/profile/:id/following"
+						element={
+							<PrivateRoute>
+								<FollowingPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/:id/follower"
+						element={
+							<PrivateRoute>
+								<FollowerPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/:id/badges"
+						element={
+							<PrivateRoute>
+								<MyBadgesPage />
+							</PrivateRoute>
+						}
+					/>
 					<Route
 						path="/profile/:id/badgeSetting"
-						element={<BadgeSetiingPage />}
+						element={
+							<PrivateRoute>
+								<BadgeSetiingPage />
+							</PrivateRoute>
+						}
 					/>
-					<Route path="/todolist" element={<TodoListPage />} />
-					<Route path="/feed" element={<FeedPage />} />
-					<Route path="/addFeed" element={<AddFeedPage />} />
-					<Route path="/feed/:id" element={<DetailFeedPage />} />
 					<Route
 						path="/profile/:id/following"
 						element={

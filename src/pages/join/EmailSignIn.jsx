@@ -71,6 +71,23 @@ const SignUpPage = () => {
 		}
 	};
 
+	const enterLoginHandler = e => {
+		if (e.keyCode === 13) {
+			dispatch(__signIn({ email: email.value, password: password.value }));
+			if (loginResult.status === 200 || loginResult === "") {
+				return;
+			} else if (loginResult === 400) {
+				return dispatch(
+					updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
+				);
+			} else {
+				return dispatch(
+					updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
+				);
+			}
+		}
+	};
+
 	return (
 		<>
 			<Flex
@@ -121,6 +138,7 @@ const SignUpPage = () => {
 							type="text"
 							variant="join"
 							placeholder="이메일을 입력하세요"
+							onKeyDown={enterLoginHandler}
 						/>
 						<Flex wd="24px" ht="24px" mg="0 13px 0 0" onClick={email.onReset}>
 							{email.value.trim() === "" ? null : <Svg variant="InputReset" />}
@@ -145,6 +163,7 @@ const SignUpPage = () => {
 							onChange={password.onChange}
 							variant="join"
 							placeholder="비밀번호를 입력하세요"
+							onKeyDown={enterLoginHandler}
 						/>
 						<Flex
 							wd="24px"

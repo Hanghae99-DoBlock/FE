@@ -51,7 +51,7 @@ export const __checkEmail = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -66,7 +66,7 @@ export const __checkNick = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -82,14 +82,21 @@ const initialState = {
 const joinSliece = createSlice({
 	name: "join",
 	initialState,
-	reducers: {},
+	reducers: {
+		resetCheckNickname: (state, action) => {
+			state.checkNickResult = "";
+		},
+		resetCheckEmail: (state, action) => {
+			state.checkMailResult = "";
+		},
+	},
 	extraReducers: {
 		[__checkEmail.pending]: (state, action) => {
 			state.isLoading = true;
 		},
 		[__checkEmail.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.checkMailResult = action.payload;
+			state.checkMailResult = action.payload.status;
 		},
 		[__checkEmail.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -101,7 +108,7 @@ const joinSliece = createSlice({
 		},
 		[__checkNick.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.checkNickResult = action.payload;
+			state.checkNickResult = action.payload.status;
 		},
 		[__checkNick.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -120,5 +127,5 @@ const joinSliece = createSlice({
 	},
 });
 
-export const {} = joinSliece.actions;
+export const { resetCheckNickname, resetCheckEmail } = joinSliece.actions;
 export default joinSliece.reducer;
