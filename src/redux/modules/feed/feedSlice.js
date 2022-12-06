@@ -355,6 +355,9 @@ export const feedSlice = createSlice({
 		updateSearchKeyword: (state, action) => {
 			state.searchKeyword = action.payload;
 		},
+		resetFormPhotoList: (state, action) => {
+			state.formPhotoList = [];
+		},
 	},
 
 	extraReducers: builder => {
@@ -482,5 +485,6 @@ export const {
 	changeFollwing,
 	defaultEditFeed,
 	addEditTag,
+	resetFormPhotoList,
 } = feedSlice.actions;
 export default feedSlice.reducer;

@@ -15,6 +15,7 @@ import {
 	changeStatus,
 	resetFeed,
 	resetFollowingList,
+	resetFormPhotoList,
 	resetTodo,
 	__getSuccessTodo,
 	__uploadFeed,
@@ -66,6 +67,7 @@ const AddFeedPage = () => {
 		setColor("");
 		title.value = "";
 		setDetail("");
+		dispatch(resetFormPhotoList());
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
@@ -76,7 +78,7 @@ const AddFeedPage = () => {
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 		if (isCompleted === 200) {
-			navigate("/feed/following");
+			navigate(-1);
 			dispatch(changeStatus());
 		}
 	}, [photoList, isCompleted]);
@@ -193,12 +195,14 @@ const AddFeedPage = () => {
 	};
 
 	useEffect(() => {
-		if (todoIdArray.length >= 1 && photoList.length >= 1 && color.length >= 1) {
+		if (todoIdArray.length >= 1 && photoList.length >= 1 && color) {
 			setIsPostPossible(true);
 		} else {
 			setIsPostPossible(false);
 		}
-	}, [boastFeed, formPhotoList, color, isCompleted]);
+	}, [boastFeed, photoList, formPhotoList, color]);
+	console.log(photoList);
+	console.log(formPhotoList);
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
