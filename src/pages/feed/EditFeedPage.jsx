@@ -87,6 +87,15 @@ const EditFeedPage = () => {
 				formPhotoList: feedItem.feedImagesUrlList,
 			}),
 		);
+		if (color === "#FFD645") {
+			yeollowHandler();
+		} else if (color === "#FFB443") {
+			orangeHandler();
+		} else if (color === "#6ED6F8") {
+			blueHandler();
+		} else {
+			greenHandler();
+		}
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
