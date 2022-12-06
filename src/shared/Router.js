@@ -17,6 +17,7 @@ import {
 	MyBadgesPage,
 	BadgeSetiingPage,
 } from "../pages";
+import EditFeedPage from "../pages/feed/EditFeedPage";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
@@ -116,6 +117,14 @@ const Router = () => {
 						element={
 							<PrivateRoute>
 								<DetailFeedPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/feedEdit/:id"
+						element={
+							<PrivateRoute>
+								<EditFeedPage />
 							</PrivateRoute>
 						}
 					/>
