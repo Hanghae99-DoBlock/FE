@@ -72,7 +72,9 @@ const DetailFeedPage = () => {
 					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
 						<Flex gap="14px">
-							<Text variant="grey">수정</Text>
+							<Text variant="grey" onClick={() => navigate(`/feedEdit/${id}`)}>
+								수정
+							</Text>
 							<Text variant="red">삭제</Text>
 						</Flex>
 					</Flex>

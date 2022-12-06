@@ -61,7 +61,6 @@ export const __uploadFeed = createAsyncThunk(
 				tagList,
 				feedColor,
 			} = payload;
-
 			const frm = new FormData();
 			frm.append("todoIdList", todoIdList);
 			frm.append("feedTitle", feedTitle);
@@ -72,7 +71,7 @@ export const __uploadFeed = createAsyncThunk(
 
 			frm.append("feedColor", feedColor);
 			frm.append("tagList", tagList);
-			const { data } = await axios.post(
+			const data = await axios.post(
 				`${serverUrl}/api/feed`,
 				frm,
 
@@ -84,6 +83,29 @@ export const __uploadFeed = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.code);
+		}
+	},
+);
+
+export const __updateFeed = createAsyncThunk(
+	"UPDATE_FEED",
+	async (payload, thunkAPI) => {
+		try {
+			const { feedTitle, feedContent, tagList, feedColor, id } = payload;
+			const data = await axios.patch(
+				`${serverUrl}/api/feed/${id}`,
+				{ feedTitle, feedContent, feedColor, tagList },
+				{
+					headers: { Authorization: accessToken },
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.code);
 		}
@@ -106,7 +128,7 @@ export const __searchTagAndMember = createAsyncThunk(
 				page = memberSearchPageNum;
 			}
 
-			const { data } = await axios.get(
+			const data = await axios.get(
 				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
 				{
 					headers: { Authorization: accessToken },
@@ -118,11 +140,12 @@ export const __searchTagAndMember = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue({
 				keyword: keyword,
-				data: data,
+				data: data.data,
 				category: category,
+				status: data.status,
 			});
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -150,7 +173,7 @@ export const __infinitySearchTag = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue({ data: data, category: category });
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -176,9 +199,12 @@ export const __infinitySearchMember = createAsyncThunk(
 				},
 				payload,
 			);
-			return thunkAPI.fulfillWithValue({ data: data, category: category });
+			return thunkAPI.fulfillWithValue({
+				data: data,
+				category: category,
+			});
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -288,6 +314,8 @@ const initialState = {
 	addedSearchMember: [],
 	searchTagValue: "",
 	searchMemberValue: "",
+	isCompleted: "",
+	searchResult: "",
 };
 
 export const feedSlice = createSlice({
@@ -320,14 +348,19 @@ export const feedSlice = createSlice({
 				});
 			}
 		},
+		addEditTag: (state, action) => {
+			if (state.tagList.length < 3) {
+				state.tagList.push(action.payload);
+			}
+		},
 		resetFeed: (state, action) => {
 			state.checkedList = [];
 			state.tagList = [];
 			state.photoList = [];
 		},
 		deleteTag: (state, action) => {
-			state.tagList = state.tagList.filter((tag, index) => {
-				return action.payload.id !== tag.id;
+			state.tagList = state.tagList.filter(tag => {
+				return action.payload !== tag.id;
 			});
 		},
 		addPhoto: (state, action) => {
@@ -347,7 +380,27 @@ export const feedSlice = createSlice({
 				followOrNot: !state.feedItem.followOrNot,
 			};
 		},
+		resetFollowingList: (state, action) => {
+			state.followingFeedList = [];
+			state.followingFeedPageNum = 0;
+		},
+		changeStatus: (state, action) => {
+			state.isCompleted = "";
+		},
+		changeFollwing: (state, action) => {
+			state.searchMember.map(member => {
+				return action.payload === member.memberId
+					? (member.followOrNot = !member.followOrNot)
+					: null;
+			});
+		},
+		defaultEditFeed: (state, action) => {
+			state.tagList = action.payload.tagList;
+			state.checkedList = action.payload.todoList;
+			state.photoList = action.payload.formPhotoList;
+		},
 	},
+
 	extraReducers: builder => {
 		builder
 			//피드 업로드
@@ -357,10 +410,15 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__uploadFeed.fulfilled, (state, action) => {
 				state.isLoading = false;
+				state.isCompleted = action.payload.status;
 			})
 			//피드 업로드 실패
 			.addCase(__uploadFeed.rejected, (state, action) => {})
 			//완료된 피드 목록 불러오기
+			.addCase(__updateFeed.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isCompleted = action.payload.status;
+			})
 			.addCase(__getSuccessTodo.fulfilled, (state, action) => {
 				state.successTodo = action.payload;
 			})
@@ -393,6 +451,7 @@ export const feedSlice = createSlice({
 					state.searchTagValue = action.payload.keyword;
 					state.infiniteTagNumber = 1;
 					state.infiniteMemberNumber = 1;
+					state.searchResult = action.payload.status;
 				} else {
 					state.searchMember = action.payload.data;
 					state.searchTagValue = action.payload.keyword;
@@ -400,7 +459,11 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = false;
 					state.infiniteTagNumber = 0;
 					state.infiniteMemberNumber = 1;
+					state.searchResult = action.payload.status;
 				}
+			})
+			.addCase(__searchTagAndMember.rejected, (state, action) => {
+				state.searchResult = action.payload;
 			})
 			.addCase(__infinitySearchTag.fulfilled, (state, action) => {
 				if (action.payload.category === "feed") {
@@ -414,6 +477,11 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = false;
 				}
 			})
+			.addCase(__infinitySearchTag.rejected, (state, action) => {
+				if (action.payload === 404) {
+					state.isNextTagSearchExist = false;
+				}
+			})
 			.addCase(__infinitySearchMember.fulfilled, (state, action) => {
 				if (action.payload.category === "member") {
 					state.isNextMemberSearchExist = true;
@@ -423,6 +491,11 @@ export const feedSlice = createSlice({
 					state.infiniteMemberNumber += 1;
 				}
 				if (state.addedSearchMember.length < 10) {
+					state.isNextMemberSearchExist = false;
+				}
+			})
+			.addCase(__infinitySearchMember.rejected, (state, action) => {
+				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
 			})
@@ -449,5 +522,10 @@ export const {
 	addFormPhoto,
 	updateFeedItem,
 	resetFeed,
+	resetFollowingList,
+	changeStatus,
+	changeFollwing,
+	defaultEditFeed,
+	addEditTag,
 } = feedSlice.actions;
 export default feedSlice.reducer;
