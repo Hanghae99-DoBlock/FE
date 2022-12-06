@@ -40,7 +40,6 @@ const DetailFeedPage = () => {
 	useEffect(() => {
 		dispatch(__getFeedItem(id));
 	}, []);
-	console.log(feedItem);
 
 	const onClickFollowHandler = () => {
 		dispatch(__followThunk(memberId));

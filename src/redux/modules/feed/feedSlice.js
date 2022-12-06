@@ -61,7 +61,6 @@ export const __uploadFeed = createAsyncThunk(
 				tagList,
 				feedColor,
 			} = payload;
-			console.log("피드컬러", feedColor);
 			const frm = new FormData();
 			frm.append("todoIdList", todoIdList);
 			frm.append("feedTitle", feedTitle);
@@ -146,7 +145,6 @@ export const __searchTagAndMember = createAsyncThunk(
 				status: data.status,
 			});
 		} catch (e) {
-			console.log(e.response.status);
 			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
@@ -362,10 +360,6 @@ export const feedSlice = createSlice({
 		},
 		deleteTag: (state, action) => {
 			state.tagList = state.tagList.filter(tag => {
-				console.log(action.payload);
-				console.log(tag.id);
-				console.log(current(state.tagList));
-
 				return action.payload !== tag.id;
 			});
 		},

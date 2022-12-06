@@ -66,8 +66,6 @@ const EditFeedPage = () => {
 	const [isGreenChecked, setIsGreenChecked] = useState(false);
 	const [color, setColor] = useState(feedItem.feedColor);
 	const { id } = useParams();
-	console.log(feedItem);
-	console.log(tagArray);
 
 	const boastFeedEdit = boastFeed?.map(feed => {
 		return { todoContent: feed };
@@ -97,7 +95,6 @@ const EditFeedPage = () => {
 		} else {
 			greenHandler();
 		}
-		console.log(id);
 	}, []);
 	useEffect(() => {
 		//등록된 사진의 개수가 4개이상일시, 파일추가 버튼을 숨기는 로직
@@ -168,9 +165,6 @@ const EditFeedPage = () => {
 			setTagValue("");
 		}
 	};
-
-	console.log(tagList);
-	console.log(editTagList);
 
 	const changeDetail = e => {
 		setDetail(e.target.value);

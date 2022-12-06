@@ -10,7 +10,6 @@ const FollowingFeedListPage = () => {
 	const { followingFeedList, isNextFollowingFeedPageExist } = useSelector(
 		state => state.feed,
 	);
-	console.log(followingFeedList);
 
 	useEffect(() => {
 		if (isNextFollowingFeedPageExist) {
@@ -24,7 +23,6 @@ const FollowingFeedListPage = () => {
 				observer.disconnect(observer);
 			};
 		}
-		console.log(followingFeedList);
 	}, [isNextFollowingFeedPageExist]);
 
 	return (
