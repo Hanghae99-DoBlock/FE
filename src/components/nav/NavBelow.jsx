@@ -4,9 +4,6 @@ import jwtDecode from "jwt-decode";
 
 const NavBelow = () => {
 	const navigate = useNavigate();
-	if (!localStorage.getItem("accessToken")) {
-		navigate("/toodlist");
-	}
 	const token = localStorage.getItem("accessToken");
 	const memberId = jwtDecode(token).memberId;
 
