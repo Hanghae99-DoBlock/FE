@@ -16,6 +16,7 @@ import {
 	InterestTagsPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
+	ReactionListPage,
 	MyFeedPage,
 } from "../pages";
 import EditFeedPage from "../pages/feed/EditFeedPage";
@@ -54,6 +55,7 @@ const Router = () => {
 					<Route path="/profile/:id/following" element={<FollowingPage />} />
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
+					<Route path="/feed/reactionList" element={<ReactionListPage />} />
 					<Route
 						path="/profile/:id/badgeSetting"
 						element={<BadgeSetiingPage />}

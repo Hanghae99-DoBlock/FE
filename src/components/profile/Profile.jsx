@@ -119,7 +119,7 @@ const Profile = () => {
 						fw="300"
 						fs="12px"
 						color="#666666"
-						onClick={() => navigate("/feed")}
+						onClick={() => navigate("/feed/following")}
 					>
 						내 블럭
 						<Flex fw="600" fs="19" color="#131313" ta="center" mg="10px 0 0 0">
@@ -198,17 +198,18 @@ const Profile = () => {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
-				<Flex wd="331px" ht="51px" jc="flex-start">
-					<Flex
-						onClick={() => navigate(`/profile/myblocks`)}
-						cursor="pointer"
-						ht="100%"
-					>
-						<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
-							내가 쌓은 블럭
-						</SecondHeading>
-						<Svg variant="rightArrow" onClick={() => navigate("/feed")}></Svg>
+				<Flex wd="375px" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
+				<Flex wd="331px" mg="20px auto">
+					<Flex wd="100%" jc="flex-start">
+						<Flex onClick={() => navigate("/feed/following")}>
+							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+								내가 쌓은 블럭
+							</SecondHeading>
+						</Flex>
+						<Svg
+							variant="rightArrow"
+							onClick={() => navigate("/feed/following")}
+						></Svg>
 					</Flex>
 				</Flex>
 				{profile.countFeed === 0 ? (
