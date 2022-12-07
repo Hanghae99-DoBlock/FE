@@ -38,10 +38,21 @@ const FeedPage = () => {
 		searchTagValue,
 		addedSearchTag,
 		addedSearchMember,
+		searchKeyword,
 	} = useSelector(state => state.feed);
 	const [tagValue, setTagValue] = useState(searchTagValue);
 	const [keyword, setKeyword] = useState(tagValue);
 
+	useEffect(() => {
+		if (searchKeyword) {
+			dispatch(
+				__searchTagAndMember({
+					keyword: searchKeyword,
+					category: "feed",
+				}),
+			);
+		}
+	}, [searchKeyword]);
 	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
