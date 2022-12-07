@@ -71,6 +71,31 @@ export const __checkNick = createAsyncThunk(
 	},
 );
 
+export const __kakaoLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/kakao?code=${code}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			console.log(code);
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+
+			window.location.replace("/todoList");
+
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
 const initialState = {
 	isLoading: false,
 	isError: false,

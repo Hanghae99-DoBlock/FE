@@ -4,7 +4,7 @@ import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
 import { useEffect, useState } from "react";
 import useInput from "../../common/hooks/useInput";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { __signIn } from "../../redux/modules/join/joinSlice";
 import jwtDecode from "jwt-decode";
@@ -17,6 +17,8 @@ const SignInPage = () => {
 	const dispatch = useDispatch();
 	const token = localStorage.getItem("accessToken");
 	const [isSplash, setIsSplash] = useState(true);
+	const kakaoUrl =
+		"https://kauth.kakao.com/oauth/authorize?client_id=e321d7ec74f7b0df738961b15a46117d&redirect_uri=http://localhost:3000/api/members/login/kakao&response_type=code";
 
 	useEffect(() => {
 		if (token) {
@@ -51,9 +53,11 @@ const SignInPage = () => {
 							<Flex fw="bold">블록을 쌓아보세요!</Flex>
 						</Flex>
 						<Flex dir="column" gap="10px">
-							<Flex>
-								<Svg variant="kakao" />
-							</Flex>
+							<a href={kakaoUrl}>
+								<Flex>
+									<Svg variant="kakao" />
+								</Flex>
+							</a>
 							<Flex>
 								<Svg variant="naver" />
 							</Flex>

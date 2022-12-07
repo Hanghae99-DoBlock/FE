@@ -10,6 +10,7 @@ import FollowingPage from "./profile/FollowingPage";
 import FollowerPage from "./profile/FollowerPage";
 import MyBadgesPage from "./profile/MyBadgesPage";
 import BadgeSetiingPage from "./profile/BadgeSetiingPage";
+import EmailSignin from "./join/EmailSignIn";
 import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
@@ -33,4 +34,5 @@ export {
 	InterestTagsPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
+	EmailSignin,
 };
