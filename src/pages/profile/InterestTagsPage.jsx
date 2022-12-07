@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateProfileTagsApi } from "../../api/profileApi";
 import { Box, Button, FirstHeading, Flex, Text } from "../../common";
 import { grey600, white, black } from "../../common";
+import { updateIsLoading } from "../../redux/modules/profileSlice";
+import { __updateProfileTags } from "../../redux/modules/middleware/profileThunk";
 
 const InterestTagsPage = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const isLoading = useSelector(state => state.profileSlice.isLoading);
 	const [inputDisplay, setInputDisplay] = useState("none");
 	const [showInputBtndisplay, setShowInputBtnDisplay] = useState("block");
 	const [tagContent, setTagContent] = useState("");
@@ -24,6 +28,13 @@ const InterestTagsPage = () => {
 	const [recommendedTags, setRecommendedTags] = useState([
 		...initialRecommendedTags,
 	]);
+
+	useEffect(() => {
+		if (isLoading === "완료") {
+			navigate(-1);
+			dispatch(updateIsLoading(null));
+		}
+	}, [isLoading]);
 
 	// 커스텀 태그 인풋 열기 핸들러
 	const showTagInputHandler = () => {
@@ -141,8 +152,7 @@ const InterestTagsPage = () => {
 	// 제출 핸들러
 	const submitHandler = () => {
 		const request = selectedTags.map(tag => tag.tagContent);
-		updateProfileTagsApi(request);
-		navigate(-1);
+		dispatch(__updateProfileTags(request));
 	};
 
 	// 선택된 태그 배경 색
