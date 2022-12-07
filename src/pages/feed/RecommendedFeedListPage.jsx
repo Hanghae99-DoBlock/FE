@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Flex, grey300, grey600, Text } from "../../common";
 import { FeedItem } from "../../components";
+import { resetRecommendedFeed } from "../../redux/modules/feed/feedSlice";
 import { __getRecommendedFeeds } from "../../redux/modules/middleware/feedListThunk";
 
 const RecommendedFeedListPage = () => {
@@ -26,6 +27,12 @@ const RecommendedFeedListPage = () => {
 			};
 		}
 	}, [isNextRecommendedFeedPageExist]);
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetRecommendedFeed());
+		};
+	}, []);
 
 	return (
 		<>

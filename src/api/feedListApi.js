@@ -12,6 +12,14 @@ export const getRecommendedFeedsApi = async payload => {
 	return response.data;
 };
 
+// 내 피드 리스트 조회
+export const getMyFeedsApi = async payload => {
+	const response = await instance.get(
+		`/api/members/profile/${payload.memberId}/feed?page=${payload.page}`,
+	);
+	return response.data;
+};
+
 // 피드 삭제
 export const deleteFeedApi = payload => {
 	instance.delete(`/api/feed/${payload}`);

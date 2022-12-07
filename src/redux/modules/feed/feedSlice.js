@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ import {
 	__getFollowingFeeds,
 	__getRecommendedFeeds,
 	__deleteFeed,
+	__getMyFeeds,
 } from "../middleware/feedListThunk";
 
 const accessToken = localStorage.getItem("accessToken");
@@ -239,6 +240,7 @@ export const __updateReactions = createAsyncThunk(
 const initialState = {
 	followingFeedList: [],
 	recommendedFeedList: [],
+	myFeedList: [],
 	checkedList: [],
 	tagList: [],
 	photoList: [],
@@ -251,8 +253,10 @@ const initialState = {
 	commentList: [],
 	followingFeedPageNum: 0,
 	recommendedFeedPageNum: 0,
+	myFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	isNextmyFeedPageExist: true,
 	searchKeyword: null,
 	tagSearchPageNum: 0,
 	memberSearchPageNum: 0,
@@ -352,6 +356,14 @@ export const feedSlice = createSlice({
 		updateIsLoading: (state, action) => {
 			state.isLoading = action.payload;
 		},
+		resetMyFeed: (state, action) => {
+			state.myFeedList = [];
+			state.myFeedPageNum = 0;
+		},
+		resetRecommendedFeed: (state, action) => {
+			state.recommendedFeedList = [];
+			state.recommendedFeedPageNum = 0;
+		},
 		updateSearchKeyword: (state, action) => {
 			state.searchKeyword = action.payload;
 		},
@@ -363,7 +375,6 @@ export const feedSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			//피드 업로드
-
 			.addCase(__uploadFeed.pending, (state, action) => {
 				state.isLoading = true;
 			})
@@ -402,6 +413,14 @@ export const feedSlice = createSlice({
 				state.recommendedFeedPageNum += 1;
 				if (action.payload.length < 5) {
 					state.isNextRecommendedFeedPageExist = false;
+				}
+			})
+			// 내 피드 조회 성공
+			.addCase(__getMyFeeds.fulfilled, (state, action) => {
+				state.myFeedList.push(...action.payload);
+				state.myFeedPageNum += 1;
+				if (action.payload.length < 5) {
+					state.isNextmyFeedPageExist = false;
 				}
 			})
 			// 피드 단건 조회 성공
@@ -480,6 +499,8 @@ export const {
 	updateIsLoading,
 	updateSearchKeyword,
 	resetFeed,
+	resetMyFeed,
+	resetRecommendedFeed,
 	resetFollowingList,
 	changeStatus,
 	changeFollwing,
