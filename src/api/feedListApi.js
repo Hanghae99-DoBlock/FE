@@ -15,7 +15,7 @@ export const getRecommendedFeedsApi = async payload => {
 // 내 피드 리스트 조회
 export const getMyFeedsApi = async payload => {
 	const response = await instance.get(
-		`/api/members/profile/${payload.memberId}/feed?page=${payload.page}`,
+		`/api/profile/${payload.memberId}/feed?page=${payload.page}`,
 	);
 	return response.data;
 };

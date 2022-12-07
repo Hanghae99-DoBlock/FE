@@ -337,6 +337,17 @@ export const feedSlice = createSlice({
 		resetFollowingList: (state, action) => {
 			state.followingFeedList = [];
 			state.followingFeedPageNum = 0;
+			state.isNextFollowingFeedPageExist = true;
+		},
+		resetMyFeed: (state, action) => {
+			state.myFeedList = [];
+			state.myFeedPageNum = 0;
+			state.isNextmyFeedPageExist = true;
+		},
+		resetRecommendedFeed: (state, action) => {
+			state.recommendedFeedList = [];
+			state.recommendedFeedPageNum = 0;
+			state.isNextRecommendedFeedPageExist = true;
 		},
 		changeStatus: (state, action) => {
 			state.isCompleted = "";
@@ -355,14 +366,6 @@ export const feedSlice = createSlice({
 		},
 		updateIsLoading: (state, action) => {
 			state.isLoading = action.payload;
-		},
-		resetMyFeed: (state, action) => {
-			state.myFeedList = [];
-			state.myFeedPageNum = 0;
-		},
-		resetRecommendedFeed: (state, action) => {
-			state.recommendedFeedList = [];
-			state.recommendedFeedPageNum = 0;
 		},
 		updateSearchKeyword: (state, action) => {
 			state.searchKeyword = action.payload;
@@ -407,6 +410,9 @@ export const feedSlice = createSlice({
 					state.isNextFollowingFeedPageExist = false;
 				}
 			})
+			.addCase(__getFollowingFeeds.rejected, (state, action) => {
+				state.isNextFollowingFeedPageExist = false;
+			})
 			// 추천 피드 조회 성공
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
 				state.recommendedFeedList.push(...action.payload);
@@ -415,6 +421,9 @@ export const feedSlice = createSlice({
 					state.isNextRecommendedFeedPageExist = false;
 				}
 			})
+			.addCase(__getRecommendedFeeds.rejected, (state, action) => {
+				state.isNextRecommendedFeedPageExist = false;
+			})
 			// 내 피드 조회 성공
 			.addCase(__getMyFeeds.fulfilled, (state, action) => {
 				state.myFeedList.push(...action.payload);
@@ -422,6 +431,9 @@ export const feedSlice = createSlice({
 				if (action.payload.length < 5) {
 					state.isNextmyFeedPageExist = false;
 				}
+			})
+			.addCase(__getMyFeeds.rejected, (state, action) => {
+				state.isNextmyFeedPageExist = false;
 			})
 			// 피드 단건 조회 성공
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
