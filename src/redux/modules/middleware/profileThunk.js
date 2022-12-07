@@ -12,7 +12,7 @@ export const __updateProfileTags = createAsyncThunk(
 			const response = await updateProfileTagsApi(payload);
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
+			return thunkAPI.rejectWithValue(error.response);
 		}
 	},
 );
