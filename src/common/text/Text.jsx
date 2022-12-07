@@ -146,6 +146,13 @@ const StText = styled.span`
 					line-height: 22px;
 					color: ${color || black};
 				`;
+			case "body2Regular":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
+					line-height: 22px;
+					color: ${color || black};
+				`;
 			case "body2Medium":
 				return css`
 					font-weight: 500;
