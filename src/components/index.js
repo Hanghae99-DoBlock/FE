@@ -17,6 +17,9 @@ import {
 	TagList,
 	ModalConfirmDelete,
 } from "./feed";
+
+import { ModalAlertExpirationToken, RefreshToken } from "./join";
+
 import NavBelow from "./nav/NavBelow";
 
 export {
@@ -35,4 +38,6 @@ export {
 	ChoiceTodo,
 	ChoiceTodoModal,
 	ModalConfirmDelete,
+	ModalAlertExpirationToken,
+	RefreshToken,
 };

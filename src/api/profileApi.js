@@ -1,15 +1,13 @@
 import { instance } from "./instance";
 
-export const updateProfileTagsApi = async payload => {
+export const updateProfileTagsApi = payload => {
 	const frm = new FormData();
 	frm.append("tagList", payload);
-	const response = await instance.patch(`/api/profile/edit`, frm);
-	return response.status;
+	instance.patch(`/api/profile/edit`, frm);
 };
 
-export const resetProfileTagsApi = async payload => {
+export const resetProfileTagsApi = payload => {
 	const frm = new FormData();
 	frm.append("tagList", []);
-	const response = await instance.patch(`/api/profile/edit`, frm);
-	return response.status;
+	instance.patch(`/api/profile/edit`, frm);
 };
