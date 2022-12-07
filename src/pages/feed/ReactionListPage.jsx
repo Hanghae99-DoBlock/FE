@@ -10,7 +10,6 @@ const ReactionListPage = () => {
 	const reactionList = useSelector(
 		state => state.feed.feedItem.reactionResponseDtoList,
 	);
-	console.log(reactionList);
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
 	};
