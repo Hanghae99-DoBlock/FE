@@ -17,6 +17,7 @@ import {
 	InterestTagsPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
+	ReactionListPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import SearchPage from "../pages/search/SearchPage";
@@ -127,6 +128,14 @@ const Router = () => {
 							element={
 								<PrivateRoute>
 									<DetailFeedPage />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/feed/reactionList"
+							element={
+								<PrivateRoute>
+									<ReactionListPage />
 								</PrivateRoute>
 							}
 						/>

@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../api";
+import {
+	__resetProfileTags,
+	__updateProfileTags,
+} from "./middleware/profileThunk";
 
 const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
@@ -63,6 +67,7 @@ export const __followThunk = createAsyncThunk(
 const updateProfile = payload => {
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
+	console.log(payload);
 	const frm = new FormData();
 	if (payload.nickname === "") {
 	} else {
@@ -80,7 +85,6 @@ const updateProfile = payload => {
 			{
 				headers: {
 					Authorization: accessToken,
-					"Refresh-Token": refreshToken,
 					"Content-Type": "multipart/form-data",
 				},
 			},
@@ -240,7 +244,7 @@ const initialState = {
 	profile: {},
 	badgeList: [],
 	representativeBadge: {},
-	isLoading: false,
+	isLoading: null,
 	error: "",
 };
 
@@ -251,8 +255,17 @@ const profileSlice = createSlice({
 		updatePro: (state, action) => {
 			updateProfile(action.payload);
 		},
+		updateIsLoading: (state, action) => {
+			state.isLoading = action.payload;
+		},
 	},
 	extraReducers: {
+		[__updateProfileTags.fulfilled]: (state, action) => {
+			state.isLoading = "완료";
+		},
+		[__resetProfileTags.fulfilled]: (state, action) => {
+			state.profile.tagList = [];
+		},
 		[__getUser.pending]: (state, action) => {
 			state.isLoading = true;
 		},
@@ -336,5 +349,5 @@ const profileSlice = createSlice({
 	},
 });
 
-export const { updatePro } = profileSlice.actions;
+export const { updatePro, updateIsLoading } = profileSlice.actions;
 export default profileSlice.reducer;

@@ -1,27 +1,23 @@
-import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Box, Flex, FloatingAddBtn, Text } from "../../common";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
+import { black, Box, Flex, FloatingAddBtn, grey600, Text } from "../../common";
 import { NavBelow } from "../../components";
 
 const FeedPage = () => {
 	const navigate = useNavigate();
+	const isMatchFollowing = Boolean(useMatch("/feed/following"));
+	const isMatchRecommended = Boolean(useMatch("/feed/recommended"));
 
-	// 상단 탭 메뉴 ui 상태 관리
-	const [followingFeedListMenuUiType, setFollowingFeedListMenuUiType] =
-		useState("selectedTabMenu");
-	const [recommendedFeedListMenuUiType, setRecommendedFeedListMenuUiType] =
-		useState("tabMenu");
+	const topTabUi = {
+		true: { box: "selectedTabMenu", color: black },
+		false: { box: "tabMenu", color: grey600 },
+	};
 
 	// 피드 리스트 종류 변경 핸들러
 	const changeFeedListTypeHandler = feedListType => {
 		if (feedListType === "recommendedFeedList") {
-			navigate(`/feed/recommended`);
-			setRecommendedFeedListMenuUiType("selectedTabMenu");
-			setFollowingFeedListMenuUiType("tabMenu");
+			navigate(`recommended`);
 		} else {
-			navigate(`/feed/following`);
-			setFollowingFeedListMenuUiType("selectedTabMenu");
-			setRecommendedFeedListMenuUiType("tabMenu");
+			navigate(`following`);
 		}
 	};
 
@@ -34,15 +30,19 @@ const FeedPage = () => {
 				<Flex wd="100%" mxw="430px" ht="41px" position="fixed" top="0">
 					<Box
 						onClick={() => changeFeedListTypeHandler("followingFeedList")}
-						variant={followingFeedListMenuUiType}
+						variant={topTabUi[isMatchFollowing].box}
 					>
-						<Text variant={followingFeedListMenuUiType}>팔로잉</Text>
+						<Text variant="title4" color={topTabUi[isMatchFollowing].color}>
+							팔로잉
+						</Text>
 					</Box>
 					<Box
 						onClick={() => changeFeedListTypeHandler("recommendedFeedList")}
-						variant={recommendedFeedListMenuUiType}
+						variant={topTabUi[isMatchRecommended].box}
 					>
-						<Text variant={recommendedFeedListMenuUiType}>추천 피드</Text>
+						<Text variant="title4" color={topTabUi[isMatchRecommended].color}>
+							추천 피드
+						</Text>
 					</Box>
 				</Flex>
 
