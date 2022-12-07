@@ -53,7 +53,7 @@ const SearchPage = () => {
 		}
 	}, [searchKeyword]);
 
-useEffect(() => {
+	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
@@ -133,7 +133,6 @@ useEffect(() => {
 			);
 		}
 	};
-	console.log(searchMemberItem);
 	const searchInputChangeHandler = e => {
 		setTagValue(e.target.value);
 	};

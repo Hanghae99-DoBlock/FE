@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Flex, Text } from "../../common";
 import { FeedItem } from "../../components";
+import { resetFollowingList } from "../../redux/modules/feed/feedSlice";
 import { __getFollowingFeeds } from "../../redux/modules/middleware/feedListThunk";
 
 const FollowingFeedListPage = () => {
@@ -24,6 +25,12 @@ const FollowingFeedListPage = () => {
 			};
 		}
 	}, [isNextFollowingFeedPageExist]);
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetFollowingList());
+		};
+	}, []);
 
 	return (
 		<Box variant="feedScrollArea">
