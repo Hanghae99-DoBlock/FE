@@ -2,16 +2,19 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	resetCheckEmail,
+	resetCheckNickname,
 	__checkEmail,
 	__checkNick,
 	__signUp,
 } from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const SignUpPage = () => {
 	const dispatch = useDispatch();
@@ -33,10 +36,12 @@ const SignUpPage = () => {
 	const [isBlue, setIsBlue] = useState(false);
 	const [isMailDuple, setIsMailDuple] = useState(false);
 
-	const checkNickname = useSelector(
-		state => state?.join?.checkNickResult.status,
-	);
-	const checkEmail = useSelector(state => state?.join?.checkMailResult.status);
+	const checkNickname = useSelector(state => state?.join?.checkNickResult);
+	const checkEmail = useSelector(state => state?.join?.checkMailResult);
+	const toast = useSelector(state => state.toastSlice.isToastExist);
+	console.log(toast);
+	console.log(checkNickname);
+	console.log(checkEmail);
 	//이메일 정규식
 	const regEmail =
 		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -107,13 +112,15 @@ const SignUpPage = () => {
 	};
 
 	const checkNicknameHandler = () => {
-		if (regNick.test(nickname.value)) {
+		if (regNick.test(nickname.value) && nickname.value.trim() !== "") {
 			dispatch(__checkNick({ nickname: nickname.value }));
 		}
 	};
 
 	const checkEmailHandler = () => {
-		if (regEmail.test(email.value)) {
+		if (!regEmail.test(email.value) && email.value.trim() !== "") {
+			dispatch(updateIsToastExist("올바른 이메일 형식을 입력해주세요."));
+		} else if (regEmail.test(email.value) && email.value.trim() !== "") {
 			dispatch(__checkEmail({ email: email.value }));
 		}
 	};
@@ -122,6 +129,22 @@ const SignUpPage = () => {
 		if (regPass.test(password.value)) {
 		}
 	};
+	useEffect(() => {
+		if (
+			checkNickname !== 200 &&
+			checkNickname !== "" &&
+			nickname.value.trim() !== ""
+		) {
+			dispatch(updateIsToastExist("이미 사용중인 닉네임입니다."));
+		}
+		dispatch(resetCheckNickname());
+	}, [checkNickname]);
+	useEffect(() => {
+		if (checkEmail !== 200 && checkEmail !== "" && email.value.trim() !== "") {
+			dispatch(updateIsToastExist("이미 사용중인 이메일입니다."));
+		}
+		dispatch(resetCheckEmail());
+	}, [checkEmail]);
 	return (
 		<>
 			<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
