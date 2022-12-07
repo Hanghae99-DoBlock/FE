@@ -8,20 +8,24 @@ import { ModalAlertExpirationToken } from "../../components";
 const RefreshToken = () => {
 	const token = localStorage.getItem("accessToken");
 	const tokenExpirationTime = jwtDecode(token).exp;
-	const timeBeforeTokenExpiration = dayjs
-		.unix(tokenExpirationTime)
-		.subtract(10, "minute").$d;
 
-	const [timeNow, setTimeNow] = useState(new Date());
+	const dateNow = dayjs(dayjs().$d).format(`YYYY.MM.DD HH:mm`);
+	const timeBeforeTokenExpiration = dayjs(
+		dayjs.unix(tokenExpirationTime).subtract(10, "minute").$d,
+	).format(`YYYY.MM.DD HH:mm`);
+
+	const [timeNow, setTimeNow] = useState(dateNow);
+
 	const [isAlertExpirationTokenModalOpen, setIsAlertExpirationTokenModalOpen] =
 		useState(false);
 
 	useEffect(() => {
 		const setTimeFunc = setInterval(() => {
-			setTimeNow(new Date());
-		}, 60000);
-	}, [new Date()]);
+			setTimeNow(dateNow);
+		}, 30000);
+	}, [dateNow]);
 
+	const testDate = dayjs().$d;
 	useEffect(() => {
 		if (timeNow === timeBeforeTokenExpiration) {
 			const accessToken = localStorage.getItem("accessToken");
@@ -45,11 +49,7 @@ const RefreshToken = () => {
 					window.localStorage.setItem("accessToken", accessToken);
 					window.localStorage.setItem("refreshToken", refreshToken);
 				})
-				.catch(error => {
-					setIsAlertExpirationTokenModalOpen(true);
-					localStorage.removeItem("accessToken");
-					localStorage.removeItem("refreshToken");
-				});
+				.catch(error => {});
 		}
 	}, [timeBeforeTokenExpiration, timeNow]);
 
