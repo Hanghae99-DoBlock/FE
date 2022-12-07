@@ -132,7 +132,7 @@ const Router = () => {
 							}
 						/>
 						<Route
-							path="/feed/reactionList"
+							path="feed/reactionList"
 							element={
 								<PrivateRoute>
 									<ReactionListPage />
