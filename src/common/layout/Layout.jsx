@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { white } from "../../common";
 
 const Layout = ({ children, ...props }) => {
 	return <StLayout {...props}>{children}</StLayout>;
@@ -19,6 +20,7 @@ const StLayout = styled.div`
 					position: relative;
 					display: flex;
 					flex-direction: column;
+					background-color: ${white};
 				`;
 			default:
 				break;

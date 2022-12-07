@@ -22,7 +22,13 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 	// onChange 핸들러
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
-		setTodo({ ...selectedDate, ...todo, [name]: value });
+		setTodo({
+			year: selectedDate.year,
+			month: selectedDate.month,
+			day: selectedDate.day,
+			...todo,
+			[name]: value,
+		});
 	};
 
 	// 투두 업로드 핸들러
@@ -87,7 +93,13 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 					</Flex>
 
 					{/* 추가 버튼 */}
-					<Button variant="addTodo">추가하기</Button>
+					{todo.todoContent ? (
+						<Button onClick={uploadHandler} variant="activatedCta">
+							추가하기
+						</Button>
+					) : (
+						<Button variant="disactivatedCta">추가하기</Button>
+					)}
 				</Form>
 			</Box>
 		</Flex>

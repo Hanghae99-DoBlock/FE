@@ -35,7 +35,7 @@ const BadgeSetiingPage = () => {
 	};
 
 	return (
-		<Flex dir="column" mw="375px" mxw="375px" mg="0 auto">
+		<Flex dir="column" wd="100%" ht="100vh" jc="flex-start">
 			{/* 모달 */}
 			{isAddTodoModalOpen ? (
 				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">

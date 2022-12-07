@@ -99,6 +99,7 @@ const PasswordChange = () => {
 		<Flex dir="column" mw="375px" mxw="375px" mg="0 auto">
 			<Flex wd="335px" jc="space-between" mg="20px 0">
 				<Svg variant="chevron" onClick={() => navigate(-1)} />
+
 				<Flex fs="18" fw="600">
 					비밀번호 변경
 				</Flex>

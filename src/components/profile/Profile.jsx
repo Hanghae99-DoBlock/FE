@@ -53,14 +53,12 @@ const Profile = () => {
 			<Flex
 				wd="100%"
 				dir="column"
-				mw="375px"
-				mxw="375px"
-				mh="667px"
-				mg="0 auto"
+				ht="100vh"
+				jc="flex-start"
 				style={{ overflow: "auto" }}
 			>
 				{decodeToken.memberId === profile.memberId ? (
-					<Flex wd="375px" ht="62px" bb="2px solid #EFEFEF">
+					<Flex wd="100%" ht="62px" bb="2px solid #EFEFEF">
 						<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
 							내 프로필
 						</Flex>
@@ -159,7 +157,7 @@ const Profile = () => {
 						</Flex>
 					</SecondHeading>
 				</Flex>
-				<Flex wd="375px" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
+				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
 					<Flex wd="100%" jc="flex-start">
 						<Flex

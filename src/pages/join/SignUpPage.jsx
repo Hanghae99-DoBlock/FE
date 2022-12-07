@@ -124,12 +124,12 @@ const SignUpPage = () => {
 	};
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
 				<Flex
+					wd="100%"
 					dir="row"
 					ht="61px"
 					jc="space-between"
-					mg="8px 0"
 					ai="center"
 					bb="1px solid #EFEFEF"
 				>

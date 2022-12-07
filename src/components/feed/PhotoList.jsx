@@ -13,7 +13,7 @@ const PhotoList = ({ photo, isPhotoFull, setIsPhotoFull }) => {
 	return (
 		<Flex onClick={deletePhotoHandler} wd="72px" ht="72px" position="relative">
 			<Svg variant="deletePhoto" />
-			<StImg src={photo.url} />;
+			<StImg src={photo.url} />
 		</Flex>
 	);
 };

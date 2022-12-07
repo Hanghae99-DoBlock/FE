@@ -36,7 +36,7 @@ const Following = () => {
 
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex dir="column" wd="100%" ht="100vh" jc="flex-start">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -58,6 +58,28 @@ const Following = () => {
 						<Svg variant="profileBlock"></Svg>
 						<Flex mg="10px 0 0 0" fw="600" fs="14" color="#3F3F3F">
 							팔로우하는 사람이 없어요..
+				{Array.from(followingList).map(data => (
+					<Flex jc="space-between" pd="13px 20px" wd="100%" key={data.memberId}>
+						<Flex>
+							<Image
+								variant="followImage"
+								src={data.profileImage}
+								alt=""
+								style={{ marginTop: "4px" }}
+								onClick={() => {
+									anotherMemberPage(data.memberId);
+								}}
+							/>
+
+							<FirstHeading
+								fw="600"
+								fs="13px"
+								onClick={() => {
+									anotherMemberPage(data.memberId);
+								}}
+							>
+								{data.nickname}
+							</FirstHeading>
 						</Flex>
 					</>
 				) : (

@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Toast from "../common/toast/Toast";
 import {
 	ProfilePage,
 	SignInPage,
@@ -14,12 +13,14 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	InterestTagsPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
 	ReactionListPage,
+	MyFeedPage,
 } from "../pages";
+import EditFeedPage from "../pages/feed/EditFeedPage";
 import EmailSignIn from "../pages/join/EmailSignIn";
-import Splash from "../pages/join/Splash";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 
@@ -80,6 +81,23 @@ const Router = () => {
 						}
 					/>
 					<Route
+						path="/profile/edit/interest"
+						element={
+							<PrivateRoute>
+								<InterestTagsPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/profile/myblocks"
+						element={
+							<PrivateRoute>
+								<MyFeedPage />
+							</PrivateRoute>
+						}
+					/>
+
+					<Route
 						path="/todolist"
 						element={
 							<PrivateRoute>
@@ -111,6 +129,14 @@ const Router = () => {
 						element={
 							<PrivateRoute>
 								<DetailFeedPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/feedEdit/:id"
+						element={
+							<PrivateRoute>
+								<EditFeedPage />
 							</PrivateRoute>
 						}
 					/>

@@ -25,9 +25,9 @@ const FeedCommentDetail = props => {
 	};
 
 	return (
-		<Flex key={props.content?.commentId} dir="column">
-			<Flex wd="335px" mg="10px 0" jc="flex-start">
-				<Flex wd="335px" jc="space-between">
+		<Flex wd="100%" pd="0 20px" key={props.content?.commentId} dir="column">
+			<Flex wd="100%" mg="10px 0" jc="flex-start">
+				<Flex wd="100%" jc="space-between">
 					<Flex>
 						<Flex>
 							<Image
@@ -55,7 +55,7 @@ const FeedCommentDetail = props => {
 					</Flex>
 				</Flex>
 			</Flex>
-			<Flex wd="335px" fw="300" fs="14" lh="20" jc="flex-start">
+			<Flex wd="100%" fw="300" fs="14" lh="20" jc="flex-start">
 				{isEdit ? (
 					<Input
 						variant="feedCommentInput"
@@ -66,7 +66,7 @@ const FeedCommentDetail = props => {
 					<>{localContent}</>
 				)}
 			</Flex>
-			<Flex wd="335px" jc="flex-start">
+			<Flex wd="100%" jc="flex-start">
 				<Flex mg="2px 0 0 0">
 					{decodeToken.memberId === props.content.memberId ? (
 						isEdit ? (

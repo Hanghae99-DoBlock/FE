@@ -131,7 +131,7 @@ const FeedComment = props => {
 						/>
 					))}
 			</Flex>
-			<Flex wd="335px" mg="10px">
+			<Flex wd="100%" pd="10px 18px">
 				<form onSubmit={onCreateComment}>
 					<Flex>
 						<Input

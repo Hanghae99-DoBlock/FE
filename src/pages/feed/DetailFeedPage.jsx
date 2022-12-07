@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import jwtDecode from "jwt-decode";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Box, Text, Svg } from "../../common";
-import { FeedComment, NavBelow } from "../../components";
+import { FeedComment, ModalConfirmDelete, NavBelow } from "../../components";
 import {
 	updateFeedItem,
+	updateSearchKeyword,
 	__getFeedItem,
 } from "../../redux/modules/feed/feedSlice";
 import { __followThunk } from "../../redux/modules/profileSlice";
@@ -64,17 +65,64 @@ const DetailFeedPage = () => {
 		followBtnStatus = "notFollowing";
 	}
 
+	const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
+		useState(false);
+
+	const openConfirmDeleteModalHandler = () => {
+		setIsConfirmDeleteModalOpen(true);
+	};
+
+	const tagSearchHandler = tagItem => {
+		dispatch(updateSearchKeyword(tagItem));
+		navigate(`/search`);
+	};
+
+	const [imgPage, setImgPage] = useState(0);
+
+	const showNextImgHandler = () => {
+		setImgPage(prev => prev + 1);
+	};
+
+	const showPrevImgHandler = () => {
+		setImgPage(prev => prev - 1);
+	};
+
 	return (
 		<>
+			{isConfirmDeleteModalOpen ? (
+				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+					<Flex wd="100%" ht="100vh" position="relative">
+						<Flex wd="100%" ht="100%" zIndex="2">
+							<ModalConfirmDelete
+								feedId={feedId}
+								setIsConfirmDeleteModalOpen={setIsConfirmDeleteModalOpen}
+							/>
+						</Flex>
+					</Flex>
+				</Flex>
+			) : null}
 			<Flex dir="column" wd="100%">
 				<Flex wd="100%" dir="column">
 					{/* 헤더 */}
 					<Flex wd="100%" ht="60px" jc="space-between" pd="18px">
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
-						<Flex gap="14px">
-							<Text variant="grey">수정</Text>
-							<Text variant="red">삭제</Text>
-						</Flex>
+
+
+						{decodedToken.memberId === memberId ? (
+							<Flex ht="100%" gap="7px">
+								<Flex cursor="pointer" ht="100%" wd="35px" onClick={() => navigate(`/feedEdit/${id}`)}>
+									<Text variant="grey">수정</Text>
+								</Flex>
+								<Flex
+									onClick={openConfirmDeleteModalHandler}
+									cursor="pointer"
+									ht="100%"
+									wd="35px"
+								>
+									<Text variant="red">삭제</Text>
+								</Flex>
+							</Flex>
+						) : null}
 					</Flex>
 
 					{/* 프로필 영역 */}
@@ -105,15 +153,17 @@ const DetailFeedPage = () => {
 									>
 										<Text variant="selectedTabMenu">{nickname}</Text>
 									</Flex>
-									<Flex
-										wd="60px"
-										ht="20px"
-										bg="#FFF4ED"
-										jc="center"
-										radius="5px"
-									>
-										<Text variant="orange">뱃지</Text>
-									</Flex>
+									{feedItem.badgeName ? (
+										<Flex
+											ht="20px"
+											bg="#FFF4ED"
+											pd="4px 8px"
+											jc="center"
+											radius="5px"
+										>
+											<Text variant="orange">{feedItem.badgeName}</Text>
+										</Flex>
+									) : null}
 								</Flex>
 
 								{/* 게시글 생성 날짜 */}
@@ -136,7 +186,7 @@ const DetailFeedPage = () => {
 
 					{/* 제목 */}
 					<Flex wd="100%" pd="8px 29px 16px" jc="flex-start">
-						<Text variant="title">{feedTitle}</Text>
+						<Text variant="title1">{feedTitle}</Text>
 					</Flex>
 
 					{/* 투두리스트 영역 */}
@@ -163,16 +213,44 @@ const DetailFeedPage = () => {
 					</Flex>
 
 					{/* 사진 영역*/}
-					<Flex wd="100%" bg="#f8f8f8" dir="column">
-						{feedImagesUrlList?.map((feedImg, index) => (
-							<Box key={index} variant="feedImg" feedImgUrl={feedImg} />
-						))}
-					</Flex>
+					{feedImagesUrlList ? (
+						<Box variant="feedImg" feedImgUrl={feedImagesUrlList[imgPage]}>
+							<Flex wd="100%" ht="100%" jc="space-between">
+								{imgPage === 0 ? (
+									<div />
+								) : (
+									<Flex
+										onClick={showPrevImgHandler}
+										cursor="pointer"
+										jc="flex-start"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Prev" />
+									</Flex>
+								)}
+								{imgPage === feedImagesUrlList.length - 1 ||
+								feedImagesUrlList.length === 1 ? null : (
+									<Flex
+										onClick={showNextImgHandler}
+										cursor="pointer"
+										jc="flex-end"
+										wd="30%"
+										ht="100%"
+									>
+										<Box variant="imgPaginationIconBox" type="Nxt" />
+									</Flex>
+								)}
+							</Flex>
+						</Box>
+					) : null}
 
 					{/* 태그 영역 */}
 					<Flex wrap="wrap" gap="8px" wd="100%" jc="flex-start" pd="24px 18px">
 						{tagList?.map((tagItem, index) => (
 							<Flex
+								onClick={() => tagSearchHandler(tagItem)}
+								cursor="pointer"
 								key={index}
 								ht="29px"
 								border="1px solid #E5E5E5"
