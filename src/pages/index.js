@@ -14,6 +14,7 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	ReactionListPage,
 } from "./feed";
 export {
 	SignInPage,
@@ -31,4 +32,5 @@ export {
 	FeedPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
+	ReactionListPage,
 };

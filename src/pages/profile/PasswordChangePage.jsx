@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { Flex, Svg, Box } from "../../common";
 import useInput from "../../common/hooks/useInput";
-import { StInput } from "../../common/input/Input";
+import Input, { StInput } from "../../common/input/Input";
 import NavBelow from "../../components/nav/NavBelow";
 import { __editPassword } from "../../redux/modules/profileSlice";
 
@@ -36,6 +37,7 @@ const PasswordChange = () => {
 
 	const [currentPassWord, setCurrentPassWord] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+	const [checkPassword, setCheckPassword] = useState("");
 
 	const [isBlue, setIsBlue] = useState(false);
 
@@ -44,6 +46,8 @@ const PasswordChange = () => {
 	// 2. 8-20자
 	const regPass =
 		/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]{8,20}$/;
+	const regPassNonLength =
+		/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-z0-9A-Z!@#$%^&*]/;
 
 	const checkPasswordHandler = () => {
 		if (regPass.test(password.value)) {
@@ -92,15 +96,28 @@ const PasswordChange = () => {
 	};
 
 	return (
-		<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
-			<Flex dir="row" ht="58px" jc="space-between" pd="8px 0" ai="center">
-				<Flex wd="113px" ht="42px" jc="flex-start" mg="0 0 0 17px">
-					<Svg variant="chevron" onClick={() => navigate(-1)} />
-				</Flex>
+		<Flex dir="column" mw="375px" mxw="375px" mg="0 auto">
+			<Flex wd="335px" jc="space-between" mg="20px 0">
+				<Svg variant="chevron" onClick={() => navigate(-1)} />
 				<Flex fs="18" fw="600">
 					비밀번호 변경
 				</Flex>
-				<Flex wd="113px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
+				{currentPassword.value !== "" &&
+				password.value !== "" &&
+				checkPass.value !== "" ? (
+					<Flex
+						fs="16"
+						fw="600"
+						color="#FF8737"
+						onClick={passwordChangeHandler}
+					>
+						적용
+					</Flex>
+				) : (
+					<Flex fs="16" fw="600" color="#D9D9D9">
+						적용
+					</Flex>
+				)}
 			</Flex>
 			<Flex
 				wd="100%"
@@ -114,80 +131,43 @@ const PasswordChange = () => {
 				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 					현재 비밀번호
 				</Flex>
-				{isBlue === false ? (
-					<Box variant="stPassword">
-						<StInput
-							id="currentPassword"
-							name="currentPassword"
-							type={currentPasswordType.type}
-							value={currentPassword.value}
-							onChange={e => {
-								currentPassword.onChange(e);
-								postHandler(e);
-							}}
-							variant="join"
-							placeholder="현재 비밀번호를 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{currentPasswordType.visible === false ? (
-								<Svg variant="noShow" onClick={currentPasswordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={currentPasswordTypeHandler} />
-							)}
-						</Flex>
-					</Box>
-				) : (
-					<Box variant="stPasswordBlue">
-						<StInput
-							id="newPassword"
-							name="newPassword"
-							onBlur={checkPasswordHandler}
-							type={currentPasswordType.type}
-							value={currentPassword.value}
-							onChange={currentPassword.onChange}
-							variant="changeBlue"
-							placeholder="현재 비밀번호를 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{currentPasswordType.visible === false ? (
-								<Svg variant="noShow" onClick={currentPasswordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={currentPasswordTypeHandler} />
-							)}
-						</Flex>
-					</Box>
-				)}
-				<Flex dir="row" wd="335px" ht="26px">
-					{currentPassword.value.trim() === "" ? (
-						<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-					) : !regPass.test(currentPassword.value) ? (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							ai="center"
-							jc="flex-start"
-						>
-							<Box variant="stSvg">
-								<Svg variant="alert" />
-							</Box>
-							<Box variant="stInfo">
-								비밀번호는 8-20자, 영문 대소문자,숫자,특수문자 !@#$%^&*를 적어도
-								하나이상 포함해야합니다
-							</Box>
-						</Flex>
-					) : (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							ai="center"
-							jc="flex-start"
-						></Flex>
-					)}
-				</Flex>
+				<StPassword>
+					<StInput
+						id="currentPassword"
+						name="currentPassword"
+						onBlur={checkPasswordHandler}
+						type={currentPasswordType.type}
+						value={currentPassword.value}
+						onChange={e => {
+							currentPassword.onChange(e);
+							postHandler(e);
+						}}
+						variant="join"
+						placeholder="현재 비밀번호를 입력하세요"
+					/>
+					<Flex
+						wd="24px"
+						ht="24px"
+						mg="0 13px 0 0"
+						onClick={currentPasswordTypeHandler}
+					>
+						{currentPasswordType.visible === false &&
+						currentPassword.value.length === 0 ? (
+							<Svg variant="noShow" onClick={currentPasswordTypeHandler} />
+						) : currentPasswordType.visible === false &&
+						  currentPassword.value.length > 0 ? (
+							<Svg variant="noShowBlack" onClick={currentPasswordTypeHandler} />
+						) : currentPasswordType.visible === true &&
+						  currentPassword.value.length === 0 ? (
+							<Svg variant="show" onClick={currentPasswordTypeHandler} />
+						) : currentPasswordType.visible === true &&
+						  currentPassword.value.length > 0 ? (
+							<Svg variant="showBlack" onClick={currentPasswordTypeHandler} />
+						) : (
+							<Svg variant="noshow" onClick={currentPasswordTypeHandler} />
+						)}
+					</Flex>
+				</StPassword>
 			</Flex>
 			<Flex
 				wd="100%"
@@ -201,84 +181,153 @@ const PasswordChange = () => {
 				<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
 					새 비밀번호
 				</Flex>
-				{isBlue === false ? (
-					<Box variant="stPassword">
-						<StInput
-							id="newPassword"
-							name="newPassword"
-							onBlur={checkPasswordHandler}
-							type={passwordType.type}
-							value={password.value}
-							onChange={e => {
-								password.onChange(e);
-								postHandler(e);
-							}}
-							variant="join"
-							placeholder="새 비밀번호를 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{passwordType.visible === false ? (
-								<Svg variant="noShow" onClick={passwordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={passwordTypeHandler} />
-							)}
-						</Flex>
-					</Box>
-				) : (
-					<Box variant="stPasswordBlue">
-						<StInput
-							id="newPassword"
-							name="newPassword"
-							onBlur={checkPasswordHandler}
-							type={passwordType.type}
-							value={password.value}
-							onChange={password.onChange}
-							variant="changeBlue"
-							placeholder="새 비밀번호를 입력하세요"
-						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{passwordType.visible === false ? (
-								<Svg variant="noShow" onClick={passwordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={passwordTypeHandler} />
-							)}
-						</Flex>
-					</Box>
-				)}
-				<Flex dir="row" wd="335px" ht="26px">
-					{password.value.trim() === "" ? (
-						<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-					) : !regPass.test(password.value) ? (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							ai="center"
-							jc="flex-start"
-						>
-							<Box variant="stSvg">
-								<Svg variant="alert" />
-							</Box>
-							<Box variant="stInfo">
-								비밀번호는 8-20자, 영문 대소문자,숫자,특수문자 !@#$%^&*를 적어도
-								하나이상 포함해야합니다
-							</Box>
-						</Flex>
+
+				<StPassword>
+					<StInput
+						id="newPassword"
+						name="newPassword"
+						onBlur={checkPasswordHandler}
+						type={passwordType.type}
+						value={password.value}
+						onChange={e => {
+							password.onChange(e);
+							postHandler(e);
+						}}
+						variant="join"
+						placeholder="비밀번호를 입력하세요"
+					/>
+					<Flex
+						wd="24px"
+						ht="24px"
+						mg="0 13px 0 0"
+						onClick={passwordTypeHandler}
+					>
+						{passwordType.visible === false && password.value.length === 0 ? (
+							<Svg variant="noShow" onClick={passwordTypeHandler} />
+						) : passwordType.visible === false && password.value.length > 0 ? (
+							<Svg variant="noShowBlack" onClick={passwordTypeHandler} />
+						) : passwordType.visible === true && password.value.length === 0 ? (
+							<Svg variant="show" onClick={passwordTypeHandler} />
+						) : passwordType.visible === true && password.value.length > 0 ? (
+							<Svg variant="showBlack" onClick={passwordTypeHandler} />
+						) : (
+							<Svg variant="noshow" onClick={passwordTypeHandler} />
+						)}
+					</Flex>
+				</StPassword>
+
+				<Flex
+					dir="column"
+					wd="335px"
+					ht="26px"
+					ai="flex-start"
+					gap="5px"
+					mg="7px 0 0 0"
+				>
+					{password.value.length === 0 ? (
+						<>
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="joinCheck" />
+								</Flex>
+								<Flex color="#A2A2A2" fs="10">
+									영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+								</Flex>
+							</Flex>
+
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="joinCheck" />
+								</Flex>
+								<Flex color="#A2A2A2" fs="10">
+									최소 8자, 최대 20자 구성
+								</Flex>
+							</Flex>
+						</>
+					) : !regPassNonLength.test(password.value) &&
+					  !(7 < password.value.length && password.value.length <= 20) ? (
+						<>
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regNon" />
+								</Flex>
+								<Flex color="#FF3B3B" fs="10">
+									영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+								</Flex>
+							</Flex>
+
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regNon" />
+								</Flex>
+								<Flex color="#FF3B3B" fs="10">
+									최소 8자, 최대 20자 구성
+								</Flex>
+							</Flex>
+						</>
+					) : regPassNonLength.test(password.value) &&
+					  !(7 < password.value.length && password.value.length <= 20) ? (
+						<>
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regOk" />
+								</Flex>
+								<Flex color="#06C270" fs="10">
+									영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+								</Flex>
+							</Flex>
+
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regNon" />
+								</Flex>
+								<Flex color="#FF3B3B" fs="10">
+									최소 8자, 최대 20자 구성
+								</Flex>
+							</Flex>
+						</>
+					) : !regPassNonLength.test(password.value) &&
+					  7 < password.value.length &&
+					  password.value.length <= 20 ? (
+						<>
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regNon" />
+								</Flex>
+								<Flex color="#FF3B3B" fs="10">
+									영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+								</Flex>
+							</Flex>
+
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regOk" />
+								</Flex>
+								<Flex color="#06C270" fs="10">
+									최소 8자, 최대 20자 구성
+								</Flex>
+							</Flex>
+						</>
 					) : (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							ai="center"
-							jc="flex-start"
-						>
-							<Box variant="stSvg">
-								<Svg variant="alert" />
-							</Box>
-							<Box variant="stInfo">사용가능한 비밀번호 입니다</Box>
-						</Flex>
+						<>
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regOk" />
+								</Flex>
+								<Flex color="#06C270" fs="10">
+									영문 대소문자, 숫자, 특수문자 !@#$%^&*를 적어도 하나씩 포함
+								</Flex>
+							</Flex>
+
+							<Flex dir="row" gap="5px">
+								<Flex>
+									<Svg variant="regOk" />
+								</Flex>
+								<Flex color="#06C270" fs="10">
+									최소 8자, 최대 20자 구성
+								</Flex>
+							</Flex>
+						</>
 					)}
 				</Flex>
 			</Flex>
@@ -295,39 +344,55 @@ const PasswordChange = () => {
 					새 비밀번호 확인
 				</Flex>
 				{isBlue === false ? (
-					<Box variant="stRePassword">
+					<StRePassword>
 						<StInput
+							id="checkPassword"
+							name="checkPassword"
 							type={checkPasswordType.type}
 							value={checkPass.value}
 							onChange={checkPass.onChange}
 							variant="join"
-							placeholder="새 비밀번호를 한번 더 입력하세요"
+							placeholder="비밀번호를 한번 더 입력하세요"
 						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{checkPasswordType.visible === false ? (
+						<Flex
+							wd="24px"
+							ht="24px"
+							mg="0 13px 0 0"
+							onClick={checkPasswordTypeHandler}
+						>
+							{checkPasswordType.visible === false &&
+							checkPass.value.length === 0 ? (
 								<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
-							) : (
+							) : checkPasswordType.visible === false &&
+							  checkPass.value.length > 0 ? (
+								<Svg variant="noShowBlack" onClick={checkPasswordTypeHandler} />
+							) : checkPasswordType.visible === true &&
+							  checkPass.value.length === 0 ? (
 								<Svg variant="show" onClick={checkPasswordTypeHandler} />
+							) : checkPasswordType.visible === true &&
+							  checkPass.value.length > 0 ? (
+								<Svg variant="showBlack" onClick={checkPasswordTypeHandler} />
+							) : (
+								<Svg variant="noshow" onClick={checkPasswordTypeHandler} />
 							)}
 						</Flex>
-					</Box>
+					</StRePassword>
 				) : (
-					<Box varian="stRePasswordBlue">
+					<StRePasswordBlue>
 						<StInput
 							type={checkPasswordType.type}
 							value={checkPass.value}
 							onChange={checkPass.onChange}
 							variant="changeBlue"
-							placeholder="새 비밀번호를 한번 더 입력하세요"
+							placeholder="비밀번호를 한번 더 입력하세요"
 						/>
-						<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-							{checkPasswordType.visible === false ? (
-								<Svg variant="noShow" onClick={checkPasswordTypeHandler} />
-							) : (
-								<Svg variant="show" onClick={checkPasswordTypeHandler} />
-							)}
-						</Flex>
-					</Box>
+						<Flex
+							wd="24px"
+							ht="24px"
+							mg="0 13px 0 0"
+							onClick={checkPasswordTypeHandler}
+						></Flex>
+					</StRePasswordBlue>
 				)}
 				{checkPass.value.trim() !== "" && password.value !== checkPass.value ? (
 					<Flex
@@ -338,33 +403,18 @@ const PasswordChange = () => {
 						ai="center"
 						jc="flex-start"
 					>
-						<Box variant="stSvg">
-							<Svg variant="alert" />
-						</Box>
-						<Box variant="stInfo">
-							{" "}
-							<Box variant="stInfo">
+						<Flex dir="row" gap="5px">
+							<Flex>
+								<Svg variant="regNon" />
+							</Flex>
+							<Flex color="#FF3B3B" fs="10">
 								비밀번호와 비밀번호 확인이 일치하지 않습니다
-							</Box>
-						</Box>
+							</Flex>
+						</Flex>
 					</Flex>
 				) : (
 					<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
 				)}
-			</Flex>
-			<Flex
-				mg="10px 0 0 0"
-				fw="600"
-				fs="16px"
-				pd="
-			10px 126px"
-				wd="335px"
-				ht="60px"
-				bc="#C8C8C8"
-				radius="10px"
-				onClick={passwordChangeHandler}
-			>
-				변경 완료
 			</Flex>
 			<NavBelow />
 		</Flex>
@@ -372,3 +422,53 @@ const PasswordChange = () => {
 };
 
 export default PasswordChange;
+
+const StSvg = styled.div`
+	display: flex;
+	align-items: center;
+	width: 22px;
+	height: 22px;
+`;
+const StInfo = styled.div`
+	color: #7474ff;
+	display: flex;
+	justify-content: flex-start;
+	width: 300px;
+`;
+export const StPassword = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 335px;
+	background-color: #ffffff;
+	align-items: center;
+	border-radius: 10px;
+	justify-content: space-between;
+	border: 1px solid #e5e5e5;
+	:focus-within {
+		outline: 1px solid #666666;
+	}
+`;
+const StRePassword = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 335px;
+	background-color: #ffffff;
+	align-items: center;
+	border-radius: 10px;
+	justify-content: space-between;
+	border: 1px solid #e5e5e5;
+
+	:focus-within {
+		outline: 1px solid #666666;
+	}
+`;
+const StRePasswordBlue = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 335px;
+	background-color: #f4f4f4;
+	align-items: center;
+	border-radius: 10px;
+	outline: 1px solid #7474ff;
+	justify-content: space-between;
+`;

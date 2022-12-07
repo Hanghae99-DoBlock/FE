@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Hr, Input, Svg, Text } from "../../common";
 import {
 	addCommentsApi,
@@ -12,6 +12,7 @@ import FeedCommentDetail from "./FeedCommentDetail";
 import ReactionModal from "./ReactionModal";
 
 const FeedComment = props => {
+	const navigate = useNavigate();
 	const { id } = useParams();
 
 	const feedId = useSelector(state => state.feed.feedItem.feedId);
@@ -67,16 +68,42 @@ const FeedComment = props => {
 	const reaction = useSelector(
 		state => state.feed.feedItem.currentReactionType,
 	);
+	const reactionType = useSelector(
+		state => state.feed.feedItem.reactionResponseDtoList,
+	);
+
+	const onClickReactionList = () => {
+		navigate("/feed/reactionList/");
+	};
 
 	return (
 		<>
-			<Flex wd="335px" fw="600" fs="14px" jc="flex-end" mg="0 auto 10px auto">
-				<Flex>{reaction?.reactionType}</Flex>
+			<Flex
+				wd="335px"
+				fw="600"
+				fs="14px"
+				jc="flex-end"
+				mg="0 auto 10px auto"
+				onClick={onClickReactionList}
+				cursor="pointer"
+			>
+				<Flex>
+					{reaction &&
+						reaction.map(data => (
+							<Flex>
+								{data.reactionType === "LIKE" ? "👍" : null}
+								{data.reactionType === "HEART" ? "❤" : null}
+								{data.reactionType === "SMILE" ? "😊" : null}
+								{data.reactionType === "PARTY" ? "🎉" : null}
+								{data.reactionType === "FIRE" ? "🔥" : null}
+							</Flex>
+						))}
+				</Flex>
 				리액션
 			</Flex>
 			<Hr variant="feedHr" />
 			<Flex dir="column" jc="center">
-				<Flex wd="335px" jc="space-between">
+				<Flex wd="335px" jc="space-between" position="relative">
 					{modal === true ? <ReactionModal /> : null}
 					<Flex
 						fw="600"

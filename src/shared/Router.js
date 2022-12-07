@@ -16,6 +16,7 @@ import {
 	FeedPage,
 	MyBadgesPage,
 	BadgeSetiingPage,
+	ReactionListPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import Splash from "../pages/join/Splash";
@@ -53,6 +54,7 @@ const Router = () => {
 					<Route path="/profile/:id/following" element={<FollowingPage />} />
 					<Route path="/profile/:id/follower" element={<FollowerPage />} />
 					<Route path="/profile/:id/badges" element={<MyBadgesPage />} />
+					<Route path="/feed/reactionList" element={<ReactionListPage />} />
 					<Route
 						path="/profile/:id/badgeSetting"
 						element={<BadgeSetiingPage />}
