@@ -15,8 +15,9 @@ import {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	ReactionListPage,
 } from "./feed";
-import { InterestTagsPage } from "./profile";
+import { InterestTagsPage, MyFeedPage } from "./profile";
 export {
 	SignInPage,
 	SignUpPage,
@@ -35,4 +36,7 @@ export {
 	MyBadgesPage,
 	BadgeSetiingPage,
 	EmailSignin,
+	ReactionListPage,
+	MyFeedPage,
+
 };

@@ -4,9 +4,6 @@ import jwtDecode from "jwt-decode";
 
 const NavBelow = () => {
 	const navigate = useNavigate();
-	if (!localStorage.getItem("accessToken")) {
-		navigate("/toodlist");
-	}
 	const token = localStorage.getItem("accessToken");
 	const memberId = jwtDecode(token).memberId;
 
@@ -30,7 +27,7 @@ const NavBelow = () => {
 					gap="8px"
 					dir="column"
 					cursor="pointer"
-					onClick={() => navigate(`/feed/following`)}
+					onClick={() => navigate(`/feed/recommended`)}
 				>
 					<Box variant="navIconBox" type="speechBubble" />
 					<Text variant="navText">피드</Text>

@@ -19,7 +19,6 @@ const Following = () => {
 
 	const followingList = useSelector(state => state.profileSlice.followingList);
 	const profile = useSelector(state => state.profileSlice.profile);
-
 	useEffect(() => {
 		dispatch(__getFollowing(id));
 	}, []);
@@ -36,7 +35,7 @@ const Following = () => {
 
 	return (
 		<>
-			<Flex dir="column" wd="100%" ht="100vh" jc="flex-start">
+			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -49,54 +48,68 @@ const Following = () => {
 						<Svg variant="chevron" onClick={() => navigate(-1)} />
 					</Flex>
 					<Flex fs="18" fw="600">
-						팔로잉
+						팔로우
 					</Flex>
 					<Flex wd="113px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
-				{Array.from(followingList).map(data => (
-					<Flex jc="space-between" pd="13px 20px" wd="100%" key={data.memberId}>
-						<Flex>
-							<Image
-								variant="followImage"
-								src={data.profileImage}
-								alt=""
-								style={{ marginTop: "4px" }}
-								onClick={() => {
-									anotherMemberPage(data.memberId);
-								}}
-							/>
+				{followingList.length === 0 ? (
+					<>
+						<Svg variant="profileBlock"></Svg>
+						<Flex mg="10px 0 0 0" fw="600" fs="14" color="#3F3F3F">
+							팔로우하는 사람이 없어요..
+						</Flex>
+					</>
+				) : (
+					Array.from(followingList).map(data => (
+						<Flex
+							jc="space-between"
+							mg="0 0 20px 0 "
+							wd="100%"
+							key={data.memberId}
+						>
+							<Flex>
+								<Image
+									variant="followImage"
+									src={data.profileImage}
+									alt=""
+									style={{ marginTop: "4px" }}
+									onClick={() => {
+										anotherMemberPage(data.memberId);
+									}}
+								/>
 
-							<FirstHeading
-								fw="600"
-								fs="13px"
-								onClick={() => {
-									anotherMemberPage(data.memberId);
-								}}
-							>
-								{data.nickname}
-							</FirstHeading>
+								<FirstHeading
+									fw="600"
+									fs="13px"
+									onClick={() => {
+										anotherMemberPage(data.memberId);
+									}}
+								>
+									{data.nickname}
+								</FirstHeading>
+							</Flex>
+							<Flex>
+								{decodeToken.memberId !== data.memberId ? (
+									data.followOrNot === false ? (
+										<Svg
+											variant="follow"
+											onClick={() => {
+												followingHandler(data.memberId);
+											}}
+										></Svg>
+									) : (
+										<Svg
+											variant="followCancel"
+											onClick={() => {
+												unfollowHandler(data.memberId);
+											}}
+										></Svg>
+									)
+								) : null}
+							</Flex>
 						</Flex>
-						<Flex>
-							{decodeToken.memberId !== data.memberId ? (
-								data.followOrNot === false ? (
-									<Svg
-										variant="follow"
-										onClick={() => {
-											followingHandler(data.memberId);
-										}}
-									></Svg>
-								) : (
-									<Svg
-										variant="followCancel"
-										onClick={() => {
-											unfollowHandler(data.memberId);
-										}}
-									></Svg>
-								)
-							) : null}
-						</Flex>
-					</Flex>
-				))}
+					))
+				)}
 			</Flex>
 			<NavBelow />
 		</>

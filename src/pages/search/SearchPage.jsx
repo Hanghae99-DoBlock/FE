@@ -53,6 +53,7 @@ const FeedPage = () => {
 			);
 		}
 	}, [searchKeyword]);
+
 	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {

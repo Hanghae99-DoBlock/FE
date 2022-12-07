@@ -139,10 +139,24 @@ const StText = styled.span`
 					font-size: 18px;
 					color: ${color || black};
 				`;
+			case "title4":
+				return css`
+					font-weight: 600;
+					font-size: 14px;
+					line-height: 18px;
+					color: ${color || black};
+				`;
 			case "body1":
 				return css`
 					font-weight: 400;
 					font-size: 16px;
+					line-height: 22px;
+					color: ${color || black};
+				`;
+			case "body2Regular":
+				return css`
+					font-weight: 400;
+					font-size: 14px;
 					line-height: 22px;
 					color: ${color || black};
 				`;

@@ -112,6 +112,30 @@ export const StInput = styled.input`
 					border-radius: 10px;
 					padding: 16px;
 				`;
+			case "profileNickNameInput":
+				return css`
+					width: 335px;
+					height: 54px;
+					border: 1px solid #e5e5e5;
+					border-radius: 10px;
+					padding: 16px;
+				`;
+			case "profilePasswordInput":
+				return css`
+					width: 335px;
+					height: 54px;
+					border: 1px solid #e5e5e5;
+					border-radius: 10px;
+					padding: 16px;
+				`;
+			case "profileEmailInput":
+				return css`
+					width: 335px;
+					height: 54px;
+					background: #f8f8f8;
+					border-radius: 10px;
+					padding: 16px;
+				`;
 			default:
 				break;
 		}
