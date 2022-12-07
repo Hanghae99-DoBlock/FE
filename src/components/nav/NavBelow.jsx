@@ -43,7 +43,7 @@ const NavBelow = () => {
 					dir="column"
 					onClick={() => navigate("/search")}
 				>
-					<Box variant="navIconBox" type="magnifyingGlass" />
+					<Box variant="navIconBox" type="magnifyingglass" />
 					<Text variant="navText">검색</Text>
 				</Flex>
 				<Flex wd="70px" ht="100%" gap="8px" dir="column" cursor="pointer">
