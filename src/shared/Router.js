@@ -20,6 +20,9 @@ import {
 	ReactionListPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
+import GoogleLogin from "../pages/join/GoogleLogin";
+import KakaoLogin from "../pages/join/KakaoLogin";
+import NaverLogin from "../pages/join/NaverLogin";
 import SearchPage from "../pages/search/SearchPage";
 import PrivateRoute from "./PrivateRoute";
 
@@ -31,6 +34,9 @@ const Router = () => {
 					<Route path="/emailSignIn" element={<EmailSignIn />} />
 					<Route path="/" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
+					<Route path="/api/members/login/kakao" element={<KakaoLogin />} />
+					<Route path="/api/members/login/naver" element={<NaverLogin />} />
+					<Route path="/api/members/login/google" element={<GoogleLogin />} />
 					<Route path="/*" element={<RefreshToken />}>
 						<Route
 							path="profile/:id"
