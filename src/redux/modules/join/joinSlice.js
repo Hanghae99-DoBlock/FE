@@ -5,6 +5,7 @@ import {
 	TaskAbortError,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import uuid from "react-uuid";
 import { serverUrl } from "../../api";
 
 export const __signUp = createAsyncThunk(
@@ -51,7 +52,7 @@ export const __checkEmail = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -66,7 +67,88 @@ export const __checkNick = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
+export const __kakaoLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/kakao?code=${code}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			console.log(code);
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
+			window.location.replace("/todoList");
+
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
+export const __naverLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const state = uuid();
+
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/naver?code=${code}&state=${state}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
+			window.location.replace("/todoList");
+
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
+export const __googleLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/google?code=${code}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			console.log(code);
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
+			window.location.replace("/todoList");
+
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
+			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
 );
@@ -82,14 +164,21 @@ const initialState = {
 const joinSliece = createSlice({
 	name: "join",
 	initialState,
-	reducers: {},
+	reducers: {
+		resetCheckNickname: (state, action) => {
+			state.checkNickResult = "";
+		},
+		resetCheckEmail: (state, action) => {
+			state.checkMailResult = "";
+		},
+	},
 	extraReducers: {
 		[__checkEmail.pending]: (state, action) => {
 			state.isLoading = true;
 		},
 		[__checkEmail.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.checkMailResult = action.payload;
+			state.checkMailResult = action.payload.status;
 		},
 		[__checkEmail.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -101,7 +190,7 @@ const joinSliece = createSlice({
 		},
 		[__checkNick.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.checkNickResult = action.payload;
+			state.checkNickResult = action.payload.status;
 		},
 		[__checkNick.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -120,5 +209,5 @@ const joinSliece = createSlice({
 	},
 });
 
-export const {} = joinSliece.actions;
+export const { resetCheckNickname, resetCheckEmail } = joinSliece.actions;
 export default joinSliece.reducer;
