@@ -130,13 +130,17 @@ const SignUpPage = () => {
 		}
 	};
 	useEffect(() => {
-		if (checkNickname !== 200 && checkNickname !== "") {
+		if (
+			checkNickname !== 200 &&
+			checkNickname !== "" &&
+			nickname.value.trim() !== ""
+		) {
 			dispatch(updateIsToastExist("이미 사용중인 닉네임입니다."));
 		}
 		dispatch(resetCheckNickname());
 	}, [checkNickname]);
 	useEffect(() => {
-		if (checkEmail !== 200 && checkEmail !== "") {
+		if (checkEmail !== 200 && checkEmail !== "" && email.value.trim() !== "") {
 			dispatch(updateIsToastExist("이미 사용중인 이메일입니다."));
 		}
 		dispatch(resetCheckEmail());
