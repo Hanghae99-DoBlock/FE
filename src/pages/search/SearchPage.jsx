@@ -43,6 +43,17 @@ const FeedPage = () => {
 	const [keyword, setKeyword] = useState(tagValue);
 
 	useEffect(() => {
+		if (searchKeyword) {
+			dispatch(
+				__searchTagAndMember({
+					keyword: searchKeyword,
+					category: "feed",
+				}),
+			);
+		}
+	}, [searchKeyword]);
+
+	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {

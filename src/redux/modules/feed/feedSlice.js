@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ import {
 	__getFollowingFeeds,
 	__getRecommendedFeeds,
 	__deleteFeed,
+	__getMyFeeds,
 } from "../middleware/feedListThunk";
 
 const accessToken = localStorage.getItem("accessToken");
@@ -239,6 +240,7 @@ export const __updateReactions = createAsyncThunk(
 const initialState = {
 	followingFeedList: [],
 	recommendedFeedList: [],
+	myFeedList: [],
 	checkedList: [],
 	tagList: [],
 	photoList: [],
@@ -251,8 +253,10 @@ const initialState = {
 	commentList: [],
 	followingFeedPageNum: 0,
 	recommendedFeedPageNum: 0,
+	myFeedPageNum: 0,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
+	isNextmyFeedPageExist: true,
 	searchKeyword: null,
 	tagSearchPageNum: 0,
 	memberSearchPageNum: 0,
@@ -333,6 +337,17 @@ export const feedSlice = createSlice({
 		resetFollowingList: (state, action) => {
 			state.followingFeedList = [];
 			state.followingFeedPageNum = 0;
+			state.isNextFollowingFeedPageExist = true;
+		},
+		resetMyFeed: (state, action) => {
+			state.myFeedList = [];
+			state.myFeedPageNum = 0;
+			state.isNextmyFeedPageExist = true;
+		},
+		resetRecommendedFeed: (state, action) => {
+			state.recommendedFeedList = [];
+			state.recommendedFeedPageNum = 0;
+			state.isNextRecommendedFeedPageExist = true;
 		},
 		changeStatus: (state, action) => {
 			state.isCompleted = "";
@@ -363,7 +378,6 @@ export const feedSlice = createSlice({
 	extraReducers: builder => {
 		builder
 			//피드 업로드
-
 			.addCase(__uploadFeed.pending, (state, action) => {
 				state.isLoading = true;
 			})
@@ -396,6 +410,9 @@ export const feedSlice = createSlice({
 					state.isNextFollowingFeedPageExist = false;
 				}
 			})
+			.addCase(__getFollowingFeeds.rejected, (state, action) => {
+				state.isNextFollowingFeedPageExist = false;
+			})
 			// 추천 피드 조회 성공
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
 				state.recommendedFeedList.push(...action.payload);
@@ -403,6 +420,20 @@ export const feedSlice = createSlice({
 				if (action.payload.length < 5) {
 					state.isNextRecommendedFeedPageExist = false;
 				}
+			})
+			.addCase(__getRecommendedFeeds.rejected, (state, action) => {
+				state.isNextRecommendedFeedPageExist = false;
+			})
+			// 내 피드 조회 성공
+			.addCase(__getMyFeeds.fulfilled, (state, action) => {
+				state.myFeedList.push(...action.payload);
+				state.myFeedPageNum += 1;
+				if (action.payload.length < 5) {
+					state.isNextmyFeedPageExist = false;
+				}
+			})
+			.addCase(__getMyFeeds.rejected, (state, action) => {
+				state.isNextmyFeedPageExist = false;
 			})
 			// 피드 단건 조회 성공
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
@@ -480,6 +511,8 @@ export const {
 	updateIsLoading,
 	updateSearchKeyword,
 	resetFeed,
+	resetMyFeed,
+	resetRecommendedFeed,
 	resetFollowingList,
 	changeStatus,
 	changeFollwing,

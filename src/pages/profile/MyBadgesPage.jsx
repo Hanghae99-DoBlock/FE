@@ -33,7 +33,7 @@ const MyBadgesPage = () => {
 					ai="center"
 					bb="1px solid #EFEFEF"
 				>
-					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
+					<Flex wd="145px" ht="42px" jc="flex-start" mg="0 0 0 17px">
 						<Svg
 							variant="chevron"
 							onClick={() => {
@@ -44,7 +44,7 @@ const MyBadgesPage = () => {
 					<Flex fs="18" fw="600">
 						내 뱃지
 					</Flex>
-					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
+					<Flex wd="135px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
 				{representativeBadge.badgeImage !== null ? (
 					<>

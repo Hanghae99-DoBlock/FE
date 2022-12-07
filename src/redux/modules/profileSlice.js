@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../api";
+import {
+	__resetProfileTags,
+	__updateProfileTags,
+} from "./middleware/profileThunk";
 
 const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
@@ -11,7 +15,7 @@ export const __editPassword = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.patch(
-				`${serverUrl}/api/members/profile/edit/password`,
+				`${serverUrl}/api/profile/edit/password`,
 				{
 					currentPassword: payload.currentPassword,
 					newPassword: payload.newPassword,
@@ -41,7 +45,7 @@ export const __followThunk = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
-				`${serverUrl}/api/members/profile/${payload}/follow`,
+				`${serverUrl}/api/profile/${payload}/follow`,
 				{
 					withCredentials: true,
 				},
@@ -74,13 +78,12 @@ const updateProfile = payload => {
 	}
 	axios
 		.patch(
-			`${serverUrl}/api/members/profile/edit`,
+			`${serverUrl}/api/profile/edit`,
 			frm,
 
 			{
 				headers: {
 					Authorization: accessToken,
-					"Refresh-Token": refreshToken,
 					"Content-Type": "multipart/form-data",
 				},
 			},
@@ -103,7 +106,7 @@ export const __getUser = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const response = await axios.get(
-				`${serverUrl}/api/members/profile/${payload}`,
+				`${serverUrl}/api/profile/${payload}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -125,7 +128,7 @@ export const __getFollowing = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const profile = await axios.get(
-				`${serverUrl}/api/members/profile/${payload}/following`,
+				`${serverUrl}/api/profile/${payload}/following`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -146,7 +149,7 @@ export const __getFollower = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const profile = await axios.get(
-				`${serverUrl}/api/members/profile/${payload}/follower`,
+				`${serverUrl}/api/profile/${payload}/follower`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -167,7 +170,7 @@ export const __getBadgeList = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const badgeList = await axios.get(
-				`${serverUrl}/api/members/profile/${payload}/badgelist`,
+				`${serverUrl}/api/profile/${payload}/badgelist`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -188,7 +191,7 @@ export const __getBadgeType = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const badges = await axios.get(
-				`${serverUrl}/api/members/profile/${payload.id}/badges?badgetype=${payload.badgeItem}`,
+				`${serverUrl}/api/profile/${payload.id}/badges?badgetype=${payload.badgeItem}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -209,7 +212,7 @@ export const __editBadges = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			await axios.patch(
-				`${serverUrl}/api/members/profile/edit/badges`,
+				`${serverUrl}/api/profile/edit/badges`,
 				{
 					badgeType: payload,
 				},
@@ -240,8 +243,9 @@ const initialState = {
 	profile: {},
 	badgeList: [],
 	representativeBadge: {},
-	isLoading: false,
+	isLoading: null,
 	error: "",
+	errMsg: null,
 };
 
 const profileSlice = createSlice({
@@ -251,8 +255,26 @@ const profileSlice = createSlice({
 		updatePro: (state, action) => {
 			updateProfile(action.payload);
 		},
+		updateIsLoading: (state, action) => {
+			state.isLoading = action.payload;
+		},
+		resetErrMsg: (state, action) => {
+			state.errMsg = null;
+		},
 	},
 	extraReducers: {
+		[__updateProfileTags.fulfilled]: (state, action) => {
+			state.isLoading = "완료";
+		},
+		[__updateProfileTags.rejected]: (state, action) => {
+			state.errMsg = action.payload.data.message;
+		},
+		[__resetProfileTags.fulfilled]: (state, action) => {
+			state.profile.tagList = [];
+		},
+		[__resetProfileTags.rejected]: (state, action) => {
+			state.errMsg = action.payload.data.message;
+		},
 		[__getUser.pending]: (state, action) => {
 			state.isLoading = true;
 		},
@@ -336,5 +358,5 @@ const profileSlice = createSlice({
 	},
 });
 
-export const { updatePro } = profileSlice.actions;
+export const { updatePro, updateIsLoading, resetErrMsg } = profileSlice.actions;
 export default profileSlice.reducer;

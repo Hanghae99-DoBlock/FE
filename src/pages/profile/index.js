@@ -1,3 +1,4 @@
 import InterestTagsPage from "./InterestTagsPage";
+import MyFeedPage from "./MyFeedPage";
 
-export { InterestTagsPage };
+export { InterestTagsPage, MyFeedPage };

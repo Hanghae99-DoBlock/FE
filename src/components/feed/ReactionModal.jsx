@@ -31,7 +31,7 @@ const ReactionModal = () => {
 	return (
 		<Flex
 			position="absolute"
-			top="1240px"
+			top="-30px"
 			wd="184px"
 			ht="40px"
 			bg="#fff"

@@ -22,7 +22,13 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 	// onChange 핸들러
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
-		setTodo({ ...selectedDate, ...todo, [name]: value });
+		setTodo({
+			year: selectedDate.year,
+			month: selectedDate.month,
+			day: selectedDate.day,
+			...todo,
+			[name]: value,
+		});
 	};
 
 	// 투두 업로드 핸들러

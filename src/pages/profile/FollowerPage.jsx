@@ -32,7 +32,7 @@ const Follower = () => {
 
 	return (
 		<>
-			<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
+			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -49,49 +49,63 @@ const Follower = () => {
 					</Flex>
 					<Flex wd="113px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
 				</Flex>
-				{Array.from(followerList).map(data => (
-					<Flex jc="space-between" pd="13px 20px" wd="100%" key={data.memberId}>
-						<Flex>
-							<Image
-								variant="followImage"
-								src={data.profileImage}
-								alt=""
-								style={{ marginTop: "4px" }}
-								onClick={() => {
-									anotherMemberPage(data.memberId);
-								}}
-							/>
-							<FirstHeading
-								fw="600"
-								fs="13px"
-								onClick={() => {
-									anotherMemberPage(data.memberId);
-								}}
-							>
-								{data.nickname}
-							</FirstHeading>
+				{followerList.length === 0 ? (
+					<>
+						<Svg variant="profileBlock"></Svg>
+						<Flex mg="10px 0 0 0" fw="600" fs="14" color="#3F3F3F">
+							팔로워가 없어요
 						</Flex>
-						<Flex>
-							{decodeToken.memberId !== data.memberId ? (
-								data.followOrNot === false ? (
-									<Svg
-										variant="follow"
-										onClick={() => {
-											followingHandler(data.memberId);
-										}}
-									></Svg>
-								) : (
-									<Svg
-										variant="followCancel"
-										onClick={() => {
-											unfollowHandler(data.memberId);
-										}}
-									></Svg>
-								)
-							) : null}
+					</>
+				) : (
+					Array.from(followerList).map(data => (
+						<Flex
+							jc="space-between"
+							mg="0 0 20px 0 "
+							wd="100%"
+							key={data.memberId}
+						>
+							<Flex>
+								<Image
+									variant="followImage"
+									src={data.profileImage}
+									alt=""
+									style={{ marginTop: "4px" }}
+									onClick={() => {
+										anotherMemberPage(data.memberId);
+									}}
+								/>
+								<FirstHeading
+									fw="600"
+									fs="13px"
+									onClick={() => {
+										anotherMemberPage(data.memberId);
+									}}
+								>
+									{data.nickname}
+								</FirstHeading>
+							</Flex>
+							<Flex>
+								{decodeToken.memberId !== data.memberId ? (
+									data.followOrNot === false ? (
+										<Svg
+											variant="follow"
+											onClick={() => {
+												followingHandler(data.memberId);
+											}}
+										></Svg>
+									) : (
+										<Svg
+											variant="followCancel"
+											onClick={() => {
+												unfollowHandler(data.memberId);
+											}}
+										></Svg>
+									)
+								) : null}
+							</Flex>
 						</Flex>
-					</Flex>
-				))}
+					))
+				)}
 			</Flex>
 			<NavBelow />
 		</>
