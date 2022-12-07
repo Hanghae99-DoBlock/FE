@@ -5,39 +5,20 @@ import { addTag, deleteTag } from "../../redux/modules/feed/feedSlice";
 import { Flex, Svg } from "../../common";
 
 const TagList = props => {
-	const { tag, tagInput, setTagInput } = props;
+	const { tag, tagInput, setTagInput, setIsInputHidden } = props;
 	const dispatch = useDispatch();
-	const tagList = useSelector(state => state.feed.tagList);
 	const [tagValue, setTagValue] = useState("");
-	const [id, setId] = useState(tagList.length);
-
 	const deleteTagInput = e => {
-		setId(prev => prev + 1);
-		dispatch(deleteTag({ id: tag.id, value: e.target.value }));
+		dispatch(deleteTag(tag.id));
 	};
 
-	const changeTagValueHandler = e => {
-		setTagValue(e.target.value);
-	};
-	{
-		/*태그가 빈값인상태로 포커스아웃될경우 자동으로 해당 인풋을 삭제한다*/
-	}
-	const isEmptyInputHandler = () => {
-		if (tagValue.trim() === "") {
-			setTagInput([tagInput.pop()]);
-		}
-	};
 	return (
 		<Flex dir="row" jc="center" ai="center">
-			<Flex bg="#f8f8f8" radius="10px" onClick={deleteTagInput}>
-				<StTagInput
-					onClick={deleteTagInput}
-					onChange={changeTagValueHandler}
-					value={tag.value}
-					onBlur={isEmptyInputHandler}
-					type="button"
-				/>
-				<Svg variant="tagDelete" />
+			<Flex bg="#f8f8f8" radius="10px">
+				<StTagInput value={tag.value} type="button" />
+				<Flex cursor="pointer" onClick={deleteTagInput}>
+					<Svg onClick={deleteTagInput} variant="tagDelete" />
+				</Flex>
 			</Flex>
 		</Flex>
 	);
@@ -47,9 +28,11 @@ export default TagList;
 
 export const StTagInput = styled.input`
 	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
 	min-height: 38px;
-	min-width: 38px;
+	min-width: 100px;
+	max-width: 315px;
 	background-color: #f8f8f8;
 	border-radius: 10px;
 	text-align: center;
@@ -57,7 +40,4 @@ export const StTagInput = styled.input`
 	padding: 0 10px;
 	letter-spacing: -1px;
 	word-spacing: -2px;
-	:hover {
-		cursor: pointer;
-	}
 `;

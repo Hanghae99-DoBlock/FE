@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Flex, Svg } from "../../common";
 import { deletePhoto } from "../../redux/modules/feed/feedSlice";
 
-const PhotoList = ({ photo, isPhotoFull, setIsPhotoFull }) => {
+const EditPhotoList = ({ photo, isPhotoFull, setIsPhotoFull }) => {
 	const dispatch = useDispatch();
 	const photoList = useSelector(state => state.feed.photoList);
 	const deletePhotoHandler = () => {
@@ -11,14 +11,13 @@ const PhotoList = ({ photo, isPhotoFull, setIsPhotoFull }) => {
 	};
 
 	return (
-		<Flex onClick={deletePhotoHandler} wd="72px" ht="72px" position="relative">
-			<Svg variant="deletePhoto" />
+		<Flex wd="72px" ht="72px" position="relative">
 			<StImg src={photo.url} />
 		</Flex>
 	);
 };
 
-export default PhotoList;
+export default EditPhotoList;
 
 export const StImg = styled.img`
 	width: 72px;
