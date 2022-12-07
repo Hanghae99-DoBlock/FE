@@ -149,7 +149,7 @@ const FeedPage = () => {
 					<Flex
 						wd="34px"
 						ht="26px"
-						fs="16"
+						fs="12"
 						cursor="pointer"
 						onClick={() => navigate("/feed")}
 					>

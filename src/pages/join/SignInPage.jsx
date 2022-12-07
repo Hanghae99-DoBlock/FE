@@ -62,11 +62,11 @@ const SignInPage = () => {
 									<Svg variant="kakao" />
 								</Flex>
 							</a>
-							<a href={naverUrl}>
+							{/* <a href={naverUrl}>
 								<Flex>
 									<Svg variant="naver" />
 								</Flex>
-							</a>
+							</a> */}
 							<a href={googleUrl}>
 								<Flex>
 									<Svg variant="google" />

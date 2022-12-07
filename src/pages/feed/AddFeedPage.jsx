@@ -201,15 +201,14 @@ const AddFeedPage = () => {
 			setIsPostPossible(false);
 		}
 	}, [boastFeed, photoList, formPhotoList, color]);
-	console.log(photoList);
-	console.log(formPhotoList);
+
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
+
 			<Flex
 				dir="column"
-				mw="375px"
-				mxw="375px"
+				mwd="375px"
 				ht="100%"
 				mg="0 auto"
 				jc="flex-start"

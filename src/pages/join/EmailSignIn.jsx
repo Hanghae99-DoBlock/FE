@@ -37,7 +37,7 @@ const SignUpPage = () => {
 	}, [token]);
 
 	useEffect(() => {
-		if (loginResult.status === 200 || loginResult === "") {
+		if (loginResult?.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
 			return dispatch(
@@ -58,7 +58,7 @@ const SignUpPage = () => {
 
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
-		if (loginResult.status === 200 || loginResult === "") {
+		if (loginResult?.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
 			return dispatch(
@@ -74,7 +74,7 @@ const SignUpPage = () => {
 	const enterLoginHandler = e => {
 		if (e.keyCode === 13) {
 			dispatch(__signIn({ email: email.value, password: password.value }));
-			if (loginResult.status === 200 || loginResult === "") {
+			if (loginResult?.status === 200 || loginResult === "") {
 				return;
 			} else if (loginResult === 400) {
 				return dispatch(
@@ -92,7 +92,7 @@ const SignUpPage = () => {
 		<>
 			<Flex
 				dir="column"
-				wd="100%"
+				mwd="375px"
 				ht="100vh"
 				mg="0 auto"
 				jc="flex-start"

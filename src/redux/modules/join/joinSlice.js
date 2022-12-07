@@ -92,6 +92,8 @@ export const __kakaoLogin = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
 			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
@@ -117,6 +119,8 @@ export const __naverLogin = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
 			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
@@ -142,6 +146,8 @@ export const __googleLogin = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
+			window.alert("이미 가입된 이메일입니다");
+			window.location.replace("/");
 			return thunkAPI.rejectWithValue(e.response.status);
 		}
 	},
