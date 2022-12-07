@@ -160,13 +160,8 @@ const ProfileEdit = () => {
 								defaultValue={user.nickname}
 								onChange={postHandler}
 								type="text"
-								variant="join"
+								variant="profileNickNameInput"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{nickname.value.trim() === "" ? null : (
-									<Svg onClick={nickname.onReset} variant="InputReset" />
-								)}
-							</Flex>
 						</Box>
 					) : (
 						<Box variant="stnicknameBlue">
@@ -177,65 +172,11 @@ const ProfileEdit = () => {
 								value={nickname.value}
 								onChange={postHandler}
 								type="text"
-								variant="changeBlue"
+								variant="profileNickNameInput"
 								placeholder="닉네임을 입력하세요"
 							/>
-							<Flex wd="24px" ht="24px" mg="0 13px 0 0">
-								{nickname.value.trim() === "" ? null : (
-									<Svg variant="InputReset" onClick={nickname.onReset} />
-								)}
-							</Flex>
 						</Box>
 					)}
-					<Flex dir="row" wd="335px" ht="26px">
-						{nickname.value.trim() === "" ? (
-							<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-						) : !regNick.test(nickname.value) ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<Box variant="stSvg">
-									<Svg variant="alert" />
-								</Box>
-								<Box variant="stInfo">
-									닉네임은 2-6자, 영어 대소문자,숫자 또는 한글로 구성됩니다.
-								</Box>
-							</Flex>
-						) : checkNickname !== 200 ? (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<Box variant="stSvg">
-									<Svg variant="alert" />
-								</Box>
-								<Box variant="stInfo">이미 사용중인 닉네임입니다.</Box>
-							</Flex>
-						) : (
-							<Flex
-								dir="row"
-								wd="335px"
-								ht="26px"
-								fs="12"
-								ai="center"
-								jc="flex-start"
-							>
-								<Box variant="stSvg">
-									<Svg variant="alert" />
-								</Box>
-								<Box variant="stInfo">사용가능한 닉네임입니다.</Box>
-							</Flex>
-						)}
-					</Flex>
 					<Flex
 						wd="335px"
 						ht="26px"
@@ -250,7 +191,7 @@ const ProfileEdit = () => {
 					<Box variant="stEmail" style={{ marginBottom: "26px" }}>
 						<Input
 							type="text"
-							variant="join"
+							variant="profileEmailInput"
 							defaultValue={user.email}
 							disabled
 							style={{ fontSize: "16px", fontWeight: 400, color: "#C8C8C8" }}

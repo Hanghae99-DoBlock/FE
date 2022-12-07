@@ -67,6 +67,7 @@ export const __followThunk = createAsyncThunk(
 const updateProfile = payload => {
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
+	console.log(payload);
 	const frm = new FormData();
 	if (payload.nickname === "") {
 	} else {
@@ -84,7 +85,6 @@ const updateProfile = payload => {
 			{
 				headers: {
 					Authorization: accessToken,
-					"Refresh-Token": refreshToken,
 					"Content-Type": "multipart/form-data",
 				},
 			},

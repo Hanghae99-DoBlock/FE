@@ -3,6 +3,7 @@ import DetailFeedPage from "./DetailFeedPage";
 import FollowingFeedListPage from "./FollowingFeedListPage";
 import RecommendedFeedListPage from "./RecommendedFeedListPage";
 import FeedPage from "./FeedPage";
+import ReactionListPage from "./ReactionListPage";
 
 export {
 	AddFeedPage,
@@ -10,4 +11,5 @@ export {
 	FollowingFeedListPage,
 	RecommendedFeedListPage,
 	FeedPage,
+	ReactionListPage,
 };
