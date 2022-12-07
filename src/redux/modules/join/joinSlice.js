@@ -5,6 +5,7 @@ import {
 	TaskAbortError,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import uuid from "react-uuid";
 import { serverUrl } from "../../api";
 
 export const __signUp = createAsyncThunk(
@@ -86,7 +87,57 @@ export const __kakaoLogin = createAsyncThunk(
 
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
+			window.location.replace("/todoList");
 
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
+export const __naverLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const state = uuid();
+
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/naver?code=${code}&state=${state}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
+			window.location.replace("/todoList");
+
+			return thunkAPI.fulfillWithValue(data);
+		} catch (e) {
+			return thunkAPI.rejectWithValue(e.response.status);
+		}
+	},
+);
+
+export const __googleLogin = createAsyncThunk(
+	"KAKAO_LOGIN",
+	async (payload, thunkAPI) => {
+		try {
+			const code = new URL(window.location.href).searchParams.get("code");
+			const data = await axios.get(
+				`${serverUrl}/api/members/login/google?code=${code}`,
+			);
+			const accessToken = data.headers.authorization;
+			const refreshToken = data.headers.refreshtoken;
+
+			console.log(code);
+
+			window.localStorage.setItem("accessToken", accessToken);
+			window.localStorage.setItem("refreshToken", refreshToken);
+			window.alert("로그인 성공");
 			window.location.replace("/todoList");
 
 			return thunkAPI.fulfillWithValue(data);
