@@ -11,7 +11,7 @@ const StBtn = styled.button`
 		switch (variant) {
 			case "join":
 				return css`
-					width: 335px;
+					width: 100%;
 					height: 60px;
 					background-color: #ff8737;
 					color: white;
