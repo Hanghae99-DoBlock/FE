@@ -159,7 +159,13 @@ const AddFeedPage = () => {
 			reader.onloadend = () => {
 				const previewImg = reader.result;
 
-				dispatch(addPhoto({ id: photoId, url: previewImg }));
+				dispatch(
+					addPhoto({
+						id: photoId,
+						url: previewImg,
+						lastModified: file.lastModified,
+					}),
+				);
 			};
 
 			if (e.target.files[i]) {
