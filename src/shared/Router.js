@@ -37,7 +37,14 @@ const Router = () => {
 					<Route path="/api/members/login/kakao" element={<KakaoLogin />} />
 					<Route path="/api/members/login/naver" element={<NaverLogin />} />
 					<Route path="/api/members/login/google" element={<GoogleLogin />} />
-					<Route path="/*" element={<RefreshToken />}>
+					<Route
+						path="/*"
+						element={
+							<PrivateRoute>
+								<RefreshToken />
+							</PrivateRoute>
+						}
+					>
 						<Route
 							path="profile/:id"
 							element={
