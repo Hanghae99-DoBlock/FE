@@ -151,7 +151,8 @@ const StBox = styled.div`
 			case "feedTodo":
 				return css`
 					display: flex;
-					width: 335px;
+					width: 100%;
+					max-width: 335px;
 					height: 50px;
 					background-color: #f4f4f4;
 					border-radius: 10px;

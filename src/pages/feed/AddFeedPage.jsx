@@ -208,17 +208,18 @@ const AddFeedPage = () => {
 
 			<Flex
 				dir="column"
-				mwd="375px"
+				wd="100%"
 				ht="100%"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
 				ai="center"
 				wrap="wrap"
+				pd="0 20px 0 20px"
 			>
 				<Flex
 					dir="row"
-					wd="375px"
+					wd="100%"
 					ht="58px"
 					jc="space-between"
 					pd="8px 0"
@@ -266,10 +267,10 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					ht="82px"
 					jc="flex-start"
-					pd="0 20px"
+					pd="0 20px 0 20px"
 					ai="normal"
 					gap="6px"
 				>
@@ -290,7 +291,7 @@ const AddFeedPage = () => {
 							dir="row"
 							ai="center"
 							gap="6px"
-							wd="148px"
+							mw="148px"
 							ht="26px"
 							fs="12"
 							jc="flex-start"
@@ -310,14 +311,14 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					mh="82px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
 				>
-					<Flex jc="space-between" ai="baseline" wd="328px" ht="26px" gap="6px">
+					<Flex jc="space-between" ai="baseline" wd="100%" ht="26px" gap="6px">
 						<Flex gap="6px">
 							<Flex
 								dir="row"
@@ -352,7 +353,7 @@ const AddFeedPage = () => {
 						) : null}
 					</Flex>
 					<Box variant="feedTodo">
-						<Flex jc="space-between" wd="335px">
+						<Flex jc="space-between" wd="100%">
 							<Flex fs="14" color="#808080">
 								투두 추가
 							</Flex>
@@ -369,7 +370,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
@@ -404,8 +405,9 @@ const AddFeedPage = () => {
 						</Flex>
 					</Flex>
 					<Flex
-						wd="335px"
+						wd="100%"
 						ht="160px"
+						jc="flex-start"
 						ai="flex-start"
 						gap="13px"
 						position="relative"
@@ -424,7 +426,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
@@ -492,7 +494,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					ht="120px"
 					jc="center"
 					ai="flex-start"
@@ -553,7 +555,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="center"
 					ai="flex-start"
 					gap="10px"
@@ -623,7 +625,7 @@ export const StTextCountBlack = styled.span`
 	color: black;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 15%;
 `;
 
 export const StTextCount = styled.span`
@@ -631,7 +633,7 @@ export const StTextCount = styled.span`
 	color: #a2a2a2;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 7%;
 `;
 
 export const StInputTag = styled.input`
@@ -732,7 +734,9 @@ export const StCheckedGreenBox = styled.button`
 `;
 
 export const StDetailContent = styled.textarea`
-	min-width: 335px;
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
 	max-width: 335px;
 	min-height: 160px;
 	max-height: 160px;
@@ -741,6 +745,7 @@ export const StDetailContent = styled.textarea`
 	padding: 12px 16px 12px 16px;
 	outline-color: #7474ff;
 	resize: none;
+	position: relative;
 `;
 
 export const StButton = styled.button`
