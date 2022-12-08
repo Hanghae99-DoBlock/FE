@@ -39,9 +39,6 @@ const SignUpPage = () => {
 	const checkNickname = useSelector(state => state?.join?.checkNickResult);
 	const checkEmail = useSelector(state => state?.join?.checkMailResult);
 	const toast = useSelector(state => state.toastSlice.isToastExist);
-	console.log(toast);
-	console.log(checkNickname);
-	console.log(checkEmail);
 	//이메일 정규식
 	const regEmail =
 		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;

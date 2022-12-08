@@ -9,8 +9,6 @@ import { __naverLogin } from "../../redux/modules/join/joinSlice";
 const NaverLogin = () => {
 	const dispatch = useDispatch();
 	const status = new URL(window.location.href);
-	console.log(status);
-
 	useEffect(() => {
 		dispatch(__naverLogin());
 	}, []);
