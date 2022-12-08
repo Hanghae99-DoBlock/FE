@@ -368,7 +368,7 @@ const AddFeedPage = () => {
 							</Flex>
 						</Flex>
 					</Box>
-					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
+					<Flex wd="100%" mht="40px" ai="flex-start" dir="column" gap="13px">
 						{boastFeed?.map(todo => {
 							return <BoastFeed todo={todo} key={todo.id} />;
 						})}
