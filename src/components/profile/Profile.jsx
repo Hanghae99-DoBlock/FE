@@ -121,17 +121,20 @@ const Profile = () => {
 					pd="40px"
 					bg="#F8F8F8"
 				>
-					<SecondHeading
-						fw="300"
-						fs="12px"
-						color="#666666"
-						onClick={() => navigate("/feed/following")}
-					>
-						내 블럭
-						<Flex fw="600" fs="19" color="#131313" ta="center" mg="10px 0 0 0">
-							{profile.countFeed}
-						</Flex>
-					</SecondHeading>
+					<Flex onClick={() => navigate("/profile/myblocks")} cursor="pointer">
+						<SecondHeading fw="300" fs="12px" color="#666666">
+							내 블럭
+							<Flex
+								fw="600"
+								fs="19"
+								color="#131313"
+								ta="center"
+								mg="10px 0 0 0"
+							>
+								{profile.countFeed}
+							</Flex>
+						</SecondHeading>
+					</Flex>
 					<SecondHeading fw="300" fs="12px" color="#666666">
 						팔로잉
 						<Flex
