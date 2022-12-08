@@ -40,9 +40,7 @@ const SignUpPage = () => {
 		if (loginResult?.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
-			return dispatch(
-				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
-			);
+			dispatch(updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."));
 		}
 	}, [loginResult]);
 
@@ -92,6 +90,7 @@ const SignUpPage = () => {
 		<>
 			<Flex dir="column" wd="100%" ht="100vh" jc="flex-start">
 				{/* 헤더 */}
+
 				<Flex
 					dir="row"
 					ht="61px"
