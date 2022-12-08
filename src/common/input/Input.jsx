@@ -55,7 +55,10 @@ export const StInput = styled.input`
 				`;
 			case "addFeedInput":
 				return css`
-					width: 335px;
+					display: flex;
+					justify-content: center;
+					width: 100%;
+					max-width: 335px;
 					height: 50px;
 					background-color: #f4f4f4;
 					border-radius: 10px;
