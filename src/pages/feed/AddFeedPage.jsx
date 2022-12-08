@@ -159,7 +159,13 @@ const AddFeedPage = () => {
 			reader.onloadend = () => {
 				const previewImg = reader.result;
 
-				dispatch(addPhoto({ id: photoId, url: previewImg }));
+				dispatch(
+					addPhoto({
+						id: photoId,
+						url: previewImg,
+						lastModified: file.lastModified,
+					}),
+				);
 			};
 
 			if (e.target.files[i]) {
@@ -167,6 +173,8 @@ const AddFeedPage = () => {
 			}
 		}
 	};
+	console.log(photoList);
+	console.log(formPhotoList);
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {

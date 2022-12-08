@@ -324,6 +324,9 @@ export const feedSlice = createSlice({
 			state.photoList = state.photoList.filter((photo, index) => {
 				return photo.id !== action.payload.id;
 			});
+			state.formPhotoList = state.formPhotoList.filter((photo, index) => {
+				return photo.lastModified !== action.payload.lastModified;
+			});
 		},
 		addFormPhoto: (state, action) => {
 			state.formPhotoList.push(action.payload);

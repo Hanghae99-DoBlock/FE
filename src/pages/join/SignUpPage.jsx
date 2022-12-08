@@ -515,15 +515,6 @@ const SignUpPage = () => {
 							/>
 						</StRePasswordBlue>
 					)}
-					{checkPass.value.trim() !== "" &&
-					password.value !== checkPass.value ? (
-						<Flex wd="100%" fs="12" jc="flex-start">
-							<StSvg>
-								<Svg variant="alert" />
-							</StSvg>
-							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
-						</Flex>
-					) : null}
 				</Flex>
 				<Button
 					variant="join"
