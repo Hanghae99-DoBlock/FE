@@ -39,9 +39,6 @@ const SignUpPage = () => {
 	const checkNickname = useSelector(state => state?.join?.checkNickResult);
 	const checkEmail = useSelector(state => state?.join?.checkMailResult);
 	const toast = useSelector(state => state.toastSlice.isToastExist);
-	console.log(toast);
-	console.log(checkNickname);
-	console.log(checkEmail);
 	//이메일 정규식
 	const regEmail =
 		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -518,15 +515,6 @@ const SignUpPage = () => {
 							/>
 						</StRePasswordBlue>
 					)}
-					{checkPass.value.trim() !== "" &&
-					password.value !== checkPass.value ? (
-						<Flex wd="100%" fs="12" jc="flex-start">
-							<StSvg>
-								<Svg variant="alert" />
-							</StSvg>
-							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
-						</Flex>
-					) : null}
 				</Flex>
 				<Button
 					variant="join"
