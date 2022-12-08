@@ -173,8 +173,6 @@ const AddFeedPage = () => {
 			}
 		}
 	};
-	console.log(photoList);
-	console.log(formPhotoList);
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {

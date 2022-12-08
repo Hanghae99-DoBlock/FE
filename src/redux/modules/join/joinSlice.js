@@ -83,8 +83,6 @@ export const __kakaoLogin = createAsyncThunk(
 			const accessToken = data.headers.authorization;
 			const refreshToken = data.headers.refreshtoken;
 
-			console.log(code);
-
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 			window.alert("로그인 성공");
@@ -136,8 +134,6 @@ export const __googleLogin = createAsyncThunk(
 			);
 			const accessToken = data.headers.authorization;
 			const refreshToken = data.headers.refreshtoken;
-
-			console.log(code);
 
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
