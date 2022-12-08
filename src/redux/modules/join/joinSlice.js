@@ -82,11 +82,11 @@ export const __kakaoLogin = createAsyncThunk(
 			);
 			const accessToken = data.headers.authorization;
 			const refreshToken = data.headers.refreshtoken;
-
+      
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 			window.alert("로그인 성공");
-			window.location.replace("/todoList");
+			window.location.replace("/todolist");
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
@@ -113,7 +113,7 @@ export const __naverLogin = createAsyncThunk(
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 			window.alert("로그인 성공");
-			window.location.replace("/todoList");
+			window.location.replace("/todolist");
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
@@ -138,7 +138,7 @@ export const __googleLogin = createAsyncThunk(
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 			window.alert("로그인 성공");
-			window.location.replace("/todoList");
+			window.location.replace("/todolist");
 
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
