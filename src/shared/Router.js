@@ -18,6 +18,7 @@ import {
 	MyBadgesPage,
 	BadgeSetiingPage,
 	ReactionListPage,
+	MyFeedPage,
 } from "../pages";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import GoogleLogin from "../pages/join/GoogleLogin";
@@ -106,6 +107,14 @@ const Router = () => {
 							element={
 								<PrivateRoute>
 									<InterestTagsPage />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="/profile/myblocks"
+							element={
+								<PrivateRoute>
+									<MyFeedPage />
 								</PrivateRoute>
 							}
 						/>
