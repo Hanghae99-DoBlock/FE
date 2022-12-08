@@ -8,6 +8,7 @@ import {
 	Text,
 	ThirdHeading,
 	Box,
+	grey600,
 } from "../../common";
 import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
@@ -71,8 +72,8 @@ const Profile = () => {
 					</Flex>
 				) : null}
 				<Flex wd="335px" mg="0px auto 20px auto;">
-					<Flex wd="100%" jc="space-between">
-						<Flex jc="space-around">
+					<Flex ht="88px" wd="100%" jc="space-between">
+						<Flex gap="12px">
 							<Image
 								variant="image"
 								src={
@@ -81,12 +82,12 @@ const Profile = () => {
 										: profile.profileImage
 								}
 							/>
-							<FirstHeading fw="600" fs="18px" color="#131313" mg="18px 0 0 0">
-								{profile.nickname}
-								<Flex fw="400" fs="12" color="#979797" mg="5px 0 0 0">
+							<Flex dir="column" ai="flex-start" gap="4px">
+								<Text variant="profileLarge">{profile.nickname}</Text>
+								<Text variant="body4" color={grey600}>
 									{profile.email}
-								</Flex>
-							</FirstHeading>
+								</Text>
+							</Flex>
 						</Flex>
 						{decodeToken.memberId === profile.memberId ? (
 							<Flex>
@@ -240,20 +241,24 @@ const Profile = () => {
 						</Flex>
 						{profile.feedResponseDtoList?.map(data => (
 							<Flex
+								dir="column"
+								gap="5px"
 								wd="333px"
-								ht="72px"
+								ht="80px"
 								bc="#F8F8F8"
 								radius="10px"
-								jc="flex-start"
+								ai="flex-start"
 								pd="20px"
 								mg="0 0 10px 0"
 							>
-								<FirstHeading fs="13px" fw="600">
-									{data.feedTitle}
-									<Flex mg="5px 0 0 0" fs="13" fw="300">
+								<Box variant="textOverflow">
+									<Text variant="body2Medium">{data.feedTitle}</Text>
+								</Box>
+								<Box variant="textOverflow">
+									<Text variant="body3" color={grey600}>
 										{data.feedContent}
-									</Flex>
-								</FirstHeading>
+									</Text>
+								</Box>
 							</Flex>
 						))}
 					</Box>
