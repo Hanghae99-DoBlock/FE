@@ -163,7 +163,7 @@ const FeedPage = () => {
 						ht="26px"
 						fs="12"
 						cursor="pointer"
-						onClick={() => navigate("/feed")}
+						onClick={() => navigate(-1)}
 					>
 						닫기
 					</Flex>
