@@ -1,18 +1,26 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FirstHeading, Flex, Image, Svg } from "../../common";
 import { NavBelow } from "../../components";
+import { __getReactions } from "../../redux/modules/feed/feedSlice";
 
 const ReactionListPage = () => {
 	const navigate = useNavigate();
-
-	const reactionList = useSelector(
-		state => state.feed.feedItem.reactionResponseDtoList,
-	);
+	const dispatch = useDispatch();
+	const feedId = useSelector(state => state.feed.feedItem.feedId);
+	const reactionList = useSelector(state => state.feed.reactionList);
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
 	};
+	console.log(reactionList);
+
+	useEffect(() => {
+		dispatch(__getReactions(feedId));
+	}, []);
+
 	return (
 		<>
 			<Flex

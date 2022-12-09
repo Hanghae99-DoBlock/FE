@@ -41,8 +41,6 @@ const ReactionModal = () => {
 			}
 		}
 	}, []);
-	const Reaction = useSelector(state => state.feed.feedItem.myReaction);
-	console.log(Reaction);
 	console.log(reactionResponseDtoList);
 
 	const onClickLikeHandler = () => {
@@ -66,7 +64,13 @@ const ReactionModal = () => {
 			data => data.memberId === decodeToken.memberId,
 		);
 		reaction[0]
-			? dispatch(__editReactions({ feedId, reactionType: e.target.value }))
+			? dispatch(
+					__editReactions({
+						memberId: decodeToken.memberId,
+						feedId,
+						reactionType: e.target.value,
+					}),
+			  )
 			: dispatch(
 					__updateReactions({
 						memberId: decodeToken.memberId,

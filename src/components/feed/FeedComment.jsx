@@ -22,7 +22,7 @@ const FeedComment = props => {
 	}, []);
 
 	const [modal, setModal] = useState(false);
-	const [content, setContent] = useState();
+	const [content, setContent] = useState("");
 	const [commentList, setCommentList] = useState([]);
 
 	const onChangeHandler = e => {
@@ -68,6 +68,7 @@ const FeedComment = props => {
 	const reaction = useSelector(
 		state => state.feed.feedItem.currentReactionType,
 	);
+	console.log("구독하고있는거", reaction);
 	const reactionType = useSelector(state => state.feed.feedItem);
 	const onClickReactionList = () => {
 		navigate("/feed/reactionList/");
@@ -137,6 +138,7 @@ const FeedComment = props => {
 							name="comments"
 							placeholder="댓글을 입력하세요"
 							onChange={onChangeHandler}
+							value={content}
 						/>
 						<Svg variant="paperAirplane" onClick={onCreateComment}></Svg>
 					</Flex>

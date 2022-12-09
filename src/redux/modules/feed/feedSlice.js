@@ -288,6 +288,30 @@ export const __removeReactions = createAsyncThunk(
 		}
 	},
 );
+// 리액션 리스트
+export const __getReactions = createAsyncThunk(
+	"feed/getReactions",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		try {
+			const response = await axios.get(
+				`${serverUrl}/api/feed/${payload}/reaction-list`,
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			console.log(response);
+			return thunkAPI.fulfillWithValue(response);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
 
 const initialState = {
 	followingFeedList: [],
@@ -325,6 +349,7 @@ const initialState = {
 	commentResult: "",
 	uploadResult: "",
 	uploadResultCode: "",
+	reactionList: [],
 };
 
 export const feedSlice = createSlice({
@@ -563,11 +588,12 @@ export const feedSlice = createSlice({
 				state.feedItem.currentReactionType.push({
 					reactionType: action.payload.reactionType,
 				});
-				console.log(current(state));
+				state.feedItem.reactionResponseDtoList.push(action.payload);
+				console.log(action.payload);
 			})
 			.addCase(__removeReactions.fulfilled, (state, action) => {
 				state.feedItem.currentReactionType = [
-					state.feedItem.currentReactionType.filter(
+					...state.feedItem.currentReactionType.filter(
 						data => data.memberId !== action.payload.memberId,
 					),
 				];
@@ -575,12 +601,16 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__editReactions.fulfilled, (state, action) => {
 				state.feedItem.currentReactionType = [
-					state.feedItem.currentReactionType.map(data =>
+					...state.feedItem.currentReactionType.map(data =>
 						data.memberId !== action.payload.memberId
 							? data
 							: { ...data, reactionType: action.payload.reactionType },
 					),
 				];
+			})
+			.addCase(__getReactions.fulfilled, (state, action) => {
+				console.log(action.payload.data);
+				state.reactionList = action.payload.data;
 			});
 	},
 });
