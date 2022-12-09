@@ -565,8 +565,8 @@ const Svg = ({ variant, onClick }) => {
 		case "paperAirplane":
 			return (
 				<svg
-					width="17"
-					height="16"
+					width="25"
+					height="26"
 					viewBox="0 0 17 16"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
