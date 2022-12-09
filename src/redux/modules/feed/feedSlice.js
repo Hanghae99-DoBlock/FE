@@ -216,7 +216,6 @@ export const __infinitySearchMember = createAsyncThunk(
 export const __updateReactions = createAsyncThunk(
 	"feed/updateReactions",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
@@ -243,7 +242,6 @@ export const __updateReactions = createAsyncThunk(
 export const __editReactions = createAsyncThunk(
 	"feed/editReactions",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.patch(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
@@ -269,7 +267,6 @@ export const __editReactions = createAsyncThunk(
 export const __removeReactions = createAsyncThunk(
 	"feed/removeReactions",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			await axios.delete(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
@@ -292,7 +289,6 @@ export const __removeReactions = createAsyncThunk(
 export const __getReactions = createAsyncThunk(
 	"feed/getReactions",
 	async (payload, thunkAPI) => {
-		console.log(payload);
 		try {
 			const response = await axios.get(
 				`${serverUrl}/api/feed/${payload}/reaction-list`,
@@ -305,7 +301,6 @@ export const __getReactions = createAsyncThunk(
 					withCredentials: true,
 				},
 			);
-			console.log(response);
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);
@@ -589,7 +584,6 @@ export const feedSlice = createSlice({
 					reactionType: action.payload.reactionType,
 				});
 				state.feedItem.reactionResponseDtoList.push(action.payload);
-				console.log(action.payload);
 			})
 			.addCase(__removeReactions.fulfilled, (state, action) => {
 				state.feedItem.currentReactionType = [
@@ -609,7 +603,6 @@ export const feedSlice = createSlice({
 				];
 			})
 			.addCase(__getReactions.fulfilled, (state, action) => {
-				console.log(action.payload.data);
 				state.reactionList = action.payload.data;
 			});
 	},

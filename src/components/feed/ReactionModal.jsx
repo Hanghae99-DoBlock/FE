@@ -41,7 +41,6 @@ const ReactionModal = () => {
 			}
 		}
 	}, []);
-	console.log(reactionResponseDtoList);
 
 	const onClickLikeHandler = () => {
 		setLike(!like);
@@ -78,7 +77,6 @@ const ReactionModal = () => {
 						reactionType: e.target.value,
 					}),
 			  );
-		console.log(reaction);
 	};
 
 	return (

@@ -15,7 +15,6 @@ const ReactionListPage = () => {
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
 	};
-	console.log(reactionList);
 
 	useEffect(() => {
 		dispatch(__getReactions(feedId));

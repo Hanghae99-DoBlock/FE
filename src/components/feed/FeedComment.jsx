@@ -68,7 +68,6 @@ const FeedComment = props => {
 	const reaction = useSelector(
 		state => state.feed.feedItem.currentReactionType,
 	);
-	console.log("구독하고있는거", reaction);
 	const reactionType = useSelector(state => state.feed.feedItem);
 	const onClickReactionList = () => {
 		navigate("/feed/reactionList/");
