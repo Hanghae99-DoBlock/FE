@@ -53,7 +53,6 @@ const SignUpPage = () => {
 			return { type: "password", visible: false };
 		});
 	};
-	console.log(loginResult);
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
 		if (loginResult?.status === 200 || loginResult === "") {

@@ -20,6 +20,7 @@ import {
 	ReactionListPage,
 	MyFeedPage,
 } from "../pages";
+import EditFeedPage from "../pages/feed/EditFeedPage";
 import EmailSignIn from "../pages/join/EmailSignIn";
 import GoogleLogin from "../pages/join/GoogleLogin";
 import KakaoLogin from "../pages/join/KakaoLogin";
@@ -169,6 +170,7 @@ const Router = () => {
 								</PrivateRoute>
 							}
 						/>
+						<Route path="feedEdit/:id" element={<EditFeedPage />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

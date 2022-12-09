@@ -90,6 +90,7 @@ const AddFeedPage = () => {
 
 	console.log(photoList);
 	console.log(formPhotoList);
+	console.log(color);
 
 	{
 		/*전달할 색상 값 변경 */
