@@ -100,6 +100,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 											isDelBtnExist={isDelBtnExist}
 										/>
 									))}
+									<Flex border="50px solid transparent" />
 									{provided.placeholder}
 								</div>
 								// </Box>

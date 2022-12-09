@@ -123,7 +123,7 @@ const ModalDetailTodo = ({
 				{/* 폼 */}
 				<Form variant="todoForm">
 					{/* 할 일 라벨 + 인풋*/}
-					<Flex dir="column" ai="flex-start">
+					<Flex dir="column" ai="flex-start" gap="9px">
 						<Label variant="grey">할 일</Label>
 						{isEdit ? (
 							<Input
@@ -134,11 +134,13 @@ const ModalDetailTodo = ({
 								name="todoContent"
 							/>
 						) : (
-							<Box variant="todoContent">
-								<Text variant="medium">{todoItem.todoContent}</Text>
-							</Box>
+							<Flex jc="flex-start" wd="100%" ht="48px" pd="12px 0">
+								<Box variant="todoContentcrollArea">
+									<Text variant="medium">{todoItem.todoContent}</Text>
+								</Box>
+							</Flex>
 						)}
-						<Flex gap="10px" jc="flex-start" mg="14px 0 0 0" wd="100%">
+						<Flex gap="10px" jc="flex-start" mg="5px 0" wd="100%">
 							{/* 메모 아이콘*/}
 							<Box variant="memoIconBox">
 								<Svg variant="memo" />
