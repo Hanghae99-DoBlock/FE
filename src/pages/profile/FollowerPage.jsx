@@ -32,7 +32,7 @@ const Follower = () => {
 
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex dir="column" wd="100%" ht="100vh" mg="0 auto" jc="flex-start">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -61,7 +61,7 @@ const Follower = () => {
 						<Flex
 							jc="space-between"
 							mg="0 0 20px 0 "
-							wd="100%"
+							wd="335px"
 							key={data.memberId}
 						>
 							<Flex>

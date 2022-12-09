@@ -35,7 +35,7 @@ const Following = () => {
 
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mh="667px" mg="0 auto">
+			<Flex dir="column" wd="100%" ht="100vh" mg="0 auto" jc="flex-start">
 				<Flex
 					dir="row"
 					wd="100%"
@@ -62,9 +62,9 @@ const Following = () => {
 				) : (
 					Array.from(followingList).map(data => (
 						<Flex
+							wd="335px"
 							jc="space-between"
 							mg="0 0 20px 0 "
-							wd="100%"
 							key={data.memberId}
 						>
 							<Flex>

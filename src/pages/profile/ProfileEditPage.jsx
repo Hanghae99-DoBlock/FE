@@ -117,7 +117,7 @@ const ProfileEdit = () => {
 						<Flex fs="18" fw="600">
 							회원 정보 수정
 						</Flex>
-						<Flex fs="16" fw="600" color="#D9D9D9" onClick={updateHandler}>
+						<Flex fs="16" fw="600" color="#FF8737" onClick={updateHandler}>
 							적용
 						</Flex>
 					</Flex>
