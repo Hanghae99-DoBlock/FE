@@ -24,11 +24,13 @@ import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 import { updateIsToastExist } from "../../redux/modules/toastSlice";
+import AddFeedCompleteModal from "../../components/feed/AddFeedCompleteModal";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const title = useInput();
 	const [openModal, setOpenModal] = useState(false);
+	const [completedModal, setCompletedModal] = useState(false);
 	const [tagInput, setTagInput] = useState([]);
 	const [tagValue, setTagValue] = useState("");
 	const boastFeed = useSelector(state => state.feed.checkedList);
@@ -81,13 +83,14 @@ const AddFeedPage = () => {
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 		if (isCompleted === 200) {
-			navigate(-1);
 			dispatch(changeStatus());
+			setCompletedModal(true);
 		}
 	}, [photoList, isCompleted]);
 
 	console.log(photoList);
 	console.log(formPhotoList);
+	console.log(color);
 
 	{
 		/*전달할 색상 값 변경 */
@@ -221,6 +224,9 @@ const AddFeedPage = () => {
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
+			{completedModal && (
+				<AddFeedCompleteModal setCompletedModal={setCompletedModal} />
+			)}
 			<Flex
 				dir="column"
 				wd="100%"
@@ -338,13 +344,13 @@ const AddFeedPage = () => {
 							<Flex
 								dir="row"
 								ai="center"
-								wd="125px"
+								wd="135px"
 								ht="26px"
 								fs="14"
 								fw="600"
 								jc="flex-start"
 							>
-								자랑하고 싶은 투두
+								자랑하고 싶은 투두 *
 							</Flex>
 
 							<Flex
@@ -521,13 +527,13 @@ const AddFeedPage = () => {
 							dir="row"
 							ai="center"
 							gap="6px"
-							wd="30px"
+							wd="40px"
 							ht="18px"
 							fs="14"
 							fw="600"
 							jc="flex-start"
 						>
-							사진
+							사진 *
 						</Flex>
 						<Flex
 							dir="row"
@@ -580,13 +586,13 @@ const AddFeedPage = () => {
 						dir="row"
 						ai="center"
 						gap="6px"
-						wd="70px"
+						wd="75px"
 						ht="26px"
 						fs="14"
 						fw="600"
 						jc="flex-start"
 					>
-						피드 컬러
+						피드 컬러 *
 					</Flex>
 					<Flex
 						wd="199px"
