@@ -181,6 +181,13 @@ const StText = styled.span`
 					line-height: 14px;
 					color: ${color || black};
 				`;
+			case "profileLarge":
+				return css`
+					font-weight: 700;
+					font-size: 16px;
+					line-height: 20px;
+					color: ${color || black};
+				`;
 			case "feedComment":
 				return css`
 					font-weight: 500;
