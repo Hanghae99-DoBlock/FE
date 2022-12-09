@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -211,16 +211,67 @@ export const __infinitySearchMember = createAsyncThunk(
 	},
 );
 
-// 리액션 추가 / 삭제
+// 리액션 추가
 export const __updateReactions = createAsyncThunk(
-	"feed/reaction",
+	"feed/updateReactions",
 	async (payload, thunkAPI) => {
+		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
 				{
 					reactionType: payload.reactionType,
 				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
+// 리액션 수정
+export const __editReactions = createAsyncThunk(
+	"feed/editReactions",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		try {
+			await axios.patch(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
+				{
+					reactionType: payload.reactionType,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+// 리액션 삭제
+export const __removeReactions = createAsyncThunk(
+	"feed/removeReactions",
+	async (payload, thunkAPI) => {
+		console.log(payload);
+		try {
+			await axios.delete(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
 				{
 					headers: {
 						Authorization: accessToken,
@@ -270,6 +321,7 @@ const initialState = {
 	searchMemberValue: "",
 	isCompleted: "",
 	searchResult: "",
+	commentResult: "",
 };
 
 export const feedSlice = createSlice({
@@ -495,6 +547,29 @@ export const feedSlice = createSlice({
 				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
+			})
+			.addCase(__updateReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType.push({
+					reactionType: action.payload.reactionType,
+				});
+				console.log(current(state));
+			})
+			.addCase(__removeReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType = [
+					state.feedItem.currentReactionType.filter(
+						data => data.memberId !== action.payload.memberId,
+					),
+				];
+				state.isLoading = false;
+			})
+			.addCase(__editReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType = [
+					state.feedItem.currentReactionType.map(data =>
+						data.memberId !== action.payload.memberId
+							? data
+							: { ...data, reactionType: action.payload.reactionType },
+					),
+				];
 			});
 	},
 });

@@ -1,7 +1,14 @@
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Button, Flex, Svg, Text } from "../../common";
-import { __updateReactions } from "../../redux/modules/feed/feedSlice";
+import {
+	__editReactions,
+	__removeReactions,
+	__updateReactions,
+} from "../../redux/modules/feed/feedSlice";
 
 const ReactionModal = () => {
 	const [like, setLike] = useState(false);
@@ -11,6 +18,32 @@ const ReactionModal = () => {
 	const [fire, setFire] = useState(false);
 	const dispatch = useDispatch();
 	const feedId = useSelector(state => state.feed.feedItem.feedId);
+	const token = localStorage.getItem("accessToken");
+	const decodeToken = jwtDecode(token);
+	const reactionResponseDtoList = useSelector(
+		state => state.feed.feedItem.reactionResponseDtoList,
+	);
+	useEffect(() => {
+		const reaction = reactionResponseDtoList.filter(
+			data => data.memberId === decodeToken.memberId,
+		);
+		if (reaction[0]) {
+			if (reaction[0].reactionType === "LIKE") {
+				setLike(true);
+			} else if (reaction[0].reactionType === "HEART") {
+				setHeart(true);
+			} else if (reaction[0].reactionType === "SMILE") {
+				setSmile(true);
+			} else if (reaction[0].reactionType === "PARTY") {
+				setParty(true);
+			} else if (reaction[0].reactionType === "FIRE") {
+				setFire(true);
+			}
+		}
+	}, []);
+	const Reaction = useSelector(state => state.feed.feedItem.myReaction);
+	console.log(Reaction);
+	console.log(reactionResponseDtoList);
 
 	const onClickLikeHandler = () => {
 		setLike(!like);
@@ -26,6 +59,22 @@ const ReactionModal = () => {
 	};
 	const onClickFireHandler = () => {
 		setFire(!fire);
+	};
+
+	const onClickReactionCheck = e => {
+		const reaction = reactionResponseDtoList.filter(
+			data => data.memberId === decodeToken.memberId,
+		);
+		reaction[0]
+			? dispatch(__editReactions({ feedId, reactionType: e.target.value }))
+			: dispatch(
+					__updateReactions({
+						memberId: decodeToken.memberId,
+						feedId,
+						reactionType: e.target.value,
+					}),
+			  );
+		console.log(reaction);
 	};
 
 	return (
@@ -45,10 +94,14 @@ const ReactionModal = () => {
 					<Svg
 						variant="feedReactionCheck"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickLikeHandler();
+							dispatch(
+								__removeReactions({
+									memberId: decodeToken.memberId,
+									feedId,
+									reactionType: e.target.value,
+								}),
+							);
 						}}
 					></Svg>
 				) : (
@@ -56,10 +109,8 @@ const ReactionModal = () => {
 						variant="feedReaction"
 						value="LIKE"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickLikeHandler();
+							onClickReactionCheck(e);
 						}}
 					>
 						&#x1F44D;
@@ -69,10 +120,14 @@ const ReactionModal = () => {
 					<Svg
 						variant="feedReactionCheck"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickHeartHandler();
+							dispatch(
+								__removeReactions({
+									memberId: decodeToken.memberId,
+									feedId,
+									reactionType: e.target.value,
+								}),
+							);
 						}}
 					></Svg>
 				) : (
@@ -80,10 +135,8 @@ const ReactionModal = () => {
 						variant="feedReaction"
 						value="HEART"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickHeartHandler();
+							onClickReactionCheck(e);
 						}}
 					>
 						&#x2764;
@@ -93,10 +146,14 @@ const ReactionModal = () => {
 					<Svg
 						variant="feedReactionCheck"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickSmileHandler();
+							dispatch(
+								__removeReactions({
+									memberId: decodeToken.memberId,
+									feedId,
+									reactionType: e.target.value,
+								}),
+							);
 						}}
 					></Svg>
 				) : (
@@ -104,10 +161,8 @@ const ReactionModal = () => {
 						variant="feedReaction"
 						value="SMILE"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickSmileHandler();
+							onClickReactionCheck(e);
 						}}
 					>
 						&#x1F60A;
@@ -117,10 +172,14 @@ const ReactionModal = () => {
 					<Svg
 						variant="feedReactionCheck"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickPartyHandler();
+							dispatch(
+								__removeReactions({
+									memberId: decodeToken.memberId,
+									feedId,
+									reactionType: e.target.value,
+								}),
+							);
 						}}
 					></Svg>
 				) : (
@@ -128,10 +187,8 @@ const ReactionModal = () => {
 						variant="feedReaction"
 						value="PARTY"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickPartyHandler();
+							onClickReactionCheck(e);
 						}}
 					>
 						&#x1F389;
@@ -141,10 +198,14 @@ const ReactionModal = () => {
 					<Svg
 						variant="feedReactionCheck"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickFireHandler();
+							dispatch(
+								__removeReactions({
+									memberId: decodeToken.memberId,
+									feedId,
+									reactionType: e.target.value,
+								}),
+							);
 						}}
 					></Svg>
 				) : (
@@ -152,10 +213,8 @@ const ReactionModal = () => {
 						variant="feedReaction"
 						value="FIRE"
 						onClick={e => {
-							dispatch(
-								__updateReactions({ feedId, reactionType: e.target.value }),
-							);
 							onClickFireHandler();
+							onClickReactionCheck(e);
 						}}
 					>
 						&#x1F525;

@@ -66,8 +66,6 @@ export const __followThunk = createAsyncThunk(
 // 프로필 수정
 const updateProfile = payload => {
 	const accessToken = localStorage.getItem("accessToken");
-	const refreshToken = localStorage.getItem("refreshToken");
-	console.log(payload);
 	const frm = new FormData();
 	if (payload.nickname === "") {
 	} else {
