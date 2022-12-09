@@ -24,11 +24,13 @@ import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 import { updateIsToastExist } from "../../redux/modules/toastSlice";
+import AddFeedCompleteModal from "../../components/feed/AddFeedCompleteModal";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const title = useInput();
 	const [openModal, setOpenModal] = useState(false);
+	const [completedModal, setCompletedModal] = useState(false);
 	const [tagInput, setTagInput] = useState([]);
 	const [tagValue, setTagValue] = useState("");
 	const boastFeed = useSelector(state => state.feed.checkedList);
@@ -81,8 +83,8 @@ const AddFeedPage = () => {
 		}
 		dispatch(__getSuccessTodo({ year: year, month: month + 1, date: day }));
 		if (isCompleted === 200) {
-			navigate(-1);
 			dispatch(changeStatus());
+			setCompletedModal(true);
 		}
 	}, [photoList, isCompleted]);
 
@@ -221,6 +223,9 @@ const AddFeedPage = () => {
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
+			{completedModal && (
+				<AddFeedCompleteModal setCompletedModal={setCompletedModal} />
+			)}
 			<Flex
 				dir="column"
 				wd="100%"

@@ -1222,6 +1222,51 @@ const Svg = ({ variant, onClick }) => {
 					</rect>
 				</svg>
 			);
+		case "addFeedCompletedBlock":
+			return (
+				<svg width="163" height="95" viewBox="0 0 163 95" fill="none">
+					<rect
+						x="17"
+						y="15.6606"
+						width="129.982"
+						height="79.3394"
+						fill="url(#pattern0)"
+					/>
+					<rect
+						width="8.07626"
+						height="7.28987"
+						transform="matrix(0.986804 0.161917 -0.200163 0.979763 4.625 34.8623)"
+						fill="#FF8737"
+					/>
+					<path
+						d="M32.691 1.8281L27.5815 0.669231C27.5815 0.669231 30.6517 5.11137 27.1333 8.66241C23.6149 12.2135 20.8386 15.8567 22.8497 18.1989L28.0254 19.1568L28.0198 19.1249C27.7833 18.901 26.7938 17.7297 27.9476 14.7985C29.2603 11.4862 34.2822 12.0617 32.691 1.8281Z"
+						fill="#FF8737"
+					/>
+					<circle cx="4.09766" cy="9.44202" r="4" fill="#FFB889" />
+					<rect
+						width="8.07626"
+						height="7.28987"
+						transform="matrix(-0.986804 0.161917 0.200163 0.979763 159.971 29)"
+						fill="#FFB889"
+					/>
+					<path
+						d="M128.832 1.8281L133.942 0.669231C133.942 0.669231 130.872 5.11137 134.39 8.66241C137.909 12.2135 140.685 15.8567 138.674 18.1989L133.498 19.1568L133.504 19.1249C133.74 18.901 134.73 17.7297 133.576 14.7985C132.263 11.4862 127.241 12.0617 128.832 1.8281Z"
+						fill="#FF8737"
+					/>
+					<circle r="4" transform="matrix(-1 0 0 1 159 7)" fill="#FF8737" />
+					<defs>
+						<pattern
+							id="pattern0"
+							patternContentUnits="objectBoundingBox"
+							width="1"
+							height="1"
+						>
+							<use transform="translate(-0.0053225) scale(0.0025016 0.00409836)" />
+						</pattern>
+						<image id="image0_1196_5084" width="404" height="244" />
+					</defs>
+				</svg>
+			);
 		default:
 			break;
 	}

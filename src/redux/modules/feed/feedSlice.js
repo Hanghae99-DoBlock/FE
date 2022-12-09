@@ -87,7 +87,6 @@ export const __uploadFeed = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			console.log(e);
 			return thunkAPI.rejectWithValue(e);
 		}
 	},
