@@ -168,6 +168,18 @@ const StBox = styled.div`
 					outline-color: #7474ff;
 					align-items: center;
 				`;
+			case "addFeedComplete":
+				return css`
+					position: fixed;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					background-color: white;
+					width: 280px;
+					height: 282px;
+					border-radius: 10px;
+					padding: 21px 20px 14px 20px;
+				`;
 			case "feedModal":
 				return css`
 					position: fixed;
