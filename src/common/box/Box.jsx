@@ -410,6 +410,7 @@ const StBox = styled.div`
 				`;
 			case "profileBox":
 				return css`
+					cursor: pointer;
 					position: relative;
 					padding-bottom: 100px;
 				`;

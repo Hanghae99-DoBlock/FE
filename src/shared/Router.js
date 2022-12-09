@@ -111,7 +111,7 @@ const Router = () => {
 							}
 						/>
 						<Route
-							path="profile/myblocks"
+							path="profile/:id/myblocks"
 							element={
 								<PrivateRoute>
 									<MyFeedPage />
