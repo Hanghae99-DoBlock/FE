@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "../../common";
+import { Box, Button, Flex, Toast } from "../../common";
 import Input, { StInput } from "../../common/input/Input";
 import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
@@ -23,6 +23,7 @@ import {
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -41,6 +42,8 @@ const AddFeedPage = () => {
 	const [isPostPossible, setIsPostPossible] = useState(false);
 	const loading = useSelector(state => state.feed.isLoading);
 	const isCompleted = useSelector(state => state.feed.isCompleted);
+	const uploadResult = useSelector(state => state.feed.uploadResult);
+	const uploadResultCode = useSelector(state => state.feed.uploadResultCode);
 	let todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});
@@ -83,9 +86,8 @@ const AddFeedPage = () => {
 		}
 	}, [photoList, isCompleted]);
 
-	{
-		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
-	}
+	console.log(photoList);
+	console.log(formPhotoList);
 
 	{
 		/*전달할 색상 값 변경 */
@@ -188,6 +190,14 @@ const AddFeedPage = () => {
 			);
 			dispatch(resetFollowingList());
 		}
+
+		if (uploadResultCode !== 200 && uploadResult === "EXCEED_FILE_SIZE") {
+			dispatch(
+				updateIsToastExist("이미지는 1장당 최대 5MB까지 등록 가능합니다"),
+			);
+		} else if (uploadResultCode !== 200 && uploadResult === "NOT_VALID_IMAGE") {
+			dispatch(updateIsToastExist("jpg,jpeg,png 형식만 업로드 가능합니다"));
+		}
 	};
 	const openModalHandler = () => {
 		setOpenModal(true);
@@ -211,7 +221,6 @@ const AddFeedPage = () => {
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
-
 			<Flex
 				dir="column"
 				wd="100%"

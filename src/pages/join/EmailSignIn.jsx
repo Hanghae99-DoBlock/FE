@@ -53,19 +53,15 @@ const SignUpPage = () => {
 			return { type: "password", visible: false };
 		});
 	};
-
+	console.log(loginResult);
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
 		if (loginResult?.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
-			return dispatch(
-				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
-			);
-		} else {
-			return dispatch(
-				updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
-			);
+			return dispatch(updateIsToastExist("비밀번호를 다시 확인해주세요."));
+		} else if (loginResult === 404) {
+			return dispatch(updateIsToastExist("찾을 수 없는 사용자입니다."));
 		}
 	};
 

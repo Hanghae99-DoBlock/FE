@@ -87,7 +87,8 @@ export const __uploadFeed = createAsyncThunk(
 			);
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
-			return thunkAPI.rejectWithValue(e.code);
+			console.log(e);
+			return thunkAPI.rejectWithValue(e);
 		}
 	},
 );
@@ -270,6 +271,8 @@ const initialState = {
 	searchMemberValue: "",
 	isCompleted: "",
 	searchResult: "",
+	uploadResult: "",
+	uploadResultCode: "",
 };
 
 export const feedSlice = createSlice({
@@ -387,9 +390,14 @@ export const feedSlice = createSlice({
 			.addCase(__uploadFeed.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isCompleted = action.payload.status;
+				state.uploadResult = action.payload.status;
 			})
 			//피드 업로드 실패
-			.addCase(__uploadFeed.rejected, (state, action) => {})
+			.addCase(__uploadFeed.rejected, (state, action) => {
+				state.isLoading = false;
+				state.uploadResult = action.payload.response.data.code;
+				state.uploadResultCode = action.payload.response.status;
+			})
 			//완료된 피드 목록 불러오기
 			.addCase(__updateFeed.fulfilled, (state, action) => {
 				state.isLoading = false;

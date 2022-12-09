@@ -82,7 +82,7 @@ export const __kakaoLogin = createAsyncThunk(
 			);
 			const accessToken = data.headers.authorization;
 			const refreshToken = data.headers.refreshtoken;
-      
+
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 			window.alert("로그인 성공");
@@ -200,6 +200,7 @@ const joinSliece = createSlice({
 			state.loginResult = action.payload;
 		},
 		[__signIn.rejected]: (state, action) => {
+			console.log(action.payload);
 			state.loginResult = action.payload;
 		},
 	},
