@@ -343,13 +343,13 @@ const AddFeedPage = () => {
 							<Flex
 								dir="row"
 								ai="center"
-								wd="125px"
+								wd="135px"
 								ht="26px"
 								fs="14"
 								fw="600"
 								jc="flex-start"
 							>
-								자랑하고 싶은 투두
+								자랑하고 싶은 투두 *
 							</Flex>
 
 							<Flex
@@ -526,13 +526,13 @@ const AddFeedPage = () => {
 							dir="row"
 							ai="center"
 							gap="6px"
-							wd="30px"
+							wd="40px"
 							ht="18px"
 							fs="14"
 							fw="600"
 							jc="flex-start"
 						>
-							사진
+							사진 *
 						</Flex>
 						<Flex
 							dir="row"
@@ -585,13 +585,13 @@ const AddFeedPage = () => {
 						dir="row"
 						ai="center"
 						gap="6px"
-						wd="70px"
+						wd="75px"
 						ht="26px"
 						fs="14"
 						fw="600"
 						jc="flex-start"
 					>
-						피드 컬러
+						피드 컬러 *
 					</Flex>
 					<Flex
 						wd="199px"
