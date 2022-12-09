@@ -16,8 +16,6 @@ const StImage = styled.img`
 					width: 60px;
 					height: 60px;
 					border-radius: 50%;
-					margin-top: 18px;
-					margin-right: 10px;
 					outline: 2px solid white;
 					outline-offset: -1px;
 				`;

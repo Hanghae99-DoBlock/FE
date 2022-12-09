@@ -29,19 +29,19 @@ const FeedPage = () => {
 				{/* 상단 탭 메뉴 */}
 				<Flex wd="100%" mxw="430px" ht="41px" position="fixed" top="0">
 					<Box
-						onClick={() => changeFeedListTypeHandler("followingFeedList")}
-						variant={topTabUi[isMatchFollowing].box}
-					>
-						<Text variant="title4" color={topTabUi[isMatchFollowing].color}>
-							팔로잉
-						</Text>
-					</Box>
-					<Box
 						onClick={() => changeFeedListTypeHandler("recommendedFeedList")}
 						variant={topTabUi[isMatchRecommended].box}
 					>
 						<Text variant="title4" color={topTabUi[isMatchRecommended].color}>
 							추천 피드
+						</Text>
+					</Box>
+					<Box
+						onClick={() => changeFeedListTypeHandler("followingFeedList")}
+						variant={topTabUi[isMatchFollowing].box}
+					>
+						<Text variant="title4" color={topTabUi[isMatchFollowing].color}>
+							팔로잉
 						</Text>
 					</Box>
 				</Flex>

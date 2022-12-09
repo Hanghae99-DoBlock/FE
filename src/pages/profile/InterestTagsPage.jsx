@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, FirstHeading, Flex, Text } from "../../common";
 import { grey600, white, black } from "../../common";
-import { updateIsLoading } from "../../redux/modules/profileSlice";
+import { resetErrMsg, updateIsLoading } from "../../redux/modules/profileSlice";
 import { __updateProfileTags } from "../../redux/modules/middleware/profileThunk";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const InterestTagsPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const isLoading = useSelector(state => state.profileSlice.isLoading);
+	const { isLoading, errMsg } = useSelector(state => state.profileSlice);
 	const [inputDisplay, setInputDisplay] = useState("none");
 	const [showInputBtndisplay, setShowInputBtnDisplay] = useState("block");
 	const [tagContent, setTagContent] = useState("");
@@ -35,6 +36,13 @@ const InterestTagsPage = () => {
 			dispatch(updateIsLoading(null));
 		}
 	}, [isLoading]);
+
+	useEffect(() => {
+		if (errMsg) {
+			dispatch(updateIsToastExist(errMsg));
+			dispatch(resetErrMsg());
+		}
+	}, [errMsg]);
 
 	// 커스텀 태그 인풋 열기 핸들러
 	const showTagInputHandler = () => {

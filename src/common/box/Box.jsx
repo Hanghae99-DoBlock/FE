@@ -12,6 +12,14 @@ const StBox = styled.div`
 
 	${({ variant, profileImageUrl, feedColor, type, feedImgUrl, bg }) => {
 		switch (variant) {
+			case "textOverflow":
+				return css`
+					width: 100%;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					word-break: break-all;
+				`;
 			case "tagChip":
 				return css`
 					display: ${type} !important;
@@ -151,7 +159,8 @@ const StBox = styled.div`
 			case "feedTodo":
 				return css`
 					display: flex;
-					width: 335px;
+					width: 100%;
+					max-width: 335px;
 					height: 50px;
 					background-color: #f4f4f4;
 					border-radius: 10px;

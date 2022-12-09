@@ -17,8 +17,9 @@ import {
 	__getFollowing,
 } from "../../redux/modules/profileSlice";
 
-const SearchPage = () => {
+const FeedPage = () => {
 	const dispatch = useDispatch();
+	const feedList = useSelector(state => state.feed.feedList);
 	const navigate = useNavigate();
 
 	// 상단 탭 메뉴 ui 상태 관리
@@ -160,9 +161,9 @@ const SearchPage = () => {
 					<Flex
 						wd="34px"
 						ht="26px"
-						fs="16"
+						fs="12"
 						cursor="pointer"
-						onClick={() => navigate("/feed")}
+						onClick={() => navigate(-1)}
 					>
 						닫기
 					</Flex>
@@ -271,7 +272,7 @@ const SearchPage = () => {
 	);
 };
 
-export default SearchPage;
+export default FeedPage;
 
 export const StSearchInput = styled.input`
 	border: none;

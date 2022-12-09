@@ -244,6 +244,7 @@ const initialState = {
 	representativeBadge: {},
 	isLoading: null,
 	error: "",
+	errMsg: null,
 };
 
 const profileSlice = createSlice({
@@ -256,13 +257,22 @@ const profileSlice = createSlice({
 		updateIsLoading: (state, action) => {
 			state.isLoading = action.payload;
 		},
+		resetErrMsg: (state, action) => {
+			state.errMsg = null;
+		},
 	},
 	extraReducers: {
 		[__updateProfileTags.fulfilled]: (state, action) => {
 			state.isLoading = "완료";
 		},
+		[__updateProfileTags.rejected]: (state, action) => {
+			state.errMsg = action.payload.data.message;
+		},
 		[__resetProfileTags.fulfilled]: (state, action) => {
 			state.profile.tagList = [];
+		},
+		[__resetProfileTags.rejected]: (state, action) => {
+			state.errMsg = action.payload.data.message;
 		},
 		[__getUser.pending]: (state, action) => {
 			state.isLoading = true;
@@ -347,5 +357,5 @@ const profileSlice = createSlice({
 	},
 });
 
-export const { updatePro, updateIsLoading } = profileSlice.actions;
+export const { updatePro, updateIsLoading, resetErrMsg } = profileSlice.actions;
 export default profileSlice.reducer;

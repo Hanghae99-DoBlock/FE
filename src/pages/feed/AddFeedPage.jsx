@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "../../common";
+import { Box, Button, Flex, Toast } from "../../common";
 import Input, { StInput } from "../../common/input/Input";
 import Svg from "../../common/svg/Svg";
 import styled from "styled-components";
@@ -23,6 +23,7 @@ import {
 import { PhotoList, TagList, ChoiceTodoModal } from "../../components";
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -41,6 +42,8 @@ const AddFeedPage = () => {
 	const [isPostPossible, setIsPostPossible] = useState(false);
 	const loading = useSelector(state => state.feed.isLoading);
 	const isCompleted = useSelector(state => state.feed.isCompleted);
+	const uploadResult = useSelector(state => state.feed.uploadResult);
+	const uploadResultCode = useSelector(state => state.feed.uploadResultCode);
 	let todoIdArray = boastFeed.map(todo => {
 		return todo.id;
 	});
@@ -83,9 +86,8 @@ const AddFeedPage = () => {
 		}
 	}, [photoList, isCompleted]);
 
-	{
-		/*boastFeed에서 중복을 제거한 버전 .일치하는 첫번째 값만을 리턴한다*/
-	}
+	console.log(photoList);
+	console.log(formPhotoList);
 
 	{
 		/*전달할 색상 값 변경 */
@@ -159,7 +161,13 @@ const AddFeedPage = () => {
 			reader.onloadend = () => {
 				const previewImg = reader.result;
 
-				dispatch(addPhoto({ id: photoId, url: previewImg }));
+				dispatch(
+					addPhoto({
+						id: photoId,
+						url: previewImg,
+						lastModified: file.lastModified,
+					}),
+				);
 			};
 
 			if (e.target.files[i]) {
@@ -182,6 +190,14 @@ const AddFeedPage = () => {
 			);
 			dispatch(resetFollowingList());
 		}
+
+		if (uploadResultCode !== 200 && uploadResult === "EXCEED_FILE_SIZE") {
+			dispatch(
+				updateIsToastExist("이미지는 1장당 최대 5MB까지 등록 가능합니다"),
+			);
+		} else if (uploadResultCode !== 200 && uploadResult === "NOT_VALID_IMAGE") {
+			dispatch(updateIsToastExist("jpg,jpeg,png 형식만 업로드 가능합니다"));
+		}
 	};
 	const openModalHandler = () => {
 		setOpenModal(true);
@@ -201,23 +217,24 @@ const AddFeedPage = () => {
 			setIsPostPossible(false);
 		}
 	}, [boastFeed, photoList, formPhotoList, color]);
+
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
 			<Flex
 				dir="column"
-				mw="375px"
-				mxw="375px"
+				wd="100%"
 				ht="100%"
 				mg="0 auto"
 				jc="flex-start"
 				gap="25px"
 				ai="center"
 				wrap="wrap"
+				pd="0 20px 0 20px"
 			>
 				<Flex
 					dir="row"
-					wd="375px"
+					wd="100%"
 					ht="58px"
 					jc="space-between"
 					pd="8px 0"
@@ -265,10 +282,10 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					ht="82px"
 					jc="flex-start"
-					pd="0 20px"
+					pd="0 20px 0 20px"
 					ai="normal"
 					gap="6px"
 				>
@@ -289,7 +306,7 @@ const AddFeedPage = () => {
 							dir="row"
 							ai="center"
 							gap="6px"
-							wd="148px"
+							mw="148px"
 							ht="26px"
 							fs="12"
 							jc="flex-start"
@@ -309,14 +326,14 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					mh="82px"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
 					gap="6px"
 				>
-					<Flex jc="space-between" ai="baseline" wd="328px" ht="26px" gap="6px">
+					<Flex jc="space-between" ai="baseline" wd="100%" ht="26px" gap="6px">
 						<Flex gap="6px">
 							<Flex
 								dir="row"
@@ -351,7 +368,7 @@ const AddFeedPage = () => {
 						) : null}
 					</Flex>
 					<Box variant="feedTodo">
-						<Flex jc="space-between" wd="335px">
+						<Flex jc="space-between" wd="100%">
 							<Flex fs="14" color="#808080">
 								투두 추가
 							</Flex>
@@ -360,7 +377,7 @@ const AddFeedPage = () => {
 							</Flex>
 						</Flex>
 					</Box>
-					<Flex wd="335px" mht="40px" ai="flex-start" dir="column" gap="13px">
+					<Flex wd="100%" mht="40px" ai="flex-start" dir="column" gap="13px">
 						{boastFeed?.map(todo => {
 							return <BoastFeed todo={todo} key={todo.id} />;
 						})}
@@ -368,7 +385,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
@@ -403,8 +420,9 @@ const AddFeedPage = () => {
 						</Flex>
 					</Flex>
 					<Flex
-						wd="335px"
+						wd="100%"
 						ht="160px"
+						jc="flex-start"
 						ai="flex-start"
 						gap="13px"
 						position="relative"
@@ -423,7 +441,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="flex-start"
 					pd="0 20px"
 					ai="normal"
@@ -491,7 +509,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					ht="120px"
 					jc="center"
 					ai="flex-start"
@@ -552,7 +570,7 @@ const AddFeedPage = () => {
 				</Flex>
 				<Flex
 					dir="column"
-					wd="375px"
+					wd="100%"
 					jc="center"
 					ai="flex-start"
 					gap="10px"
@@ -622,7 +640,7 @@ export const StTextCountBlack = styled.span`
 	color: black;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 15%;
 `;
 
 export const StTextCount = styled.span`
@@ -630,7 +648,7 @@ export const StTextCount = styled.span`
 	color: #a2a2a2;
 	position: absolute;
 	bottom: 5%;
-	right: 5%;
+	right: 7%;
 `;
 
 export const StInputTag = styled.input`
@@ -731,7 +749,9 @@ export const StCheckedGreenBox = styled.button`
 `;
 
 export const StDetailContent = styled.textarea`
-	min-width: 335px;
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
 	max-width: 335px;
 	min-height: 160px;
 	max-height: 160px;
@@ -740,6 +760,7 @@ export const StDetailContent = styled.textarea`
 	padding: 12px 16px 12px 16px;
 	outline-color: #7474ff;
 	resize: none;
+	position: relative;
 `;
 
 export const StButton = styled.button`

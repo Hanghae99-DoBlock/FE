@@ -9,7 +9,6 @@ const PhotoList = ({ photo, isPhotoFull, setIsPhotoFull }) => {
 	const deletePhotoHandler = () => {
 		dispatch(deletePhoto(photo));
 	};
-
 	return (
 		<Flex onClick={deletePhotoHandler} wd="72px" ht="72px" position="relative">
 			<Svg variant="deletePhoto" />

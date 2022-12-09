@@ -2,16 +2,19 @@ import styled from "styled-components";
 import Button from "../../common/button/Button";
 import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	resetCheckEmail,
+	resetCheckNickname,
 	__checkEmail,
 	__checkNick,
 	__signUp,
 } from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const SignUpPage = () => {
 	const dispatch = useDispatch();
@@ -33,10 +36,9 @@ const SignUpPage = () => {
 	const [isBlue, setIsBlue] = useState(false);
 	const [isMailDuple, setIsMailDuple] = useState(false);
 
-	const checkNickname = useSelector(
-		state => state?.join?.checkNickResult.status,
-	);
-	const checkEmail = useSelector(state => state?.join?.checkMailResult.status);
+	const checkNickname = useSelector(state => state?.join?.checkNickResult);
+	const checkEmail = useSelector(state => state?.join?.checkMailResult);
+	const toast = useSelector(state => state.toastSlice.isToastExist);
 	//이메일 정규식
 	const regEmail =
 		/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -107,13 +109,15 @@ const SignUpPage = () => {
 	};
 
 	const checkNicknameHandler = () => {
-		if (regNick.test(nickname.value)) {
+		if (regNick.test(nickname.value) && nickname.value.trim() !== "") {
 			dispatch(__checkNick({ nickname: nickname.value }));
 		}
 	};
 
 	const checkEmailHandler = () => {
-		if (regEmail.test(email.value)) {
+		if (!regEmail.test(email.value) && email.value.trim() !== "") {
+			dispatch(updateIsToastExist("올바른 이메일 형식을 입력해주세요."));
+		} else if (regEmail.test(email.value) && email.value.trim() !== "") {
 			dispatch(__checkEmail({ email: email.value }));
 		}
 	};
@@ -122,33 +126,46 @@ const SignUpPage = () => {
 		if (regPass.test(password.value)) {
 		}
 	};
+	useEffect(() => {
+		if (
+			checkNickname !== 200 &&
+			checkNickname !== "" &&
+			nickname.value.trim() !== ""
+		) {
+			dispatch(updateIsToastExist("이미 사용중인 닉네임입니다."));
+		}
+		dispatch(resetCheckNickname());
+	}, [checkNickname]);
+	useEffect(() => {
+		if (checkEmail !== 200 && checkEmail !== "" && email.value.trim() !== "") {
+			dispatch(updateIsToastExist("이미 사용중인 이메일입니다."));
+		}
+		dispatch(resetCheckEmail());
+	}, [checkEmail]);
 	return (
-		<>
-			<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
-				<Flex
-					wd="100%"
-					dir="row"
-					ht="61px"
-					jc="space-between"
-					ai="center"
-					bb="1px solid #EFEFEF"
-				>
-					<Flex wd="125px" ht="42px" jc="flex-start" mg="0 0 0 17px">
-						<Svg variant="chevron" onClick={() => navigate("/")} />
-					</Flex>
-					<Flex fs="18" fw="bold">
-						회원가입
-					</Flex>
-					<Flex wd="125px" ht="42px" jc="center" mg="0 17px 0 0"></Flex>
+		<Flex dir="column" jc="flex-start" wd="100%" ht="100vh">
+			{/* 헤더 */}
+			<Flex
+				wd="100%"
+				dir="row"
+				ht="61px"
+				jc="space-between"
+				bb="1px solid #EFEFEF"
+			>
+				<Flex ht="100%" mg="0 0 0 18px">
+					<Svg variant="chevron" onClick={() => navigate("/")} />
 				</Flex>
-				<Flex
-					ht="124px"
-					dir="column"
-					pd="0 20px 20px"
-					gap="6px"
-					mg="16px 0 0 0"
-				>
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+				<Flex fs="18" fw="bold">
+					회원가입
+				</Flex>
+				<Flex wd="40px" />
+			</Flex>
+
+			{/* 컨텐트 */}
+			<Flex gap="26px" wd="100%" dir="column" pd="25px 20px">
+				{/* 닉네임 */}
+				<Flex wd="100%" dir="column" gap="8px">
+					<Flex mg="0 0 10px 0" wd="100%" fw="600" fs="14" jc="flex-start">
 						닉네임
 					</Flex>
 
@@ -190,7 +207,7 @@ const SignUpPage = () => {
 							</Flex>
 						</StnicknameBlue>
 					)}
-					<Flex dir="column" wd="335px" ht="26px" ai="flex-start" gap="5px">
+					<Flex dir="column" wd="100%" ai="flex-start" gap="5px">
 						{nickname.value.length === 0 ? (
 							<>
 								<Flex dir="row" gap="5px">
@@ -254,8 +271,10 @@ const SignUpPage = () => {
 						)}
 					</Flex>
 				</Flex>
-				<Flex ht="124px" dir="column" ai="center" pd="0 20px 20px" gap="6px">
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+
+				{/* 이메일 */}
+				<Flex wd="100%" dir="column" gap="6px">
+					<Flex mg="0 0 10px 0" wd="100%" fw="600" fs="14" jc="flex-start">
 						이메일
 					</Flex>
 					{isBlue === false ? (
@@ -292,16 +311,10 @@ const SignUpPage = () => {
 						</StEmailBlue>
 					)}
 				</Flex>
-				<Flex
-					wd="100%"
-					ht="124px"
-					dir="column"
-					ai="center"
-					pd="0 20px 20px"
-					gap="6px"
-					position="relative"
-				>
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+
+				{/* 비밀번호 */}
+				<Flex wd="100%" dir="column" gap="6px">
+					<Flex mg="0 0 10px 0" wd="100%" fw="600" fs="14" jc="flex-start">
 						비밀번호
 					</Flex>
 
@@ -336,14 +349,7 @@ const SignUpPage = () => {
 						</Flex>
 					</StPassword>
 
-					<Flex
-						dir="column"
-						wd="335px"
-						ht="26px"
-						ai="flex-start"
-						gap="5px"
-						mg="7px 0 0 0"
-					>
+					<Flex dir="column" wd="100%" ai="flex-start" gap="5px">
 						{password.value.length === 0 ? (
 							<>
 								<Flex dir="row" gap="5px">
@@ -451,16 +457,10 @@ const SignUpPage = () => {
 						)}
 					</Flex>
 				</Flex>
-				<Flex
-					wd="100%"
-					ht="124px"
-					dir="column"
-					ai="center"
-					pd="0 20px 20px"
-					gap="6px"
-					position="relative"
-				>
-					<Flex wd="335px" ht="26px" fw="600" fs="14" lh="26" jc="flex-start">
+
+				{/* 비밀번호 확인 */}
+				<Flex wd="100%" dir="column" gap="6px">
+					<Flex mg="0 0 10px 0" wd="100%" fw="600" fs="14" jc="flex-start">
 						비밀번호 확인
 					</Flex>
 					{isBlue === false ? (
@@ -512,43 +512,21 @@ const SignUpPage = () => {
 								ht="24px"
 								mg="0 13px 0 0"
 								onClick={checkPasswordTypeHandler}
-							></Flex>
+							/>
 						</StRePasswordBlue>
 					)}
-					{checkPass.value.trim() !== "" &&
-					password.value !== checkPass.value ? (
-						<Flex
-							dir="row"
-							wd="335px"
-							ht="26px"
-							fs="12"
-							ai="center"
-							jc="flex-start"
-						>
-							<StSvg>
-								<Svg variant="alert" />
-							</StSvg>
-							<StInfo>비밀번호를 다시 확인해주세요</StInfo>
-						</Flex>
-					) : (
-						<Flex dir="row" wd="335px" ht="26px" fs="12" ai="center"></Flex>
-					)}
 				</Flex>
-				<Flex gap="16px" jc="center" ai="center">
-					<Flex jc="center" ai="center">
-						<Button
-							variant="join"
-							onClick={() => {
-								changePlaceholder();
-								joinHandler();
-							}}
-						>
-							가입하기
-						</Button>
-					</Flex>
-				</Flex>
+				<Button
+					variant="join"
+					onClick={() => {
+						changePlaceholder();
+						joinHandler();
+					}}
+				>
+					가입하기
+				</Button>
 			</Flex>
-		</>
+		</Flex>
 	);
 };
 
@@ -564,7 +542,7 @@ const StSvg = styled.div`
 export const StEmail = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
@@ -579,7 +557,7 @@ export const StEmail = styled.div`
 const StEmailBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
@@ -590,7 +568,7 @@ const StEmailBlue = styled.div`
 export const StPassword = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
@@ -604,7 +582,7 @@ export const StPassword = styled.div`
 const StPasswordBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
@@ -615,7 +593,7 @@ const StPasswordBlue = styled.div`
 const Stnickname = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
@@ -630,7 +608,7 @@ const Stnickname = styled.div`
 const StnicknameBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;
@@ -641,7 +619,7 @@ const StnicknameBlue = styled.div`
 const StRePassword = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #ffffff;
 	align-items: center;
 	border-radius: 10px;
@@ -656,7 +634,7 @@ const StRePassword = styled.div`
 const StRePasswordBlue = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 335px;
+	width: 100%;
 	background-color: #f4f4f4;
 	align-items: center;
 	border-radius: 10px;

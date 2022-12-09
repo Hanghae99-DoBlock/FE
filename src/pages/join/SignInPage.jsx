@@ -4,7 +4,7 @@ import Flex from "../../common/flex/Flex";
 import { StInput } from "../../common/input/Input";
 import { useEffect, useState } from "react";
 import useInput from "../../common/hooks/useInput";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { __signIn } from "../../redux/modules/join/joinSlice";
 import jwtDecode from "jwt-decode";
@@ -17,7 +17,13 @@ const SignInPage = () => {
 	const dispatch = useDispatch();
 	const token = localStorage.getItem("accessToken");
 	const [isSplash, setIsSplash] = useState(true);
+	const kakaoUrl =
+		"https://kauth.kakao.com/oauth/authorize?client_id=e321d7ec74f7b0df738961b15a46117d&redirect_uri=https://www.do-block.click/api/members/login/kakao&response_type=code";
 
+	const naverUrl =
+		"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=uc4jdieiAPEjFxNtS9AO&redirect_uri=https://www.do-block.click/api/members/login/naver";
+	const googleUrl =
+		"https://accounts.google.com/o/oauth2/v2/auth?client_id=721623942038-v920amc1bplpqs63t65gah1dqauppkcl.apps.googleusercontent.com&redirect_uri=https://www.do-block.click/api/members/login/google&response_type=code&scope=email profile";
 	useEffect(() => {
 		if (token) {
 			navigate("/todolist", { replace: true });
@@ -51,15 +57,21 @@ const SignInPage = () => {
 							<Flex fw="bold">블록을 쌓아보세요!</Flex>
 						</Flex>
 						<Flex dir="column" gap="10px">
-							<Flex>
-								<Svg variant="kakao" />
-							</Flex>
-							<Flex>
-								<Svg variant="naver" />
-							</Flex>
-							<Flex>
-								<Svg variant="google" />
-							</Flex>
+							<a href={kakaoUrl}>
+								<Flex>
+									<Svg variant="kakao" />
+								</Flex>
+							</a>
+							{/* <a href={naverUrl}>
+								<Flex>
+									<Svg variant="naver" />
+								</Flex>
+							</a> */}
+							<a href={googleUrl}>
+								<Flex>
+									<Svg variant="google" />
+								</Flex>
+							</a>
 						</Flex>
 						<Flex
 							dir="row"

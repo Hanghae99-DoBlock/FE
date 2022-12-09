@@ -8,6 +8,7 @@ import {
 	Text,
 	ThirdHeading,
 	Box,
+	grey600,
 } from "../../common";
 import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
@@ -48,6 +49,12 @@ const Profile = () => {
 		navigate(`/profile/edit`);
 	};
 
+	const logOutHandler = () => {
+		localStorage.removeItem("accessToken");
+		localStorage.removeItem("refreshToken");
+		navigate(`/`);
+	};
+
 	return (
 		<>
 			<Flex
@@ -65,8 +72,8 @@ const Profile = () => {
 					</Flex>
 				) : null}
 				<Flex wd="335px" mg="0px auto 20px auto;">
-					<Flex wd="100%" jc="space-between">
-						<Flex jc="space-around">
+					<Flex ht="88px" wd="100%" jc="space-between">
+						<Flex gap="12px">
 							<Image
 								variant="image"
 								src={
@@ -75,16 +82,16 @@ const Profile = () => {
 										: profile.profileImage
 								}
 							/>
-							<FirstHeading fw="600" fs="18px" color="#131313" mg="18px 0 0 0">
-								{profile.nickname}
-								<Flex fw="400" fs="12" color="#979797" mg="5px 0 0 0">
+							<Flex dir="column" ai="flex-start" gap="4px">
+								<Text variant="profileLarge">{profile.nickname}</Text>
+								<Text variant="body4" color={grey600}>
 									{profile.email}
-								</Flex>
-							</FirstHeading>
+								</Text>
+							</Flex>
 						</Flex>
 						{decodeToken.memberId === profile.memberId ? (
 							<Flex>
-								<Svg variant="logOut" />
+								<Svg onClick={logOutHandler} variant="logOut" />
 								<Svg variant="setting" onClick={profileEditHandler} />
 							</Flex>
 						) : profile.followOrNot === false ? (
@@ -115,17 +122,20 @@ const Profile = () => {
 					pd="40px"
 					bg="#F8F8F8"
 				>
-					<SecondHeading
-						fw="300"
-						fs="12px"
-						color="#666666"
-						onClick={() => navigate("/feed/following")}
-					>
-						내 블럭
-						<Flex fw="600" fs="19" color="#131313" ta="center" mg="10px 0 0 0">
-							{profile.countFeed}
-						</Flex>
-					</SecondHeading>
+					<Flex onClick={() => navigate("/profile/myblocks")} cursor="pointer">
+						<SecondHeading fw="300" fs="12px" color="#666666">
+							내 블럭
+							<Flex
+								fw="600"
+								fs="19"
+								color="#131313"
+								ta="center"
+								mg="10px 0 0 0"
+							>
+								{profile.countFeed}
+							</Flex>
+						</SecondHeading>
+					</Flex>
 					<SecondHeading fw="300" fs="12px" color="#666666">
 						팔로잉
 						<Flex
@@ -198,14 +208,16 @@ const Profile = () => {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<Flex wd="375px" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
-				<Flex wd="331px" mg="20px auto">
-					<Flex wd="100%" jc="flex-start">
-						<Flex onClick={() => navigate("/feed/following")}>
-							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
-								내가 쌓은 블럭
-							</SecondHeading>
-						</Flex>
+				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0" />
+				<Flex wd="331px" ht="51px" jc="flex-start">
+					<Flex
+						onClick={() => navigate(`/profile/myblocks`)}
+						cursor="pointer"
+						ht="100%"
+					>
+						<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+							내가 쌓은 블럭
+						</SecondHeading>
 						<Svg
 							variant="rightArrow"
 							onClick={() => navigate("/feed/following")}
@@ -229,20 +241,24 @@ const Profile = () => {
 						</Flex>
 						{profile.feedResponseDtoList?.map(data => (
 							<Flex
+								dir="column"
+								gap="5px"
 								wd="333px"
-								ht="72px"
+								ht="80px"
 								bc="#F8F8F8"
 								radius="10px"
-								jc="flex-start"
+								ai="flex-start"
 								pd="20px"
 								mg="0 0 10px 0"
 							>
-								<FirstHeading fs="13px" fw="600">
-									{data.feedTitle}
-									<Flex mg="5px 0 0 0" fs="13" fw="300">
+								<Box variant="textOverflow">
+									<Text variant="body2Medium">{data.feedTitle}</Text>
+								</Box>
+								<Box variant="textOverflow">
+									<Text variant="body3" color={grey600}>
 										{data.feedContent}
-									</Flex>
-								</FirstHeading>
+									</Text>
+								</Box>
 							</Flex>
 						))}
 					</Box>

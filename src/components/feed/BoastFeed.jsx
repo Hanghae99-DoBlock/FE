@@ -6,7 +6,7 @@ import { deleteTodo } from "../../redux/modules/feed/feedSlice";
 const BoastFeed = ({ todo }) => {
 	return (
 		<Box variant="feedTodo">
-			<Flex jc="space-between" wd="335px">
+			<Flex jc="space-between" wd="100%" mxw="335px">
 				<Flex>{todo.todoContent}</Flex>
 			</Flex>
 		</Box>

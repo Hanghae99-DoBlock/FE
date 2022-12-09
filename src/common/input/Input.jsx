@@ -12,7 +12,7 @@ export const StInput = styled.input`
 			//회원가입, 로그인시 사용
 			case "join":
 				return css`
-					width: 335px;
+					width: 100%;
 					height: 56px;
 					background-color: #ffffff;
 					border-radius: 10px;
@@ -55,7 +55,10 @@ export const StInput = styled.input`
 				`;
 			case "addFeedInput":
 				return css`
-					width: 335px;
+					display: flex;
+					justify-content: center;
+					width: 100%;
+					max-width: 335px;
 					height: 50px;
 					background-color: #f4f4f4;
 					border-radius: 10px;
