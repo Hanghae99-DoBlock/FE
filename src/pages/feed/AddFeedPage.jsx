@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import useInput from "../../common/hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { BoastFeed } from "../../components";
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import "./style/AddFeedStyle.css";
 import {
 	addFormPhoto,
@@ -87,10 +89,6 @@ const AddFeedPage = () => {
 			setCompletedModal(true);
 		}
 	}, [photoList, isCompleted]);
-
-	console.log(photoList);
-	console.log(formPhotoList);
-	console.log(color);
 
 	{
 		/*전달할 색상 값 변경 */
@@ -227,6 +225,18 @@ const AddFeedPage = () => {
 			{completedModal && (
 				<AddFeedCompleteModal setCompletedModal={setCompletedModal} />
 			)}
+			{loading && (
+				<Flex wd="100%" ht="100%" ai="flex-start" position="absolute">
+					<Flex wd="100%" ht="100vh" position="relative">
+						<Flex wd="100%" ht="100%" zIndex="2">
+							<Flex wd="100%" ht="100vh" bg="rgba(255,255,255,0.5)">
+								<Lottie animationData={spinner} />
+							</Flex>
+						</Flex>
+					</Flex>
+				</Flex>
+			)}
+
 			<Flex
 				dir="column"
 				wd="100%"
