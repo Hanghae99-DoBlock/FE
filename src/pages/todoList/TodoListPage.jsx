@@ -15,9 +15,12 @@ const TodoListPage = () => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const [todoList, setTodoList] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const requestGetTodoList = async () => {
-		const response = await getTodoListApi(selectedDate);
+		const response = await getTodoListApi(selectedDate)
+			.then(res => setIsLoading(false))
+			.catch(err => setIsLoading(false));
 		setTodoList(response);
 	};
 
@@ -100,6 +103,7 @@ const TodoListPage = () => {
 				{/* 투두리스트 */}
 				<DragDropContext onDragEnd={onDragEndHandler}>
 					<TodoList
+						isLoading={isLoading}
 						todoList={todoList}
 						setTodoList={setTodoList}
 						setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}

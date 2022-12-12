@@ -262,10 +262,14 @@ const profileSlice = createSlice({
 		},
 	},
 	extraReducers: {
+		[__updateProfileTags.pending]: (state, action) => {
+			state.isLoading = true;
+		},
 		[__updateProfileTags.fulfilled]: (state, action) => {
 			state.isLoading = "완료";
 		},
 		[__updateProfileTags.rejected]: (state, action) => {
+			state.isLoading = false;
 			state.errMsg = action.payload.data.message;
 		},
 		[__resetProfileTags.fulfilled]: (state, action) => {
