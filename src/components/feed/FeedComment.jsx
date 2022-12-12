@@ -87,7 +87,7 @@ const FeedComment = props => {
 				<Flex>
 					{reaction &&
 						reaction.map(data => (
-							<Flex>
+							<Flex key={data.memberId}>
 								{data.reactionType === "LIKE" ? "👍" : null}
 								{data.reactionType === "HEART" ? "❤" : null}
 								{data.reactionType === "SMILE" ? "😊" : null}

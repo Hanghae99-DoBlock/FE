@@ -43,7 +43,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		dispatch(__getUser(id));
-	}, []);
+	}, [id]);
 
 	const profileEditHandler = () => {
 		navigate(`/profile/edit`);
@@ -54,7 +54,6 @@ const Profile = () => {
 		localStorage.removeItem("refreshToken");
 		navigate(`/`);
 	};
-
 	return (
 		<>
 			<Flex
@@ -226,7 +225,7 @@ const Profile = () => {
 				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0" />
 				<Flex wd="331px" ht="51px" jc="flex-start">
 					<Flex onClick={() => navigate(`myblocks`)} cursor="pointer" ht="100%">
-						{decodeToken.memberId === Number(id) ? (
+						{decodeToken.memberId === profile.memberId ? (
 							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
 								내가 쌓은 블럭
 							</SecondHeading>

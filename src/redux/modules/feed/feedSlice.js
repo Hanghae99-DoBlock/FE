@@ -590,6 +590,7 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__updateReactions.fulfilled, (state, action) => {
 				state.feedItem.currentReactionType.push({
+					memberId: action.payload.memberId,
 					reactionType: action.payload.reactionType,
 				});
 				state.feedItem.reactionResponseDtoList.push(action.payload);
@@ -600,7 +601,6 @@ export const feedSlice = createSlice({
 						data => data.memberId !== action.payload.memberId,
 					),
 				];
-				state.isLoading = false;
 			})
 			.addCase(__editReactions.fulfilled, (state, action) => {
 				state.feedItem.currentReactionType = [

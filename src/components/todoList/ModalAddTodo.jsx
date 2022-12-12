@@ -99,7 +99,7 @@ const ModalAddTodo = ({ todoList, setTodoList, setIsAddTodoModalOpen }) => {
 										value={todo.todoMemo || ""}
 										name="todoMemo"
 										variant="memo"
-										placeholder="메모"
+										placeholder="메모를 입력해주세요"
 										maxLength="100"
 									/>
 								</Flex>
