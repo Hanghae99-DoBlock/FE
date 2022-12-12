@@ -18,8 +18,8 @@ const NavBelow = () => {
 					cursor="pointer"
 					onClick={() => navigate(`/todolist`)}
 				>
-					<Box variant="navIconBox" type="calendar" />
-					<Text variant="navText">캘린더</Text>
+					<Flex wd="15px" ht="15px" bi="url(/images/todo.svg)" />
+					<Text variant="navText">투두</Text>
 				</Flex>
 				<Flex
 					wd="70px"

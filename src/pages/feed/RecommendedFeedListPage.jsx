@@ -55,7 +55,7 @@ const RecommendedFeedListPage = () => {
 								관심사를 선택하면
 							</Text>
 							<Text variant="body3" color={grey600}>
-								흥미로울 만한 피드를 추천해드려요.
+								관련된 피드를 추천해드려요.
 							</Text>
 						</Flex>
 						<Flex

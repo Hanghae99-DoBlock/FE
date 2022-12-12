@@ -64,7 +64,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 						// 투두가 없을 때
 						<Flex ht="100%" dir="column" gap="21.5px">
 							<Svg variant="todoEmpty" />
-							<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
+							<Text variant="greyBig">추가한 투두가 없어요!</Text>
 						</Flex>
 					) : (
 						// 투두가 있을 때
@@ -100,6 +100,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 											isDelBtnExist={isDelBtnExist}
 										/>
 									))}
+									<Flex border="50px solid transparent" />
 									{provided.placeholder}
 								</div>
 								// </Box>
