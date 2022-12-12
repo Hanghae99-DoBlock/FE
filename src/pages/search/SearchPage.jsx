@@ -44,7 +44,7 @@ const FeedPage = () => {
 	const [keyword, setKeyword] = useState(tagValue);
 
 	useEffect(() => {
-		if (searchKeyword) {
+		if (searchKeyword.trim() !== "") {
 			dispatch(
 				__searchTagAndMember({
 					keyword: searchKeyword,

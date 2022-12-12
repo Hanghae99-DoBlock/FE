@@ -18,12 +18,12 @@ const SignInPage = () => {
 	const token = localStorage.getItem("accessToken");
 	const [isSplash, setIsSplash] = useState(true);
 	const kakaoUrl =
-		"https://kauth.kakao.com/oauth/authorize?client_id=e321d7ec74f7b0df738961b15a46117d&redirect_uri=https://www.do-block.click/api/members/login/kakao&response_type=code";
+		"https://kauth.kakao.com/oauth/authorize?client_id=e321d7ec74f7b0df738961b15a46117d&redirect_uri=http://www.do-block.click/api/members/login/kakao&response_type=code";
 
 	const naverUrl =
-		"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=uc4jdieiAPEjFxNtS9AO&redirect_uri=https://www.do-block.click/api/members/login/naver";
+		"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=uc4jdieiAPEjFxNtS9AO&redirect_uri=http://www.do-block.click/api/members/login/naver";
 	const googleUrl =
-		"https://accounts.google.com/o/oauth2/v2/auth?client_id=721623942038-v920amc1bplpqs63t65gah1dqauppkcl.apps.googleusercontent.com&redirect_uri=https://www.do-block.click/api/members/login/google&response_type=code&scope=email profile";
+		"https://accounts.google.com/o/oauth2/v2/auth?client_id=721623942038-v920amc1bplpqs63t65gah1dqauppkcl.apps.googleusercontent.com&redirect_uri=http://www.do-block.click/api/members/login/google&response_type=code&scope=email profile";
 	useEffect(() => {
 		if (token) {
 			navigate("/todolist", { replace: true });
