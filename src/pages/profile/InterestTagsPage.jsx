@@ -61,7 +61,11 @@ const InterestTagsPage = () => {
 
 	// 커스텀 태그 onChange 핸들러
 	const onChangeHandler = e => {
-		setTagContent(e.target.value);
+		if (e.target.value.length < 15) {
+			setTagContent(e.target.value);
+		} else {
+			dispatch(updateIsToastExist("더이상 입력할 수 없어요😭"));
+		}
 	};
 
 	// 커스텀 태그 추가 핸들러
