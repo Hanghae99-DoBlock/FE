@@ -98,7 +98,7 @@ const TodoListPage = () => {
 			{/* 투두 추가 모달 오픈 버튼 */}
 			<FloatingAddBtn onClick={openAddTodoModalHandler} />
 
-			<Flex dir="column" jc="flex-start" ht="100vh">
+			<Flex wd="100%" dir="column" jc="flex-start" ht="100vh">
 				{/* 캘린더 */}
 				<TodoListCalendar />
 
