@@ -1,3 +1,5 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -290,11 +292,17 @@ const InterestTagsPage = () => {
 			{/* 버튼 */}
 			{selectedTags.length === 0 ? (
 				<Button variant="disactivatedXL">선택 완료</Button>
+			) : isLoading ? (
+				<Button variant="activatedXL">
+					<Flex ht="100%">
+						<Lottie animationData={spinner} />
+					</Flex>
+				</Button>
 			) : (
 				<Button onClick={submitHandler} variant="activatedXL">
 					선택 완료
 				</Button>
-			)}{" "}
+			)}
 		</Flex>
 	);
 };
