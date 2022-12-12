@@ -15,10 +15,15 @@ const TodoListPage = () => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const [todoList, setTodoList] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const requestGetTodoList = async () => {
-		const response = await getTodoListApi(selectedDate);
-		setTodoList(response);
+	const requestGetTodoList = () => {
+		getTodoListApi(selectedDate)
+			.then(res => {
+				setIsLoading(false);
+				setTodoList(res);
+			})
+			.catch(err => setIsLoading(false));
 	};
 
 	useEffect(() => {
@@ -100,6 +105,7 @@ const TodoListPage = () => {
 				{/* 투두리스트 */}
 				<DragDropContext onDragEnd={onDragEndHandler}>
 					<TodoList
+						isLoading={isLoading}
 						todoList={todoList}
 						setTodoList={setTodoList}
 						setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}

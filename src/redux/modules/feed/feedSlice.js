@@ -484,8 +484,12 @@ export const feedSlice = createSlice({
 				);
 				state.isLoading = false;
 			})
-			// 팔로잉 피드 조회 성공
+			// 팔로잉 피드 조회
+			.addCase(__getFollowingFeeds.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
+				state.isLoading = false;
 				state.followingFeedList.push(...action.payload);
 				state.followingFeedPageNum += 1;
 				if (action.payload.length < 5) {
@@ -493,10 +497,15 @@ export const feedSlice = createSlice({
 				}
 			})
 			.addCase(__getFollowingFeeds.rejected, (state, action) => {
+				state.isLoading = false;
 				state.isNextFollowingFeedPageExist = false;
 			})
-			// 추천 피드 조회 성공
+			// 추천 피드 조회
+			.addCase(__getRecommendedFeeds.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
+				state.isLoading = false;
 				state.recommendedFeedList.push(...action.payload);
 				state.recommendedFeedPageNum += 1;
 				if (action.payload.length < 5) {
@@ -504,6 +513,7 @@ export const feedSlice = createSlice({
 				}
 			})
 			.addCase(__getRecommendedFeeds.rejected, (state, action) => {
+				state.isLoading = false;
 				state.isNextRecommendedFeedPageExist = false;
 			})
 			// 내 피드 조회 성공
