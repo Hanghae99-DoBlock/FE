@@ -17,11 +17,13 @@ const TodoListPage = () => {
 	const [todoList, setTodoList] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const requestGetTodoList = async () => {
-		const response = await getTodoListApi(selectedDate)
-			.then(res => setIsLoading(false))
+	const requestGetTodoList = () => {
+		getTodoListApi(selectedDate)
+			.then(res => {
+				setIsLoading(false);
+				setTodoList(res);
+			})
 			.catch(err => setIsLoading(false));
-		setTodoList(response);
 	};
 
 	useEffect(() => {
