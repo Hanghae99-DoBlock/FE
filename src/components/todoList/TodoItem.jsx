@@ -1,8 +1,11 @@
-import { useDispatch } from "react-redux";
-import { Box, Button, Flex, grey200, orange300, Svg, Text } from "../../common";
+import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Button, Flex, grey200, orange300, Text } from "../../common";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
 import { checkTodoApi, deleteTodoApi } from "../../api/todoListApi";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const TodoItem = ({
 	index,
@@ -14,6 +17,31 @@ const TodoItem = ({
 }) => {
 	const { todoContent, completed, todoId } = todoItem;
 	const dispatch = useDispatch();
+	const [isFuture, setIsFuture] = useState(false);
+	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
+	const today = dayjs(dayjs().$d).format(`YYYY.MM.DD`);
+	const todayYear = today.slice(0, 4);
+	const todayMonth = today.slice(5, 7);
+	const todayDay = today.slice(8, 10);
+
+	useEffect(() => {
+		if (todayYear - selectedDate.year < 0) {
+			setIsFuture(true);
+		} else if (todayMonth - selectedDate.month < 0) {
+			setIsFuture(true);
+		} else if (todayDay - selectedDate.day < 0) {
+			setIsFuture(true);
+		} else {
+			setIsFuture(false);
+		}
+	}, [
+		selectedDate.day,
+		selectedDate.month,
+		selectedDate.year,
+		todayDay,
+		todayMonth,
+		todayYear,
+	]);
 
 	// 디테일 모달 오픈 핸들러
 	const openDetailModalHandler = e => {
@@ -25,13 +53,17 @@ const TodoItem = ({
 	// 투두 완료 여부 체크 핸들러
 	const checkTodoHandler = e => {
 		e.stopPropagation();
-		checkTodoApi(todoItem.todoId);
-		const changedTodoList = todoList.map(todo => {
-			return todo.todoId === todoItem.todoId
-				? { ...todo, completed: !todo.completed }
-				: todo;
-		});
-		setTodoList(changedTodoList);
+		if (isFuture) {
+			dispatch(updateIsToastExist("투두를 미리 완료할 수는 없어요😭"));
+		} else {
+			checkTodoApi(todoItem.todoId);
+			const changedTodoList = todoList.map(todo => {
+				return todo.todoId === todoItem.todoId
+					? { ...todo, completed: !todo.completed }
+					: todo;
+			});
+			setTodoList(changedTodoList);
+		}
 	};
 
 	const deleteTodoHandler = () => {
