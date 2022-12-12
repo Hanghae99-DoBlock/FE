@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button, Flex, grey200, orange300, Svg, Text } from "../../common";
+import { Box, Button, Flex, grey200, orange300, Svg, Text } from "../../common";
 import { getTodoItem } from "../../redux/modules/todoList/todoListSlice";
 import { Draggable } from "react-beautiful-dnd";
 import { checkTodoApi, deleteTodoApi } from "../../api/todoListApi";
@@ -50,7 +50,14 @@ const TodoItem = ({
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 				>
-					<Flex ht="51px" radius="10px" bg="#FFFFFF" mg="0 0 10px 0">
+					<Flex
+						jc="space-between"
+						wd="100%"
+						ht="51px"
+						radius="10px"
+						bg="#FFFFFF"
+						mg="0 0 10px 0"
+					>
 						<Flex onClick={e => e.stopPropagation()} ht="100%" pd="0 15px">
 							{/* 체크박스 */}
 							{completed ? (
@@ -77,16 +84,9 @@ const TodoItem = ({
 						</Flex>
 
 						{/* 투두 컨텐트 */}
-						<Flex
-							onClick={openDetailModalHandler}
-							cursor="pointer"
-							jc="flex-start"
-							wd="100%"
-							ht="100%"
-							pd="13.5px 0 13.5px 0"
-						>
+						<Box onClick={openDetailModalHandler} variant="textOverflow">
 							<Text variant="normal">{todoContent}</Text>
-						</Flex>
+						</Box>
 						<Flex ht="100%">
 							{isDelBtnExist ? (
 								<Flex mg="0 10px">
