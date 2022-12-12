@@ -21,9 +21,7 @@ const MyBadgesPage = () => {
 		state => state.profileSlice.profile.badgeResponseDtoList,
 	);
 
-	const profile = useSelector(state => state);
 	const representativeBadge = useSelector(state => state.profileSlice.profile);
-	console.log(profile);
 	const token = localStorage.getItem("accessToken");
 	const decodeToken = jwtDecode(token);
 	return (
