@@ -35,7 +35,7 @@ const PcVerIllustration = () => {
 					<Flex
 						wd={pcBgUi[screenSizeStatus].wd}
 						ht={pcBgUi[screenSizeStatus].ht}
-						bi="url(/images/pcVerIllustrationLeft.svg)"
+						bi="url(/images/GroupLeft.webp)"
 					/>
 				</Flex>
 			</Flex>
@@ -44,7 +44,7 @@ const PcVerIllustration = () => {
 					<Flex
 						wd={pcBgUi[screenSizeStatus].wd}
 						ht={pcBgUi[screenSizeStatus].ht}
-						bi="url(/images/pcVerIllustrationRight.svg)"
+						bi="url(/images/GroupRight.webp)"
 					/>
 				</Flex>
 			</Flex>

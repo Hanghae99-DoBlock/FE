@@ -44,17 +44,37 @@ const ReactionModal = () => {
 
 	const onClickLikeHandler = () => {
 		setLike(!like);
+		setHeart(false);
+		setSmile(false);
+		setParty(false);
+		setFire(false);
 	};
 	const onClickHeartHandler = () => {
+		setLike(false);
 		setHeart(!heart);
+		setSmile(false);
+		setParty(false);
+		setFire(false);
 	};
 	const onClickSmileHandler = () => {
+		setLike(false);
+		setHeart(false);
 		setSmile(!smile);
+		setParty(false);
+		setFire(false);
 	};
 	const onClickPartyHandler = () => {
+		setLike(false);
+		setHeart(false);
+		setSmile(false);
 		setParty(!party);
+		setFire(false);
 	};
 	const onClickFireHandler = () => {
+		setLike(false);
+		setHeart(false);
+		setSmile(false);
+		setParty(false);
 		setFire(!fire);
 	};
 

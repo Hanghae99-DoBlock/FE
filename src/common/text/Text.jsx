@@ -177,7 +177,7 @@ const StText = styled.span`
 			case "body4":
 				return css`
 					font-weight: 400;
-					font-size: 11px;
+					font-size: 12px;
 					line-height: 14px;
 					color: ${color || black};
 				`;

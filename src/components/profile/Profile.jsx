@@ -1,12 +1,9 @@
 import {
 	Flex,
 	Svg,
-	FirstHeading,
 	SecondHeading,
 	Image,
-	Hr,
 	Text,
-	ThirdHeading,
 	Box,
 	grey600,
 } from "../../common";
@@ -14,19 +11,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {
-	__followThunk,
-	__getBadgeList,
-	__getUser,
-} from "../../redux/modules/profileSlice";
+import { __followThunk, __getUser } from "../../redux/modules/profileSlice";
 import NavBelow from "../nav/NavBelow";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../profile/style/slide.css";
 import { Pagination } from "swiper";
-import styled from "styled-components";
 const Profile = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -36,11 +27,13 @@ const Profile = () => {
 	const decodeToken = jwtDecode(token);
 
 	const profile = useSelector(state => state.profileSlice.profile);
+	const feedResponseDtoList = useSelector(
+		state => state.profileSlice.profile.feedResponseDtoList,
+	);
 
 	const acquisitionBadge = useSelector(
 		state => state.profileSlice.profile.badgeImageList,
 	);
-
 	useEffect(() => {
 		dispatch(__getUser(id));
 	}, [id]);
@@ -65,7 +58,7 @@ const Profile = () => {
 			>
 				{decodeToken.memberId === profile.memberId ? (
 					<Flex wd="100%" ht="62px" bb="2px solid #EFEFEF">
-						<Flex wd="335px" fw="600" fs="18px" jc="flex-start">
+						<Flex wd="335px" fw="600" fs="18" jc="flex-start">
 							내 프로필
 						</Flex>
 					</Flex>
@@ -74,6 +67,7 @@ const Profile = () => {
 					<Flex ht="88px" wd="100%" jc="space-between">
 						<Flex gap="12px">
 							<Image
+								alt=""
 								variant="image"
 								src={
 									decodeToken.profileImage === ""
@@ -184,44 +178,76 @@ const Profile = () => {
 				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0"></Flex>
 				<Flex wd="331px" mg="20px auto">
 					<Flex wd="100%" jc="flex-start">
-						<Flex
-							onClick={() => {
-								navigate(`/profile/${id}/badges`);
-							}}
-						>
-							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
-								획득한 뱃지 {profile.countBadge}
-							</SecondHeading>
-						</Flex>
-						<Svg
-							variant="rightArrow"
-							onClick={() => {
-								navigate(`/profile/${id}/badges`);
-							}}
-						></Svg>
-					</Flex>
-				</Flex>
-				<Swiper
-					slidesPerView="auto"
-					loop={false}
-					spaceBetween={20}
-					pagination={{
-						clickable: true,
-					}}
-					modules={[Pagination]}
-					className="mySwiper"
-				>
-					{acquisitionBadge?.map(data => (
-						<SwiperSlide className="badge-slide" key={data.id}>
-							<Image
-								src={data}
+						{decodeToken.memberId === profile.memberId ? (
+							<Flex
 								onClick={() => {
 									navigate(`/profile/${id}/badges`);
 								}}
-							/>
-						</SwiperSlide>
-					))}
-				</Swiper>
+							>
+								<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+									획득한 뱃지 {profile.countBadge}
+								</SecondHeading>
+							</Flex>
+						) : (
+							<Flex>
+								<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+									획득한 뱃지 {profile.countBadge}
+								</SecondHeading>
+							</Flex>
+						)}
+						{decodeToken.memberId !== profile.memberId ? (
+							<Svg variant="rightArrow"></Svg>
+						) : (
+							<Svg
+								variant="rightArrow"
+								onClick={() => {
+									navigate(`/profile/${id}/badges`);
+								}}
+							></Svg>
+						)}
+					</Flex>
+				</Flex>
+				{decodeToken.memberId !== profile.memberId ? (
+					<Swiper
+						slidesPerView="auto"
+						loop={false}
+						spaceBetween={20}
+						pagination={{
+							clickable: true,
+						}}
+						modules={[Pagination]}
+						className="mySwiper"
+					>
+						{acquisitionBadge?.map(data => (
+							<SwiperSlide className="badge-slide">
+								<Image src={data} alt="" />
+							</SwiperSlide>
+						))}
+					</Swiper>
+				) : (
+					<Swiper
+						slidesPerView="auto"
+						loop={false}
+						spaceBetween={20}
+						pagination={{
+							clickable: true,
+						}}
+						modules={[Pagination]}
+						className="mySwiper"
+					>
+						{acquisitionBadge?.map(data => (
+							<SwiperSlide className="badge-slide">
+								<Image
+									src={data}
+									alt=""
+									onClick={() => {
+										navigate(`/profile/${id}/badges`);
+									}}
+								/>
+							</SwiperSlide>
+						))}
+					</Swiper>
+				)}
 				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0" />
 				<Flex wd="331px" ht="51px" jc="flex-start">
 					<Flex onClick={() => navigate(`myblocks`)} cursor="pointer" ht="100%">
@@ -240,10 +266,10 @@ const Profile = () => {
 				{profile.countFeed === 0 ? (
 					<>
 						<Svg variant="profileBlock"></Svg>
-						<Flex fw="600" fs="14px" color="#3F3F3F" mg="20px 0 0 0">
+						<Flex fw="600" fs="14" color="#3F3F3F" mg="20px 0 0 0">
 							쌓은 블럭이 없어요
 						</Flex>
-						<Flex fw="300" fs="12px" color="#A2A2A2" mg="15px 0 140px 0">
+						<Flex fw="300" fs="12" color="#A2A2A2" mg="15px 0 140px 0">
 							피드를 작성해서 블럭을 쌓아보세요!
 						</Flex>
 					</>
@@ -252,7 +278,7 @@ const Profile = () => {
 						<Flex jc="flex-end" position="absolute" right="10px" top="-38px">
 							<Svg variant="block" />
 						</Flex>
-						{profile.feedResponseDtoList?.map(data => (
+						{feedResponseDtoList?.map(data => (
 							<Flex
 								dir="column"
 								gap="5px"
@@ -263,6 +289,7 @@ const Profile = () => {
 								ai="flex-start"
 								pd="20px"
 								mg="0 0 10px 0"
+								key={data.memberId}
 							>
 								<Box variant="textOverflow">
 									<Text variant="body2Medium">{data.feedTitle}</Text>
@@ -283,8 +310,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-const Test = styled.div`
-	position: relative;
-	padding-bottom: 100px;
-`;
