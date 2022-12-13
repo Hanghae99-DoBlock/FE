@@ -69,6 +69,8 @@ const StBox = styled.div`
 					gap: 11px;
 					overflow-x: hidden;
 					overflow-y: auto;
+					position: relative;
+					//margin-bottom: 5px;
 					::-webkit-scrollbar {
 						display: none;
 					}
