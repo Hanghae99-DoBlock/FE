@@ -210,6 +210,7 @@ const AddFeedPage = () => {
 			setIsInputHidden(true);
 		}
 	};
+	console.log(tagList);
 
 	useEffect(() => {
 		if (todoIdArray.length >= 1 && photoList.length >= 1 && color) {
@@ -516,9 +517,11 @@ const AddFeedPage = () => {
 								autoFocus={true}
 							/>
 						) : null}
-						<Button variant="addTag" onClick={addTagInput}>
-							<Svg variant="bluePlus" />
-						</Button>
+						{tagList.length < 3 ? (
+							<Button variant="addTag" onClick={addTagInput}>
+								<Svg variant="bluePlus" />
+							</Button>
+						) : null}
 						<Flex gap="5px"></Flex>
 					</Flex>
 				</Flex>
