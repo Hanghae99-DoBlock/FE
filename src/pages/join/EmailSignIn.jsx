@@ -55,7 +55,7 @@ const SignUpPage = () => {
 	};
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
-		if (loginResult.status === 200 || loginResult === "") {
+		if (loginResult?.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
 			return () => {

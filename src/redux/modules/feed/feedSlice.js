@@ -531,9 +531,13 @@ export const feedSlice = createSlice({
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
 				state.feedItem = action.payload;
 			})
+			.addCase(__searchTagAndMember.pending, (state, action) => {
+				state.isLoading = true;
+			})
 
 			.addCase(__searchTagAndMember.fulfilled, (state, action) => {
 				if (action.payload.category === "feed") {
+					state.isLoading = false;
 					state.searchTag = action.payload.data;
 					state.isNextTagSearchExist = true;
 					state.isNextMemberSearchExist = false;
@@ -542,6 +546,7 @@ export const feedSlice = createSlice({
 					state.infiniteMemberNumber = 1;
 					state.searchResult = action.payload.status;
 				} else {
+					state.isLoading = false;
 					state.searchMember = action.payload.data;
 					state.searchTagValue = action.payload.keyword;
 					state.isNextMemberSearchExist = true;
@@ -553,6 +558,7 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__searchTagAndMember.rejected, (state, action) => {
 				state.searchResult = action.payload;
+				state.isLoading = false;
 			})
 			.addCase(__infinitySearchTag.fulfilled, (state, action) => {
 				if (action.payload.category === "feed") {

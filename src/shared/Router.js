@@ -170,7 +170,14 @@ const Router = () => {
 								</PrivateRoute>
 							}
 						/>
-						<Route path="feedEdit/:id" element={<EditFeedPage />} />
+						<Route
+							path="feedEdit/:id"
+							element={
+								<PrivateRoute>
+									<EditFeedPage />
+								</PrivateRoute>
+							}
+						/>
 					</Route>
 				</Routes>
 			</BrowserRouter>

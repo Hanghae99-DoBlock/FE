@@ -16,6 +16,8 @@ import {
 	__followThunk,
 	__getFollowing,
 } from "../../redux/modules/profileSlice";
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 
 const FeedPage = () => {
 	const dispatch = useDispatch();
@@ -31,6 +33,7 @@ const FeedPage = () => {
 	const searchMemberItem = useSelector(state => state.feed.searchMember);
 	const isFollow = useSelector(state => state.profileSlice.profile.followOrNot);
 	const searchResult = useSelector(state => state.feed.searchResult);
+	const loading = useSelector(state => state.feed.isLoading);
 	const target = useRef(null);
 	const {
 		isNextTagSearchExist,
@@ -53,7 +56,6 @@ const FeedPage = () => {
 			);
 		}
 	}, [searchKeyword]);
-	console.log(searchKeyword);
 	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {
@@ -193,6 +195,31 @@ const FeedPage = () => {
 				{/* 검색 리스트 */}
 				{category === "feed" ? (
 					<Box variant="searchScrollArea">
+						{loading && (
+							<Flex
+								wd="100%"
+								ht="100%"
+								top="0"
+								left="0"
+								ai="flex-start"
+								position="absolute"
+								overflow="hidden"
+								mg="0 auto"
+							>
+								<Flex wd="100%" ht="100%">
+									<Flex wd="100%" ht="100%" zIndex="2">
+										<Flex
+											position="absolute"
+											wd="100%"
+											ht="100vh"
+											bg="rgba(255,255,255,0.5)"
+										>
+											<Lottie animationData={spinner} />
+										</Flex>
+									</Flex>
+								</Flex>
+							</Flex>
+						)}
 						{searchResult === "" ? (
 							<Flex></Flex>
 						) : searchResult === 200 ? (
@@ -208,6 +235,31 @@ const FeedPage = () => {
 					</Box>
 				) : (
 					<Box variant="searchScrollArea">
+						{loading && (
+							<Flex
+								wd="100%"
+								ht="100%"
+								top="0"
+								left="0"
+								ai="flex-start"
+								position="absolute"
+								overflow="hidden"
+								mg="0 auto"
+							>
+								<Flex wd="100%" ht="100%">
+									<Flex wd="100%" ht="100%" zIndex="2">
+										<Flex
+											position="absolute"
+											wd="100%"
+											ht="100vh"
+											bg="rgba(255,255,255,0.5)"
+										>
+											<Lottie animationData={spinner} />
+										</Flex>
+									</Flex>
+								</Flex>
+							</Flex>
+						)}
 						{searchResult === "" ? (
 							<Flex></Flex>
 						) : searchResult === 200 ? (
