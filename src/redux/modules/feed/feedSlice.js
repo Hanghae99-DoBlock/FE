@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { serverUrl } from "../../api";
 import axios from "axios";
 
@@ -211,9 +211,9 @@ export const __infinitySearchMember = createAsyncThunk(
 	},
 );
 
-// 리액션 추가 / 삭제
+// 리액션 추가
 export const __updateReactions = createAsyncThunk(
-	"feed/reaction",
+	"feed/updateReactions",
 	async (payload, thunkAPI) => {
 		try {
 			await axios.post(
@@ -231,6 +231,76 @@ export const __updateReactions = createAsyncThunk(
 				},
 			);
 			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
+// 리액션 수정
+export const __editReactions = createAsyncThunk(
+	"feed/editReactions",
+	async (payload, thunkAPI) => {
+		try {
+			await axios.patch(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
+				{
+					reactionType: payload.reactionType,
+				},
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+// 리액션 삭제
+export const __removeReactions = createAsyncThunk(
+	"feed/removeReactions",
+	async (payload, thunkAPI) => {
+		try {
+			await axios.delete(
+				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(payload);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+// 리액션 리스트
+export const __getReactions = createAsyncThunk(
+	"feed/getReactions",
+	async (payload, thunkAPI) => {
+		try {
+			const response = await axios.get(
+				`${serverUrl}/api/feed/${payload}/reaction-list`,
+				{
+					headers: {
+						Authorization: accessToken,
+					},
+				},
+				{
+					withCredentials: true,
+				},
+			);
+			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);
 		}
@@ -270,8 +340,10 @@ const initialState = {
 	searchMemberValue: "",
 	isCompleted: "",
 	searchResult: "",
+	commentResult: "",
 	uploadResult: "",
 	uploadResultCode: "",
+	reactionList: [],
 };
 
 export const feedSlice = createSlice({
@@ -412,8 +484,12 @@ export const feedSlice = createSlice({
 				);
 				state.isLoading = false;
 			})
-			// 팔로잉 피드 조회 성공
+			// 팔로잉 피드 조회
+			.addCase(__getFollowingFeeds.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
+				state.isLoading = false;
 				state.followingFeedList.push(...action.payload);
 				state.followingFeedPageNum += 1;
 				if (action.payload.length < 5) {
@@ -421,10 +497,15 @@ export const feedSlice = createSlice({
 				}
 			})
 			.addCase(__getFollowingFeeds.rejected, (state, action) => {
+				state.isLoading = false;
 				state.isNextFollowingFeedPageExist = false;
 			})
-			// 추천 피드 조회 성공
+			// 추천 피드 조회
+			.addCase(__getRecommendedFeeds.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
+				state.isLoading = false;
 				state.recommendedFeedList.push(...action.payload);
 				state.recommendedFeedPageNum += 1;
 				if (action.payload.length < 5) {
@@ -432,6 +513,7 @@ export const feedSlice = createSlice({
 				}
 			})
 			.addCase(__getRecommendedFeeds.rejected, (state, action) => {
+				state.isLoading = false;
 				state.isNextRecommendedFeedPageExist = false;
 			})
 			// 내 피드 조회 성공
@@ -505,6 +587,32 @@ export const feedSlice = createSlice({
 				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
+			})
+			.addCase(__updateReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType.push({
+					memberId: action.payload.memberId,
+					reactionType: action.payload.reactionType,
+				});
+				state.feedItem.reactionResponseDtoList.push(action.payload);
+			})
+			.addCase(__removeReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType = [
+					...state.feedItem.currentReactionType.filter(
+						data => data.memberId !== action.payload.memberId,
+					),
+				];
+			})
+			.addCase(__editReactions.fulfilled, (state, action) => {
+				state.feedItem.currentReactionType = [
+					...state.feedItem.currentReactionType.map(data =>
+						data.memberId !== action.payload.memberId
+							? data
+							: { ...data, reactionType: action.payload.reactionType },
+					),
+				];
+			})
+			.addCase(__getReactions.fulfilled, (state, action) => {
+				state.reactionList = action.payload.data;
 			});
 	},
 });
