@@ -1,4 +1,4 @@
-import moment from "moment/moment";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Calendar } from "react-calendar";
 import { useDispatch } from "react-redux";
@@ -13,9 +13,9 @@ const TodoListCalendar = () => {
 	useEffect(() => {
 		// 선택된 날짜
 		const selectedDate = {
-			year: parseInt(moment(value).format("YYYY")),
-			month: parseInt(moment(value).format("MM")),
-			day: parseInt(moment(value).format("DD")),
+			year: parseInt(dayjs(value).format("YYYY")),
+			month: parseInt(dayjs(value).format("MM")),
+			day: parseInt(dayjs(value).format("DD")),
 			dayOfTheWeek: ["일", "월", "화", "수", "목", "금", "토"][value.getDay()],
 		};
 
@@ -26,7 +26,7 @@ const TodoListCalendar = () => {
 	return (
 		<Calendar
 			onChange={onChange} // useState로 포커스 변경 시 현재 날짜 받아오기
-			formatDay={(locale, date) => moment(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
+			formatDay={(locale, date) => dayjs(date).format("DD")} // 날'일' 제외하고 숫자만 보이도록 설정
 			calendarType="US" // 캘린더 타입 변경
 			value={value}
 			minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
