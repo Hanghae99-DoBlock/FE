@@ -35,7 +35,7 @@ export const __signIn = createAsyncThunk(
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 
-			//window.location.replace("/todoList");
+			window.location.replace("/todolist");
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.status);

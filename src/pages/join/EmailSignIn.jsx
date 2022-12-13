@@ -44,7 +44,6 @@ const SignUpPage = () => {
 			dispatch(updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."));
 		}
 	}, [loginResult]);
-	console.log(loginResult);
 	//password type 변경하는 함수
 	const passwordTypeHandler = e => {
 		setPasswordType(() => {

@@ -44,7 +44,7 @@ const FeedPage = () => {
 	const [keyword, setKeyword] = useState(tagValue);
 
 	useEffect(() => {
-		if (searchKeyword.trim() !== "") {
+		if (searchKeyword !== null) {
 			dispatch(
 				__searchTagAndMember({
 					keyword: searchKeyword,
@@ -53,7 +53,7 @@ const FeedPage = () => {
 			);
 		}
 	}, [searchKeyword]);
-
+	console.log(searchKeyword);
 	useEffect(() => {
 		if (isNextTagSearchExist) {
 			const observer = new IntersectionObserver(([entry]) => {

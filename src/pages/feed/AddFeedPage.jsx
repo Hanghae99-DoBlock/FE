@@ -218,7 +218,6 @@ const AddFeedPage = () => {
 			setIsPostPossible(false);
 		}
 	}, [boastFeed, photoList, formPhotoList, color]);
-
 	return (
 		<>
 			{openModal && <ChoiceTodoModal setOpenModal={setOpenModal} />}
