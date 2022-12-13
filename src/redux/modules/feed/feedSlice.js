@@ -215,6 +215,7 @@ export const __infinitySearchMember = createAsyncThunk(
 export const __updateReactions = createAsyncThunk(
 	"feed/updateReactions",
 	async (payload, thunkAPI) => {
+		console.log(payload);
 		try {
 			await axios.post(
 				`${serverUrl}/api/feed/${payload.feedId}/reaction`,
