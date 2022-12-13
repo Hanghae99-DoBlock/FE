@@ -478,11 +478,11 @@ export const feedSlice = createSlice({
 				state.successTodo = action.payload;
 			})
 			// 피드 삭제
+			.addCase(__deleteFeed.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__deleteFeed.fulfilled, (state, action) => {
-				state.followingFeedList = state.followingFeedList.filter(
-					feedItem => feedItem.feedId !== action.payload,
-				);
-				state.isLoading = false;
+				state.isLoading = "완료";
 			})
 			// 팔로잉 피드 조회
 			.addCase(__getFollowingFeeds.pending, (state, action) => {

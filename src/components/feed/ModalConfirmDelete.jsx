@@ -21,7 +21,7 @@ const ModalConfirmDelete = ({ setIsConfirmDeleteModalOpen, feedId }) => {
 	};
 
 	useEffect(() => {
-		if (isLoading === false) {
+		if (isLoading === "완료") {
 			dispatch(updateIsToastExist("게시글 삭제가 완료되었습니다."));
 			navigate(`../feed/following`);
 			dispatch(updateIsLoading(null));

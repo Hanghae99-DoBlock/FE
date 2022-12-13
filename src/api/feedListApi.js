@@ -21,6 +21,7 @@ export const getMyFeedsApi = async payload => {
 };
 
 // 피드 삭제
-export const deleteFeedApi = payload => {
-	instance.delete(`/api/feed/${payload}`);
+export const deleteFeedApi = async payload => {
+	const response = await instance.delete(`/api/feed/${payload}`);
+	return response;
 };
