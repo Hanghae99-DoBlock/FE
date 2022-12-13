@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import uuid from "react-uuid";
+import { StTextCount } from "../../../pages/feed/AddFeedPage";
 import { serverUrl } from "../../api";
 
 export const __signUp = createAsyncThunk(
@@ -34,7 +35,7 @@ export const __signIn = createAsyncThunk(
 			window.localStorage.setItem("accessToken", accessToken);
 			window.localStorage.setItem("refreshToken", refreshToken);
 
-			window.location.replace("/todoList");
+			window.location.replace("/todolist");
 			return thunkAPI.fulfillWithValue(data);
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.status);
@@ -167,6 +168,9 @@ const joinSliece = createSlice({
 		resetCheckEmail: (state, action) => {
 			state.checkMailResult = "";
 		},
+		resetLoginResult: (state, action) => {
+			state.loginResult = "";
+		},
 	},
 	extraReducers: {
 		[__checkEmail.pending]: (state, action) => {
@@ -195,16 +199,17 @@ const joinSliece = createSlice({
 		},
 		[__signIn.pending]: (state, action) => {
 			state.isLoading = true;
+			state.loginResult = "";
 		},
 		[__signIn.fulfilled]: (state, action) => {
 			state.loginResult = action.payload;
 		},
 		[__signIn.rejected]: (state, action) => {
-			console.log(action.payload);
 			state.loginResult = action.payload;
 		},
 	},
 });
 
-export const { resetCheckNickname, resetCheckEmail } = joinSliece.actions;
+export const { resetCheckNickname, resetCheckEmail, resetLoginResult } =
+	joinSliece.actions;
 export default joinSliece.reducer;
