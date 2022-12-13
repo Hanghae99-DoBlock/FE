@@ -1,10 +1,17 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import { useSelector } from "react-redux";
 import { Box, Flex, Svg, Text } from "../../common";
 import { TodoItem } from "../../components";
 import { Droppable } from "react-beautiful-dnd";
 import { useState } from "react";
 
-const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
+const TodoList = ({
+	todoList,
+	setTodoList,
+	setIsDetailTodoModalOpen,
+	isLoading,
+}) => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const [isDelBtnExist, setIsDelBtnExist] = useState(false);
@@ -60,11 +67,15 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 					wd="100%"
 					ht="100%"
 				>
-					{!todoList || !todoList[0] ? (
+					{isLoading ? (
+						<Flex mg="0 0 50px 0" wd="100%" ht="100%">
+							<Lottie animationData={spinner} />
+						</Flex>
+					) : !todoList || !todoList[0] ? (
 						// 투두가 없을 때
 						<Flex ht="100%" dir="column" gap="21.5px">
 							<Svg variant="todoEmpty" />
-							<Text variant="greyBig">플랜이 없어요! 추가해주세요</Text>
+							<Text variant="greyBig">추가한 투두가 없어요!</Text>
 						</Flex>
 					) : (
 						// 투두가 있을 때
@@ -100,6 +111,7 @@ const TodoList = ({ todoList, setTodoList, setIsDetailTodoModalOpen }) => {
 											isDelBtnExist={isDelBtnExist}
 										/>
 									))}
+									<Flex border="50px solid transparent" />
 									{provided.placeholder}
 								</div>
 								// </Box>

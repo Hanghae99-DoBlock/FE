@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box, Flex, FloatingAddBtn, Text, white } from "../../common";
 import { FeedItem, NavBelow } from "../../components";
 import { resetMyFeed } from "../../redux/modules/feed/feedSlice";
@@ -10,6 +10,7 @@ import { __getMyFeeds } from "../../redux/modules/middleware/feedListThunk";
 const MyFeedPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { id } = useParams();
 	const target = useRef(null);
 	const { myFeedList, isNextmyFeedPageExist } = useSelector(
 		state => state.feed,
@@ -22,7 +23,7 @@ const MyFeedPage = () => {
 		if (isNextmyFeedPageExist) {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
-					dispatch(__getMyFeeds(decodedToken.memberId));
+					dispatch(__getMyFeeds(id));
 				}
 			});
 			observer.observe(target.current);
@@ -63,7 +64,11 @@ const MyFeedPage = () => {
 					<Flex wd="19px" ht="15px" bi="url(/images/back.svg)" />
 				</Flex>
 				<Flex mg="0 30px 0 0">
-					<Text variant="title3">내가 쌓은 블럭</Text>
+					{decodedToken.memberId === Number(id) ? (
+						<Text variant="title3">내가 쌓은 블럭</Text>
+					) : (
+						<Text variant="title3">쌓은 블럭</Text>
+					)}
 				</Flex>
 				<div />
 			</Flex>
@@ -83,7 +88,11 @@ const MyFeedPage = () => {
 				<Flex wd="100%" ht="100vh">
 					<Flex dir="column" ht="100%" gap="15px">
 						<Flex wd="107px" ht="64px" bi="url(/images/blockStacksGrey.svg)" />
-						<Text variant="body2Medium">내가 쌓은 블록이 없습니다.</Text>
+						{decodedToken.memberId === Number(id) ? (
+							<Text variant="body2Medium">내가 쌓은 블록이 없습니다.</Text>
+						) : (
+							<Text variant="body2Medium">쌓은 블럭이 없습니다.</Text>
+						)}
 					</Flex>
 				</Flex>
 			)}

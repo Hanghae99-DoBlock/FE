@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flex, Hr, Input, Svg, Text } from "../../common";
 import {
@@ -22,7 +22,7 @@ const FeedComment = props => {
 	}, []);
 
 	const [modal, setModal] = useState(false);
-	const [content, setContent] = useState();
+	const [content, setContent] = useState("");
 	const [commentList, setCommentList] = useState([]);
 
 	const onChangeHandler = e => {
@@ -55,7 +55,7 @@ const FeedComment = props => {
 	};
 
 	const onRemoveComment = async commentId => {
-		// if (!window.confirm("삭제하시겠습니까?")) return false;
+		if (!window.confirm("삭제하시겠습니까?")) return false;
 		const newCommentList = commentList.filter(it => it.commentId !== commentId);
 		const response = await removeCommentsApi({
 			feedId,
@@ -68,10 +68,7 @@ const FeedComment = props => {
 	const reaction = useSelector(
 		state => state.feed.feedItem.currentReactionType,
 	);
-	const reactionType = useSelector(
-		state => state.feed.feedItem.reactionResponseDtoList,
-	);
-
+	const reactionType = useSelector(state => state.feed.feedItem);
 	const onClickReactionList = () => {
 		navigate("/feed/reactionList/");
 	};
@@ -81,7 +78,7 @@ const FeedComment = props => {
 			<Flex
 				wd="335px"
 				fw="600"
-				fs="14px"
+				fs="14"
 				jc="flex-end"
 				mg="0 auto 10px auto"
 				onClick={onClickReactionList}
@@ -90,7 +87,7 @@ const FeedComment = props => {
 				<Flex>
 					{reaction &&
 						reaction.map(data => (
-							<Flex>
+							<Flex key={data.memberId}>
 								{data.reactionType === "LIKE" ? "👍" : null}
 								{data.reactionType === "HEART" ? "❤" : null}
 								{data.reactionType === "SMILE" ? "😊" : null}
@@ -102,7 +99,7 @@ const FeedComment = props => {
 				리액션
 			</Flex>
 			<Hr variant="feedHr" />
-			<Flex dir="column" jc="center">
+			<Flex wd="375px" dir="column" jc="center">
 				<Flex wd="335px" jc="space-between" position="relative">
 					{modal === true ? <ReactionModal /> : null}
 					<Flex
@@ -140,6 +137,7 @@ const FeedComment = props => {
 							name="comments"
 							placeholder="댓글을 입력하세요"
 							onChange={onChangeHandler}
+							value={content}
 						/>
 						<Svg variant="paperAirplane" onClick={onCreateComment}></Svg>
 					</Flex>

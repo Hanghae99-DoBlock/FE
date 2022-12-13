@@ -15,10 +15,15 @@ const TodoListPage = () => {
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const [todoList, setTodoList] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const requestGetTodoList = async () => {
-		const response = await getTodoListApi(selectedDate);
-		setTodoList(response);
+	const requestGetTodoList = () => {
+		getTodoListApi(selectedDate)
+			.then(res => {
+				setIsLoading(false);
+				setTodoList(res);
+			})
+			.catch(err => setIsLoading(false));
 	};
 
 	useEffect(() => {
@@ -93,13 +98,14 @@ const TodoListPage = () => {
 			{/* 투두 추가 모달 오픈 버튼 */}
 			<FloatingAddBtn onClick={openAddTodoModalHandler} />
 
-			<Flex dir="column" jc="flex-start" ht="100vh">
+			<Flex wd="100%" dir="column" jc="flex-start" ht="100vh">
 				{/* 캘린더 */}
 				<TodoListCalendar />
 
 				{/* 투두리스트 */}
 				<DragDropContext onDragEnd={onDragEndHandler}>
 					<TodoList
+						isLoading={isLoading}
 						todoList={todoList}
 						setTodoList={setTodoList}
 						setIsDetailTodoModalOpen={setIsDetailTodoModalOpen}

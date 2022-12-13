@@ -43,7 +43,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		dispatch(__getUser(id));
-	}, []);
+	}, [id]);
 
 	const profileEditHandler = () => {
 		navigate(`/profile/edit`);
@@ -54,7 +54,6 @@ const Profile = () => {
 		localStorage.removeItem("refreshToken");
 		navigate(`/`);
 	};
-
 	return (
 		<>
 			<Flex
@@ -122,19 +121,34 @@ const Profile = () => {
 					pd="40px"
 					bg="#F8F8F8"
 				>
-					<Flex onClick={() => navigate("/profile/myblocks")} cursor="pointer">
-						<SecondHeading fw="300" fs="12px" color="#666666">
-							내 블럭
-							<Flex
-								fw="600"
-								fs="19"
-								color="#131313"
-								ta="center"
-								mg="10px 0 0 0"
-							>
-								{profile.countFeed}
-							</Flex>
-						</SecondHeading>
+					<Flex onClick={() => navigate(`myblocks`)} cursor="pointer" Z>
+						{decodeToken.memberId === profile.memberId ? (
+							<SecondHeading fw="300" fs="12px" color="#666666">
+								내 블럭
+								<Flex
+									fw="600"
+									fs="19"
+									color="#131313"
+									ta="center"
+									mg="10px 0 0 0"
+								>
+									{profile.countFeed}
+								</Flex>
+							</SecondHeading>
+						) : (
+							<SecondHeading fw="300" fs="12px" color="#666666">
+								블럭
+								<Flex
+									fw="600"
+									fs="19"
+									color="#131313"
+									ta="center"
+									mg="10px 0 0 0"
+								>
+									{profile.countFeed}
+								</Flex>
+							</SecondHeading>
+						)}
 					</Flex>
 					<SecondHeading fw="300" fs="12px" color="#666666">
 						팔로잉
@@ -210,18 +224,17 @@ const Profile = () => {
 				</Swiper>
 				<Flex wd="100%" bb="2px solid #EFEFEF" mg="20px 0 0 0" />
 				<Flex wd="331px" ht="51px" jc="flex-start">
-					<Flex
-						onClick={() => navigate(`/profile/myblocks`)}
-						cursor="pointer"
-						ht="100%"
-					>
-						<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
-							내가 쌓은 블럭
-						</SecondHeading>
-						<Svg
-							variant="rightArrow"
-							onClick={() => navigate("/feed/following")}
-						></Svg>
+					<Flex onClick={() => navigate(`myblocks`)} cursor="pointer" ht="100%">
+						{decodeToken.memberId === profile.memberId ? (
+							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+								내가 쌓은 블럭
+							</SecondHeading>
+						) : (
+							<SecondHeading fw="600" fs="15px" mg="0 10px 0 0">
+								쌓은 블럭
+							</SecondHeading>
+						)}
+						<Svg variant="rightArrow"></Svg>
 					</Flex>
 				</Flex>
 				{profile.countFeed === 0 ? (
@@ -235,7 +248,7 @@ const Profile = () => {
 						</Flex>
 					</>
 				) : (
-					<Box variant="profileBox">
+					<Box onClick={() => navigate(`myblocks`)} variant="profileBox">
 						<Flex jc="flex-end" position="absolute" right="10px" top="-38px">
 							<Svg variant="block" />
 						</Flex>

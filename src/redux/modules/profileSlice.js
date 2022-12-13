@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 import { serverUrl } from "../api";
 import {
@@ -66,7 +66,6 @@ export const __followThunk = createAsyncThunk(
 // 프로필 수정
 const updateProfile = payload => {
 	const accessToken = localStorage.getItem("accessToken");
-	const refreshToken = localStorage.getItem("refreshToken");
 	const frm = new FormData();
 	if (payload.nickname === "") {
 	} else {
@@ -263,10 +262,14 @@ const profileSlice = createSlice({
 		},
 	},
 	extraReducers: {
+		[__updateProfileTags.pending]: (state, action) => {
+			state.isLoading = true;
+		},
 		[__updateProfileTags.fulfilled]: (state, action) => {
 			state.isLoading = "완료";
 		},
 		[__updateProfileTags.rejected]: (state, action) => {
+			state.isLoading = false;
 			state.errMsg = action.payload.data.message;
 		},
 		[__resetProfileTags.fulfilled]: (state, action) => {

@@ -1,21 +1,34 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FirstHeading, Flex, Image, Svg } from "../../common";
 import { NavBelow } from "../../components";
+import { __getReactions } from "../../redux/modules/feed/feedSlice";
 
 const ReactionListPage = () => {
 	const navigate = useNavigate();
-
-	const reactionList = useSelector(
-		state => state.feed.feedItem.reactionResponseDtoList,
-	);
+	const dispatch = useDispatch();
+	const feedId = useSelector(state => state.feed.feedItem.feedId);
+	const reactionList = useSelector(state => state.feed.reactionList);
 	const anotherMemberPage = memberId => {
 		navigate(`/profile/${memberId}`);
 	};
+
+	useEffect(() => {
+		dispatch(__getReactions(feedId));
+	}, []);
+
 	return (
 		<>
-			<Flex dir="column" mw="375px" mxw="375px" mg="0 auto">
+			<Flex
+				dir="column"
+				jc="flex-start"
+				wd="100%"
+				ht="100vh"
+				style={{ overflow: "auto" }}
+			>
 				<Flex
 					dir="row"
 					ht="58px"
@@ -66,8 +79,7 @@ const ReactionListPage = () => {
 										}}
 									>
 										{data.nickname}
-
-										<Flex color="#A2A2A2" fw="300" fs="11">
+										<Flex color="#A2A2A2" fw="300" fs="11" mg="-18px 0 0 0">
 											{data.email}
 										</Flex>
 									</FirstHeading>
