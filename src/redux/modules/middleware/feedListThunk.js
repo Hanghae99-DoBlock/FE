@@ -52,8 +52,8 @@ export const __getMyFeeds = createAsyncThunk(
 // 피드 삭제 Thunk
 export const __deleteFeed = createAsyncThunk(
 	"feed/deleteFeed",
-	(payload, thunkAPI) => {
-		deleteFeedApi(payload);
+	async (payload, thunkAPI) => {
+		const response = await deleteFeedApi(payload);
 		return thunkAPI.fulfillWithValue(payload);
 	},
 );
