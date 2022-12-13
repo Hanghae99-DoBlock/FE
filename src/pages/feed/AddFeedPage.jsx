@@ -27,6 +27,7 @@ import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 import { updateIsToastExist } from "../../redux/modules/toastSlice";
 import AddFeedCompleteModal from "../../components/feed/AddFeedCompleteModal";
+import imageCompression from "browser-image-compression";
 const AddFeedPage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -150,23 +151,27 @@ const AddFeedPage = () => {
 	};
 
 	// 사진 추가 핸들러
-	const photoChangeHandler = e => {
+	const photoChangeHandler = async e => {
 		e.preventDefault();
 		for (let i = 0; i < 4; i++) {
 			let photoId = uuid();
 			let reader = new FileReader();
 			let file = e.target.files[i];
-			if (file !== undefined) {
-				dispatch(addFormPhoto(file));
+			const options = {
+				maxSizeMb: 1,
+			};
+			const compressedImg = await imageCompression(file, options);
+			if (compressedImg !== undefined) {
+				dispatch(addFormPhoto(compressedImg));
 			}
+
 			reader.onloadend = () => {
 				const previewImg = reader.result;
-
 				dispatch(
 					addPhoto({
 						id: photoId,
 						url: previewImg,
-						lastModified: file.lastModified,
+						lastModified: compressedImg.lastModified,
 					}),
 				);
 			};
@@ -176,6 +181,9 @@ const AddFeedPage = () => {
 			}
 		}
 	};
+
+	console.log("폼", formPhotoList);
+	console.log("미리보기", photoList);
 	const uploadFeedHandler = () => {
 		//필수 항목 입력 검사
 		if (boastFeed.length >= 1 && photoList.length >= 1 && color.length >= 1) {
@@ -210,7 +218,6 @@ const AddFeedPage = () => {
 			setIsInputHidden(true);
 		}
 	};
-	console.log(tagList);
 
 	useEffect(() => {
 		if (todoIdArray.length >= 1 && photoList.length >= 1 && color) {
