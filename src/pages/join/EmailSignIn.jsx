@@ -10,6 +10,7 @@ import {
 	__checkNick,
 	__signUp,
 	__signIn,
+	resetLoginResult,
 } from "../../redux/modules/join/joinSlice";
 import { useNavigate } from "react-router-dom";
 import Svg from "../../common/svg/Svg";
@@ -43,7 +44,6 @@ const SignUpPage = () => {
 			dispatch(updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."));
 		}
 	}, [loginResult]);
-
 	//password type 변경하는 함수
 	const passwordTypeHandler = e => {
 		setPasswordType(() => {
@@ -55,28 +55,36 @@ const SignUpPage = () => {
 	};
 	const loginHandler = () => {
 		dispatch(__signIn({ email: email.value, password: password.value }));
-		if (loginResult?.status === 200 || loginResult === "") {
+		if (loginResult.status === 200 || loginResult === "") {
 			return;
 		} else if (loginResult === 400) {
-			return dispatch(updateIsToastExist("비밀번호를 다시 확인해주세요."));
+			return () => {
+				dispatch(updateIsToastExist("비밀번호를 다시 확인해주세요."));
+				dispatch(resetLoginResult());
+			};
 		} else if (loginResult === 404) {
-			return dispatch(updateIsToastExist("찾을 수 없는 사용자입니다."));
+			return () => {
+				dispatch(updateIsToastExist("찾을 수 없는 사용자입니다."));
+				dispatch(resetLoginResult());
+			};
 		}
 	};
 
 	const enterLoginHandler = e => {
 		if (e.keyCode === 13) {
 			dispatch(__signIn({ email: email.value, password: password.value }));
-			if (loginResult?.status === 200 || loginResult === "") {
+			if (loginResult.status === 200 || loginResult === "") {
 				return;
 			} else if (loginResult === 400) {
-				return dispatch(
-					updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
-				);
-			} else {
-				return dispatch(
-					updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."),
-				);
+				return () => {
+					dispatch(updateIsToastExist("아이디, 비밀번호를 다시 입력해주세요."));
+					dispatch(resetLoginResult());
+				};
+			} else if (loginResult === 404) {
+				return () => {
+					dispatch(updateIsToastExist("찾을 수 없는 사용자입니다."));
+					dispatch(resetLoginResult());
+				};
 			}
 		}
 	};

@@ -1,3 +1,5 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +61,11 @@ const InterestTagsPage = () => {
 
 	// 커스텀 태그 onChange 핸들러
 	const onChangeHandler = e => {
-		setTagContent(e.target.value);
+		if (e.target.value.length < 15) {
+			setTagContent(e.target.value);
+		} else {
+			dispatch(updateIsToastExist("더이상 입력할 수 없어요😭"));
+		}
 	};
 
 	// 커스텀 태그 추가 핸들러
@@ -193,12 +199,8 @@ const InterestTagsPage = () => {
 				<Flex dir="column" gap="9px">
 					<FirstHeading>관심사를 선택해주세요</FirstHeading>
 					<Flex dir="column">
-						<Text color={grey600} variant="body2Medium">
-							최대 3개의 관심사를 선택하시면
-						</Text>
-						<Text color={grey600} variant="body2Medium">
-							흥미로울 만한 피드를 추천해드려요
-						</Text>
+						<Text variant="body2Medium">3개까지 선택할 수 있어요</Text>
+						<Text variant="body2Medium">관련된 피드를 추천해드릴게요</Text>
 					</Flex>
 				</Flex>
 
@@ -294,11 +296,17 @@ const InterestTagsPage = () => {
 			{/* 버튼 */}
 			{selectedTags.length === 0 ? (
 				<Button variant="disactivatedXL">선택 완료</Button>
+			) : isLoading ? (
+				<Button variant="activatedXL">
+					<Flex ht="100%">
+						<Lottie animationData={spinner} />
+					</Flex>
+				</Button>
 			) : (
 				<Button onClick={submitHandler} variant="activatedXL">
 					선택 완료
 				</Button>
-			)}{" "}
+			)}
 		</Flex>
 	);
 };

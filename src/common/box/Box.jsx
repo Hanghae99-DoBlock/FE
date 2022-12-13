@@ -116,12 +116,10 @@ const StBox = styled.div`
 						display: none;
 					}
 				`;
-
-			// 메모 조회 스크롤 영역
-			case "memocrollArea":
+			case "todoContentcrollArea":
 				return css`
 					display: flex;
-					height: 50px;
+					height: 38px;
 					margin: 2px 0 0 0;
 					overflow-x: hidden;
 					overflow-y: auto;
@@ -130,8 +128,18 @@ const StBox = styled.div`
 						display: none;
 					}
 				`;
-
-			// 모달창
+			case "memocrollArea":
+				return css`
+					display: flex;
+					height: 39px;
+					margin: 2px 0 0 0;
+					overflow-x: hidden;
+					overflow-y: auto;
+					align-items: flex-start;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				`;
 			case "modalBox":
 				return css`
 					background-color: white;
@@ -148,14 +156,6 @@ const StBox = styled.div`
 					border-radius: 10px;
 					box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 				`;
-
-			// 투두 박스
-			case "todoContent":
-				return css`
-					height: 48px;
-					padding: 12px 0;
-				`;
-
 			case "feedTodo":
 				return css`
 					display: flex;

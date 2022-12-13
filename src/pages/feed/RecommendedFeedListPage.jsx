@@ -1,3 +1,5 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +11,7 @@ import { __getRecommendedFeeds } from "../../redux/modules/middleware/feedListTh
 const RecommendedFeedListPage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { isLoading } = useSelector(state => state.feed);
 	const target = useRef(null);
 	const { recommendedFeedList, isNextRecommendedFeedPageExist } = useSelector(
 		state => state.feed,
@@ -37,13 +40,22 @@ const RecommendedFeedListPage = () => {
 	return (
 		<>
 			<Box variant="feedScrollArea">
-				{recommendedFeedList[0] ? (
+				{isLoading && !recommendedFeedList[0] ? (
+					<Flex mg="0 0 50px 0" wd="100%" ht="100%">
+						<Lottie animationData={spinner} />
+					</Flex>
+				) : recommendedFeedList[0] ? (
 					<>
 						{recommendedFeedList.map(feedItem => (
 							<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 						))}
+						{isLoading && (
+							<Flex mg="0 0 80px 0" wd="100%" ht="100%">
+								<Lottie animationData={spinner} />
+							</Flex>
+						)}
 						{isNextRecommendedFeedPageExist ? null : (
-							<Flex border="50px solid transparent" />
+							<Flex border="100px solid transparent" />
 						)}
 					</>
 				) : (
@@ -55,7 +67,7 @@ const RecommendedFeedListPage = () => {
 								관심사를 선택하면
 							</Text>
 							<Text variant="body3" color={grey600}>
-								흥미로울 만한 피드를 추천해드려요.
+								관련된 피드를 추천해드려요.
 							</Text>
 						</Flex>
 						<Flex
@@ -73,9 +85,6 @@ const RecommendedFeedListPage = () => {
 							<Flex wd="5px" ht="8px" bi="url(/images/arrowRightBlack.svg)" />
 						</Flex>
 					</Flex>
-				)}
-				{isNextRecommendedFeedPageExist ? null : (
-					<Flex border="50px solid transparent" />
 				)}
 				<div ref={target} />
 			</Box>

@@ -1,3 +1,5 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Flex, Text } from "../../common";
@@ -8,9 +10,8 @@ import { __getFollowingFeeds } from "../../redux/modules/middleware/feedListThun
 const FollowingFeedListPage = () => {
 	const dispatch = useDispatch();
 	const target = useRef(null);
-	const { followingFeedList, isNextFollowingFeedPageExist } = useSelector(
-		state => state.feed,
-	);
+	const { followingFeedList, isNextFollowingFeedPageExist, isLoading } =
+		useSelector(state => state.feed);
 
 	useEffect(() => {
 		if (isNextFollowingFeedPageExist) {
@@ -34,13 +35,22 @@ const FollowingFeedListPage = () => {
 
 	return (
 		<Box variant="feedScrollArea">
-			{followingFeedList[0] ? (
+			{isLoading && !followingFeedList[0] ? (
+				<Flex mg="0 0 50px 0" wd="100%" ht="100%">
+					<Lottie animationData={spinner} />
+				</Flex>
+			) : followingFeedList[0] ? (
 				<>
 					{followingFeedList.map(feedItem => (
 						<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 					))}
+					{isLoading && (
+						<Flex mg="0 0 80px 0" wd="100%" ht="100%">
+							<Lottie animationData={spinner} />
+						</Flex>
+					)}
 					{isNextFollowingFeedPageExist ? null : (
-						<Flex border="50px solid transparent" />
+						<Flex border="100px solid transparent" />
 					)}
 				</>
 			) : (
@@ -49,10 +59,6 @@ const FollowingFeedListPage = () => {
 					<Text variant="body2Medium">팔로잉 피드가 없습니다.</Text>
 				</Flex>
 			)}
-			{isNextFollowingFeedPageExist ? null : (
-				<Flex border="50px solid transparent" />
-			)}
-
 			<div ref={target} />
 		</Box>
 	);
