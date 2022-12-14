@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Flex, FloatingAddBtn } from "../../common";
 import {
 	TodoListCalendar,
@@ -10,8 +10,10 @@ import {
 } from "../../components";
 import { DragDropContext } from "react-beautiful-dnd";
 import { getTodoListApi, swithTodoApi } from "../../api/todoListApi";
+import { updateIsToastExist } from "../../redux/modules/toastSlice";
 
 const TodoListPage = () => {
+	const dispatch = useDispatch();
 	const selectedDate = useSelector(state => state.todoListSlice.selectedDate);
 
 	const [todoList, setTodoList] = useState([]);
@@ -53,14 +55,19 @@ const TodoListPage = () => {
 		coppiedTodoList.splice(result.destination.index, 0, reordredTodoItem);
 		const todoIdList = coppiedTodoList.map(todoItem => todoItem.todoId);
 		// 배열 교체
+		setTodoList(coppiedTodoList);
 		swithTodoApi({
 			year: selectedDate.year,
 			month: selectedDate.month,
 			day: selectedDate.day,
 			todoIdList: todoIdList,
 			todoList: coppiedTodoList,
+		}).catch(() => {
+			getTodoListApi(selectedDate).then(res => {
+				setIsLoading(false);
+				setTodoList(res);
+			}, dispatch(updateIsToastExist("서버 연결이 불안정합니다😭")));
 		});
-		setTodoList(coppiedTodoList);
 	};
 
 	return (
