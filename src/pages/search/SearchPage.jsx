@@ -57,7 +57,7 @@ const FeedPage = () => {
 		}
 	}, [searchKeyword]);
 	useEffect(() => {
-		if (isNextTagSearchExist) {
+		if (isNextTagSearchExist && category === "feed") {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
 					dispatch(
@@ -75,7 +75,7 @@ const FeedPage = () => {
 		}
 	}, [isNextTagSearchExist, addedSearchTag, keyword]);
 	useEffect(() => {
-		if (isNextMemberSearchExist) {
+		if (isNextMemberSearchExist && category === "member") {
 			const observer = new IntersectionObserver(([entry]) => {
 				if (entry.isIntersecting) {
 					dispatch(
@@ -220,9 +220,9 @@ const FeedPage = () => {
 								</Flex>
 							</Flex>
 						)}
-						{searchResult === "" ? (
+						{!searchResult ? (
 							<Flex></Flex>
-						) : searchResult === 200 ? (
+						) : searchResult.length !== 0 ? (
 							searchTagItem?.map(feedItem => {
 								return <FeedItem key={feedItem.feedId} feedItem={feedItem} />;
 							})
@@ -231,7 +231,7 @@ const FeedPage = () => {
 								<Svg variant="searchResultNone" />
 							</Flex>
 						)}
-						<div style={{ width: "335px", height: "90px" }} ref={target} />
+						<div style={{ width: "335px", height: "150px" }} ref={target} />
 					</Box>
 				) : (
 					<Box variant="searchScrollArea">
@@ -260,9 +260,9 @@ const FeedPage = () => {
 								</Flex>
 							</Flex>
 						)}
-						{searchResult === "" ? (
+						{!searchResult ? (
 							<Flex></Flex>
-						) : searchResult === 200 ? (
+						) : searchResult.length !== 0 ? (
 							searchMemberItem.map(data => (
 								<Flex
 									jc="space-between"

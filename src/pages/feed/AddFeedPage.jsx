@@ -210,7 +210,6 @@ const AddFeedPage = () => {
 			setIsInputHidden(true);
 		}
 	};
-	console.log(tagList);
 
 	useEffect(() => {
 		if (todoIdArray.length >= 1 && photoList.length >= 1 && color) {
