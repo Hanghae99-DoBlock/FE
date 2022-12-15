@@ -11,8 +11,8 @@ export const __getFollowingFeeds = createAsyncThunk(
 	"feed/getFollowingFeeds",
 	async (payload, thunkAPI) => {
 		try {
-			const { followingFeedPageNum } = thunkAPI.getState().feed;
-			const response = await getFollowingFeedsApi(followingFeedPageNum);
+			const { lastFollowingFeedId } = thunkAPI.getState().feed;
+			const response = await getFollowingFeedsApi(lastFollowingFeedId);
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);
@@ -25,8 +25,8 @@ export const __getRecommendedFeeds = createAsyncThunk(
 	"feed/getRecommendedFeeds",
 	async (payload, thunkAPI) => {
 		try {
-			const { recommendedFeedPageNum } = thunkAPI.getState().feed;
-			const response = await getRecommendedFeedsApi(recommendedFeedPageNum);
+			const { lastRecommendedFeedId } = thunkAPI.getState().feed;
+			const response = await getRecommendedFeedsApi(lastRecommendedFeedId);
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);
@@ -37,11 +37,10 @@ export const __getRecommendedFeeds = createAsyncThunk(
 // 내 피드 조회 Thunk
 export const __getMyFeeds = createAsyncThunk(
 	"feed/getMyFeeds",
-	async (payload, thunkAPI) => {
+	async (memberId, thunkAPI) => {
 		try {
-			const { myFeedPageNum } = thunkAPI.getState().feed;
-			const request = { memberId: payload, page: myFeedPageNum };
-			const response = await getMyFeedsApi(request);
+			const { lastMyFeedId } = thunkAPI.getState().feed;
+			const response = await getMyFeedsApi({ memberId, lastMyFeedId });
 			return thunkAPI.fulfillWithValue(response);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error);

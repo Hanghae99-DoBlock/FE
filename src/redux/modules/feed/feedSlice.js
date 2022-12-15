@@ -345,9 +345,9 @@ const initialState = {
 	searchTag: [],
 	searchMember: [],
 	commentList: [],
-	followingFeedPageNum: 0,
-	recommendedFeedPageNum: 0,
-	myFeedPageNum: 0,
+	lastRecommendedFeedId: null,
+	lastFollowingFeedId: null,
+	lastMyFeedId: null,
 	isNextFollowingFeedPageExist: true,
 	isNextRecommendedFeedPageExist: true,
 	isNextmyFeedPageExist: true,
@@ -439,17 +439,17 @@ export const feedSlice = createSlice({
 		},
 		resetFollowingList: (state, action) => {
 			state.followingFeedList = [];
-			state.followingFeedPageNum = 0;
+			state.lastFollowingFeedId = null;
 			state.isNextFollowingFeedPageExist = true;
 		},
 		resetMyFeed: (state, action) => {
 			state.myFeedList = [];
-			state.myFeedPageNum = 0;
+			state.lastMyFeedId = null;
 			state.isNextmyFeedPageExist = true;
 		},
 		resetRecommendedFeed: (state, action) => {
 			state.recommendedFeedList = [];
-			state.recommendedFeedPageNum = 0;
+			state.lastRecommendedFeedId = null;
 			state.isNextRecommendedFeedPageExist = true;
 		},
 		changeStatus: (state, action) => {
@@ -516,25 +516,48 @@ export const feedSlice = createSlice({
 			})
 			.addCase(__getFollowingFeeds.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.followingFeedList.push(...action.payload);
-				state.followingFeedPageNum += 1;
-				if (action.payload.length < 5) {
+
+				let lastItem;
+				if (action.payload[action.payload.length - 1] !== undefined) {
+					lastItem = action.payload[action.payload.length - 1];
+				} else {
+					lastItem = null;
+				}
+
+				if (lastItem !== null) {
+					if (state.lastFollowingFeedId !== lastItem.feedId) {
+						state.followingFeedList.push(...action.payload);
+						state.lastFollowingFeedId = lastItem.feedId;
+					} else {
+						return;
+					}
+				} else {
 					state.isNextFollowingFeedPageExist = false;
 				}
 			})
-			.addCase(__getFollowingFeeds.rejected, (state, action) => {
-				state.isLoading = false;
-				state.isNextFollowingFeedPageExist = false;
-			})
+
 			// 추천 피드 조회
 			.addCase(__getRecommendedFeeds.pending, (state, action) => {
 				state.isLoading = true;
 			})
 			.addCase(__getRecommendedFeeds.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.recommendedFeedList.push(...action.payload);
-				state.recommendedFeedPageNum += 1;
-				if (action.payload.length < 5) {
+
+				let lastItem;
+				if (action.payload[action.payload.length - 1] !== undefined) {
+					lastItem = action.payload[action.payload.length - 1];
+				} else {
+					lastItem = null;
+				}
+
+				if (lastItem !== null) {
+					if (state.lastRecommendedFeedId !== lastItem.feedId) {
+						state.recommendedFeedList.push(...action.payload);
+						state.lastRecommendedFeedId = lastItem.feedId;
+					} else {
+						return;
+					}
+				} else {
 					state.isNextRecommendedFeedPageExist = false;
 				}
 			})
@@ -542,16 +565,30 @@ export const feedSlice = createSlice({
 				state.isLoading = false;
 				state.isNextRecommendedFeedPageExist = false;
 			})
-			// 내 피드 조회 성공
+			// 내 피드 조회
+			.addCase(__getMyFeeds.pending, (state, action) => {
+				state.isLoading = true;
+			})
 			.addCase(__getMyFeeds.fulfilled, (state, action) => {
-				state.myFeedList.push(...action.payload);
-				state.myFeedPageNum += 1;
-				if (action.payload.length < 5) {
+				state.isLoading = false;
+
+				let lastItem;
+				if (action.payload[action.payload.length - 1] !== undefined) {
+					lastItem = action.payload[action.payload.length - 1];
+				} else {
+					lastItem = null;
+				}
+
+				if (lastItem !== null) {
+					if (state.lastMyFeedId !== lastItem.feedId) {
+						state.myFeedList.push(...action.payload);
+						state.lastMyFeedId = lastItem.feedId;
+					} else {
+						return;
+					}
+				} else {
 					state.isNextmyFeedPageExist = false;
 				}
-			})
-			.addCase(__getMyFeeds.rejected, (state, action) => {
-				state.isNextmyFeedPageExist = false;
 			})
 			// 피드 단건 조회 성공
 			.addCase(__getFeedItem.fulfilled, (state, action) => {
