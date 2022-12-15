@@ -122,30 +122,49 @@ export const __searchTagAndMember = createAsyncThunk(
 			const { tagSearchPageNum, memberSearchPageNum } =
 				thunkAPI.getState().feed;
 
-			let page;
+			let id;
 
 			if (category === "feed") {
-				page = tagSearchPageNum;
+				id = null;
 			} else {
-				page = memberSearchPageNum;
+				id = null;
 			}
+			if (id === null && category === "feed") {
+				const data = await axios.get(
+					`${serverUrl}/api/search?keyword=${keyword}&category=${category}`,
+					{
+						headers: { Authorization: accessToken },
+					},
+					{
+						withCredentials: true,
+					},
+					payload,
+				);
+				return thunkAPI.fulfillWithValue({
+					keyword: keyword,
+					data: data.data,
+					category: category,
+					status: data.status,
+				});
+			} else if (id === null && category === "member") {
+				const data = await axios.get(
+					`${serverUrl}/api/search?keyword=${keyword}&category=${category}&id${id}`,
+					{
+						headers: { Authorization: accessToken },
+					},
+					{
+						withCredentials: true,
+					},
+					payload,
+				);
 
-			const data = await axios.get(
-				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
-				{
-					headers: { Authorization: accessToken },
-				},
-				{
-					withCredentials: true,
-				},
-				payload,
-			);
-			return thunkAPI.fulfillWithValue({
-				keyword: keyword,
-				data: data.data,
-				category: category,
-				status: data.status,
-			});
+				return thunkAPI.fulfillWithValue({
+					keyword: keyword,
+					data: data.data,
+					category: category,
+					status: data.status,
+				});
+			}
 		} catch (e) {
 			return thunkAPI.rejectWithValue(e.response.status);
 		}
@@ -157,14 +176,17 @@ export const __infinitySearchTag = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const { keyword, category } = payload;
-			const { infiniteTagNumber } = thunkAPI.getState().feed;
+			const { infiniteTagNumber, infiniteTagResult, addedSearchTag } =
+				thunkAPI.getState().feed;
 
-			let page;
+			let id;
 
-			page = infiniteTagNumber;
+			//id = infiniteTagNumber;
+
+			id = addedSearchTag[addedSearchTag.length - 1].feedId;
 
 			const { data } = await axios.get(
-				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&id=${id}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -184,15 +206,17 @@ export const __infinitySearchMember = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			const { keyword, category } = payload;
-			const { infiniteTagNumber, infiniteMemberNumber } =
+			const { infiniteMemberNumber, infiniteMemberResult, addedSearchMember } =
 				thunkAPI.getState().feed;
 
-			let page;
+			let id;
 
-			page = infiniteMemberNumber;
+			//id = infiniteMemberNumber;
+
+			id = addedSearchMember[addedSearchMember.length - 1].memberId;
 
 			const { data } = await axios.get(
-				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&page=${page}`,
+				`${serverUrl}/api/search?keyword=${keyword}&category=${category}&id=${id}`,
 				{
 					headers: { Authorization: accessToken },
 				},
@@ -330,7 +354,7 @@ const initialState = {
 	searchKeyword: null,
 	tagSearchPageNum: 0,
 	memberSearchPageNum: 0,
-	infiniteTagNumber: 0,
+	infiniteTagNumber: 1,
 	infiniteMemberNumber: 1,
 	isNextTagSearchExist: true,
 	isNextMemberSearchExist: true,
@@ -340,6 +364,8 @@ const initialState = {
 	searchMemberValue: "",
 	isCompleted: "",
 	searchResult: "",
+	infiniteTagResult: "",
+	infiniteMemberResult: "",
 	commentResult: "",
 	uploadResult: "",
 	uploadResultCode: "",
@@ -544,7 +570,8 @@ export const feedSlice = createSlice({
 					state.searchTagValue = action.payload.keyword;
 					state.infiniteTagNumber = 1;
 					state.infiniteMemberNumber = 1;
-					state.searchResult = action.payload.status;
+					state.searchResult = action.payload.data;
+					state.addedSearchTag = action.payload.data;
 				} else {
 					state.isLoading = false;
 					state.searchMember = action.payload.data;
@@ -553,7 +580,8 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = false;
 					state.infiniteTagNumber = 0;
 					state.infiniteMemberNumber = 1;
-					state.searchResult = action.payload.status;
+					state.searchResult = action.payload.data;
+					state.addedSearchMember = action.payload.data;
 				}
 			})
 			.addCase(__searchTagAndMember.rejected, (state, action) => {
@@ -566,13 +594,14 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = true;
 					state.addedSearchTag = action.payload.data;
 					state.searchTag.push(...action.payload.data);
-					state.infiniteTagNumber += 1;
+					//state.infiniteTagNumber += 1;
 				}
 				if (state.addedSearchTag.length < 5) {
 					state.isNextTagSearchExist = false;
 				}
 			})
 			.addCase(__infinitySearchTag.rejected, (state, action) => {
+				state.infiniteTagResult = action.payload;
 				if (action.payload === 404) {
 					state.isNextTagSearchExist = false;
 				}
@@ -583,13 +612,14 @@ export const feedSlice = createSlice({
 					state.isNextTagSearchExist = false;
 					state.addedSearchMember = action.payload.data;
 					state.searchMember.push(...action.payload.data);
-					state.infiniteMemberNumber += 1;
+					//state.infiniteMemberNumber += 1;
 				}
-				if (state.addedSearchMember.length < 10) {
-					state.isNextMemberSearchExist = false;
-				}
+				//if (state.addedSearchMember.length < 10) {
+				//	state.isNextMemberSearchExist = false;
+				//}
 			})
 			.addCase(__infinitySearchMember.rejected, (state, action) => {
+				state.infiniteMemberResult = action.payload;
 				if (action.payload === 404) {
 					state.isNextMemberSearchExist = false;
 				}
