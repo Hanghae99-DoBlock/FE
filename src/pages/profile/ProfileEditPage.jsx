@@ -219,7 +219,7 @@ const ProfileEdit = () => {
 								<Flex
 									onClick={() => navigate(`interest`)}
 									cursor="pointer"
-									wd="120px"
+									wd="130px"
 									ht="30px"
 									radius="5px"
 									border={`1px solid ${grey300}`}

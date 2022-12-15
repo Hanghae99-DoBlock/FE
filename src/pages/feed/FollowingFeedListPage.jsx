@@ -59,7 +59,7 @@ const FollowingFeedListPage = () => {
 					<Text variant="body2Medium">팔로잉 피드가 없습니다.</Text>
 				</Flex>
 			)}
-			<div ref={target} />
+			<div ref={target} style={{ border: "1px solid transparent" }} />
 		</Box>
 	);
 };

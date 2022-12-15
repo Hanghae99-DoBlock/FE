@@ -1,3 +1,5 @@
+import Lottie from "lottie-react";
+import spinner from "../../common/gif/spinner.json";
 import jwtDecode from "jwt-decode";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +14,7 @@ const MyFeedPage = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams();
 	const target = useRef(null);
-	const { myFeedList, isNextmyFeedPageExist } = useSelector(
+	const { myFeedList, isNextmyFeedPageExist, isLoading } = useSelector(
 		state => state.feed,
 	);
 
@@ -73,31 +75,33 @@ const MyFeedPage = () => {
 				<div />
 			</Flex>
 
-			{myFeedList[0] ? (
-				<Flex wd="100%" mg="19px 0 0 0">
-					<Box variant="feedScrollArea">
+			<Box variant="feedScrollArea">
+				{isLoading && !myFeedList[0] ? (
+					<Flex mg="0 0 50px 0" wd="100%" ht="100%">
+						<Lottie animationData={spinner} />
+					</Flex>
+				) : myFeedList[0] ? (
+					<>
 						{myFeedList.map(feedItem => (
 							<FeedItem key={feedItem.feedId} feedItem={feedItem} />
 						))}
+						{isLoading && (
+							<Flex mg="0 0 80px 0" wd="100%" ht="100%">
+								<Lottie animationData={spinner} />
+							</Flex>
+						)}
 						{isNextmyFeedPageExist ? null : (
-							<Flex border="50px solid transparent" />
+							<Flex border="100px solid transparent" />
 						)}
-					</Box>
-				</Flex>
-			) : (
-				<Flex wd="100%" ht="100vh">
-					<Flex dir="column" ht="100%" gap="15px">
+					</>
+				) : (
+					<Flex dir="column" ht="100%" pd="0 0 40px 0" gap="15px">
 						<Flex wd="107px" ht="64px" bi="url(/images/blockStacksGrey.svg)" />
-						{decodedToken.memberId === Number(id) ? (
-							<Text variant="body2Medium">내가 쌓은 블록이 없습니다.</Text>
-						) : (
-							<Text variant="body2Medium">쌓은 블럭이 없습니다.</Text>
-						)}
+						<Text variant="body2Medium">쌓은 블럭이 없습니다.</Text>
 					</Flex>
-				</Flex>
-			)}
-			{isNextmyFeedPageExist ? null : <Flex border="50px solid transparent" />}
-			<div ref={target} />
+				)}
+				<div ref={target} style={{ border: "3px solid transparent" }} />
+			</Box>
 			<NavBelow />
 		</>
 	);

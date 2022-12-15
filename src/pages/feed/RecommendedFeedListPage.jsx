@@ -73,7 +73,7 @@ const RecommendedFeedListPage = () => {
 						<Flex
 							onClick={() => navigate(`/profile/edit/interest`)}
 							cursor="pointer"
-							wd="120px"
+							wd="130px"
 							ht="30px"
 							radius="5px"
 							border={`1px solid ${grey300}`}
@@ -86,7 +86,7 @@ const RecommendedFeedListPage = () => {
 						</Flex>
 					</Flex>
 				)}
-				<div ref={target} />
+				<div ref={target} style={{ border: "1px solid transparent" }} />
 			</Box>
 		</>
 	);
