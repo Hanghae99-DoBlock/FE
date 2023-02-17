@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import spinner from "../../common/gif/spinner.json";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, FirstHeading, Flex, Text } from "../../common";
@@ -31,6 +31,7 @@ const InterestTagsPage = () => {
 	const [recommendedTags, setRecommendedTags] = useState([
 		...initialRecommendedTags,
 	]);
+	const refInput = useRef(null);
 
 	useEffect(() => {
 		if (isLoading === "완료") {
@@ -45,6 +46,10 @@ const InterestTagsPage = () => {
 			dispatch(resetErrMsg());
 		}
 	}, [errMsg]);
+
+	useEffect(() => {
+		refInput.current.focus();
+	}, [inputDisplay]);
 
 	// 커스텀 태그 인풋 열기 핸들러
 	const showTagInputHandler = () => {
@@ -254,7 +259,7 @@ const InterestTagsPage = () => {
 							<Flex mg="3px 0 0 0">
 								<input
 									id="tagInputId"
-									autoFocus
+									ref={refInput}
 									onChange={onChangeHandler}
 									onKeyDown={addTagHandler}
 									value={tagContent || ""}
