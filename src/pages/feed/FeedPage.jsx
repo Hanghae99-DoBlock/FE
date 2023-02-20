@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import { black, Box, Flex, FloatingAddBtn, grey600, Text } from "../../common";
 import { NavBelow } from "../../components";
+import { updateFeedRequestNum } from "../../redux/modules/feed/feedSlice";
 
 const FeedPage = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const isMatchFollowing = Boolean(useMatch("/feed/following"));
 	const isMatchRecommended = Boolean(useMatch("/feed/recommended"));
+	const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
 	const topTabUi = {
 		true: { box: "selectedTabMenu", color: black },
@@ -20,6 +25,18 @@ const FeedPage = () => {
 			navigate(`following`);
 		}
 	};
+
+	useEffect(() => {
+		const screenSizeListener = () => {
+			setScreenHeight(window.innerHeight);
+		};
+		window.addEventListener("screenSizeListener", screenSizeListener);
+	});
+
+	useEffect(() => {
+		const feedRequestNum = parseInt((screenHeight - 115) / 221) * 3;
+		dispatch(updateFeedRequestNum(feedRequestNum));
+	}, [screenHeight]);
 
 	return (
 		<>

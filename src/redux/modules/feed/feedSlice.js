@@ -476,6 +476,9 @@ export const feedSlice = createSlice({
 		resetFormPhotoList: (state, action) => {
 			state.formPhotoList = [];
 		},
+		updateFeedRequestNum: (state, action) => {
+			state.feedRequestNum = action.payload;
+		},
 	},
 
 	extraReducers: builder => {
@@ -690,6 +693,7 @@ export const feedSlice = createSlice({
 	},
 });
 export const {
+	updateFeedRequestNum,
 	choiceTodo,
 	deleteTodo,
 	resetTodo,
